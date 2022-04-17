@@ -70,6 +70,7 @@ GEM
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     digest (3.1.0)
+    dry-cli (0.7.0)
     erubi (1.10.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -105,6 +106,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-proxy (0.7.2)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (7.0.2.3)
@@ -141,6 +144,13 @@ GEM
     timeout (0.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    vite_rails (3.0.8)
+      railties (>= 5.1, < 8)
+      vite_ruby (~> 3.0)
+    vite_ruby (3.1.1)
+      dry-cli (~> 0.7.0)
+      rack-proxy (~> 0.6, >= 0.6.1)
+      zeitwerk (~> 2.2)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -154,6 +164,7 @@ DEPENDENCIES
   rails (~> 7.0.2, >= 7.0.2.2)
   spring
   sqlite3 (~> 1.4)
+  vite_rails
 
 RUBY VERSION
    ruby 3.0.0p0
