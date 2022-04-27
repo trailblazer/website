@@ -1,7 +1,7 @@
 {
   "all": {
     "sourceCodeDir": "app/frontend",
-    "watchAdditionalPaths": []
+    "watchAdditionalPaths": ["app/concepts/**/*.erb"]
   },
   "development": {
     "autoBuild": true,

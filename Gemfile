@@ -14,6 +14,11 @@ gem "puma", "~> 5.0"
 
 gem "vite_rails"
 
+gem "trailblazer-operation"
+gem "trailblazer-cells"
+gem "cells-rails"
+gem "cells-erb"
+
 group :development, :test do
 end
 
