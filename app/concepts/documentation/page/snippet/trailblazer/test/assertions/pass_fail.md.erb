@@ -1,0 +1,274 @@
+<%= h2 "Operation unit tests" %>
+
+<a href="https://github.com/trailblazer/trailblazer-test" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-test</a>
+
+
+Whenever you introduce a new operation class to your application, you have four choices for testing.
+
+1. You could skip testing and program the next feature - then, you shouldn't be reading this.
+2. If the operation is simple enough, cover its behavior in a smoke test and test both the successful invocation and its invalid state in a UI test. Nevertheless, this can be cumbersome and slow.
+3. Write your own operation unit tests.
+4. Use `assert_pass` and `assert_fail` to quickly test all possible inputs and outcomes in a unit test.
+
+<%= h3 "Overview" %>
+
+The goal of `trailblazer-test` is to provide simple, strong, non-verbose testing of operations and edge cases.
+
+~~~ruby
+it "converts {duration} to seconds" do
+  assert_pass( {duration: "2.24"}, {duration: 144} )
+end
+~~~~
+
+The assertion helpers focus on minimizing test code and the associated pain with it.
+
+A typical operation test case might look as follows.
+
+<%= code "test", collapse: "meths" %>
+
+As - hopefully - visible in this example `trailblazer-test` focuses on minimalistic, less verbose testing of operations. This in turn makes testing literally a no-brainer where **testing all edge cases** actually is fun.
+
+Note that only `#assert_pass` and `#assert_fail` are specific to Trailblazer. Structural helpers such as `it` and `describe` are provided by Minitest, and the test style is completely up to you. See below for conventions of how we test operations.
+
+<%= h3 "Base class" %>
+
+It is a good idea to maintain a slim `OperationTest` or `OperationSpec` base class in your `test_helper.rb`.
+
+<%= code "operation-spec" %>
+
+By including the assertion modules your tests can use our assertions such as `assert_pass` and `assert_exposes`.
+
+<%= h3 "Configuration" %>
+
+The `trailblazer-test` gem allows to configure common options on the test level.
+
+<%= h4 "default ctx" %>
+
+You can define a `default_ctx` using `let()` (and maintain different versions in `describe` blocks). `default_ctx` defines what to pass *into* the operation per default.
+
+<%= code "default-ctx" %>
+
+Note that `default_ctx` is always the full context that you'd normally pass into `Operation.call()`.
+
+<%= h4 "Expected attributes" %>
+
+The counterpart of `default_ctx` defines what the attributes of the operation's `model` will look like when the operation was run successfully.
+
+<%= code "expected-attrs" %>
+
+As in 99% of operation usage a model is created or altered, this hash represents the attributes of the *model* that were modified by the operation.
+
+<%= h4 "operation" %>
+
+Instead of having to pass what operation gets tested to each assertion you can conveniently define it using `let()`.
+
+<%= code "let-operation" %>
+
+Again, you may use any level of `describe` to fine-tune your tests.
+
+<%= h3 "assert_pass" %>
+
+The assertion helpers are bringing together `operation`, `default_ctx` and `expected_attributes`.
+
+Use `assert_pass` to run an operation and assert it was successful, while checking if the attributes of the operation's `:model` are what you're expecting.
+
+<%= code "assert-pass-empty" %>
+
+`assert_pass` with empty hashes will invoke the operation configured via `let(:operation)` by passing the hash from `let(:default_ctx)` into `call`. After that, it grabs the operation's `result[:model]` and tests all attributes from `expected_attributes` on it.
+
+If you were to hand-write this code, something along this would happen.
+
+~~~ruby
+it "passes with valid input, {duration} is optional" do
+  result = Song::Operation::Create.(default_ctx)
+  assert result.success?
+  assert_equal "Rancid",   result[:model].band
+  assert_equal "Timebomb", result[:model].title
+end
+~~~
+
+That's quite a lot of code, right?
+
+<%= h4 "Manual options" %>
+
+`assert_pass` makes it really simple to override ingoing *form* attributes. This is perfect for testing validations of your contracts by simulating differing user input.
+
+<%= code "assert-pass" %>
+
+Per default, the assertion accepts two arguments.
+
+1. The first hash to `assert_pass` is merged into the `default_ctx`.
+2. The second argument is merged with `expected_attributes` and allows to assert a different outcome.
+
+However, and now listen up, `default_ctx` and the *first* hash are not merged on the top-level! If `let(:key_in_params)` is set the merging behavior is changed.
+
+<%= code "let-key-in-params" %>
+
+With this configuration in place, the first argument given to `assert_pass` is merged with the hash found at `default_ctx[:params][:song]`. This allows for quickly changing the input that usually represents a form or API document - things to test that you will spend a lot of time on.
+
+Again, if you're hand-coding, here's what is going on.
+
+~~~ruby
+assert_pass( {duration: "2.24"}, {duration: 144} )
+# identical to
+
+input  = default_ctx[:params][:song].merge!(duration: "2.24")
+
+result = Song::Operation::Create.(input)
+# ... assertions
+~~~
+
+Changing the form input part in order to test validations and processing is a pretty common task. The `assert_pass` assertion is built to minimize test code and helps you with just that.
+
+<%= h4 "Omit key" %>
+
+In case you don't use a key in your form input you can set `:key_in_params` to `false`.
+
+<%= code "let-key-in-params-false" %>
+
+Note that this decision is also reflected in your `default_ctx`, which now doesn't have the `:song` key anymore.
+
+When using `assert_pass` and `assert_fail` you can still worryless pass form input. The assertion now merges it directly with `:params`.
+
+<%= code "omit-key-it" %>
+
+<%= h4 "Model name" %>
+
+`assert_pass` usually tests the expected attributes on `result[:model]`. Use `:model_at` to change the key where to find the asserted object.
+
+<%#= code "model-at" %>
+
+In this example, the asserting code will now grab the model from `result[:song]`.
+
+<%= h4 "Block" %>
+
+If you need more specific assertions, use a block with `assert_pass`.
+
+<%= code "assert-pass-block" %>
+
+This will run all assertions built into `assert_pass`. By yielding the operation's result in case of success, additional assertions can be made manually.
+
+Note that the block is not run when an earlier assertion in `assert_pass` has failed.
+
+<%= h4 "Result" %>
+
+Both versions of `assert_pass` (with or without a block) return the result object of the operation call.
+
+<%= code "assert-pass-result" %>
+
+Use this for adding assertions outside the block.
+
+<%= h3 "assert_fail" %>
+
+To test an unsuccessful outcome of an operation, use `assert_fail`. This is helpful for testing all kinds of validations. By invoking the operation with insufficient or wrong data it will fail and add errors onto the errors object. Those can be matched against a list of expected errors.
+
+<%= code "assert-fail" %>
+
+The merging of the form input works exactly as in [`assert_pass`](#trailblazer-test-operation-unit-tests-assert_pass), respecting `keys_in_params` and `default_ctx`.
+
+1. First, the operation is run, returning the result object. The first assertion is whether `result.failure?` is true.
+2. After that, the operation's error object is extracted and its keys are compared to the list that was provided to `assert_fail` as the second argument. If the keys in the actual errors object and your array match, this assertions passes, and proves that particular validations do work.
+
+
+This translates to the following manual test case.
+
+~~~ruby
+it "fails with missing {title} and invalid {duration}" do
+  assert_fail( {duration: 1222, title: ""}, [:title, :duration] )
+  # is almost identical to:
+
+  input  = {params: {song: {title: "", band: "Rancid", duration: 1222}
+  result = Song::Operation::Create(input)
+
+  assert result.failure?
+  assert_equal [:title, :duration], result["contract.default"].errors.messages.keys
+end
+~~~
+
+Per default, no assumptions are made on the model. Use `assert_fail` with a block to do so.
+
+<%= info do %>
+In 2.0 and 2.1, the errors object defaults to `result["contract.default"].errors`. In TRB 2.2, there will be an operation-wide errors object decoupled from the contracts.
+<% end %>
+
+<%= h4 "Error messages" %>
+
+If testing the presence of validation errors is not enough you can pass a hash to `assert_fail` to check that a particular error message (or multiple) is set.
+
+<%= code "assert-fail-msg" %>
+
+When there is only one error message per field, you may omit the array for your convenience.
+
+<%= code "assert-fail-msg-array" %>
+
+`assert_fail` automatically wraps error messages in an array.
+
+<%= h4 "Block" %>
+
+You can use a block with `assert_fail` for more specific assertions.
+
+<%= code "assert-fail-block" %>
+
+The block is run in addition to `assert_fail`'s built-in assertions. Just as in `assert_pass` it receives the operation's `result` object and allows you to add assertions as you desire.
+
+<%= h4 "Result" %>
+
+Both versions of `assert_fail` (with or without a block) return the result object of the operation call.
+
+<%= code "assert-fail-result" %>
+
+Use this for adding assertions outside the block.
+
+<%= h3 "Debugging" %>
+
+Both `assert_pass` and `assert_fail` allow to run the operation [using `wtf?`](trailblazer.html#trailblazer-developer-wtf-). When you're unsure about what is going on inside the tested operation, the `:wtf?` option comes to rescue.
+
+<%= code "wtf" %>
+
+In the trace on the console, it's obvious that the contract validation failed. Again, note that this works for both `assert_pass` and `assert_fail`.
+
+<%= h3 "Options" %>
+
+[All `let()` options](#test-operation-unit-tests-configuration) can also be passed directly to the assertion, allowing you to override the `let()` option or not having to define it on the test level at all.
+
+<%= code "option-operation" %>
+
+Accepted options are `:operation`, `:default_ctx`, `:expected_attributes` and `:key_in_params`.
+
+<%= h3 "Ctx Helper" %>
+
+If you need a customized `ctx` to pass into the tested operation, use `Ctx()`. It's mostly used as the first argument to `assert_pass` and `assert_fail`.
+
+<%= code "ctx-pass" %>
+
+The helper brings some nice API especially for testing edge cases and failures.
+
+<%= code "ctx-example" %>
+
+Whenever you use `Ctx()` the computed hash is passed through directly into the operation, so you have full control over what's going in. Both `assert_pass` and `assert_fail` are not altering your ctx anymore.
+
+<%= h4 "Merge" %>
+
+The standard behavior of `Ctx()` is to merge the passed hash with `default_ctx`.
+
+<%= code "ctx-inject", collapse: "skip" %>
+
+This allows to quickly add injections such as the `:current_user` to the ctx.
+
+Anything under the `:params` key is deep-merged with your `default_ctx`, which is super handy when you need to add non-form variables.
+
+<%= code "ctx-merge", collapse: "skip" %>
+
+Note how `:duration` is added to the existing `:song` hash.
+
+<%= h4 "Exclude" %>
+
+If you want to delete a certain form field from the input, you can use `:exclude`. This is great for testing presence or required validations.
+
+<%= code "ctx-exclude", collapse: "skip" %>
+
+The `:title` field under `:song` is now removed from the input.
+
+You may also use `:exclude` in combination with the deep-merge.
+
+<%= code "ctx-exclude-merge", collapse: "skip" %>

@@ -1,0 +1,20 @@
+<%= h3 "factory" %>
+
+You should always use operations as factories in tests. The `factory` method calls the operation and raises an error should the operation have failed. If successful, it will do the exact same thing [`call`](#call) does.
+
+<%= code "factory" %>
+
+If the factory operation fails, for example due to invalid form input, it raises a `OperationFailedError` exception.
+
+~~~ ruby
+factory( Song::Create, { title: "" } )["model"]
+#=> Trailblazer::Test::OperationFailedError: factory( Song::Create ) failed.
+~~~
+
+It is absolutely advisable to use `factory` in combination with `let`.
+
+~~~ ruby
+let(:song) { factory( Song::Create, { title: "Timebomb", band: "Rancid" } ) }
+~~~
+
+Also, you can safely use FactoryGirl's `attributes_for` to generate input.

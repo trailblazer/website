@@ -1,0 +1,33 @@
+<%= info do %>
+Looking for the old **trailblazer-test-0.1.1** docs? [They're here](old/trailblazer-test-0.1.html), but don't forget to upgrade to 1.0 - it's worth it!
+<% end %>
+
+Testing a Trailblazer project is very simple. Your test suite usually consists of two separate layers.
+
+* **Integration tests** or **system tests** covering the full stack, and using Capybara to "click through" the happy path and possible edge-cases such as an erroring form.
+  Smoke tests make sure of the integrity of your application, and assert that controllers, views and operations play well together. We will provide more documentation about system tests shortly.
+* **Operation unit tests** guarantee that your operations, data processing and validations do what they're supposed to. As they're much faster and easier to write than full stack "smoke tests" they can cover any possible input to your operation and help quickly asserting the created side-effects. The `trailblazer-test` gem is here to help with that.
+
+There's no need to test controllers, models, service objects, etc. in isolation - unless you want to do so for a better documentation of your internal APIs. As operations are the single entry-point for your functions, your entire stack is covered with the two test types.
+
+The `trailblazer-test` gem allows simple, streamlined operation unit tests.
+<%= h2 "Installation" %>
+
+Add this line to your application's Gemfile:
+
+~~~ ruby
+gem 'trailblazer-test', ">= 1.0.0"
+~~~
+
+The provided assertions and helpers work with Minitest. For RSpec support use [`rspec-trailblazer`](#test-rspec) which provides matchers such as `pass_with` and `fail_with` around our assertions.
+
+<%= info do %>
+We're working on RSpec matchers. The current implementation is [documented here](#test-rspec). Please [chat with us](https://trailblazer.zulipchat.com) if you want to help.
+<% end %>
+
+<!--
+
+However, the idea of operation tests is: Run the complete unit with a certain input set, and test the side-effects. This differs to the Rails Way™ testing style, where smaller units of code, such as a specific validation or a callback, are tested in complete isolation. While that might look tempting and clean, it will create a test environment that is not identical to what happens in production.
+
+In production, you will never trigger one specific callback or a particular validation, only. Your application will run all code required to create a `Song` object, for instance. In Trailblazer, this means running the `Song::Create` operation, and testing that very operation with all its side-effects.
+ -->

@@ -1,0 +1,329 @@
+
+<%= h2 "About" %>
+
+The Trailblazer project started off with a single gem called `trailblazer`. Currently, the framework consists of around 40 gems. The main gem `trailblazer` is an umbrella gem with the sole reason to pull all default dependencies for you. Feel free to pick and choose what you need for your applications.
+
+<%= info do %>
+Are you new to TRB? Then it's probably best to start on [our LEARN page](/2.1/learn.html) and find out more about this framework!
+<% end %>
+
+<%= h3 "Overview" %>
+
+The following list of gems is an overview of the most important core components in Trailblazer.
+
+<table class="table table-striped-gems">
+  <thead>
+    <tr>
+      <th colspan="2">Gem</th>
+      <th colspan="3">Summary</th>
+      <th colspan="2">Dependencies</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="trailblazer-group">
+      <td colspan="2"></td>
+      <td colspan="3" class="text-center"><strong>CORE</strong></td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/trailblazer.html#trailblazer-rails">trailblazer-rails</a></nobr>
+      </td>
+      <td colspan="3">
+        Glue code for conveniently using TRB in a Rails project. Adds <code>Controller#run</code> for invoking operations and <code>Controller#cell</code> to render cells.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-rails" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/activity.html">trailblazer-activity</a></nobr>
+      </td>
+      <td colspan="3">
+        Callable run-time circuits that control the execution flow of your tasks.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-activity" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/activity.html#activity-overview-dsl">trailblazer-activity-dsl-linear</a></nobr>
+      </td>
+      <td colspan="3">
+        DSL that provides <code>Path</code>, <code>Railway</code> and <code>FastTrack</code> activities.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/trailblazer.html#trailblazer-context">trailblazer-context</a></nobr>
+      </td>
+      <td colspan="3">
+        Context implementation.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-context" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/trailblazer.html#trailblazer-option">trailblazer-option</a></nobr>
+      </td>
+      <td colspan="3">
+        Callables implementation.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-option" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr class="trailblazer-group">
+      <td colspan="2"></td>
+      <td colspan="3" class="text-center"><strong>HELPER</strong></td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/endpoint.html">trailblazer-endpoint</a></nobr>
+      </td>
+      <td colspan="3">
+        Implement the entire controller flow, from authentication until rendering, via activities.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-endpoint" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/operation.html">trailblazer-operation</a></nobr>
+      </td>
+      <td colspan="3">
+        Thin API around <code>FastTrack</code> exposing the "old" <code>call</code>-API named <code>Operation</code>.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-operation" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/operation.html#operation-macros">trailblazer-macro</a></nobr>
+      </td>
+      <td colspan="3">
+        Provides <code>Nested()</code>, <code>Model()</code> and other macros for everyday usage.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-macro" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/operation.html#operation-contract-validate">trailblazer-macro-contract</a></nobr>
+      </td>
+      <td colspan="3">
+        Provides the <code>Contract::Validate()</code> macro and friends.
+      </td>
+      <td colspan="2">
+        reform, dry-validation
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-macro-contract" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr class="trailblazer-group">
+      <td colspan="2"></td>
+      <td colspan="3" class="text-center"><strong>TOOLS</strong></td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/trailblazer.html#trailblazer-developer">trailblazer-developer</a></nobr>
+      </td>
+      <td colspan="3">
+        Activity visualization, tracing, debugging, PRO Editor communication.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-developer" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/trailblazer.html#trailblazer-test">trailblazer-test</a></nobr>
+      </td>
+      <td colspan="3">
+        Minitest assertions and tools for fast TRB testing.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/trailblazer-test" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="#">trailblazer-rspec</a></nobr>
+      </td>
+      <td colspan="3">
+        Rspec testing extensions.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/rspec-trailblazer" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr class="trailblazer-group">
+      <td colspan="2"></td>
+      <td colspan="3" class="text-center"><strong>PRO</strong></td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="#">trailblazer-workflow</a></nobr>
+      </td>
+      <td colspan="3">
+        Long-running activities with process engine, events and collaboration.
+      </td>
+      <td colspan="2">
+      </td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="#">trailblazer-activity-implementation</a></nobr>
+      </td>
+      <td colspan="3">
+        DSL for creating activities from PRO Editor exports.
+      </td>
+      <td colspan="2">
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Along with the core gems goes a rich list of eco-system gems.
+
+<table class="table table-striped-gems">
+  <thead>
+    <tr>
+      <th colspan="2">Gem</th>
+      <th colspan="3">Summary</th>
+      <th colspan="2">Dependencies</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/reform.html">reform</a></nobr>
+      </td>
+      <td colspan="3">
+        Form objects.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/reform" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/cells.html">cells</a></nobr>
+      </td>
+      <td colspan="3">
+        Generic view components.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/cells" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/representable.html">representable</a></nobr>
+      </td>
+      <td colspan="3">
+        Maps representation documents from and to Ruby objects.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/representable" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/disposable.html">disposable</a></nobr>
+      </td>
+      <td colspan="3">
+        Decorators on top of your ORM layer.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/apotonick/disposable" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <nobr><a href="/2.1/docs/roar.html">roar</a></nobr>
+      </td>
+      <td colspan="3">
+        Parse and render REST API documents using representers.
+      </td>
+      <td colspan="2">
+      </td>
+      <td>
+        <nobr><a href="https://github.com/trailblazer/roar" target="_blank"><i class="fab fa-github"></i></a></nobr>
+      </td>
+    </tr>
+  </tbody>
+</table>

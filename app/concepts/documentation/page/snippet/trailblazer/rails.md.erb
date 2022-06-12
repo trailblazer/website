@@ -1,0 +1,238 @@
+
+<!-- @trailblazer-rails <trailblazer-rails[] loader, trailblazer-loader, rails support, -->
+<%= h2 "Rails" %>
+
+Trailblazer runs with any Ruby web framework. However, if you're using Rails, you're lucky since we provide convenient glue code in the `trailblazer-rails` gem.
+
+<%= code :ruby do %>
+gem "trailblazer-rails"
+<% end %>
+
+This will automatically pull `trailblazer` and `trailblazer-loader`.
+
+<%= info do %>
+  The `Trailblazer::Rails::Railtie` railtie will activate all necessary convenience methods for you. You don’t have to do anything manually here.
+<% end %>
+
+Use `trailblazer-rails` >= 2.0 for TRB 2.1 and above.
+
+<%= h3 "Controller" %>
+
+In order to run an operation in a controller you may simply invoke it manually.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    ctx = Song::Operation::Create.(params: params)
+
+    @form = ctx[:contract]
+    render :new
+  end
+end
+<% end %>
+
+<%= h3 "Run" %>
+
+However, `trailblazer-rails` gives you `#run` for this to simplify the task.
+
+<%= code :ruby do %>
+  class SongsController < ApplicationController
+    def create
+      run Song::Operation::Create
+
+      render :new
+    end
+  end
+<% end %>
+
+
+Without any configuration, `#run` passes the controller’s `params` hash into the operation call as in the example above.
+
+It automatically assigns `@model` and, if available, `@form` for you.
+
+<%= h4 "Return value" %>
+
+The ctx result object is returned.
+
+<%= code :ruby do %>
+def create
+  ctx = run Song::Operation::Create
+  ctx[:model] #=> #<Song title=...>
+
+  render :new
+end
+<% end %>
+
+The ctx object is also assigned to `@_result`.
+
+<%= h4 "With Block" %>
+
+To handle success and failure cases, run accepts an optional block.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    run Song::Operation::Create do |ctx|
+      return redirect_to song_path(ctx[:model].id)
+    end
+
+    render :new
+  end
+end
+<% end %>
+
+The block is only run for `success?`. The block argument is the operation’s result ctx.
+
+<%= h4 "Controller runtime variables" %>
+
+In general, it’s a good idea to inject runtime dependencies such as `:current_user` into the operation call.
+
+<%= code :ruby do %>
+Song::Operation::Create.(params: params, current_user: current_user)
+<% end %>
+
+Override `#_run_options` to do that automatically for all `run` calls in a controller.
+
+<%= code :ruby do %>
+class ApplicationController < ActionController::Base
+private
+  def _run_options(options)
+    options.merge(
+      current_user: current_user
+    )
+  end
+end
+<% end %>
+
+<%= h4 "Runtime variables" %>
+
+Instead of configuring variables on the controller-level, you can also fine-tune variables when invoking `#run`.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    run Song::Operation::Create, current_user: current_user, cookie: session do |ctx|
+      return redirect_to song_path(ctx[:model].id)
+    end
+
+    render :new
+  end
+end
+<% end %>
+
+This will add `:current_user` and `:cookie` to the ctx passed into the `Song::Operation::Create` operation.
+
+<%= h3 "Cells" %>
+
+The `trailblazer-rails` gem makes it very simple to use the Cells gem along with TRB. It overrides `ActionController#render` and allows to render a cell.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    run Song::New # optional
+
+    render cell(Song::Cell::New, @model)
+  end
+end
+<% end %>
+
+You simply invoke `#cell` the way you did it before, and pass it to `render`. If the first argument to `#render` is not a cell, the original Rails `render` version will be used, allowing you to use serializers, partials or whatever else you need.
+
+<%= h4 "Skip controller layout" %>
+
+Per default, `#render` will add `layout: true` to render the controller's ActionView layout.
+
+The controller's layout can be disabled using `layout: false`. These are pure Rails mechanics.
+
+<%= code :ruby do %>
+render cell(Song::Cell::New, @model), layout: false
+<% end %>
+
+In fact, any option passed to `render` will be passed through to the controller's `#render`.
+
+<%= h4 "Cell options" %>
+
+As you're using `#cell` from the Cells gem you may pass any option the cell understands.
+
+<%= code :ruby do %>
+render cell(Song::Cell::New, model, layout: Song::Cell::DarkLayout)
+<% end %>
+
+For instance, you can instruct the cell to use a separate layout cell. Note that this option is passed to `#cell`, not to `#render`.
+
+<%= h4 "Configuration" %>
+
+You can set controller-wide options passed to every `#cell` call by overriding the `#options_for_cell` method.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  private def options_for_cell(model, options)
+    {
+      layout: Song::Cell::DarkLayout # used for all #cell calls.
+    }
+  end
+end
+<% end %>
+
+This is extremely helpful for providing controller-wide options like `:layout`, allowing you to skip this specific option in all actions.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    # ..
+    render cell(Song::Cell::New, model) # no need to pass {layout: Song::Cell::DarkLayout}
+  end
+<% end %>
+
+<%= info do %>
+This feature was added in `trailblazer-rails` version 2.2.0.
+<% end %>
+
+<%= h3 "Loader" %>
+
+The `trailblazer-loader` gem implements a very simple way to load all files in your `concepts` directory in a heuristically meaningful order. It can be used in any environment.
+
+
+<!-- @trailblazer-loader, <trailblazer-loader[] disable loader, file structure -->
+
+<%= h4 "Loader with Rails" %>
+
+The `trailblazer-loader` gem comes pre-bundled with `trailblazer-rails` for historical reasons: in the early days of Trailblazer, the conventional file name `concepts/product/operation/create.rb` didn't match the short operation name, such as `Product::Create`.
+
+The `trailblazer-loader` gem's duty was to load all concept files without using Rails' autoloader, overcoming the latter's conventions.
+
+Over the years, and with the emerge of controller helpers or our workflow engine calling operations for you, the class name of an operation more and becomes a thing not to worry about.
+
+Many projects use Trailblazer along with the Rails naming convention now. This means you can disable the loader gem, and benefit from Rails auto-magic behavior such as faster loading in the "correct" order, reloading and all the flaws that come with this non-deterministic behavior.
+
+As a first step, add `Operation` to your operation's class name, matching the Rails naming convention.
+
+<%= code :ruby do %>
+# app/concepts/product/operation/create.rb
+
+module Product::Operation
+  class Create < Trailblazer::Operation
+    # ...
+  end
+end
+<% end %>
+
+It's a Trailblazer convention to put `[ConceptName]::Operation` in one line: it will force Rails to load the concept name constant, so you don't have to reopen the class yourself.
+
+This will result in a class name `Product::Operation::Create`.
+
+Next, disable the loader gem, in `config/initializers/trailblazer.rb`.
+
+<%= code :ruby do %>
+# config/initializers/trailblazer.rb
+
+YourApp::Application.config.trailblazer.enable_loader = false
+<% end %>
+
+Trailblazer files will now be loaded by Rails - you need to follow the Rails autoloading file naming from here on, and things should run smoothly. A nice side-effect here is that in bigger projects (with hundreds of operations), the start-up time in development accelerates significantly.
+
+
+<%= info do %>
+The infamous `warning: toplevel constant Cell referenced by Notification::Cell` warning [is a bug in Ruby](https://blog.bigbinary.com/2017/10/18/ruby-2.5-has-removed-top-level-constant-lookup.html). You should upgrade to Ruby >= 2.5.
+
+<% end %>

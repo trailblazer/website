@@ -1,0 +1,27 @@
+<%= h4 "mock_step" %>
+
+This helper allows you to mock any step within a given or deeply nested activities. For example,
+
+<%= code "mock-show-operation", collapse: :method %>
+
+To skip processing inside `:load_user` and use a mock instead, use `mock_step`.
+
+<%= code "simple-mock-step" %>
+
+Internally, it creates and returns a fresh, *subclassed* activity (via [patching](/2.1/docs/activity.html#activity-dsl-options-patching)) whilst replacing the step for given `:id`. Be advised that this does *not change* the original activity class.
+
+You can also mock any nested activity (aka `Subprocess`) which does any heavy computations or I/O calls.
+
+<%= code "mock-subprocess" %>
+
+In case you want to mock only single step from the nested activity, you can do so by passing it as a `subprocess`.
+
+<%= code "mock-subprocess-step" %>
+
+It'll search the `:id` to be mocked within nested activity instead of top-level activity.
+
+In addition, if you want to mock any deeply nested step in `subprocess's` activity, it can be done via passing `subprocess_path`.
+
+<%= code "mock-nested-subprocess-step" %>
+
+`subprocess_path` should list n-level of nested activities in the order they are nested. Internally, it uses [patching](https://2019.trailblazer.to/2.1/docs/activity.html#activity-dsl-options-patching) API supported by `Subprocess` helper.

@@ -1,0 +1,33 @@
+<%= h2 "Option" %>
+
+[Trailblazer::Option](https://github.com/trailblazer/trailblazer-option) is one of the core concept behind operation's [step API](/2.1/docs/activity.html#activity-wiring-api), reform's [populator API](/2.1/docs/reform.html#reform-populators) etc. It makes us possible to accept any kind of callable objects at compile time and execute them at runtime.
+
+~~~ ruby
+class Song::Create < Trailblazer::Operation
+  step Authorize				# Module callable
+  step :model					# Method callable
+  step ->(ctx, model:, **) { puts model }	# Proc callable
+end
+~~~
+
+It is also a replacement over [declarative-option](https://github.com/apotonick/declarative-option) and has been extracted out from [trailblazer-context](https://github.com/trailblazer/trailblazer-context) by identifying common callable patterns.
+
+<%= h3 "Callables" %>
+
+`Trailblazer::Option()` accepts `Symbol`, `lambda` and any other type of callable as an argument. It will be wrapped accordingly to make an executable, so you can evaluate it at runtime.
+
+Passing a `Symbol` will be treated as a method that's called on the given `exec_context`.
+
+<%= code "method" %>
+
+Same with the objects responding to `.call` or `#call` method.
+
+<%= code "module" %>
+
+<%= info do %>
+  Notice the usage of `keyword_arguments` while calling an `Option()`. They need to be mentioned explicitly in order for them to be [compatible](https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/) with ruby 2.7+.
+<% end %>
+
+And of course, passing lambdas. They get executed within given `exec_context` when set.
+
+<%= code "lambda" %>

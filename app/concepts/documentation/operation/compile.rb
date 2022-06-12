@@ -2,10 +2,10 @@
 
 class Documentation::Operation::Compile < Trailblazer::Operation
   TOC_ORDER = {
-    # generics:          [
-    #   "2.1/docs/trailblazer.md",
+    generics:          [
+      "trailblazer",
     #   "2.1/docs/test.md"
-    # ],
+    ],
 
     activity: [
       "activity"
@@ -29,6 +29,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   }
 
   LINKS = {
+    "trailblazer" => "/2.1/docs/trailblazer.html",
     "activity" => "/2.1/docs/activity.html"
     # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
   }

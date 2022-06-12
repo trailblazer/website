@@ -1,0 +1,399 @@
+<%= h2 "2.1 Migration" %>
+
+<%= h3 "Call API" %>
+
+<%= h4 "Operation.call" %>
+
+In versions before 2.1, the automatic merging of the params part and the additional options was confusing many new users and an unnecessary step.
+
+<%= code :ruby do %>
+# old style
+result = Memo::Create.( params, "current_user" => current_user )
+<% end %>
+
+The first argument (params) was merged into the second argument using the key "params". You now pass one hash to call and hence do the merging yourself.
+
+<%= code :ruby do %>
+# new style
+result = Memo::Create.( params: params, current_user: current_user )
+<% end %>
+
+The new call API is much more consistent and takes away another thing we kept explaining to new users - an indicator for a flawed API.
+
+<%= info do %>
+For a soft deprecation, do this in an initializer:
+
+<%= code :ruby do %>
+require "trailblazer/deprecation/call"
+<% end %>
+
+You will get a bunch of warnings, so fix all `Operation.()` calls and remove the require again. This is provied by [trailblazer-future](https://github.com/trailblazer/trailblazer-future) gem.
+<% end %>
+
+<%= h4 "Step Signature" %>
+
+In case your steps expose a signature as follows, you're safe.
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  step :create_model
+
+  def create_model(options, params:, **)
+    # ..
+  end
+end
+<% end %>
+
+By convention, we renamed `option` to `ctx`, but it is completely up to you to adopt this.
+
+Nevertheless, the "old style" signatures won't work anymore.
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  def create_model(options)
+    # ..
+  end
+
+  # or
+
+  def create_model(model:, **)
+    # ..
+  end
+end
+<% end %>
+
+Neither a single `options` nor keyword-arguments-only are gonna fly as the new step signature is more restrictive and always requires you to maintain the `ctx` (or `options`, if you will) as the first positional argument, then keyword arguments.
+
+Double splat operator `**` at the end will be required to in order to discard unused kw args.
+
+<%= info do %>
+You can introduce this change before actual migration to 2.1.
+<% end %>
+
+<%= h4 "pass/fail" %>
+
+Steps declared as `success` or `failure` are now renamed to `pass` and `fail` respectively.
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  success :model
+  failure :handle_some_error
+end
+<% end %>
+
+Change it as follows.
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  pass :model
+  fail :handle_some_error
+end
+<% end %>
+
+If you are using Rubocop it will probably start complaining about unreachable code because it just so happens that `fail` is also a Ruby Kernel's [method](https://ruby-doc.org/core-2.0.0/Kernel.html#method-i-fail). One solution to this could be to add a custom rule to `.rubocop.yml` like this:
+
+<%= code do %>
+Lint/UnreachableCode:
+  Exclude:
+    - '*/**/concepts/**/operation/**/*'
+Style/SignalException:
+  Exclude:
+    - '*/**/concepts/**/operation/**/*'
+<% end %>
+
+There is also a `trick` that will allow you to do this rename before actually migrating to 2.1. You can put this in an initializer:
+
+<%= code :ruby do %>
+Trailblazer::Operation::Pipetree::DSL.send(:alias_method, :pass, :success)
+Trailblazer::Operation::Pipetree::DSL.send(:alias_method, :fail, :failure)
+<% end %>
+
+This way you could introduce this change before actual migration to 2.1. Just don't forget to remove it after updating gems to 2.1.
+
+<%= h4 "pass_fast/fail_fail" %>
+
+Now every step that may end up in `pass_fast` or `fail_fast` signals need an extra option that indicates fast track usage. Change this operation:
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  step :create
+
+  def create(ctx, **)
+    Railway.pass_fast! if ctx[:model].save
+  end
+end
+<% end %>
+
+Use the `:fast_track` option to let Trailblazer know about the potential new signal being emitted.
+
+<%= code :ruby do %>
+class Memo::Create < Trailblazer::Operation
+  step :create, fast_track: true # notice the extra option :fast_track
+
+  def create(ctx, **)
+    Railway.pass_fast! if ctx[:model].save
+  end
+end
+<% end %>
+
+<%= h3 "Context" %>
+
+The keys for `ctx` used to be mixed up, some where `"longer.strings"`, some were `:symbols`. The new context implementation `Context::IndifferentAccess` now allows to use both.
+
+<%= code :ruby do %>
+ctx["model"]
+ctx[:model]  # => same!
+<% end %>
+
+This also works for namespaced keys, which you still might find helpful.
+
+<%= code :ruby do %>
+ctx["contract.default"]
+ctx[:"contract.default"]  # => same!
+<% end %>
+
+<%= info do %>
+On the core level, we use symbol keys, only (e.g. `:"contract.default"`).
+<% end %>
+
+The default implementation of the context object can be set by overriding `Context.implementation`. For example, if you want the old behavior back.
+
+<%= code :ruby do %>
+class Trailblazer::Context
+  def self.implementation
+    Context # old behavior.
+  end
+end
+<% end %>
+
+Note that the override might be deprecated in favor of a dependency injection.
+
+<%= h3 "Nested" %>
+
+The `Nested` macro allows to, well, nest activities or operations, providing a neat way to encapsulate and reuse logic.
+
+<%= h4 "Deprecation" %>
+
+In 2.1, the [`Subprocess` macro] is the standard way for nesting. The `Nested` macro should only be used when you use the dynamic version where the nested operation is computed at runtime using `:builder`.
+
+An exception will warn you about the inappropriate usage.
+
+<%= code :ruby do %>
+[Trailblazer] Using the `Nested()` macro with operations and activities is deprecated. Replace `Nested(Create)` with `Subprocess(Create)`.
+<% end %>
+
+<%= h4 "input and output" %>
+
+Both the `:input` and `:output` options that used to go with `Nested(Present, :input: ...)` are now a generic option in Trailblazer. Move them behind the
+macro parenthesis.
+
+<%= code :ruby do %>
+# 2.0
+Nested(Present, input: :my_input, output: :my_output)
+
+# 2.1
+Nested(Present), input: :my_input, output: :my_output
+<% end %>
+
+An exception will stop compilation if you fail to obey.
+
+<%= code :ruby do %>
+ArgumentError: unknown keyword: input
+<% end %>
+
+Behold of another tiny API change! The `:output` filter signature has changed for a better.
+
+In Trailblazer 2.0, the following signature was allowed.
+
+<%= code :ruby do %>
+# 2.0
+Nested(Present,
+  output: ->(ctx, mutable_data:, **) {
+    {model: mutable_data[:article]} # you used the {mutable_data} keyword argument.
+  }
+)
+<% end %>
+
+Mind the arguments being passed to `:output`. The first positional is the original outer context, the context from the nested operation comes as a `mutable_data:` keyword argument.
+
+In 2.1, those two have swapped.
+
+<%= code :ruby do %>
+# 2.1
+Nested(Present),
+  output: ->(inner_ctx, article:, **) {
+    # {inner_ctx} is {mutable_data}
+    {model: article} # you used the {mutable_data} keyword argument.
+  }
+<% end %>
+
+The inner context from the nested operation comes first, as a positional argument. Note how you can conveniently use keyword arguments to access variables from this inner ctx (e.g. `article:`). Keep in mind, the naming is completely up to you. We use `inner_ctx`/`ctx` and `original_ctx` in our code.
+
+If you also need the original context in the `:output` filter, use the `:output_with_outer_ctx` option.
+
+<%= code :ruby do %>
+# 2.1
+Nested(Present),
+  output_with_outer_ctx: true
+  output: ->(inner_ctx, original_ctx, article:, **) {
+    {
+      model:  article,
+      errors: original_ctx[:errors].merge(inner_ctx[:errors]) # you can access the outer ctx!
+    }
+  }
+<% end %>
+
+The original, outer ctx comes in as a second positional argument.
+
+<%= info do %>
+You do not need to `extend Uber::Callable` in classes with `#call` methods anymore.
+<% end %>
+
+Check the [Variable Mapping docs](/2.1/docs/activity.html#activity-variable-mapping) for a complete explanation.
+
+<%= h4 "Fast Track" %>
+
+Don't forget to declare fast track usage if you expect it from within nested operation, like this:
+
+<%= code :ruby do %>
+Nested(Present), input: :my_input, output: :my_output, fast_track: true
+<% end %>
+
+Another difference is that in 2.0, when you were using `pass_fast` in nested operations, it would stop only the nested operation from executing. After this the outer one would continue executing.
+
+Now returning `pass_fast` in nested operation will stop both, inner and outer operation with `success` as a final result. If you rely on old behaviour you can still have it with proper signals mapping:
+
+<%= code :ruby do %>
+Nested(Present), input: :my_input,
+                 output: :my_output,
+                 fast_track: true,
+                 Output(:pass_fast) => Track(:success), # pass_fast now mapped to `just` a success
+                 Output(:fail_fast) => End(:failure)
+<% end %>
+
+<%= h3 "Macro API" %>
+
+Macros are functions that add a task along with specific options to the activity. In TRB 2.0, those (historically camel-cased) functions returned an array with two elements.
+
+<%= code :ruby do %>
+module MyMacro
+  def self.NormalizeParams(name: :myparams, merge_hash: {})
+    task = ->((ctx, flow_options), _) do
+      ctx[name] = ctx[:params].merge(merge_hash)
+
+      return Trailblazer::Activity::Right, [ctx, flow_options]
+    end
+
+    [task, name: name] # old API
+  end
+end
+<% end %>
+
+In 2.1, a hash is returned. Note that `:name` is `:id` now.
+
+<%= code "macro", file: "docs/macro_test.rb", root: "../trailblazer-activity-dsl-linear/test"  %>
+
+This allows for a much richer macro experience where you might add additional steps via a macro, use DSL options such as `:before` and `:after` and add taskWrap extensions. [macro API]
+
+A common error if you don't return a hash from your macro is a `call` on `Array`.
+
+<%= code do %>
+NoMethodError:
+   undefined method `call' for #<Array:0x000055663116be98>
+ # gems/trailblazer-context-0.4.0/lib/trailblazer/option.rb:9:in `call!'
+<% end %>
+
+<%= h4 "Signature and Return" %>
+
+In Trailblazer 2.0, macros were automatically using the task interface. Mind the arguments and the return value.
+
+<%= code "ruby" do %>
+
+task = ->(ctx, current_user:, model:, **) {
+  # do something
+  # return true/false
+}
+<% end %>
+
+In Trailblazer 2.1, macros use the [circuit interface](/2.1/docs/activity.html#activity-internals-circuit-interface) per default. If you want the simpler task interface, you need to wrap your task using `Binary()`.
+
+<%= code "ruby" do %>
+def MyMacro()
+  task = ->(ctx, current_user:, model:, **) {
+    # do something
+    # return true/false
+  }
+
+  {
+    task: Trailblazer::Activity::TaskBuilder.Binary(task), # wrap the callable.
+    id: "my_macro"
+  }
+<% end %>
+
+A common error if you don't wrap your macro is an `ArgumentError`.
+
+<%= code do %>
+ArgumentError:
+       missing keywords: current_user, model
+<% end %>
+
+
+<%= h4 "Step id" %>
+
+In case you used the same macro twice in one operation, like this for example:
+
+<%= code :ruby do %>
+class Create < Trailblazer::Operation
+  step Contract::Persist(method: :sync)
+  step Contract::Persist(method: :save!)
+end
+<% end %>
+
+You will have to specify id explictly for one of them:
+
+<%= code :ruby do %>
+class Create < Trailblazer::Operation
+  step Contract::Persist(method: :sync)
+  step Contract::Persist(method: :save!), id: "some_custom_unique_id"
+end
+<% end %>
+
+<%= h3 "Contract DSL" %>
+
+It was possible to define contracts on the operation level using a DSL.
+
+<%= code :ruby do %>
+class Create < Trailblazer::Operation
+  contract do
+    property :id
+  end
+
+  step Contract::Build()
+  step Contract::Validate()
+end
+<% end %>
+
+Since the usability doesn't outweigh the complexity needed to implement such DSL, we decided to remove that functionality _for now_.
+
+Instead, use an explicit inline class and the `:constant` option.
+
+<%= code :ruby do %>
+class Create < Trailblazer::Operation
+  class Form < Reform::Form
+    property :id
+  end
+
+  step Contract::Build(constant: Form)
+  step Contract::Validate()
+end
+<% end %>
+
+<%= h3 "Trailblazer loader" %>
+
+Usage of a [trailblazer-loader](https://github.com/trailblazer/trailblazer-loader) is now discouraged as it's slower than the ones provided by Rails and it's error prone.
+
+In short, we decided to adopt the Rails naming scheme and change operation names from `User::Create` to `User::Operation::Create`, so the file name and class path are in sync.
+
+Read the [details here](trailblazer.html#trailblazer-rails-loader-loader-with-rails).
+
+We highly recommend changing this with your upgrade as it highly improves the dev experience.

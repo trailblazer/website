@@ -1,0 +1,40 @@
+<%= h3 "assert_exposes" %>
+
+Test attributes of an arbitrary object.
+
+Pass a hash of key/value tuples to `assert_exposes` to test that all attributes of the asserted object match the provided values.
+
+<%= code "exp-eq" %>
+
+Per default, this will read the values via `model.{key}` from the asserted object (`model`) and compare it to the expected values.
+
+This is a short-cut for tests such as the following.
+
+~~~ ruby
+assert_equal "Timebomb", model.title
+assert_equal "Rancid",   model.band
+~~~
+
+Note that `assert_exposes` accepts any object with a reader interface.
+
+<%= h4 "Reader" %>
+
+If the asserted object exposes a hash reader interface, use the `:reader` option.
+
+<%= code "exp-reader-hash" %>
+
+This will read values with via `#[]`, e.g. `model[:title]`.
+
+If the object has a generic reader, you can pass the name via `:reader`.
+
+<%= code "exp-reader-get" %>
+
+Now the value is read via `model.get(:title)`.
+
+<%= h4 "Lambda" %>
+
+You can also pass a lambda to `assert_expose` in order to compute a dynamic value for the test, or for more complex comparisons.
+
+<%= code "exp-proc" %>
+
+The lambda will receive a hash with the `:actual` value read from the asserted object. It must return a boolean.

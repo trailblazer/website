@@ -1,0 +1,37 @@
+<%= h2 "Context" %>
+
+Context aka `ctx` (or plain old `options`) is a core argument-specific data structure for Trailblazer. It provides a generic, ordered read/write interface that collects mutable runtime-computed data while providing access to any compile-time information. It is extracted into its own [gem](https://github.com/trailblazer/trailblazer-context) and can also be used independently.
+
+<%= h3 "ctx" %>
+
+`ctx` can be initialized when an operation is invoked at the run time or by defining [dependencies](/2.1/docs/operation.html#operation-options-class-dependencies) at the compile time. Inside the operation, it gets passed down to every `step` with it's argument position depending on step's [interface](/2.1/docs/activity.html#activity-internals-circuit-interface). It will contain whatever the most recently executed step has changed and hopefully contains what you’re expecting.
+
+<%= info do %>
+  If you want to see what `ctx` modifications are being performed per step or at specific steps, you can debug it using developer's [focus_on](/2.1/docs/trailblazer.html#trailblazer-developer-wtf-focus_on) API.
+<% end %>
+
+`ctx`'s purpose is to hold the state of your activity which can also be passed down to other nested activities using [Subprocess](/2.1/docs/activity.html#activity-wiring-api-subprocess). You can filter what such activities can or can not "see" using [variable mapping](/2.1/docs/activity.html#activity-variable-mapping). After operation's execution using public call, the [Result](/2.1/docs/operation.html#operation-overview-result) object wraps the context for convenient access.
+
+In order to provide the generic interface, scoping and debugging capabilities, the "Hash" argument you provide to an operation is initialized as an instance of `Trailblazer::Context::Container` to build up the final `ctx`. This allows us to support more features on top of it like indifferent access, aliasing etc
+
+<%= h4 "Indifferent Access" %>
+
+`ctx` mimics as "Hash" and also allows you to use Strings or Symbols interchangeably as keys; similar to the `params` hash in Rails.
+
+<%= code 'ctx-indifferent-access' %>
+
+All keys are stored as Symbols by default in order to allow them to be accessible as keyword arguments.
+Note that `ctx` doesn't provide interchangeable keys for any nested hashes because of the performance reasons. 
+
+<%= h4 "Aliases" %>
+
+Most commonly found keys in `ctx` are `'contract.default', 'contract.default.params', 'policy.default'` etc. It sometimes becomes cumbersome to access them from `ctx` as they can't be defined as keyword arguments in steps. 
+
+To overcome this, it is possible to define a shorter versions of context keys using `aliases`. By providing aliases mapping in `flow_options[:context_options]`, context will maintain any mutations being made on the origianl keys with 
+the aliases and vice versa.
+
+<%= code 'ctx-aliases' %>
+
+`flow_options` are passed to the nested operations via `Subprocess` and all given aliases will also be applied in them by default.
+
+<%= code 'ctx-aliases-step', collapse: "flow" %>
