@@ -1,0 +1,46 @@
+<%= h2 "Troubleshooting" %>
+
+Even though tracing and `wtf?` attempt to make your developer experience as smooth as possible, sometimes there are annoying issues.
+
+<%= h3 "Type Error" %>
+
+It's a common error to use a bare `Hash` (with string keys!) instead of a `Trailblazer::Context` object when running an activity. While symbolized hashes are not a problem, string keys will fail.
+
+<%= code "type-err" %>
+
+The infamous `TypeError` means your context object can't convert strings into symbol keys. This is required when calling your steps with keyword arguments.
+
+<%= code "type-exc" %>
+
+Use `Trailblazer::Context` as a wrapper.
+
+<%= code "type-ctx" %>
+
+The `Context` object automatically converts string keys to symbols.
+
+<%= h3 "Wrong circuit" %>
+
+When using the same task multiple times in an activity, you might end up with a wiring you're not expecting. This is due to Trailblazer internally keying tasks by their object identity.
+
+<%= code "wire-class" %>
+
+When introspecting this activity, you will see that the `CheckAttribute` task is present only once.
+
+You need to create a copy of the method or the class of your callable task in order to fix this and have two identical steps.
+
+<%= code "wire-fix" %>
+
+<%= h3 "Illegal Signal Error" %>
+
+As the name suggests, the `IllegalSignalError` exception is raised when a step returns a signal that is not registered at [compile time](/2.1/docs/activity.html#activity-internals-build-structures-compilation). The routing algorithm is not able to find a connection for the returned signal and raises an error at run-time.
+
+Usually, you encounter this beautiful exception when using the [circuit interface](#activity-internals-circuit-interface) signature for a step, and returning a "wrong" signal that is not wired to an on-going next task.
+
+Other common cases may be
+
+* Steps which are not wrapped by [TaskBuilder], for example: `step task: method(:validate)`
+* [User defined macros](/2.1/docs/activity.html#activity-macro-api).
+
+<%= code "illegal-signal-error" %>
+
+The exception helps by displaying both the actually returned signal and the registered, wired signals for this step.

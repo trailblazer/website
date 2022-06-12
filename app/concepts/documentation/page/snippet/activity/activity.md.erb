@@ -1,0 +1,72 @@
+
+<%= h2 "Overview" %>
+
+An activity is an executable _circuit_ of tasks. Each task is arbitrary Ruby code, usually encapsulated in a callable object. Depending on its return value and its outgoing connections, the next task to invoke is picked.
+
+Activities are tremendously helpful for modelling and implementing any kind of logic and any level of complexity. They're useful for a hash merge algorithm, an application's function to validate form data and update models with it, or for implementing long-running business workflows that drive entire application lifecycles.
+
+<%= info do %>
+The `activity` gem is an extraction from Trailblazer 2.0, where we only had operations. Operations expose a linear flow which goes into one direction, only. While this was a massive improvement over messily nested code, we soon decided it's cool being able to model non-linear flows. This is why activities are the major concept since Trailblazer 2.1.
+<% end %>
+
+<%= h3 "Anatomy" %>
+
+To understand the mechanics behind Trailblazer's activities, you need to know a few simple concepts.
+
+1. An **activity** is a circuit of tasks - boxes being connected by arrows.
+2. It has one **start** and at least one **end event**. Those are the circles in the diagrams.
+2. A **task** is a unit of business logic. They're visualized as boxes. This is where your code goes!
+3. Each task has one or more **outputs**. From one particular output you can draw one connecting line to the next task.
+4. An output is triggered by a **signal**. The last line in a task usually decides what output to pick, and that happens by `return`ing a specific object, a signal.
+5. Besides the signal, a **semantic** is assigned to an output. This is a completely arbitrary "meaning". In Trailblazer, we use `success` and `failure` as conventional semantics.
+6. In a railway activity, for instance, the "failure" and "success" track mean nothing more than following the `failure` or `success`-labeled outputs. That's a **track**.
+
+Activities can be visualized neatly by taking advantage of the BPMN specification.
+
+<%= img "intermediate.png" %>
+
+Well, this is not entirely BPMN, but you get the idea. Intuitively, you understand that the tasks `B` and `C` have only one outcome, whereas `A` yields two possible results. This works by adding two _outputs_ to `A`.
+
+An output is a combination of a _semantic_ and a _signal_. A part of the return value of the invoked task is interpreted as a signal, and that's how Trailblazer picks the connection to the next task to take.
+
+Depending on `A`'s' returned signal (yet to be defined), the flow will continue on its `success` or `failure` connection. It's completely up to the modelling developer what names they choose for semantics, and how many outputs they need. Nevertheless, for binary outputs we usually take `success` and `failure` as meaningful semantics.
+
+<%= h3 "DSL" %>
+
+To implement our activity, we can use Activity's DSL.
+
+<%= info do %>
+To demonstrate the concepts of an activity, we make use of the DSL. This simplifies defining activities. However, keep in mind that you're free to build activities using the PRO editor, with your own DSL or with our [low-level API].
+<% end %>
+
+<%= code "upsert", collapse: "mod" %>
+
+The `Activity::Path` class is the simplest DSL strategy. It automatically connects each `step` to the previous one, unless you use the `:magnetic_to` option. In our case, this is necessary to connect `#find` (A) to `#create` (C). The `Output` method helps to define what signal and semantic an output has, and using `Id` you can point those to a specific neighbor task.
+
+If unsure, use the [developer tools] to render the circuit.
+
+<%= code "render" %>
+
+Alternatively, use the PRO editor tools.
+
+<%= h3 "Invocation" %>
+
+Before you can use your activity, the tasks need to be written. Using the [task interface] this is pretty straight-forward. Note that you can return either a boolean value or a [signal subclass] in order to dictate the direction of flow.
+
+<%= code "upsert", collapse: "flow" %>
+
+<%= info do %>
+You don't have to stick to the task interface! The [circuit interface] is a bit more clumsy, but gives you much better control over how ctx and signals are handled.
+<% end %>
+
+To run your activity, use its `call` method. `Activity`s always use the [circuit interface].
+
+<%= code "upsert-call" %>
+
+The `ctx` will be whatever the most recently executed task returned, and hopefully contain what you're expecting.
+
+<%= code "upsert-result" %>
+
+After this brief introduction, you should check out how [nesting] of activities will help you, what [operations] are, and what awesome debugging tools such as [tracing] we provide.
+
+`:activity` is guaranteed to match the currently invoked activity

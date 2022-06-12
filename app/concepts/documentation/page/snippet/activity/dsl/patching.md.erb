@@ -1,0 +1,42 @@
+<%= h3 "Patching" %>
+
+Working with `Subprocess` and deeply nested activities for complex flows is a great way to encapsulate and create reusable code. However, it can be a PITA if you want to customize one of those deeply nested components and add or remove a certain step, for example.
+
+Suppose the following 3-level nested activity.
+
+<%= img "patching.png" %>
+
+The public operation `Destroy` contains `Delete` as a nested activity, which itself contains `DeleteAssets`. In order to customize the latter one and add another step `tidy_storage`, you'd normally have to subclass all three activities and override steps.
+
+<%= h4 "Patch Option" %>
+
+Using patching, you can do this ad-hoc in the uppermost `Destroy` activity.
+
+<%= code "destroy", collapse: "meths" %>
+
+The `Subprocess()` macro accepts the `:patch` option which is a hash of the path to the customized activity, and its patch. This patch block is `class_eval`ed in context of the patched activity. You may add methods here, add, remove, or move steps, or whatever else needs fixing.
+
+<%= info do %>
+Note that patching does **not** change the originally nested activities. It creates copies of them.
+Also, the automatically assigned ID of a step gets replaced with new a copy. Make sure you mention it [explicitly](#activity-dsl-options-sequence-options-id) to persist.
+<% end %>
+
+Looking at the trace of `Destroy`, you can see that `#tidy_storage` is executed where you want it.
+
+<%= img "patching-trace.png" %>
+
+Patching can be also done at the top-level activity by passing  `:patch` as a block (Take `Delete` from above example).
+
+<%= code "patch_self" %>
+
+<%= h4 "Side effects" %>
+
+The idea of patching is that the originally nested activities remain untouched.
+
+<%= code "delete", collapse: "meths" %>
+
+They're inherited and customized for you automatically by the DSL.
+
+<%= code "delete_assets", collapse: "meths" %>
+
+Patching has no implicit, magical side-effects and is strongly encouraged to customize flows for a specific case in a quick and consise way.

@@ -1,0 +1,48 @@
+<%= h3 "Subprocess" %>
+
+While you could nest an activity into another manually, the `Subprocess` macro will come in handy.
+
+Consider the following nested activity.
+
+<%= code "nested", collapse: :methods %>
+
+Use `Subprocess` to nest it into the `Create` activity.
+
+<%= code "container", collapse: :methods %>
+
+The macro automatically wires all of `Validate`'s ends to the known counter-part tracks.
+
+<%= img "nesting.png" %>
+
+The `Subprocess` macro will go through all outputs of the nested activity, query their semantics and search for tracks with the same semantic.
+
+Note that the failure track starting from `create_model` will skip the nested activity, just as if it was simple task.
+
+<%= h4 "Wiring" %>
+
+You can use the familiar DSL to reconnect ends.
+
+<%= code "reconnect", collapse: :methods %>
+
+The nested's `failure` output now goes to the outer `success` track.
+
+<%= img "nesting-reconnect.png" %>
+
+In this example, regardless of nested's outcome, it will always be interpreted as a successful invocation.
+
+<%= h4 "End" %>
+
+A nested activity doesn't have to have two ends, only.
+
+<%= code "end-nested", collapse: :methods %>
+
+`Subprocess` will try to match the nested ends' semantics to the tracks it knows. You may wire custom ends using `Output`.
+
+<%= code "end", collapse: :methods %>
+
+The new special end is now wired to the `failure` track of the containing activity.
+
+<%= img "nesting-end.png" %>
+
+There will be an exception thrown if you don't connect unknown ends.
+

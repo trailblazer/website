@@ -1,29 +1,29 @@
-module Application::Cell
-  class Navbar < Trailblazer::Cell
-    def show
-      render :navbar
-    end
+# frozen_string_literal: true
 
-    private
+class Application::Cell::Navbar < Trailblazer::Cell
+  def show
+    render :navbar
+  end
 
-    def landing_page?
-      model[:layout] == "home"
-    end
+  private
 
-    def doc_page?
-      model[:layout] == "doc"
-    end
+  def landing_page?
+    model[:layout] == "home"
+  end
 
-    def about_us_page?
-      model[:page] == "about_us"
-    end
+  def doc_page?
+    model[:layout] == "documentation"
+  end
 
-    def blog_page?
-      model[:page] == "blog"
-    end
+  def about_us_page?
+    model[:page] == "about_us"
+  end
 
-    def learn_page?
-      model[:page] == "learn"
-    end
+  def blog_page?
+    model[:page] == "blog"
+  end
+
+  def learn_page?
+    model[:page] == "learn"
   end
 end

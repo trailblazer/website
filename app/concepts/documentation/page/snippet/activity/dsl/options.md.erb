@@ -1,0 +1,23 @@
+<%= h2 "DSL Options" %>
+
+`#step` and friends accept a bunch of options in order to insert a task at a specific location, add pre-defined connections and outputs, or even configure its taskWrap.
+<!--
+  outputs
+  connections
+  magnetic_to
+ -->
+
+<%= h3 "magnetic_to" %>
+
+In combination with [`Track()`], the `:magnetic_to` option allows for a neat way to spawn custom tracks outside of the conventional Railway or FastTrack schema.
+
+<%= code "pay-magneticto", file: "basics_test.rb" %>
+
+The `failure` output of the `find_provider` task will now snap to the next task being `:magnetic_to` its semantic - which obviously is the `charge_paypal` task.
+
+<%#= img "magnetic_to.png" %>
+
+
+When creating a new branch (or path) in this way, it's a matter of repeating the use of `Track()` and `:magnetic_to` to add more tasks to the branch.
+
+<%= h3 "extensions" %>

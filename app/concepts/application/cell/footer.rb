@@ -1,15 +1,15 @@
-module Application::Cell
-  class Footer < Trailblazer::Cell
-    def show
-      render :footer
-    end
+# frozen_string_literal: true
 
-    def layout
-      model[:layout]
-    end
+class Application::Cell::Footer < Trailblazer::Cell
+  def show
+    render :footer
+  end
 
-    def page
-      model[:page]
-    end
+  def layout
+    model.fetch(:layout)
+  end
+
+  def page
+    model.fetch(:page)
   end
 end

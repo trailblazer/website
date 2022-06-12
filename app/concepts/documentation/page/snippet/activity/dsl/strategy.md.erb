@@ -1,0 +1,174 @@
+<%= h2 "STRATEGY" %>
+
+<%= h3 "Path" %>
+
+The simplest strategy is `Path`, which does nothing but connecting each task's `:success` output to the following task.
+
+<%= code "step", collapse: "mod" %>
+
+Without any additional DSL options, this results in a straight path.
+
+<%= img "path.png" %>
+
+In turn, this means that only `true` return values in your tasks will work. The DSL will, per default, wrap every task with the `Binary` interface, meaning returning `true` will result in `Activity::Right`, and false in `Activity::Left`. Currently, only `Right` signals are wired up.
+
+<%= h4 "Output" %>
+
+You may add as many outputs to a task as you need. The DSL provides the `Output()` helper to do so.
+
+<%= code "validate", collapse: "mod" %>
+
+The `Path` strategy only maintains the `:success`/`Activity::Right` semantic/signal combination. Any other combination you need to define explicitly using `Output(signal, semantic)`.
+
+<%= h4 "End" %>
+
+The `End()` helper allows creating a new end event labelled with the specified semantic.
+
+<%= code "validate", collapse: "mod" %>
+
+This will result in the following circuit.
+
+<%= img "path-end.png" %>
+
+The `validate` task now has a `success` and a `failure` output. Since it's wrapped using `Binary` it may return `true` or `false` to dictate the used output (or `Activity::Right`/`Activity::Left` since it's the [task interface]).
+
+<%= code "validate", collapse: "flow" %>
+
+The activity will halt on the `:invalid`-labelled end if `validate` was falsey.
+
+<%= code "validate-call", collapse: "flow" %>
+
+<%= h4 "Multiple References" %>
+
+Note that repeatedly using the same semantic (`End(:semantic)`) will reference the same end event.
+
+<%= code "double-end", collapse: "mod" %>
+
+Since we're adding a `:failure` output, `create` now has two outgoing connections.
+
+<%= img "double-end.png" %>
+
+<%= h3 "Railway" %>
+
+The [`Railway` pattern](http://fsharpforfunandprofit.com/rop/) is used for "automatic" error handling. You arrange your actual chain of logic on the "success" track, if a problem occurs, the processing jumps to the parallel "failure" track, skipping the rest of the tasks on the success track.
+
+Once on the failure track, it stays there (unless you instruct not to do so!).
+
+<%= img "railway.png" %>
+
+Three possible execution paths this activity might take.
+
+* No errors: First `validate`, then `create`, then ends in `End.success`. The activity was successful.
+* Validation error: First `validate`, which returns a `Left` (failure) signal, leading to `log_error`, then `End.failure`.
+* Creation error: First `validate`, then `create`, which deviates to the failure track, leading to `End.failure`. Note this doesn't hit the logging error handler due to the sequence order.
+
+To place tasks on the failure track, use `#fail`. Note that the order of tasks corresponds to the order in the Railway.
+
+<%= code "railway", collapse: "mod" %>
+
+Obviously, you may use as many tasks as you need on both tracks. There are no limitations.
+
+<%= info do %>
+Historically, the success path is called "right" whereas the error handling track is "left". The signals `Right` and `Left` in Trailblazer are still named following this convention.
+<% end %>
+
+<%= h4 "Wiring" %>
+
+All wiring features apply to `Railway`. You can rewire, add or remove connections as you please.
+
+<%= code "railway-wire", collapse: "mod" %>
+
+Railway automatically connects a task's `success` output to the next possible task available on the success track. Vice-verse, the `failure` output is connected the the new possible task on the failure path.
+
+Here, `create`'s failure output is reconnected.
+
+<%= img "railway-wire.png" %>
+
+<%= h4 "Fail" %>
+
+DSL's `#fail` method allows to place tasks on the failure track.
+
+Such error handlers are still wrapped using `Binary`. In other words, they can still return a `Right` or `Left` signal. However, per default, both outputs are connected to the next task on the failure track.
+
+You may rewire or add outputs on failure tasks, too.
+
+<%= code "railway-fail", collapse: "mod" %>
+
+For instance, it's possible to jump back to the success path if `log_error` decides to do so.
+
+<%= img "railway-fail.png" %>
+
+The return value of `log_error` now does matter.
+
+<%= code "railway-fail", collapse: "flow" %>
+
+<%= h4 "Pass" %>
+
+If the return value of a "right" task shouldn't matter, use `#pass`.
+
+<%= code "railway-pass", collapse: "mod" %>
+
+Regardless of `create`'s return value, it will always flow to the next success task.
+
+<%= img "railway-pass.png" %>
+
+Both outputs are connected to the following task on the success path (or, in this case, the success end).
+
+<%= h4 "Notes" %>
+
+FIXME
+
+* Using `Railway`, tasks always get two outputs assigned: `:success/Right` and `:failure/Left`.
+
+<%= h3 "FastTrack" %>
+
+Based on the `Railway` strategy, the `FastTrack` pattern allows to "short-circuit" tasks and leave the circuit at specified events.
+
+<%= info do %>
+The infamous `Trailblazer::Operation` is a thin public API around `Activity::FastTrack`.
+<% end %>
+
+<%= h4 "PassFast" %>
+
+The `:pass_fast` option wires the `:success` output straight to the new `pass_fast` end.
+
+<%= code "ft-passfast", collapse: "mod" %>
+
+If `validate` returns a true value, it will skip the remaining tasks on the success track and end in `End.pass_fast`.
+
+<%= img "ft-passfast.png" %>
+
+Note that in the example, the `create` task not accessable anymore.
+
+<%= h4 "FailFast" %>
+
+The counter-part for `:pass_fast` is `:fail_fast`.
+
+<%= code "ft-failfast", collapse: "mod" %>
+
+A falsey return value from `#validate` will deviate the flow and go straight to `End.fail_fast`.
+
+<%= img "ft-failfast.png" %>
+
+Again, this specific example renders the `log_errors` task unreachable.
+
+<%= h4 "FastTrack" %>
+
+It's possible to wire a task to the two FastTrack ends `End.fail_fast` and `End.pass_fast` in addition to the normal Railway wiring.
+
+<%= code "ft-fasttrack", collapse: "mod" %>
+
+The `validate` task now has four outputs. You can instruct the two new FastTrack outputs by returning either `Trailblazer::Activity::FastTrack::FailFast` or `Trailblazer::Activity::FastTrack::PassFast` (see also [returning signals]).
+
+Note that you don't have to use both outputs.
+
+<%= img "ft-fasttrack.png" %>
+
+The standard FastTrack setup allows you to communicate and model up to four states from one task.
+
+<%= h4 "Notes" %>
+
+FIXME
+
+* All options (`:pass_fast`, `:fail_fast` and `:fast_track`) may be used with `step`, `pass` or `fail`. If in doubt, [render the circuit].
+* `:pass_fast` and `:fail_fast` can be used in combination.

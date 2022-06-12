@@ -1,5 +1,4 @@
-module Home::Cell
-  class Show < Trailblazer::Cell
-    include ViteRails::TagHelpers
-  end
+# frozen_string_literal: true
+
+class Home::Cell::Show < Trailblazer::Cell
 end

@@ -1,0 +1,59 @@
+<%= h2 "Macro API" %>
+
+Macros are short-cuts for inserting a task along with options into your activity.
+
+<%= h3 "Definition" %>
+
+They're simple functions that return a hash with options described here.
+
+<%= code "macro" %>
+
+Two required options are `:id` and `:task`, the latter being the actual task you want to insert. The callable task needs to implement the [circuit interface].
+
+<%= info do %>
+Please note that the actual task doesn't have to be a proc! Use a class, constant, object, as long as it exposes a `#call` method it will flow.
+<% end %>
+
+<%= h3 "Usage" %>
+
+To actually apply the macro you call the function in combination with `step`, `pass`, `fail`, etc.
+
+<%= code "macro-call" %>
+
+There's no additional logic from Trailblazer happening here. The function returns a well-defined hash which is passed as an argument to `step`.
+
+<%= h3 "Options" %>
+
+In the returned hash you may insert any valid DSL [step option], such as sequence options like `:before`, `Output()` and friends from the wiring API or even `:extensions`.
+
+The following `FindModel` macro retrieves a configured model just like `trailblazer-macro`'s `Model()` and automatically wires the step's `failure` output to a new terminus `not_found`.
+
+<%= code "output" %>
+
+See how you can simply add `Output` wirings by using the well-established mechanics from the wiring API? Remember you're not in an `Activity` or `Operation` namespace and hence need to use the fully-qualified constant reference `Trailblazer::Activity::Railway.Output()`.
+
+To insert that step and its extended wiring, simply call the macro.
+
+<%= code "output-usage" %>
+
+When running the activity without a valid model ID, it will now terminate on `End.not_found`.
+
+<%= code "output-result" %>
+
+Using the wiring API in your own macros gives you a powerful tool for harnessing extended wiring without requiring the user to know about the details - the crucial point for a good API.
+
+<%= h4 "Subprocess" %>
+
+You can even use other macros in custom macros, such as the [`Subprocess()` helper](#activity-wiring-api-subprocess) for nesting activities.
+
+Consider the following `Logger` activity.
+
+<%= code "logger" %>
+
+Along with the nested `Logger` step should also go `:input` and `:output` configuration. When using the `Logger` in multiple operation, you would need to repeat the options, so why not pack the entire configuration in a macro?
+
+<%= code "sub-macro" %>
+
+The nesting activity can now elegantly use the macro without inconvenient options.
+
+<%= code "sub-op" %>

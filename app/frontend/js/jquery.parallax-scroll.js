@@ -1,4 +1,4 @@
-import $ from "jquery";
+import jquery from "jquery";
 
 export const ParallaxScroll = {
   /* PUBLIC VARIABLES */
@@ -49,12 +49,12 @@ export const ParallaxScroll = {
     if (this.showLogs) console.log("Parallax Scroll / " + message);
   },
   _onScroll: function (noSmooth) {
-    var scroll = $(document).scrollTop();
-    var windowHeight = $(window).height();
+    var scroll = jquery(document).scrollTop();
+    var windowHeight = jquery(window).height();
     this._log("onScroll " + scroll);
-    $("[data-parallax]").each(
-      $.proxy(function (index, el) {
-        var $el = $(el);
+    jquery("[data-parallax]").each(
+      jquery.proxy(function (index, el) {
+        var $el = jquery(el);
         var properties = [];
         var applyProperties = false;
         var style = $el.data("style");
@@ -76,7 +76,7 @@ export const ParallaxScroll = {
           var data = datas[iData];
           var scrollFrom = data["from-scroll"];
           if (scrollFrom == undefined)
-            scrollFrom = Math.max(0, $(el).offset().top - windowHeight);
+            scrollFrom = Math.max(0, jquery(el).offset().top - windowHeight);
           scrollFrom = scrollFrom | 0;
           var scrollDistance = data["distance"];
           var scrollTo = data["to-scroll"];
@@ -85,9 +85,13 @@ export const ParallaxScroll = {
           scrollDistance = Math.max(scrollDistance | 0, 1);
           var easing = data["easing"];
           var easingReturn = data["easing-return"];
-          if (easing == undefined || !$.easing || !$.easing[easing])
+          if (easing == undefined || !jquery.easing || !jquery.easing[easing])
             easing = null;
-          if (easingReturn == undefined || !$.easing || !$.easing[easingReturn])
+          if (
+            easingReturn == undefined ||
+            !jquery.easing ||
+            !jquery.easing[easingReturn]
+          )
             easingReturn = easing;
           if (easing) {
             var totalTime = data["duration"];
@@ -131,7 +135,7 @@ export const ParallaxScroll = {
             $el.data("current-time", currentTime);
           }
           this._properties.map(
-            $.proxy(function (prop) {
+            jquery.proxy(function (prop) {
               var defaultProp = 0;
               var to = data[prop];
               if (to == undefined) return;
@@ -160,7 +164,13 @@ export const ParallaxScroll = {
                   easing = easingReturn;
                   totalTime = totalTimeReturn;
                 }
-                val = $.easing[easing](null, currentTime, from, to, totalTime);
+                val = jquery.easing[easing](
+                  null,
+                  currentTime,
+                  from,
+                  to,
+                  totalTime
+                );
               }
               val = Math.ceil(val * this.round) / this.round;
               if (val == prev && next == to) val = to;
@@ -237,9 +247,9 @@ export const ParallaxScroll = {
       }, this)
     );
     if (window.requestAnimationFrame) {
-      window.requestAnimationFrame($.proxy(this._onScroll, this, false));
+      window.requestAnimationFrame(jquery.proxy(this._onScroll, this, false));
     } else {
-      this._requestAnimationFrame($.proxy(this._onScroll, this, false));
+      this._requestAnimationFrame(jquery.proxy(this._onScroll, this, false));
     }
   },
 };

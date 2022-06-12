@@ -1,0 +1,213 @@
+
+<!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
+
+<%= h3 "Circuit Interface" %>
+
+Activities and all tasks (or "steps") are required to expose a _circuit interface_. This is the low-level interface. When an activity is executed, all involved tasks are called with that very signature.
+
+Most of the times it is hidden behind the [task interface](#FIXME) that you're probably used to from your operations when using `step`. Under the hood, however, all callable circuit elements operate through that very interface.
+
+The circuit interface consists of three things.
+
+* A circuit element has to expose a `call` method.
+* The signature of the `call` method is `call((ctx, flow_options), **circuit_options)`.
+*  Return value of the `call` method is an array of format `[signal, [new_ctx, new_flow_options]]`.
+
+Do not fear those syntactical finesses unfamiliar to you, young padawan.
+
+<%= code "circuit-interface-create", collapse: "method" %>
+
+Both the `Create` activity itself and the `validate` step expose the circuit interface. Note that the `:task` option for `step` configures this element as a low-level circuit interface, or in other words, it will skip the wrapping with the task interface.
+
+<%= h4 "Invocation" %>
+
+Maybe it makes more sense now when you see how an activity is called manually? Here's how to invoke `Create`.
+
+<%= code "circuit-interface-call", collapse: "method" %>
+
+Note that both `ctx` and `flow_options` can be just anything. Per convention, they respond to a hash interface, but theoretically it's up to you how your network of activities and tasks communicates.
+
+Check the implementation of `validate` to understand how you return a different signal or a changed `ctx`.
+
+<%= code "circuit-interface-validate" %>
+
+Make sure to always stick to the `return` signature on the circuit interface level.
+
+<%= h4 "Signature" %>
+
+The circuit interface is a bit more clumsy but it gives you unlimited power over the way the activity will be run. And trust us, we've been playing with different APIs for two years and this was the easiest and fastest outcome.
+
+<%= code "circuit-interface-validate", collapse: :method %>
+
+The alienating signature uses [Ruby's decomposition](https://docs.ruby-lang.org/en/2.1.0/syntax/methods_rdoc.html#label-Array+Decomposition) feature. This only works because the first argument for `call` is actually an array.
+
+Using this interface empowers you to fully take _control of the flow™_.
+
+* You can return any `signal` you want, not only the binary style in _steps_. Do not forget to wire that signal appropriately to the next task, though.
+* If needed, the `ctx` object might be mutated or, better, replaced and a new version returned. This is the place where you'd start implementing an immutable version of Trailblazer's `ctx`, for instance.
+* Advanced features like tracing, input/output filters or type checking leverage the framework argument `flow_options`, which will be passed onwards through the entire activities flow. Know what you're doing when using `flow_options` and **always return it** even if you're not changing it.
+* The `circuit_options` is another framework argument needed to control the start task and more. It is immutable and you don't have to return it. The same `circuit_options` are guaranteed to be passed to all invoked tasks within one activity.
+
+Since in 99% the `circuit_options` are irrelevant for you, it's nicer and faster to discard them instantly.
+
+<pre><code class="ruby light code-snippet wow fadeIn">
+def validate((ctx, flow_options), *)
+  # ...
+end
+</code></pre>
+
+Use the lonely `*` squat asterisk to do so.
+
+<%= h4 "Circuit options" %>
+
+The last positional argument when `call`ing an activity or task is called _circuit options_. It's a library-level hash that is guaranteed to be identical for all tasks of an activity. In other words, all tasks of one activity will be called with the same `circuit_options` hash.
+
+The following options are available.
+
+<%= h4 "Start_task" %>
+
+You can instruct the activity where to start - it doesn't have to be the default start event! Use the `:start_task` option.
+
+Consider this activity.
+
+<%= code "circuit-interface-start", collapse: :meths %>
+
+Inject the `:start_task` option via the circuit options. The value has to be the actual callable task object. You can use the [introspection API] to grab it.
+
+<%= code "circuit-interface-start-call", collapse: :meths %>
+
+Starting with `:validate`, the `:create` task will be skipped and only `:validate` and then `:save` will be executed.
+
+Note that this is a low-level option that should not be used to build "reuseable" activities. If you want different behavior for differing contexts, you should compose different activities.
+
+<%= h4 "Exec_context" %>
+
+When using the `step :method_name` DSL style, the `:exec_context` option controls what object provides the method implementations at runtime.
+
+Usually, `Activity#call` will automatically set this, but you can invoke the `circuit` instead, and inject your own `exec_context`. This allows you to have a separate structure and implementation.
+
+The following activity is such an "empty" structure.
+
+<%= code "circuit-interface-exec" %>
+
+You may then use a class, object or module to define the implementation of your steps.
+
+<%= code "circuit-interface-implementation" %>
+
+This is really just a container of the desired step logic, with the familiar interface.
+
+When invoking the `Create` activity, you need to call the `circuit` directly and inject the `:exec_context` option.
+
+<%= code "circuit-interface-exec-call" %>
+
+While this bypasses `Activity#call`, it gives you a powerful tool for advanced activity design.
+
+<%= h4 "DSL" %>
+
+When using the DSL, use the `:task` option if you want your added task to be called directly with the circuit interface.  This skips the `TaskBuilder::Binary` wrapping.
+
+<pre><code class="ruby light code-snippet wow fadeIn">
+class Create < Trailblazer::Activity::Railway
+  # ...
+  step task: method(:validate)
+end
+</code></pre>
+
+<!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
+
+<%= h3 "Task Interface" %>
+
+The convenient high-level interface for a task implementation is - surprisingly - called _task interface_. It's the one you will be working with 95% of your time when writing task logic.
+
+This interface comprises of two elements.
+
+* The **signature** receives a mutable `ctx` object, and an optional list of keywords, often seen as `(ctx, **)`.
+* The **return value** can be `true`, `false`, or a subclass of `Activity::Signal` to dictate the control flow.
+
+The return value does not control what is the next task, though. A task does inform the circuit about its outcome, it's the circuit's job to wire that specific result to the following task.
+
+<%= code "task-implementation" %>
+
+<%= h4 "Keyword Arguments" %>
+
+A cleaner way to access data from the `ctx` object is to use keyword arguments in the method signature. Trailblazer makes all `ctx` options available as kw args.
+
+<%= code "task-implementation-kws" %>
+
+You may use as many keyword arguments as you need - it will save you reading from `ctx` manually, gives you automatic presence checks, and allows defaulting, too.
+
+<!-- @activity-circuit-interface-class-method <trailblazer-activity[1.0] activity, circuit interface, low level, class method -->
+
+<%= h4 "Return Value" %>
+
+Using the DSL, your task will usually be wrapped using the `TaskBuilder::Binary` strategy, which translates a `nil` and `false` return value to an `Activity::Left` signal, and all other return values to `Activity::Right`.
+
+<%= code "task-implementation-kws", collapse: "method" %>
+
+In a Railway activity, a true value will usually result in the flow staying on the "success" path, where a falsey return value deviates to the "failure" track. However, eventually it's the developer's decision how to [wire signals to connections](#activity-wiring).
+
+<%= h4 "Return Signal" %>
+
+You are not limited to true and falsey return values. Any subclass of `Activity::Signal` will simply be passed through without getting "translated" by the `Binary` wrapper. This allows to emit more than two possible states from a task.
+
+<%= code "task-implementation-signal", collapse: "method" %>
+
+The exemplary `DatabaseError` is being passed through to the routing and interpreted. It's your job to make sure this signal is wired to a following task, track, or end (line 16).
+
+<%= img "activity-signal.png" %>
+
+Note that you don't have to use the default binary signals at all (`Left` and `Right`).
+<a href="#" class="pink">
+   <i class="far fa-arrow-alt-circle-right"></i>
+   <span class="medium">wiring</span>
+</a>
+
+<%= h4 "Instance Method" %>
+
+The most convenient way is to use instance methods. Those may be declared after the `step` definitions, allowing you to first define the flow, then implement it.
+
+<%= code "task-style-instance-method", collapse: :mod %>
+
+Use `:method_name` to refer to instance methods.
+
+Do *not use instance variables* (`@ivar`) ever as they're not guaranteed to work as expected. Always transport state via `ctx`.
+
+<%= h4 "Class Method" %>
+
+A class method can implement a task of an activity. It needs to be declared as a class method using `self.method_name` and must precede the `step` declaration. Using Ruby's `#method`, it can be passed to the `step` DSL.
+
+<%= code "task-style-1", collapse: :mod %>
+
+Instead of prefixing every method signature with `self.` you could use Ruby's `class << self` block to create class methods.
+
+<%= code "task-style-2", collapse: :mod %>
+
+In TRB 2.0, instance methods in operations were the preferred way for implementing tasks. This was a bit more convenient, but required the framework to create an object instance with every single activity invocation. It also encouraged users to transport state via the activity instance itself (instead of the `ctx` object), which led to bizarre issues.
+
+Since 2.1, the approach is as stateless and functional as possible, as we now prefer class methods.
+
+<!-- @activity-circuit-interface-callable <trailblazer-activity[1.0] activity, circuit interface, low level, class method -->
+
+<%= h4 "Callable" %>
+
+As a matter of fact, you can use any callable object. That means, any object that responds to `#call` is suitable as a task implementation.
+
+<%= code "task-style-3", collapse: :mod %>
+
+When using a class, it needs to expose a class method `#call`. This is ideal for more complex task code that needs to be decomposed into smaller private methods internally.
+
+<%= code "task-style-class", collapse: :mod %>
+
+The signature of `#call` is identical to the other implementation styles.
+
+<%= h4 "Module" %>
+
+Keep in mind that you don't have to implement every task in the activity itself - it can be outsourced to a module.
+
+<%= code "task-style-module", collapse: :mod %>
+
+When using `module_function`, every method will be a "class" method automatically.
+
+In the activity, you can reference the module's methods using our old friend `method`.
+
+<%= code "task-style-3", collapse: :callable %>

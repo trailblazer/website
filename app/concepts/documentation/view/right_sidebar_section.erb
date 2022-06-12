@@ -1,0 +1,23 @@
+<div class="features" id="<%= id %>-features" style="<%= active?(index) %>">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span><%= chapter_title %></span>
+  </h3>
+
+  <ul class="vertical menu">
+    <% items.each do |section| %>
+      <li>
+        <a href="#<%= section.id %>">
+          <i class="fas fa-arrow-right"></i>
+          <%= section.title %>
+        </a>
+      </li>
+      <% section.items.each do |feature| %>
+        <% next if feature.options[:hide_in_toc] %>
+        <li class="sub-item">
+          <a href="#<%= feature.id %>"><%= feature.title %></a>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

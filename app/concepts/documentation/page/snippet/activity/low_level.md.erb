@@ -1,0 +1,47 @@
+
+<%= h3 "Build Structures" %>
+
+The Activity DSL is only one way to define activities. Under the hood, the DSL simply creates a handful of generic objects such as an _intermediate_ structure or an _implementation_. Those standardized objects then get compiled into an `Activity` instance to be used at run-time.
+
+<%= img "dsl_to_activity.png" %>
+
+This section discusses those underlying concepts - it will be helpful if you want to better understand how the DSL works, write your own DSL or generate activities from your own editor.
+
+
+<%= h4 "Intermediate" %>
+
+When defining an activity, two objects are used: an `Intermediate` and an `Implementation` structure. The intermediate object is a generic definition of the **structure** of the activity: which task got what connections?
+
+<%= img "intermediate.png" %>
+
+It simply lists all tasks, along with the connections they have. The little gray bubbles on the task border are _outputs_. An output has a certain _semantic_ plus a connection (an arrow) pointing to the following task.
+
+<%= code "int", collapse: "mod" %>
+
+Basically, it resembles a hash where the key is an `Intermediate::TaskRef` instance referencing a task's ID, and its values an array of possible `Intermediate::Out` outputs going from this very task. Again, only IDs are used to point to the following task.
+
+An `Intermediate` structure is not used at run-time. It might come from a DSL, or from a generator, for example, from the PRO editor.
+
+The idea is to allow serializing intermediate structures without a complex deserialization of task logic. Only task IDs are referenced, and no signal objects used. Instead, the heavy-lifting after defining the structure is done in the `Implementation`.
+
+<%= h4 "Implementation" %>
+
+After defining the structure, the actual start and end events, and the tasks have to be specified. This happens in an `Implementation` object. It references "real" Ruby callables for each task. Usually, tasks and events are defined in some sort of namespace or module.
+
+<%= code "impl-mod", collapse: "mod" %>
+
+The implementation object lists all the tasks and events.
+
+<%= code "impl", collapse: "mod" %>
+
+An `Implementation::Task` needs the actual Ruby callable that responds to the [circuit interface](#TODO) and a list of `Activity::Output`s. Outputs consist of the actual signal the task returns (like `Activity::Right`) and a semantic that is needed in the next step, the `Activity` compilation.
+
+Note that all tasks, even start and end events, need to be defined on this very low-level.
+
+<%= h4 "Compilation" %>
+
+In order to combine intermediate structure with the implementation, you need to compile an activity from both.
+
+<%= code "comp" %>
+
+This will create a callable `Activity` instance that you're used to.

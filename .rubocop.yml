@@ -1,0 +1,222 @@
+inherit_from: .rubocop_todo.yml
+require:
+  - rubocop-rails
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7
+  DisplayStyleGuide: true
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+    - 'db/**/*'
+    - 'node_modules/**/*'
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Rails:
+  Enabled: true
+
+Rails/ApplicationController:
+  Enabled: false
+
+Rails/ApplicationMailer:
+  Enabled: false
+
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Rails/TimeZone:
+  EnforcedStyle: flexible
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  AllowedMethods:
+    - insert_all
+
+Rails/HttpStatus:
+  EnforcedStyle: numeric
+
+Style/Documentation:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: compact
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/NumericLiteralPrefix:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: true
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/EmptyCaseCondition:
+  Enabled: false
+
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/MixinUsage:
+  Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
+Style/DateTime:
+  AllowCoercion: true
+
+Style/GuardClause:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+# Refer https://trailblazer.to/2.1/docs/trailblazer.html#trailblazer-2-1-migration-call-api-pass-fail
+Style/SignalException:
+  Exclude:
+    - 'app/concepts/**/*'
+
+# 118 is the maximum line length in the GitHub UI
+# Layout/LineLength:
+#   Max: 118
+#   Exclude:
+#     - 'Gemfile'
+
+Metrics/ModuleLength:
+  Max: 500
+
+Metrics/BlockLength:
+  IgnoredMethods: ['collection', 'configure', 'group', 'property', 'validation']
+  Exclude:
+    - "config/routes.rb"
+    - "db/migrate/*"
+
+# Metrics/ParameterLists:
+#   CountKeywordArgs: false
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
+Lint/SuppressedException:
+  Enabled: false
+
+Lint/Loop:
+  Enabled: false
+
+# Refer https://trailblazer.to/2.1/docs/trailblazer.html#trailblazer-2-1-migration-call-api-pass-fail
+Lint/UnreachableCode:
+  Exclude:
+    - 'app/concepts/**/*'
+
+Naming/MethodName:
+  EnforcedStyle: snake_case
+
+Naming/FileName:
+  Exclude:
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'Rakefile'
+    - 'config/deploy/**/*'
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+
+# This conflicts with Chamber syntax Chamber.dig(:key)
+Style/SingleArgumentDig:
+  Enabled: false
+
+# We use ignored columns and remove it in a post restart migration, so this would be a false positive
+Rails/UnusedIgnoredColumns:
+  Enabled: false

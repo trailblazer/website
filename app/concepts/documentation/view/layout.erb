@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trailblazer - Documentation</title>
+
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'documentation' %>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+
+    <script type="text/javascript">
+      var searchMap = <%= search_map %>;
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-69514939-1");
+    </script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= vite_asset_path('images/favicon.ico') %>">
+  </head>
+  <body data-spy="scroll" data-offset="110">
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <%= cell(Application::Cell::Navbar, layout: "documentation") %>
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      id="search"
+                      readonly
+                      class="form-control"
+                      placeholder="Click to Search"
+                      aria-label="Search"
+                      data-toggle="modal"
+                      data-target="#searchModal"
+                    >
+                  </div>
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <%= toc %>
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100"><%= title %></h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated <%= last_updated %></span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block"><%= yield %></div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <%= vite_image_tag "images/deco1.png", alt: "Trailblazer", class: "wow fadeIn" %>
+                <%= right_sidebars %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <%= cell(Application::Cell::Footer, layout: "documentation", page: @model.md_name) %>
+    </div>
+
+    <div
+      class="modal fade pt-5 mt-5"
+      id="searchModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="searchModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0 p-0">
+            <div class="search-header">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                autofocus="autofocus"
+                class="search-input"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

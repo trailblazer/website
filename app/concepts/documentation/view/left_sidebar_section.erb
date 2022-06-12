@@ -1,0 +1,36 @@
+<div class="sidebar-accordion-wrapper">
+  <div id="<%= id %>">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="<%= @options[:url] %>">
+        <button
+          class="<%= icon_class %>"
+          data-toggle="collapse"
+          data-target="#<%= id %>-collapse"
+          aria-expanded="<%= expanded? %>"
+          aria-controls="<%= id %>-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span><%= title %></span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  <div
+    id="<%= id %>-collapse"
+    class="<%= menu_class %>"
+    aria-labelledby="<%= id %>"
+    data-parent="#accordion"
+  >
+    <ul class="nav vertical menu">
+      <%- items.each_with_index do |chapter, index| %>
+        <li class="nav-item">
+          <a class="nav-link <%= active?(index) %>" href="#<%= chapter.id %>">
+            <%= chapter.title %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

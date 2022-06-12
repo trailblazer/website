@@ -1,0 +1,105 @@
+<%= h2 "Wiring API" %>
+
+You can use the wiring API to model more complicated flows in activities.
+
+<%= info do %>
+The wiring API is implemented in the [`trailblazer-activity-dsl-linear` gem].
+
+Feel invited to write your own DSL using our [low-level mechanics], or if your activities get too complex, please use the [visual editor].
+<% end %>
+
+In addition to your friends `step`, `pass` and `fail`, the DSL provides helpers to fine-tune your wiring.
+
+<%= code "pay-implicit" %>
+
+By default, and without additional helpers used, the DSL will connect every `step` task's two outputs to the two respective tracks of a "railway".
+
+<%= img "wire-output.png" %>
+
+<%= h3 "Output()" %>
+
+The `Output()` method helps to rewire one or more specific outputs of a task, or to add outputs.
+
+To understand this helper, you should understand that every `step` invocation calls `Output()` for you behind the scenes. The following DSL use is identical to the one [above].
+
+<%= code "pay-explicit" %>
+
+We're adding two outputs here, provide the _signal_ as the first and the _semantic_ as the second parameter to `Output()` and then connect them to a track.
+
+<%= h4 "Implicit signal" %>
+
+Trailblazer has two outputs predefined. As you might've guessed, the `:failure` and `:success` outputs are a convention. This allows to **omit the signal** when referencing an existing output.
+
+<%= code "pay-nosignal" %>
+
+As the DSL knows the `:failure` output, it will reconnect it accordingly while keeping the signal.
+
+<%= h4 "Adding outputs" %>
+
+When specifying a new semantic to `Output()`, you are adding an output to the task. This is why you must also pass a signal as the first argument.
+
+<%= info do %>
+Since a particular output is triggered by a particular signal, note that each output must be configured with a **unique signal** per activity.
+<% end %>
+
+<%= code "pay-add" %>
+
+<%= img "wire-output-add.png" %>
+
+
+The `find_provider` task now has three possible outcomes that can be triggered by returning either `Right`, `Left`, or `UsePaypal`.
+
+<%= h3 "End()" %>
+
+Use `End()` to connect outputs to an existing end, or create a new end.
+
+You may reference existing ends by their semantic.
+
+<%= code "pay-endex" %>
+
+This reconnects both outputs to the same end, always ending in a - desirable, yet unrealistic - successful state.
+
+<%= img "wire-output-end.png" %>
+
+
+<%= h4 "Adding ends" %>
+
+Providing a new semantic to the `End()` function will create a new end event.
+
+<%= code "pay-end" %>
+
+Adding ends to an activity is a beautiful way to communicate more than two outcomes to the outer world without having to use a state field in the `ctx`. It also allows wiring those outcomes to different tracks in the container activity. [See nesting]
+
+<%= img "wire-output-endadd.png" %>
+
+This activity now maintains three end events. The path to the `declined` end is taken from the task's `failure` output.
+
+<%= info do %>
+Successive uses of the same `End(:semantic)` will all connect to the same end.
+<% end %>
+
+<%= h3 "Id()" %>
+
+An output can be connected to a particular task by using `Id()`.
+
+<%= code "pay-id" %>
+
+This connects the `failure` output to the previous task, which might create an infinity loop and waste your computing time - it is solely here for demonstrational purposes.
+
+<%#= img "wire-output-id.png" %>
+
+<%= h3 "Track()" %>
+
+The `Track()` function will snap the output to the next task that is "magnetic to" the track's semantic.
+
+<%= code "pay-track" %>
+
+Since `notify` sits on the "failure" track and hence is "magnetic to" `:failure`, `find_provider` will be connected to it.
+
+<%#= img "wire-track.png" %>
+
+Using `Track()` with a new track semantic only makes sense when using the [`:magnetic_to` option] on other tasks.
+
+<%= info do %>
+Use [Path()] if you want to avoid `Track()` and `:magnetic_to` - this helper does nothing but providing those values to your convenience.
+<% end %>
