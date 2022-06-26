@@ -9,8 +9,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
     activity: [
       "activity",
-      "operation"
-      # "2.1/docs/workflow.md",
+      "operation",
+      "workflow"
       # "2.1/docs/endpoint.md"
     ]
 
@@ -32,7 +32,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "trailblazer" => "/2.1/docs/trailblazer.html",
     "activity"    => "/2.1/docs/activity.html",
     "test"        => "/2.1/docs/test.html",
-    "operation"        => "/2.1/docs/operation.html"
+    "operation"   => "/2.1/docs/operation.html",
+    "workflow"    => "/2.1/docs/workflow.html"
     # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
   }
 

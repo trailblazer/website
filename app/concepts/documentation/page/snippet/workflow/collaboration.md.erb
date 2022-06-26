@@ -1,0 +1,12 @@
+# Collaboration
+
+## advance
+
+An invocation of `advance` will start with start_task, run the collaboration (possibly sending messages back and forth, continuing from resume states) until the throw queue is empty and the token arrived at a suspend stated. In other words, once the collaboration hits a waiting "suspend" state (or catching event), it stops.
+
+# State
+
+A specific position for all tokens at a certain point in time represents a state. It's as simple as that.
+
+In many state machine frameworks, a state refers to one state machine, such as `moderated` for a blog post. In Trailblazer, a state might refer to one or many token positions. The latter is the case when you use a collaboration.
+

@@ -36,4 +36,4 @@ gem "vite_rails"
 # Tool collection to write and layout programmer's manuals. (https://github.com/apotonick/torture)
 gem "torture"
 # Write a short summary, because RubyGems requires one. (https://github.com/apotonick/torture)
-gem "torture-server", path: "/Users/planet/Work/ruby/torture-server" 
+gem "torture-server", path: "/Users/planet/Work/ruby/torture-server"

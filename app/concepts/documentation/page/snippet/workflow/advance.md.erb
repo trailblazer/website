@@ -1,0 +1,36 @@
+<%= info do %>
+The `trailblazer-workflow` gem is currently a paid feature. It's still unreleased and [we will inform you](http://fb.me/trailblazer_to) once it's available.
+<% end %>
+
+<%= h2 "Advance" %>
+
+- these are still notes # FIXME -
+
+
+    signal, (ctx, _) = Trailblazer::Developer.wtf?(Trailblazer::Workflow::Advance::Controller, [{
+      event_name:   event_name || _event_name,
+      dictionary: diagram_dictionary,                # DISCUSS: could be retrieved from the Collaboration.
+      activity:   collaboration,
+      # resume_data: {},
+      domain_ctx:    domain_ctx, # DISCUSS: is this where {:resume_data} comes in?
+
+      process_model_class:  process_model_class,
+      process_model_id:     process_model_id,
+
+      cipher_key: cipher_key,
+      encrypted_resume_data: encrypted_resume_data,
+      process_model_from_resume_data: process_model_from_resume_data,
+      find_process_model: find_process_model,
+    }, {throw: []}])
+
+<%= h3 "domain_ctx" %>
+
+Via the `:domain_ctx` option, you provide the context object that is directly handed into the workflow/collaboration call.
+
+<%= img "advance-domain-ctx.png" %>
+
+* There is no wrapping happening, so building a `Context` instance is up to you.
+* After the workflow invocation, the *returned* ctx is made available under `:domain_ctx` in the outer ctx. In other words, if you want to know what has been going on in the workflow, use `:domain_ctx`.
+
+{:resume_data} ??
+{:process_model} ??
