@@ -2,14 +2,14 @@
 
 class Documentation::Operation::Compile < Trailblazer::Operation
   TOC_ORDER = {
-    generics:          [
-      "trailblazer",
-      "test"
+    generics: %w[
+      trailblazer
+      test
     ],
 
     activity: [
-      "activity"
-      # "2.1/docs/operation.md",
+      "activity",
+      "operation"
       # "2.1/docs/workflow.md",
       # "2.1/docs/endpoint.md"
     ]
@@ -30,8 +30,9 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
   LINKS = {
     "trailblazer" => "/2.1/docs/trailblazer.html",
-    "activity" => "/2.1/docs/activity.html",
-    "test" => "/2.1/docs/test.html",
+    "activity"    => "/2.1/docs/activity.html",
+    "test"        => "/2.1/docs/test.html",
+    "operation"        => "/2.1/docs/operation.html"
     # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
   }
 

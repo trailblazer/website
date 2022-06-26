@@ -1,0 +1,62 @@
+<%= h2 "Overview" %>
+
+Operations have been a central element since Trailblazer 1.0. An operation models a top-level function of your application, such as creating a user or archiving a blog post. It's the outer-most object that is directly invoked by the controller, embraces all business-specific logic and hides it from the latter.
+
+Operations are often confused as _god objects_ that do "everything". However, operations are nothing but orchestrators. Where to implement the actual code and when to call it is up to the developer.
+
+<%= info do %>
+Since Trailblazer 2.1, operations are reduced to being a very thin, public API around an `Activity` with some pre-defined configuration such as the `FastTrack`-railway.
+
+Deeply nested business logic is implemented using activities. For background-compatibility, you may still use an operation for the upper-most logic, but internally, it boils down to being an `Activity::FastTrack`.
+<% end %>
+
+* Two public `Operation.call` signatures: "public call" and circuit interface.
+*
+
+<%= h3 "Invocation" %>
+
+An operation has two invocation styles. This is the only difference to an `Activity`.
+
+<%= h4 "Public call" %>
+
+Until TRB 2.1, the public call was the only way to invoke an operation. Its signature is simpler, but less powerful.
+
+<%= code "call-public" %>
+
+The public call will return a [result object](/2.1/docs/operation.html#operation-overview-result) that exposes the binary state (`success?` or `failure?`). All variables written to the context are accessable via the `#[]` reader.
+
+<%= h4 "Circuit Interface" %>
+
+Since operations are just normal activities under the hood, they also expose the [circuit interface]. This allows using all advanced features such as [taskWrap], [tracing] or nesting operations with the generic activity mechanics.
+
+<%= code "call-circuit" %>
+
+<%= h3 "Wiring" %>
+
+An operation is simply an `Activity::FastTrack` subclass and all [DSL implications are identical].
+
+<%= code "op", collapse: "mod", root: "../trailblazer-operation/test/docs", file: "operation_test.rb" %>
+
+An operation always allows you the fast-track outputs and wiring.
+
+<%= img "ft-fasttrack.png" %>
+
+For DSL options, refer to [Fast Track](/2.1/docs/activity.html#activity-strategy-fasttrack).
+
+<%= h3 "Result" %>
+
+An operation invoked with public call will return an `Operation::Result` object for your convenience. It's nothing but a container exposing the binary state (or outcome) plus the `ctx` object that was passed around in the circuit.
+
+<%= code "op", collapse: "rest", root: "../trailblazer-operation/test/docs", file: "operation_test.rb" %>
+
+The result exposes state and the context you wrote to.
+
+<%= code "op-result" %>
+
+The operation ending on a "failure" end (`End.failure`, `End.fail_fast`) will result in `result.failure?` being true. All other outcomes will be interpreted as success.
+
+<%= info do %>
+Please note that the result object is not compatible with the circuit interface and only here for backward-compatibility, when invoking operations manually.
+
+In compositions or workflows, operations will always be called using the circuit interface.
+<% end %>

@@ -1,0 +1,144 @@
+<%= h2 "Policy" %>
+
+The `Policy` macros [`Policy::Pundit`](#pundit), and [`Policy::Guard`](#guard) help to implement permission decider steps.
+
+<%= h3 "Pundit" %>
+
+The `Policy::Pundit` module allows using [Pundit](https://github.com/elabs/pundit)-compatible policy classes in an operation.
+
+A Pundit policy has various rule methods and a special constructor that receives the current user and the current model.
+
+<%= code "policy", file: "pundit_test.rb" %>
+
+In pundit policies, it is a convention to have access to those objects at runtime and build rules on top of those.
+
+You can plug this policy into your pipe at any point. However, this must be inserted after the `"model"` skill is available.
+
+<%= code "pundit", file: "pundit_test.rb" %>
+
+Note that you don't have to create the model via the `Model` macro - you can use any logic you want. The `Pundit` macro will grab the model from `["model"]`, though.
+
+This policy will only pass when the operation is invoked as follows.
+
+<%= code :ruby do %>
+Create.(current_user: User.find(1))
+<% end %>
+
+Any other call will cause a policy breach and stop the pipe from executing after the `Policy::Pundit` step.
+
+<%= h4 "API" %>
+
+Add your polices using the `Policy::Pundit` macro. It accepts the policy class name, and the rule method to call.
+
+<%= code "pundit", file: "pundit_test.rb" %>
+
+The step will create the policy instance automatically for you and passes the `"model"` and the `"current_user"` skill into the policies constructor. Just make sure those dependencies are available before the step is executed.
+
+If the policy returns `falsey`, it [deviates to the left track](api.html#flow-control-step).
+
+After running the `Pundit` step, its result is readable from the `Result` object.
+
+<%= code "pundit-result", file: "pundit_test.rb" %>
+
+Note that the actual policy instance is available via `["result.policy.#{name}"]["policy"]` to be reinvoked with other rules (e.g. in the view layer).
+
+<%= h4 "Name" %>
+
+You can add any number of Pundit policies to your pipe. Make sure to use `name:` to name them, though.
+
+<%= code "name", file: "pundit_test.rb" %>
+
+The result will be stored in `"result.policy.#{name}"`
+
+<%= code "name-call", file: "pundit_test.rb" %>
+
+
+<%= h4 "Dependency Injection" %>
+
+Override a configured policy using dependency injection.
+
+<%= code "di-call", file: "pundit_test.rb" %>
+
+You can inject it using `"policy.#{name}.eval"`. It can be any object responding to `call`.
+
+<%= h3 "Guard" %>
+
+A guard is a step that helps you evaluating a condition and writing the result. If the condition was evaluated as `falsey`, the pipe won't be further processed and a policy breach is reported in `Result["result.policy.default"]`.
+
+<%= code "proc", file: "guard_test.rb" %>
+
+The only way to make the above operation invoke the second step `:process` is as follows.
+
+<%= code :ruby do %>
+result = Create.({ pass: true })
+result["x"] #=> true
+<% end %>
+
+Any other input will result in an abortion of the pipe after the guard.
+
+<%= code :ruby do %>
+result = Create.()
+result["x"] #=> nil
+result["result.policy.default"].success? #=> false
+<% end %>
+
+Learn more about [→ dependency injection](skill.md) to pass params and current user into the operation. TODO: fix link
+
+<%= h4 "API" %>
+
+The `Policy::Guard` macro helps you inserting your guard logic. If not defined, it will be evaluated [where you insert](#guard-position) it.
+
+<%= code "pipeonly", file: "guard_test.rb" %>
+
+
+The `options` object is passed into the guard and allows you to read and inspect data like `params` or `current_user`. Please use kw args.
+
+<%= h4 "Callable" %>
+
+As always, the guard can also be a `Callable`-marked object.
+
+<%= code "callable", file: "guard_test.rb" %>
+
+Insert the object instance via the `Policy::Guard` macro.
+
+<%= code "callable-op", file: "guard_test.rb", collapse: :methods %>
+
+
+<%= h4 "Instance Method" %>
+
+As always, you may also use an instance method to implement a guard.
+
+<%= code "method", file: "guard_test.rb", collapse: :methods %>
+
+<%= h4 "Name" %>
+
+The guard name defaults to `default` and can be set via `name:`. This allows having multiple guards.
+
+<%= code "name", file: "guard_test.rb" %>
+
+The result will sit in `result.policy.#{name}`.
+
+<%= code "name-result", file: "guard_test.rb" %>
+
+<%= h4 "Dependency Injection" %>
+
+Instead of using the configured guard, you can inject any callable object that returns a `Result` object. Do so by overriding the `policy.#{name}.eval` path when calling the operation.
+
+<%= code "di-call", file: "guard_test.rb" %>
+
+
+An easy way to let Trailblazer build a compatible object for you is using `Guard.build`.
+
+This is helpful to override a certain policy for testing, or to invoke it with special rights, e.g. for an admin.
+
+<%= h4 "Position" %>
+
+You may specify a position.
+
+<%= code "before", file: "guard_test.rb" %>
+
+Resulting in the guard inserted before `model!`, even though it was added at a later point.
+
+<%= code "before-pipe", file: "guard_test.rb" %>
+
+This is helpful if you maintain modules for operations with generic steps.

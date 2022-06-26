@@ -1,0 +1,27 @@
+<%= h2 "Options" %>
+
+<%= h3 "Class Dependencies" %>
+
+If you want to configure values or dependencies on the operation class level, use the `ClassDependencies` module.
+
+<%= info do %>
+The usage of this feature is not recommended. Use a dry-container instead.
+<% end %>
+
+You may use the `self[]=` setter to add directives to the operation class.
+
+These variables will be available within every step of the operation *and after*.
+
+<%= code "create" %>
+
+Starting with the invocation of the `Create` operation, the `validator` variable is injected into the `ctx` and passed on.
+
+<%= code "validate" %>
+
+The variable is readable from `ctx` even when the operation finishes - so be careful in nested setups.
+
+<%= code "invoke" %>
+
+<%= info do %>
+Note that variables from within a nested operation are readable in the outer operation after the nested one has been invoked.
+<% end %>

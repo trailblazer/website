@@ -1,0 +1,262 @@
+<%= h2 "Contract" %>
+
+A *contract* is an abstraction to handle validation of arbitrary data or object state. It is a fully self-contained object that is orchestrated by the operation.
+
+The actual validation can be implemented using Reform with `ActiveModel::Validation` or dry-validation, or a [`Dry::Schema` directly](/2.1/docs/operation.html#operation-contract-dry-schema) without Reform.
+
+The `Contract` macros helps you defining contracts and assists with instantiating and validating data with those contracts at runtime.
+
+<%= h3 "overview: reform" %>
+
+Most contracts are [Reform](/2.1/docs/reform.html) objects that you can define and validate in the operation. Reform is a fantastic tool for deserializing and validating deeply nested hashes, and then, when valid, writing those to the database using your persistence layer such as ActiveRecord.
+
+<%= code "constant-contract" %>
+
+The contract then gets hooked into the operation.
+
+<%= code "constant" %>
+
+As you can see, using contracts consists of five steps.
+
+1. Define the contract class (or multiple of them) for the operation.
+2. Plug the contract creation into the operation's pipe using `Contract::Build`.
+3. Run the contract's validation for the params using `Contract::Validate`.
+4. If successful, write the sane data to the model(s). This will usually happen in the `Contract::Persist` macro.
+5. After the operation has been run, [interpret the result](/2.1/docs/operation.html#operation-overview-result). For instance, a controller calling an operation will render a erroring form for invalid input.
+
+<%= info do %>
+You don't have to use any of the TRB macros to deal with contracts, and do everything yourself. They are an abstraction that will save code and bugs, and introduce strong conventions. However, feel free to use your own code.
+<% end %>
+
+Here's what the result would look like after running the `Create` operation with invalid data.
+
+<%= code "constant-result" %>
+
+<%= h3 "Definition" %>
+
+Trailblazer offers a few different ways to define contract classes and use them in an operation.
+
+<%= h4 "Explicit" %>
+
+The preferred way of defining contracts is to use a separate file and class, such as the example below.
+
+<%= code "constant-contract" %>
+
+This is called *explicit contract*.
+
+The contract file could be located just anywhere, but it's clever to follow the Trailblazer conventions.
+
+Using the contract happens via `Contract::Build`, and the `:constant` option.
+
+<%= code "constant" %>
+
+Since both operations and contracts grow during development, the completely encapsulated approach of the explicit contract is what we recommend.
+
+<%= h4 "Inline" %>
+
+Contracts can also be defined in the operation itself.
+
+<%= code "overv-reform" %>
+
+Defining the contract happens via the `contract` block. This is called an *inline contract*. Note that you need to extend the class with the `Contract::DSL` module. You don't have to specify anything in the `Build` macro.
+
+While this is nice for a quick example, this usually ends up quite convoluted and we advise you to use the [explicit style](/2.1/docs/operation.html#operation-contract-definition-explicit).
+
+<%= h3 "Build" %>
+
+The `Contract::Build` macro helps you to instantiate the contract.
+It is both helpful for a complete workflow, or to create the contract, only, without validating it, e.g. when presenting the form.
+
+<%= code "constant-new" %>
+
+This macro will grab the model from `options["model"]` and pass it into the contract's constructor. The contract is then saved in `options["contract.default"]`.
+
+<%= code "constant-new-result" %>
+
+The `Build` macro accepts [the `:name` option](/2.1/docs/operation.html#operation-contract-name) to change the name from `default`.
+
+<%= h4 "Dependency Injection / Contract class" %>
+
+Instead of defining  the contract class in the `Build()` macro the very option can be injected at run-time, when `call`ing the operation. The operation *class* doesn't need any hard-wired reference to a contract class at all.
+
+<%= code "di-constant" %>
+
+A prerequisite for that is that the contract class is defined somewhere.
+
+<%= code "di-constant-contract" %>
+
+When invoking the operation, you now have to provide the default contract class as a variable (or dependency) using the `:"contract.default.class"` option. The `Build()` step will use the passed class constant for instantiating the contract.
+
+<%= code "di-contract-call" %>
+
+This will work with any contract name if you follow [the naming conventions](/2.1/docs/operation.html#operation-contract-name).
+
+<%= h3 "Validate" %>
+
+The `Contract::Validate` macro is responsible for validating the incoming params against its contract. That means you have to use `Contract::Build` beforehand, or create the contract yourself. The macro will then grab the params and throw then into the contract's `validate` (or `call`) method.
+
+<%= code "validate-only" %>
+
+
+Depending on the outcome of the validation, it either stays on the right track, or deviates to left, skipping the remaining steps.
+
+<%= code "validate-only-result-false" %>
+
+Note that `Validate` really only validates the contract, nothing is written to the model, yet. You need to push data to the model manually, e.g. [with `Contract::Persist`](/2.1/docs/operation.html#operation-contract-persist).
+
+<%= code "validate-only-result" %>
+
+`Validate` will use `options["params"]` as the input. You can change the nesting with [the `:key` option](/2.1/docs/operation.html#operation-contract-key).
+
+<%= info do %>
+Internally, this macro will simply call `Form#validate` on the Reform object.
+
+Note that Reform comes with sophisticated deserialization semantics for nested forms, it might be worth reading [a bit about Reform](/2.1/docs/reform.html) to fully understand what you can do in the `Validate` step.
+<% end %>
+
+<%= h4 "Key" %>
+
+Per default, `Contract::Validate` will use `ctx[:params]` as the data to be validated. Use the `:key` option if you want to validate a nested hash from the original params structure.
+
+<%= code "key" %>
+
+This automatically extracts the nested `"song"` hash.
+
+<%= code "key-res" %>
+
+If that key isn't present in the params hash, the operation fails before the actual validation.
+
+<%= code "key-res-false" %>
+
+Note that string vs. symbol do matter here since the operation will simply do a hash lookup using the key you provided.
+
+<%= h4 "Dependency Injection / Key" %>
+
+The `Validate()` macro allows to injecting the `:key` option at run-time instead of providing it when using the macro on the class level. You may omit the `:key` option in the `Validate()` macro call as below.
+
+<%= code "inject-key-op", collapse: "meths" %>
+
+  Defining the `:key` option in `Operation.call` is now achieved by passing the `"contract.default.extract_key"` option.
+<%= code "inject-key-call" %>
+
+Note that the `.default` part might differ depending on the name of your contract.
+
+<%= h4 "Dependency injection / Contract instance" %>
+
+Instead of using `Contract::Build()` to let the macro create the contract instance used for `Validate()`, an arbitrary contract object may be injected at run-time. You may omit `Model()` and `Contract::Build()` in that case.
+
+<%= code "inject-contract-op" %>
+
+In order for `Validate()` to work you have to inject a contract via the `:"contract.default"` option.
+
+<%= code "inject-contract-call" %>
+
+As always, the `.default` part might differ depending on the name of your contract.
+
+<%= h3 "Invalid Termini" %>
+
+If the `Contract::Validate()` deviates on a failure track, it is possible to emit a new [signal](/2.1/docs/operation.html#signals) suggesting contract failure.
+
+<%= img "macro-ends.png" %>
+
+This becomes really handy when used along with the [endpoint](/2.1/docs/endpoint.html).
+It avoids any conditional checks and can be wired to render **422 response** without accessing the `ctx`.
+In order to add this [new termini](/2.1/docs/activity.html#activity-wiring-api-end-adding-ends) in your operation's terminuses, you need to pass `invalid_data_terminus` kwarg.
+
+<%= code "invalid-end" %>
+
+Based on the given [name](/2.1/docs/operation.html#operation-contract-name) to this macro (default is ofcourse, `default`), it will assign `End` semantic as `"contract.#{name}.invalid"`.
+
+<%= code "invalid-end-res" %>
+
+<%= h3 "Persist" %>
+
+To push validated data from the contract to the model(s), use `Persist`. Like `Validate`, this requires a contract to be set up beforehand.
+
+<%= code "constant" %>
+
+After the step, the contract's attribute values are written to the model, and the contract will call `save` on the model.
+
+<%= code "constant-result-true" %>
+
+You can also configure the `Persist` step to call `sync` instead of Reform's `save`.
+
+<%= code :ruby do %>
+step Persist( method: :sync )
+<% end %>
+
+This will only write the contract's data to the model without calling `save` on it.
+
+<%= h3 "Name" %>
+
+Explicit naming for the contract is possible, too.
+
+<%= code "constant-name" %>
+
+You have to use the `name:` option to tell each step what contract to use. The contract and its result will now use your name instead of `default`.
+
+<%= code "name-res" %>
+
+Use this if your operation has multiple contracts.
+
+<%= h3 "Dry-Validation" %>
+
+Instead of using `ActiveModel::Validation` you may use the very popular [`dry-validation` gem](http://dry-rb.org/gems/dry-validation/) for  validations in your Reform class.
+
+<%= code "dry-schema" %>
+
+All you need to do is including the `feature Dry` extension and applying dry-validation's syntax within the `validation` blocks. The operation's macros will work seamlessly with dry's logic.
+
+<%= info do %>
+(TODO Jan 2021) We are rewriting the Dry-validation documentation shortly and will link to a more concise reference here.
+<% end %>
+
+<%= h4 "Dry-Schema" %>
+
+It is possible to use Dry's [Validation::Contract](http://dry-rb.org/gems/dry-validation/) directly as a contract in an operation, using the `Contract::Validate()` macro. You don't need a model here, and the contract cannot be persisted. However, this is great for formal validations, e.g. to make sure the params have the correct format.
+
+<%= code "dry-schema-contract", collapse: :methods %>
+
+Invoking the operation works exactly as it did with a "normal" contract.
+
+<%= code "dry-contract-call" %>
+
+Note that if you don't use the `:song` key in your incoming data, you can [configure](/2.1/docs/operation.html#operation-contract-validate-key) the `Validate()` macro to refrain from looking for that key.
+
+The "errors" object after running the contract validation can be found at `ctx[:"result.contract.default"]
+
+<%= code "dry-contract-result" %>
+
+<%= info do %>
+(TODO Jan 2021) We are working on an operation-wide `Errors` object which will be available at `ctx[:errors]`.
+<% end %>
+
+<%= h3 "Manual Extraction" %>
+
+You can plug your own complex logic to extract params for validation into the pipe.
+
+<%= code "key-extr" %>
+
+Note that you have to set the `self["params.validate"]` field in your own step, and - obviously - this has to happen before the actual validation.
+
+Keep in mind that `&` will deviate to the left track if your `extract_params!` logic returns falsey.
+
+<%= h3 "Manual Build" %>
+
+To manually build the contract instance, e.g. to inject the current user, use `builder:`.
+
+<%= code "builder-option" %>
+
+Note how the contract's class and the appropriate model are offered as kw arguments. You're free to ignore these options and use your own assets.
+
+As always, you may also use a proc.
+
+<%= h3 "Result Object" %>
+
+The operation will store the validation result for every contract in its own result object.
+
+The path is `result.contract.#{name}`.
+
+<%= code "result" %>
+
+Each result object responds to `success?`, `failure?`, and `errors`, which is an `Errors` object. TODO: design/document Errors. WE ARE CURRENTLY WORKING ON A UNIFIED API FOR ERRORS (FOR DRY AND REFORM).

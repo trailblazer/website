@@ -8,7 +8,7 @@ class DocumentationController < ApplicationController
     render html: cell(
       Documentation::Cell::Show,
       page,
-      search_map: ctx[:search_map],
+      search_map: ctx[:search_map]
     )
   end
 end
