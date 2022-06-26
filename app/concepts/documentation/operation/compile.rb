@@ -7,20 +7,20 @@ class Documentation::Operation::Compile < Trailblazer::Operation
       test
     ],
 
-    activity: [
-      "activity",
-      "operation",
-      "workflow",
-      "endpoint"
-    ]
+    activity: %w[
+      activity
+      operation
+      workflow
+      endpoint
+    ],
 
-    # gems:              [
-    #   "2.1/docs/reform.md",
-    #   "2.1/docs/cells.md",
-    #   "2.1/docs/representable.md",
-    #   "2.1/docs/disposable.md",
-    #   "2.1/docs/roar.md"
-    # ],
+    gems:     [
+      "reform"
+      #   "2.1/docs/cells.md",
+      #   "2.1/docs/representable.md",
+      #   "2.1/docs/disposable.md",
+      #   "2.1/docs/roar.md"
+    ]
 
     # tutorials_and_pro: [
     #   "2.1/tutorials/activity.md",
@@ -35,6 +35,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "operation"   => "/2.1/docs/operation.html",
     "workflow"    => "/2.1/docs/workflow.html",
     "endpoint"    => "/2.1/docs/endpoint.html",
+    "reform"      => "/2.1/docs/reform.html"
     # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
   }
 
