@@ -14,12 +14,12 @@ class Documentation::Operation::Compile < Trailblazer::Operation
       endpoint
     ],
 
-    gems:     [
-      "reform"
-      #   "2.1/docs/cells.md",
-      #   "2.1/docs/representable.md",
-      #   "2.1/docs/disposable.md",
-      #   "2.1/docs/roar.md"
+    gems:     %w[
+      reform
+      cells
+      representable
+      disposable
+      roar
     ]
 
     # tutorials_and_pro: [
@@ -29,14 +29,17 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   }
 
   LINKS = {
-    "trailblazer" => "/2.1/docs/trailblazer.html",
-    "activity"    => "/2.1/docs/activity.html",
-    "test"        => "/2.1/docs/test.html",
-    "operation"   => "/2.1/docs/operation.html",
-    "workflow"    => "/2.1/docs/workflow.html",
-    "endpoint"    => "/2.1/docs/endpoint.html",
-    "reform"      => "/2.1/docs/reform.html"
-    # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
+    "trailblazer"   => "/2.1/docs/trailblazer.html",
+    "activity"      => "/2.1/docs/activity.html",
+    "test"          => "/2.1/docs/test.html",
+    "operation"     => "/2.1/docs/operation.html",
+    "workflow"      => "/2.1/docs/workflow.html",
+    "endpoint"      => "/2.1/docs/endpoint.html",
+    "reform"        => "/2.1/docs/reform.html",
+    "cells"         => "/2.1/docs/cells.html",
+    "representable" => "/2.1/docs/representable.html",
+    "disposable"    => "/2.1/docs/disposable.html",
+    "roar"          => "/2.1/docs/roar.html"
   }
 
   step :build_pages

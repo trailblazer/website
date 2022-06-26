@@ -1,0 +1,21 @@
+<%= page title: "Cells" %>
+
+Out of the frustration with Rails' view layer, its lack of encapsulation and the convoluted code resulting from partials and helpers both accessing global state, the [Cells](https://github.com/apotonick/cells) gem emerged.
+
+The cells gem is completely stand-alone and can be used without Trailblazer.
+
+A cell is an object that represent a fragment of your UI. The scope of that fragment is up to you: it can embrace an entire page, a single comment container in a thread or just an avatar image link.
+
+In other words: **A cell is an object that can render a template.**
+
+<%= snippets(
+  "snippet/cells/overview"                        => {},
+  "snippet/cells/getting_started"                 => {},
+  "snippet/cells/api"                             => {},
+  "snippet/cells/trailblazer"                     => {},
+  "snippet/cells/testing"                         => {},
+  "snippet/cells/render"                          => {},
+  "snippet/cells/rails"                           => {},
+  "snippet/cells/templates"                       => {},
+  "snippet/cells/troubleshooting"                 => {},
+) %>

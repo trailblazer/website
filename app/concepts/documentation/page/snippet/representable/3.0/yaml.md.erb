@@ -1,0 +1,35 @@
+<%= h2 "YAML" %>
+
+Representable also comes with a YAML representer. Like [XML](#representable-xml), the declarative API is almost identical.
+
+<%= h3 "Flow Style Lists" %>
+
+A nice feature is that `#collection` also accepts a `:style` option which helps having nicely formatted inline (or "flow") arrays in your YAML - if you want that!
+
+    require 'representable/yaml'
+
+    class SongRepresenter < Representable::Decorator
+      include Representable::YAML
+
+      property :title
+      property :id
+      collection :composers, style: :flow
+    end
+
+
+#### Public API
+
+To render and parse, you invoke `to_yaml` and `from_yaml`.
+
+~~~ ruby
+Song = Struct.new(:title, :id, :composers)
+song = Song.new("Fallout", 1, ["Stewart Copeland", "Sting"])
+SongRepresenter.new(song).to_yaml
+~~~
+
+~~~ ruby
+---
+title: Fallout
+id: 1
+composers: [Stewart Copeland, Sting]
+~~~

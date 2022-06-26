@@ -1,0 +1,49 @@
+<%= h2 "Troubleshooting" %>
+
+<%= h3 "Helper Inclusion Order" %>
+
+One of the many problems with Rails helper implementation is that the inclusion order matters. This can lead to problems with the following exception.
+
+
+    undefined method `output_buffer=' for #<Comment::Cell:0xb518d8cc>
+
+
+Usually, the problem arises when you have initializers to setup your application cell. When including helpers here, they might be included before the `cells` gem has a chance to include its fixes.
+
+Please include your template engine module explicitly then, _after_ your standard helper inclusions.
+
+
+    # config/initializers/trailblazer.rb
+
+    Cell::Concept.class_eval do
+      include ActionView::Helpers::TranslationHelpers # include your helpers here.
+      include Cell::Erb # or Cell::Slim, or Cell::Haml after that
+    end
+
+<%= h3 "Form helpers" %>
+
+Sometimes you have to manually include Rails helpers into your cell classes. For instance, the following exception originating from `lib/action_view/helpers/form_options_helper.rb` might disturb your sunny day.
+
+    undefined method `collection_select' for #<...::Cell::
+
+While we still don't understand the root of the problem, it can be fixed by including `FormOptionsHelper`.
+
+    module Comment::Cell
+      class New < Trailblazer::Cell
+        include ActionView::Helpers::FormOptionsHelper
+        # ...
+      end
+    end
+
+Likewise, when using `simple_form` you need to manually include its helper or you will encounter the following exception.
+
+    undefined method `simple_form_for' for #<...::Cell::
+
+It is easily fixed with an `include`.
+
+    module Transaction::Cell
+      class New < Trailblazer::Cell
+        include SimpleForm::ActionViewExtensions::FormHelper
+        # you can include more than one helper:
+        # include ActionView::Helpers::FormOptionsHelper
+
