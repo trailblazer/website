@@ -1,0 +1,123 @@
+<%= h2 "Web Interface" %>
+
+The Web interface is designed to be used in HTML-rendering controllers that operate web UIs.
+
+While its concepts are very similar to the mechanics found in API endpoints, it focuses on a better action API since web controllers very often need to customize behavior, such as redirecting, rendering pages in a specific fashion or even setting cookie values.
+
+<%= code "ruby" do %>
+class SongsController < ApplicationController::Web
+  # ...
+  def create
+    endpoint Song::Operation::Create do |ctx, model:, **|
+      render html: cell(Song::Cell::Create, model)          # render success cell
+    end.Or do |ctx, contract:, **|                          # validation failure
+      flash "Errors: #{contract.errors.messages}"
+      redirect_to "/my"                                     # manual override
+    end
+  end
+end
+<% end %>
+
+Endpoint's `Or`-DSL is optimized for web-based controllers.
+
+<%= h3 "Adapter" %>
+
+The `Trailblazer::Endpoint::Adapter::Web` adapter is slightly simpler than the API version.
+
+<%= img "endpoint-adapter-web.png" %>
+
+As oppossed to the `Api` adapter, there are no handler steps and such installed. Use this adapter if you want to customize the flow or if you don't need any automatic behavior.
+
+<%= h3 "Application Controller" %>
+
+A good practice is to install an `ApplicationController::Web` controller in your app to inherit from.
+
+<%= code "app-include", file: "app/controllers/application_controller/web.rb" %>
+
+By providing `dsl: true` you activate the `Or`-DSL.
+
+<%= info do %>
+Please include the `Endpoint::Controller` module only once per inheritance tree.
+<% end %>
+
+<%= h3 "Configuration" %>
+
+The web interface uses the well-established mechanisms and directives on the controller class level.
+
+<%= h4 "Endpoint Definition" %>
+
+Endpoints are defined per action on the controller class.
+
+<%= code "endpoint", file: "app/controllers/songs_controller.rb" %>
+
+<%= h4 "Options" %>
+
+You can use the four endpoint directives to configure what data gets passed to the endpoint and your domain activity (or operation).
+
+In order to perform authentication and authorization in the endpoint's protocol, injecting the `session` is a good idea.
+
+<%= code "options", file: "app/controllers/application_controller/web.rb" %>
+
+This is done by setting a `options_for_endpoint` directive.
+
+<%= h4 "Protocol" %>
+
+In a web context, the `Protocol` will usually extract the user from the cookie and perform a policy check based on that user.
+
+<%= code "protocol", file: "app/controllers/application_controller/web.rb", collapse: "pskip" %>
+
+As always, you don't have to perform the policy check in the protocol.
+
+<%= h4 "Generic endpoint" %>
+
+With the `Protocol` class defined, the generic endpoint settings can be configured.
+
+<%= code "generic", file: "app/controllers/application_controller/web.rb", collapse: "gskip" %>
+
+Note that we simply use the `Adapter::Web` adapter.
+
+The `:domain_ctx_filter` option will inject the `current_user` into the `domain_ctx` so it is accessable from within your domain activity.
+
+<%= h3 "Or-DSL" %>
+
+In the controller subclasses you're now ready to use endpoints and the `Or`-DSL.
+
+<%= code "create", file: "app/controllers/songs_controller.rb" %>
+
+The `Or` block is executed when your endpoint terminates on `:failure`, which is the case for `invalid_data` or `failure`. The `endpoint` block, as usual, is invoked for a `success`ful outcome.
+
+In both blocks, the `domain_ctx` is available along with the `:endpoint_ctx` keyword argument, should you need low-level data.
+
+<%= h4 "Runtime Options" %>
+
+You can pass `#endpoint` options at run-time.
+
+<%= code "create-options", file: "app/controllers/songs_controller.rb" %>
+
+Run-time options will be accessable in the endpoint contenxt (**not** the `domain_ctx`).
+
+<%= h4 "Protocol Failure" %>
+
+The `Or` block is only executed for a `failure` outcome. To catch a protocol failure you can use `#protocol_failure`.
+
+<%= code "protocol_failure", file: "app/controllers/songs_controller.rb" %>
+
+The block is only executed for authentication/authorization failures.
+
+<%= h4 "Pitfalls" %>
+
+**Do not return** anything from your controller action! This will break the DSL.
+
+<%= code "ruby" do %>
+def create
+  endpoint Song::Operation::Create do |ctx, **|
+    # ...
+  end.Or do |ctx|
+    # ...
+  end
+
+  @counter += 1 # this will break!
+end
+<% end %>
+
+Put any additional code before or into the DSL blocks.

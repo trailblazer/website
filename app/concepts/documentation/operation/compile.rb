@@ -10,8 +10,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     activity: [
       "activity",
       "operation",
-      "workflow"
-      # "2.1/docs/endpoint.md"
+      "workflow",
+      "endpoint"
     ]
 
     # gems:              [
@@ -33,7 +33,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "activity"    => "/2.1/docs/activity.html",
     "test"        => "/2.1/docs/test.html",
     "operation"   => "/2.1/docs/operation.html",
-    "workflow"    => "/2.1/docs/workflow.html"
+    "workflow"    => "/2.1/docs/workflow.html",
+    "endpoint"    => "/2.1/docs/endpoint.html",
     # "page/trailblazer.md" => "/2.1/docs/trailblazer.html"
   }
 

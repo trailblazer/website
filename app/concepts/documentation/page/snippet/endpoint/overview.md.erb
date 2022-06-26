@@ -1,0 +1,237 @@
+The `endpoint` gem is the missing link between your routing framework and your business code. It acts like a mix of `before_filter`s and "responder" that handles authentication and authorization, invoking your actual logic, and rendering a response.
+
+<%= info do %>
+These docs, as of early December 2020, are still work-in-progress, and so is the `endpoint` gem. [Your input](https://github.com/trailblazer/trailblazer-endpoint/issues) for best practices is highly appreciated!
+
+We're pretty confident that by the end of the year `endpoint` is released and the API docs are streamlined.
+<% end %>
+
+<%= h2 "Overview" %>
+
+An endpoint links your routing with your business code. The idea is that your controllers are pure HTTP routers, calling the respective endpoint for each action. From there, the endpoint takes over, handles authentication, policies, executing the domain code, interpreting the result, and providing hooks to render a response.
+
+Instead of dealing with a mix of `before_filter`s, Rack-middlewares, controller code and callbacks, an endpoint is just another activity and allows to be customized with the well-established Trailblazer mechanics.
+
+<%= img "endpoint-draft.png" %>
+
+The abstract cave painting beautifully illustrates the concept of an endpoint.
+
+* Instead of invoking your domain operation yourself (which would be running `Song::Operation::Create` here), the endpoints takes care of that. You only configure and run the endpoint.
+* The endpoint runs auth*-related logic before and response-specific code after the operation, depending on the outcome of the former code. Flow-control in the endpoint is implemented identically to what happens in activities and operations: an endpoint is just another activity using the [Wiring API](/2.1/docs/activity.html#activity-wiring-api) to insert steps and connect outputs.
+* For pluggability, an endpoint is split into a _Protocol_ and an _Adapter_ part. This separates generic logic from  environment-dependent code.
+* You may use the wiring mechanics to customize endpoint, adapter, protocol, remove or change steps, rewire outputs, inherit from base endpoints, and so on.
+* All Trailblazer developer niceties are available: tracing and debugging endpoints via `#wtf?` and friends helps understanding flow and behavior.
+
+<%= h3 "Example" %>
+
+In a Rails controller, a controller action could look as follows.
+
+    class DiagramsController < ApplicationController
+      endpoint Diagram::Operation::Create, [:is_logged_in?, :can_add_diagram?]
+
+      def create
+        endpoint Diagram::Operation::Create do |ctx, **|
+          redirect_to diagram_path(ctx[:diagram].id)
+        end.Or do |ctx, **|
+          render :form
+        end
+      end
+    end
+
+While routing and redirecting/rendering still happens in Rails, all remaining steps are handled in the endpoint.
+
+An API controller action, where the rendering is done generically, could look much simpler.
+
+    class API::V1::DiagramsController < ApplicationController
+      endpoint Diagram::Operation::Create, [:is_logged_in?, :can_add_diagram?]
+
+      def create
+        endpoint Diagram::Operation::Create
+      end
+    end
+
+Endpoints are easily customized but their main intent is to reduce fuzzy controller code and providing best practices for both HTML-rendering controllers and APIs.
+
+<%= h3 "Endpoint" %>
+
+Each controller action maintains its very own endpoint. The endpoint contains the actual business operation to be executed.
+
+An endpoint is separated into two parts: protocol and adapter.
+
+<%= h4 "Protocol" %>
+
+The adapter is where authentication, policy checks, and eventually your domain logic happen. All termini of the protocol's activity are standardized end events - that's how protocol and adapter communicate.
+
+<%= img "endpoint-protocol.png" %>
+
+Note how a handful of default steps lead into six standardized termini, allowing to plug protocols into different adapters. Imagine replacing your self-written API adapter with a canonical JSON-API adapter, for example.
+
+The default steps of the protocol handle the following aspects.
+
+* **AUTHENTICATION** The `authenticate` step is specific to the environment. For instance, it might deserialize a user from a web cookie, or parse an XML header for authentication detail. The outcome is communicated through its well-defined terminus `not_authenticated`. It is up to you to implement this step.
+* **AUTHORIZATION** Per default, there's a `policy` step to decide whether or not the domain operation should be invoked. Should the check fail the protocol will end on `not_authorized`. It is up to you to replace, implement or remove this step.
+* **DOMAIN ACTIVITY** Once the above steps have been executed successfully, your actual business code is invoked. This could be an operation, a workflow, or hand-baked Ruby code completely unrelated to Trailblazer.
+
+Four more termini implement the following concepts.
+
+* `success` indicates a successful run of the domain activity.
+* `failure` is interpreted as "invalid data". Most operations end on `failure` if something went "wrong", such as a failed validation.
+* `not_found` is reached when the domain operation (or additional steps in the protocol) couldn't find a particular object. Most "legacy" operations don't have this output, yet. However, the `Model()` macro [now supports this terminus](/2.1/docs/operation.html#operation-macros-model-not-found). Alternatively, you could add a decider step after your domain activity that connects to the `not_found` terminus if `ctx[:model]` is empty.
+* `invalid_data` is an experimental terminus that is designed to represent a validation failure more explicitly. Ignore it for now.
+
+It is important to understand that the protocol doesn't interact with the environment: while it handles all the "boring" tasks like auth* and running the actual domain activity, it does not react to that but merely communicates the outcome via one of the well-defined termini.
+
+<%= h4 "Adapter" %>
+
+In turn, the adapter knows nothing about what happened in the protocol. Its job is to prepare everything for the response, which usually implies setting HTTP headers, a status and rendering some kind of document.
+
+<%= img "endpoint-adapter-web.png" %>
+
+Structurally, the adapter activity contains the protocol as just another step. The protocol's termini are wired to the handler paths in the adapter (depicted above as dotted lines). As visible, the wiring is completely customizable using the TRB wiring API. For example, `failure` and `invalid_data` are both wired to the same handler path.
+
+The three end events `not_found`, `not_authenticated` and `not_authorized` are all running through the same path, ending in the `fail_fast` terminus. This path is called `protocol_failure` and implies a non-business problem, like a failed authentication.
+
+Business failures such as a invalid contract validation will usually end up on the `failure` terminus.
+
+Both the `Web` and the `API` adapter will now run, and the frontend code then interprets the outcome and runs your configured _block_ (e.g. `render` or `redirect_to`).
+
+<%= info do %>
+Currently, we have very simple adapters that don't do much, as we're still figuring out the best practices here.
+<% end %>
+
+<%= h2 "Configuration" %>
+
+In Rails, the endpoint layer is introduced by including a customized module in a controller. You may do so by using `Controller::module`.
+
+<%= code "app-include", file: "app/controllers/application_controller/api.rb" %>
+
+The options are discussed in the respective API and Web sections. When including, a bunch of configuration directives are set up, and a handful of class and instance methods are added to the controller.
+
+<%= h3 "Controller-level Setup" %>
+
+Configuring endpoints for your application involves three steps.
+
+* Defining application-wide and/or controller-wide runtime options by setting `directive`s.
+* Setting application or controller-wide default values for building endpoints at compile-time using the "hash-form" of `::endpoint`.
+* Fine-tuning each controller action endpoint using the "targeted" `endpoint Song::Operation::Create` and passing specific options.
+
+Those options will be combined at compile-time to build a specific endpoint activity for each controller action, where the "targeted" options (3.) override default settings from the "hash-form" (2.).
+
+It is a good strategy to configure as much as possible on the controller-level and customize per specific endpoint. Use the "hash-form" of `endpoint` to configure default options.
+
+For example, in a set of web controllers, most endpoints will reuse the same protocol and adapter. You can specify default values on the (application) controller level, here, on `ApplicationController::Web`.
+
+<%= code "endpoint", file: "app/controllers/application_controller/api.rb" %>
+
+The "hash-form" `::endpoint` method accepts the following options.
+
+* `:protocol`
+* `:adapter`
+* The "protocol block" passed as a block to `::endpoint`. This block is executed in the protocol context and allows adding, changing and removing steps using the TRB wiring API. Currently, you need to return a hash from it. (FIXME)
+* `:find_process_model` to activate process model finding.
+* `:serialize` and `:deserialize` to active encrypted suspend/resume session handling.
+* `:deserialize_process_model_id_from_resume_data` to automatically extract the process model's ID from the resume data. (experimental)
+
+Keep in mind that those options can be overridden using the "targeted" `::endpoint` method.
+
+<%= h4 "Action Endpoint" %>
+
+Every action needs to have its very own endpoint set up. This is usually done one the class level with the `::endpoint` method.
+
+<%= code "endpoint", file: "app/controllers/api/v1/songs_controller.rb" %>
+
+It's sufficient to simply pass the operation constant to `::endpoint` to make Trailblazer set up an endpoint that contains the specified operation as its domain activity.
+ All other values are copied over from the [generic setup](#endpoint-configuration-endpoint-setup).
+
+Note that you can override the _protocol block_ per action/endpoint.
+
+It's possible to use an arbitrary alias for the endpoint if you provide the `:domain_activity` option.
+
+<%= code :ruby do %>
+endpoint :create, domain_activity: Song::Operation::Create
+<% end %>
+
+You can then invoke the endpoint by providing the alias.
+
+<%= code :ruby do %>
+def create
+  endpoint :create
+end
+<% end %>
+
+This is helpful for triggering events when using workflows within the endpoint. (We will document that soon!)
+
+#todo domain_ctx_filter, :current_user
+
+<%= h4 "Directives" %>
+
+As everything in TRB, an endpoint is invoked top-to-bottom. Any dependency required inside, for instance the `current_user` in the domain activity, needs to be "thrown into" the invocation. Just like you're used to when calling operations manually.
+
+Injecting dependencies is done using directives. Those are Ruby snippets that provide variables.
+
+<%= code "options_for_domain_ctx", file: "app/controllers/application_controller/api.rb" %>
+
+By registering directives using the same-named method, Trailblazer knows that you want to add variables to a well-defined configuration hash. The directives are executed at certain hooks in `endpoint` and hopefully provide the desired data.
+
+The `endpoint` gem uses four directives.
+
+* `options_for_endpoint` is data passed directly to the endpoint activity. For instance, if you need to parse an XML body for authentication, or inspect a JWT, you have to make sure that at least the `request` object is available in this hash.
+* `options_for_domain_ctx` represents the "hash" passed to the domain activity. This is where `params` and such is passed.
+* `options_for_block_options` are three blocks defining the behavior for the three different outcomes. Hence, the keys are `:success_block`, `:failure_block` and `:protocol_failure_block`.
+* `options_for_flow_options` are library-specific options. Here, you could set `context_options` to alias keys in the `ctx` object, activate your own tracing, etc.
+
+Please refer to the API and Web sections to see directives in action.
+
+<%= info do %>
+TODO note: we will shortly document how `directive`s work generically as it's a mechanism independent from `endpoint`.
+<% end %>
+
+<%= h3 "Runtime" %>
+
+To run an endpoint in a controller action, use the `#endpoint` method. Its interface varies depending on if you use the API or the DSL version.
+
+<%= code "ruby" do %>
+def create
+  endpoint Song::Operation::Create do |ctx, model:, **|
+    redirect_to song_path(model.id)
+  end
+end
+<% end %>
+
+The particular endpoint is referenced by passing the alias to the `#endpoint` method, which is usually the constant of the operation.
+
+<%= h4 "Options" %>
+
+Any options passed to the method will be available in the `endpoint_ctx`.
+
+<%= code "create-options", file: "app/controllers/songs_controller.rb" %>
+
+If you want to override the `domain_ctx`, the `:options_for_domain_ctx` option is your friend.
+
+<%= code "domain_ctx", file: "app/controllers/songs_controller.rb" %>
+
+The `options_for_domain_ctx` directive will not be used if you provide the option manually.
+
+<!--
+<%#= h4 "Design Concepts" %>
+
+* top to bottom, as everything in TRB.
+
+* controllers are configuration containers for input and rendering behavior (failure case, success!)
+
+* Endpoints are just a suggestion following a best-practice. You can and should rewire them using the Wiring API if you find the existing pattern not suiting your needs.
+* The separation of protocol and adapter makes it super simple to reuse adapters for many protocols.
+* Certain steps, like `authentication` can easily be replaced with  a subprocess from authentication gems, like Tyrant or Devise. Again, you can use the Wiring API.
+
+      endpoint =
+        Trailblazer::Endpoint.build(
+          domain_activity: activity,
+          protocol: Trailblazer::Endpoint::Protocol,
+          adapter:  Trailblazer::Endpoint::Adapter::Web,
+      ) do
+        # this block is executed in the context of the {Protocol}
+
+        step Subprocess(Tyrant::Auth::Cookie), replace: :authenticate, inherit: true # replace the template's authentication with yours
+        {}
+      end
+-->

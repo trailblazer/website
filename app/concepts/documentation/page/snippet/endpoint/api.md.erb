@@ -1,0 +1,178 @@
+<%= h2 "API Interface" %>
+
+If a controller exposes a generic behavior, the `API` interface is your pick. While you can still override specific behavior, it abstracts best practices for document APIs.
+
+The `API` interface is designed to generically render a document response (such as XML or JSON) along with a response status. It does so by placing handler and render steps onto the three outcome tracks for `success`, `failure` and `protocol_failure` in an API-specific `Adapter`.
+
+<%= img "endpoint-adapter-api.png" %>
+
+In `Adapter::API` there's one track for a `success`ful domain execution, one for `failure` or `invalid_data` and one _protocol failure_ track that handles `not_found`, `not_authorized` and `not_authenticated`. The idea is to render a generic error with HTTP status code for the latter three cases, hence all three outcomes lead into the same track.
+
+<%= h3 "Application Controller" %>
+
+It is a good practice to install an `ApplicationController::Api` controller in your app to inherit from.
+
+<%= code "app-include", file: "app/controllers/application_controller/api.rb" %>
+
+Introducing all necessary class and runtime methods, every controller inheriting from `Api` is ready to be used as an endpoint controller for a document API.
+
+<%= info do %>
+Please include the `Endpoint::Controller` module only once per inheritance tree.
+<% end %>
+
+<%= h3 "Action" %>
+
+Since the response behavior in APIs is very universal, controllers usually look quite simple.
+
+<%= code "controller", file: "app/controllers/api/v1/songs_controller.rb", collapse: :empty %>
+
+Note that the concrete controllers are derived from `ApplicationController::Api`.
+
+On the class level, each endpoint is configured using the `::endpoint` method. The only required option is the operation you intend to run (also known as _domain_activity_). Optionally, you might add additional wiring using the _protocol block_, such as adding a `not_found` output. (FIXME: explain later)
+
+In the actual action you can now run the endpoint and your domain operation using the `#endpoint` instance method. Additional options may be passed and will be available in the `endpoint_ctx`.
+
+<%= info do %>
+Endpoints should be configured on the class level. This allows compiling each activity when your code is loaded, which results in a much faster app performance than computing the endpoint at runtime.
+<% end %>
+
+<%= h3 "Configuration" %>
+
+A handful of options need to be configured using Trailblazer's `directive` mechanism.
+
+<%= h4 "Response" %>
+
+Universal behavior is usually configured on the app-level. In Rails, this would be the `ApplicationController` or a generic subclass such as `ApplicationController::Api`.
+
+<%= code "app-controller", file: "app/controllers/application_controller/api.rb" %>
+
+The hash returned by `#options_for_block_options` configures the generic behavior for the three outcomes `success`, `failure` and `protocol_failure`.
+
+You have access to the currently executed `controller` instance and hence can use all of Rails' controller API, in our case, render a JSON document and set a HTTP response status. Since all three outcomes do the same, this is very generic configuration. Nevertheless, here is the place to add additional headers such as `Authorization`.
+
+Both the `:representer` and the `:status` variables are set during the endpoint's invocation. We will discuss this shortly.
+
+Last, you need to use the `::directive` method to register your configuration. The `:options_for_block_options` directive is used internally after running the endpoint and before rendering the response.
+
+<%= h4 "Overriding Block options" %>
+
+Per default, the three blocks to render the response are configured via the `:options_for_block_options` directive. You may override them via `#endpoint`.
+
+<%= code "show-options", file: "app/controllers/api/v1/songs_controller.rb" %>
+
+This is handy to customize behavior in a particular action, or for debugging.
+
+<%= h4 "Runtime Options" %>
+
+As the endpoint needs data to perform authentication, authorization and eventually the rendering, a few more options are set using the canonical `options_for_endpoint` directive.
+
+<%= code "options_for_endpoint", file: "app/controllers/application_controller/api.rb" %>
+
+The three variables `:request`, `:errors` and `:errors_representer` will now be injected into the endpoint's `ctx`. Note that these are specific to our authentication and our very own `Adapter` implementation. In your project, you might not need representers or an application `Errors` object.
+
+In order to inject data into your domain operation (e.g. `Song::Operation::Create`), use the `:options_for_domain_ctx` directive. It can be easily overridden at run-time in the controller action if you need to tweak it specifically (FIXME: add link).
+
+<%= code "options_for_domain_ctx", file: "app/controllers/application_controller/api.rb" %>
+
+The domain operation can now access `ctx[:params]`.
+
+
+<%= h3 "Protocol" %>
+
+For an API-specific protocol, in most cases a password or JWT-based authentication will be installed. Authorization, or a policy deciding whether or not this action is legit, can be handled with your own logic or entirely removed and done in the operation itself.
+
+Both authorization and policy are discussed in the tutorial, simple versions are [implemented in the gem test suite](https://github.com/trailblazer/trailblazer-endpoint/blob/prototype-nick/test/rails-app/app/concepts/auth/operation/authenticate.rb).
+
+Whatever your auth* logic does, it should set a `ctx[:current_user]` that will then get passed into your business operation.
+
+<%= code "protocol", file: "app/controllers/application_controller/api.rb" %>
+
+Derive your API protocol from `Trailblazer::Endpoint::Protocol` and override the steps you want to customize using the `:inherit` option, so that the original step's wiring stays in place.
+
+<%= h3 "Adapter" %>
+
+It is important to understand that the `Adapter::API` shipped with `endpoint` only sets the HTTP status according to the outcome. In order to render a document, additional steps have to be added to the adapter subclass.
+
+<%= code "adapter", file: "app/controllers/application_controller/api.rb" %>
+
+Those render steps in our example app use two injected variables for rendering.
+
+The `:representer_class` variable is injected per controller action by passing it to the `endpoint` helper.
+
+<%= code "create", file: "app/controllers/api/v1/songs_controller.rb" %>
+
+Since the error rendering is generic, the `:errors_representer_class` variable is set controller-wide [via `options_for_endpoint`](#endpoint-api-interface-configuration-runtime-options).
+
+<%= h3 "api endpoint" %>
+
+Putting together the `Protocol` with the specific `Adapter` along with the `Create` domain operation will result in a flow as depicted here.
+
+<%= img "endpoint-adapter-api.png" %>
+
+The separation of the `Protocol` and `Adapter` allows to use the same business logic in different environments, the `Adapter` only reacts to well-defined outcomes such as "not found" or "invalid data" and, in an API context, responds with a rendered document and a HTTP status. This behavior could and should be different [in a web UI].
+
+<%= h4 "Handlers" %>
+
+In our example adapter, each `_xxx_status` method sets a status code in the endpoint's context. Those steps are shipped with the gem in `Adapter::API`.
+
+<%= code :ruby do %>
+# endpoint/lib/trailblazer/endpoint/adapter.rb
+class Trailblazer::Endpoint::Adapter::API < Web
+  # ...
+  def _422_status(ctx, **)
+    ctx[:status] = 422
+  end
+<% end %>
+
+All `handle_*` steps are inserted via `include Trailblazer::Endpoint::Adapter::API::Errors::Handlers`, in their standard version they simply set an error message on the `errors` object instance.
+
+<%= code :ruby do %>
+# endpoint/lib/trailblazer/endpoint/adapter.rb
+class Trailblazer::Endpoint::Adapter::API < Web
+  # ...
+  def handle_invalid_data(ctx, errors:, **)
+    errors.message = "The submitted data is invalid."
+  end
+<% end %>
+
+Feel free to replace, extend or remove these error handlers should you not want to maintain an `errors` object, for instance.
+
+<%= h4 "Protocol Failure" %>
+
+Check again the above diagram. It is important to understand that only `failure` and `invalid_data` are wired to the explicit `failure` terminus in the adapter. This communicates a domain error, such as a failed validation or an expired account.
+
+All other problems are connected to the `protocol_failure` step and will end on the `fail_fast` terminus of the adapter, indicating a _protocol error_ like wrong user credentials, a not-existent record, or missing permissions to perform that very operation.
+
+In the API context, protocol failures often need to be treated differently to domain errors. The first may be communicated to the user with a generic error message and an HTTP status code, whereas the latter often involves rendering the specific validation errors. The design of the `Adapter::API` in the endpoint gem makes this quite trivial.
+
+<%= h3 "Build" %>
+
+Once all parts are written and configured, you need to configure the basic endpoint.
+
+<%= code "endpoint", file: "app/controllers/application_controller/api.rb" %>
+
+All controllers derived from `ApplicationController::Api` will inherit those settings.
+
+<%= h3 "Test" %>
+
+To see your API endpoints in action, write a test. In the example, we use simple Rails controller tests.
+
+When `POST`ing a valid document to your `Create` action, a `200` HTTP is returned along with a JSON response which is the rendered object we just created.
+
+<%= code "success", file: "test/controllers/api_songs_controller_test.rb" %>
+
+Note the valid JWT token we pass along in the request. The valid token and the appropriate input data results in the following trace.
+
+<%= img "endpoint-success-trace.png" %>
+
+The next test covers the `not_authenticated` case where the JWT was not submitted.
+
+<%= code "not_authenticated", file: "test/controllers/api_songs_controller_test.rb" %>
+
+In case you're wondering - the error message is set by the `handle_not_authenticated` step in the adapter.
+
+Here's the trace.
+
+<%= img "endpoint-not_authenticated-trace.png" %>
+
+As this is a protocol_failure, the endpoint terminates on its `fail_fast` end.
