@@ -1,0 +1,36 @@
+<%= h2 "License" %>
+
+All Trailblazer core gems are licensed under the LGPLv3. Additional gems are MIT.
+
+<%= h3 "FAQ" %>
+
+There is a lot of confusion around the LGPLv3 license. It is actually not as restrictive as you might've thought! Here are the most commonly asked questions that we answered with the help of a lawyer specialized in licensing.
+
+<%= h4 "Why is TRB licensed under LGPL, not MIT?" %>
+
+Trailblazer (TRB) is an Open-Source project. Since we want to keep it that way, we decided to raise awareness for the “cost” of our work - providing new versions and features is incredibly time-consuming for us, but we love what we do. The GNU Lesser General Public License (LGPL) has no implications for 75% of our users. Nevertheless, the license change has lead to an increasing number of inquiries for a commercial license. This creates a win-win situation, you as the user have your peace of mind, and we can continue working with your funds.
+
+<%= h4 "What are the implications of LGPL and how can I avoid those?" %>
+
+The LGPL allows users to use and integrate LGPL software components into their own software without being required to release the source code of their own software components. However, if users modify LGPL software components (“derivative work”), they are required to make the modified software component available under the same LGPL license.
+
+To avoid the latter with TRB, users have to comply with para. 5 LGPLv2.1:
+
+> A program that contains no derivative of any portion of the Library, but is designed to work with the Library by being compiled or linked with it, is called a "work that uses the Library". Such a work, in isolation, is not a derivative work of the Library, and therefore falls outside the scope of this License.
+
+In other words: if you use the TRB libraries in your commercial applications or Open-Source projects, you’re not creating a derivative work of Trailblazer. Your software can be distributed under any terms.
+
+<%= h4 "I use TRB in my MIT-OSS project. Does that mean I have to relicense mine to LPGL?" %>
+
+No, just make sure you that you don’t use a derivative of any portion of the Library (see above). Again, using Trailblazer in your projects, overriding its methods, “monkey-patching”, etc is not considered a derivate. You’re free to pick your own license.
+
+<%= h4 "We use TRB in a commercial, closed-source application. Do we have to publish our source code now?" %>
+
+No, you don’t have to license your project under LGPL and you don’t have to provide your source code publicly.
+
+However, if you use TRB modules licensed under LGPLv3 please
+
+* provide a relinking mechanism for TRB libraries
+* provide a license copy & explicitly acknowledge TRB usage
+* make a TRB source code copy available for customers or link to our repositories
+* note that TRB source code modifications are not proprietary

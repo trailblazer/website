@@ -1,0 +1,316 @@
+<%= h2 "QUICK START 01 | Operation Basics" %>
+<%= h2 "QUICK START 02 | Trailblazer Basics" %>
+<%= h2 "QUICK START 03 | Rails Basics" %>
+
+Now that we've learned [what operations do](01-operation-basics.html) and how Trailblazer [provides convenient macro steps](02-trailblazer-basics.html) to ease your life as a software engineer, it's time to check out how to leverage operations and form objects in Rails.
+
+In this guide you will learn
+
+* where files live and what Trailblazer's file structure in a Rails application looks like
+* how to build basic CRUD operations to implement a blog post lifecycle
+* why it's a good idea to harness `trailblazer-rails` gem in your controller
+
+You will **not** learn
+
+* how to use Cells to replace Rails views with a better abstraction - in this guide will are using vanilla Rails views
+* how tests works (this is covered in the next guide)
+
+
+<i class="fa fa-download" aria-hidden="true"></i> Where's the [**EXAMPLE CODE?**](https://github.com/trailblazer/guides/tree/operation-03)
+
+<%= h3 "Setup" %>
+
+We are going to create very primitive CRUD operations to create, update, show, and delete a `BlogPost` model. The operations use simple form objects provided by `reform` to validate data.
+
+Here's the `Gemfile`.
+
+<%= code "gemfile", file: "Gemfile" %>
+
+The `trailblazer` gem pulls all best-practice gems of the Trailblazer project, like the operation, macros, and reform bindings.
+
+`traiblazer-rails` adds one single method `#run` to the `ApplicationController` which provides a short-cut to invoke operations in controller actions.
+
+For the rendering part, we require `simpleform` because it makes rendering forms (and erroring forms) super simple! The `dry-validation` gem integrates with Reform and allows defining validations for our form objects.
+
+<%= h3 "File Structure" %>
+
+You can always discover a Trailblazer application in Rails by the `app/concepts` directory.
+
+
+    app/concepts/
+    ├── blog_post
+    │   ├── contract
+    │   │   ├── create.rb
+    │   │   └── update.rb
+    │   └── operation
+    │       ├── create.rb
+    │       ├── delete.rb
+    │       ├── index.rb
+    │       ├── show.rb
+    │       └── update.rb
+
+Trailblazer files are structured first by *concept*, then by *technology*, where the first represents the domain name like "blog post" and the latter an abstraction layer like `operation`, `contract` or `cell`.
+
+<%= info do %>
+Keep in mind that it is also possible to use nested concepts as in `app/concepts/admin/ui/post`.
+<% end -%>
+
+In Trailblazer **all file and class names are singular** which means you don't have to think about whether or not something should be plural (it is still possible to use plural names, e.g. `app/concepts/invoices/..`).
+
+Existing controllers, models and other code can peacefully coexist with TRB files - it's a refactoring framework meant to be used in your seasoned application.
+
+<%= h3 "Presentation Operation" %>
+
+We already covered the essential mechanics in chapter 02 and can jump directly into the first problem: how do we render a form to create a blog post?
+
+Since we're going to use Reform for our forms, we need a *presentation* operation that creates an empty `BlogPost` and sets up a Reform object which can then be rendered in a Rails view. The new operation is named `BlogPost::Operation::Create::Present` and usually sits *inline* in the `Create` operation class (and file).
+
+<%= code "createop", file: "app/concepts/blog_post/operation/create.rb" %>
+
+The inlined `Present` operation is a convention to save you from creating another superfluous file. The operation's sole purpose is to instantiate an empty model and construct a form object for it.
+
+<%= code "createop", file: "app/concepts/blog_post/operation/create.rb", collapse: "present" %>
+
+Those are all steps we've discussed in chapter 02. Create a new model, and use `Contract::Build()` to instantiate a Reform form that decorates the model. The form object will be stored in the `ctx["contract.default"]` variable. <%= api "/2.1/docs/operation.html#operation-contract-build" %>
+
+<%= h3 "Contract (Dry-validation)" %>
+
+The interesting part in the `Present` operation is the `:constant` option: it references the `BlogPost::Contract::Create` class which defines the form object (or "contract", we use that interchangeable) for a create context.
+
+<%= code "contract", file: "app/concepts/blog_post/contract/create.rb" %>
+
+Including the `Dry` module activates Dry-validation. In the `validation` block you can use all mechanics provided by Dry-validation. <%= api "https://dry-rb.org/gems/dry-validation/" %>
+
+While you could be validating your incoming data directly with a Dry-validation contract, using a Reform object, whatsoever, will allow rendering that form in a view.
+
+<%= info do %>
+You are free to chose between ActiveModel validations or Dry-validation in Reform.
+<% end -%>
+
+<%= h3 "Rendering Forms" %>
+
+We now have the form and operation in place and are ready to hook that into the `BlogPostsController`'s `new` action.
+
+<%= code "new", file: "app/controllers/blog_posts_controller.rb", collapse: "doc" %>
+
+Instead of invoking the operation manually, we use the handy `#run` method provided by the `trailblazer-rails` gem. <%= api "/2.1/docs/trailblazer.html#trailblazer-rails-run" %>
+
+The `run` helper yields the block we passed to it, but only in case of a successful operation run. The `ctx` block argument is the result object from the - successfully - run operation.
+
+This is really nothing more as so.
+
+    if ctx = BlogPost::Operation::Create::Present.(params: params)
+      @form = ctx["contract.default"]
+      render
+    end
+
+After running the operation, retrieving the contract instance, and storing it in `@form` it is now time to render a view with a form, that we can actually fill out and publish our blog post.
+
+We will use a vanilla Rails view.
+
+<%= h4 "Forms and Rails views" %>
+
+The new view has nothing to do with Trailblazer, it's pure Rails and hence resides in the good-ol' `app/views` directory.
+
+<%= code "new", file: "app/views/blog_posts/new.html.erb" %>
+
+The `@form` object (which is a Reform instance) is passed into `simple_form_for`. Note that we do have to provide `:url` and `:as` manually since Reform - per default - is not completely compatible to Rails' magic form helpers. <%= api "/2.1/docs/reform.html#reform-rails-activemodel-compliance" %>
+
+<img class="thumbnail" src="/images/guides/03-new-form-layoutless.png">
+
+It looks a bit sad without any layout, but we’ll come to that shortly.
+
+Submitting this very form will POST data to `/blog_posts/`, which is the next controller action we are going to implement.
+
+<%= h3 "Create" %>
+
+And again, we simply run an operation in the controller action. This time it's `BlogPost::Operation::Create`.
+
+<%= code "create", file: "app/controllers/blog_posts_controller.rb" %>
+
+Do you start seeing how controller actions map to operations? This is because in Rails apps, actions correspond to specific application functions ("create blog post", "search user" or "add a comment"). Since the business logic is encapsulated in operations, you will always find controller actions simply dispatching to a particular operation.
+
+The `#run` helper executes the block when the operation was run successfully: we are redirected to the index page in case of creating a new blog post.
+
+<%= info do %>
+Please note that there's a `return` in the block, causing the controller's execution to stop. If you forget this, the rest of the `create` method will be executed, too.
+<% end -%>
+
+If the operation failed, we re-render the form from `new`. The `#run` method also returns the result object from the ran operation, so we can use it outside the block.
+
+<%= img "2.1/blog_post_new_error.png" %>
+
+Let's check out the `BlogPost::Operation::Create` operation in detail.
+
+<%= h4 "Create operation" %>
+
+While the `Present` operation we implemented earlier only creates an unpersisted model, the `BlogPost::Operation::Create` operation requires additional logic. It needs to process the submitted form data and physically persists the model in case of validity.
+
+To understand how the operation knows whether or not it was run successful, and how this entire workflow is implemented, we should have a look at its code.
+
+<%= code "createop", file: "app/concepts/blog_post/operation/create.rb" %>
+
+Now don't get confused by the nested `Present` class in `Create`! This is only Ruby's way of namespacing and doesn't leak any logic or state into the `Create` operation.
+
+<%= h4 "Nesting operations" %>
+
+The actual `Create` class starts after the `Present` body, with the `step Subprocess()` statement. This is where we reuse the existing `Present` operation to create an fresh `BlogPost` model and form object for it.
+
+The nested `Present` operation will be run when the `Subprocess` step is hit.
+
+<%= code "sub", file: "app/concepts/blog_post/operation/create.rb" %>
+
+Without configuration, the nested operation receives the current `ctx` object. In addition to that, when it finishes running, all its variables are copied back onto the original `ctx` and hence allowing you to "see" variables like `ctx["contract.default"]` on the outside. <%= api "/2.1/docs/activity.html#activity-variable-mapping" %>
+
+After building the model and contract is done, we run validations using the `Validate()` macro, persist the data to the model (in case the validation is happy) and send a notification after it in `#notify!`.
+
+<%= h4 "Macros" %>
+
+In this operation we make use of a lot of macros. Those are handy short cuts for frequently used steps such as creating or finding a model, building a contract, validating `params` using a form object, and so on.
+
+* `Contract::Validate()` uses the form it finds in `ctx["contract.default"]` and runs its validations against the `params` hash.
+* `Contract::Persist()` pushes the validated form data to `ctx[:model]` and calls `save` on the latter. <%= api "/2.1/docs/operation.html#operation-contract-persist" %>
+
+
+We wrote enough code to have a fully working setup to create, validate and persist blog posts along with post-processing logic such as sending out notifications, which would usually happen in an ActiveRecord callback.
+
+While an invalid form submission will re-render the form with errors. Sane input data causes a redirect to `/blog_posts/`, aka the *index* action.
+
+<%= h3 "Index" %>
+
+Again, the controller method `#index` simply dispatches to the `BlogPost::Operation::Index` operation and then renders a view.
+
+Yes, even data-aggregating functions (that do not alter application state) are embraced in operations.
+
+<%= code "index", file: "app/controllers/blog_posts_controller.rb" %>
+
+The collection of `BlogPost` models is exposed to the controller via `ctx[:model]`. Using the term `:model` is a convention and should not mean there's only exactly one model here.
+
+The total amount of posts is computed in the controller. This is okay to do, but could also be calculated in the `Index` operation. We are going to refactor this in a later guide.
+
+The collecting `Index` operation is very straight-forward.
+
+<%= code "indexop", file: "app/concepts/blog_post/operation/index.rb" %>
+
+The retrieved list is stored in `ctx[:model]` and exposed to the public under that very key.
+
+<%= info do %>
+This is the place where pagination, filtering, or even delegating to `Query` objects might happen. You are not limited to basic ActiveRecord usage here. We do [offer `trailblazer-finder`](https://github.com/trailblazer/trailblazer-finder/) but it's still under development.
+<% end -%>
+
+<%= h4 "Rails View", hide_in_toc: true %>
+
+After retrieving the collection of `BlogPost`s, the controller view `index.html.erb` is rendered.
+
+<%= code "index", file: "app/views/blog_posts/index.html.erb" %>
+
+We simply iterate of each row in `@model` and display the post's attributes and links to update and delete it.
+
+<%= img "2.1/blog_post_index.png" %>
+
+When rendered in the browser, you can see a breathtaking list of posts with buttons and links.
+
+<%= h3 "Edit" %>
+
+Clicking "Edit" brings you to the editing form that is rendered by the `BlogPostsController#edit` action. Keep in mind that the requested URL for this action is something like `/blog_posts/edit/1` with an ID in it!
+
+<%= code "edit", file: "app/controllers/blog_posts_controller.rb" %>
+
+Just like with `Create`, we use a "present operation" name `BlogPost::Operation::Update::Present` to prepare the form object, the latter being assigned to `@form` in the controller.
+
+Note that we also compute a `@title` for the HTML form in the controller. As this is rendering-specific, it's totally fine to do so in the controller. Check out, though, how we use `ctx[:model]` to access the currently edited `BlogPost` instance and grab its title.
+
+<%= h4 "Operation", hide_in_toc: true %>
+
+The `Update::Present` operation has to retrieve the matching model by somehow reading the ID from the URL, and then find the `BlogPost` row. Here is the operation.
+
+<%= code "update", file: "app/concepts/blog_post/operation/update.rb", collapse: "up" %>
+
+Again, the `Present` operation (that finds the post model) is inlined.
+
+The `Model()` macro here is configured to use `find_by` to retrieve a particular model. It does so by looking into `params[:id]`, here's what `Model()` does, in pseudo-code.
+
+    ctx[:model] = BlogPost.find_by(ctx[:params][:id])
+
+You might be wondering, where is `ctx[:params]` coming from all at sudden? It is always passed automatically into the operation call when using `#run` in the controller action. That makes `ctx[:params]` accessible throughout the operation without being a global. <%= api "/2.1/docs/trailblazer.html#trailblazer-rails-run" %>
+
+Since we don't need differing validations when editing, we reuse the `BlogPost::Contract::Create` contract we also used earlier. However, and this is one big advantage of this architecture, you *could* use different contracts for create, update, etc. without any need for `if`s as the forms are separate classes and not hard-wired into the model.
+
+
+<%= h4 "Rails view", hide_in_toc: true %>
+
+The rendered view `edit.html.erb` is very similar to the create view.
+
+<%= code "edit", file: "app/views/blog_posts/edit.html.erb" %>
+
+And as we're still not using Reform's ActiveModel magic we have to provide a `:url` as well as the `:method` option to SimpleForm in order to submit the form via `PATCH /blog_posts/:id`.
+
+Submitting the edit form will send us to the `#update` controller action. Do not forget, this form is sent to `/blog_posts/:id` - meaning we still do have the post's ID in `params`.
+
+<%= h3 "Update" %>
+
+Here's the controller action receiving the edited form.
+
+<%= code "update", file: "app/controllers/blog_posts_controller.rb" %>
+
+When `BlogPost::Operation::Update` wasn't happy with the input data, we render the editing form again, just as we did in `#edit`. There's quite some redundancy going on here which we could get rid off using the Cells gem, or introducing methods for the controller. Another time.
+
+Nevertheless, if the operation ran successfully, a flash message is set and we're redirected to the "show" action of the controller.
+
+<%= h4 "Operation", hide_in_toc: true %>
+
+The work-horse of this use case is obviously the operation with its steps, which you can check out below.
+
+<%= code "update", file: "app/concepts/blog_post/operation/update.rb" %>
+
+We apply the same `Present` pattern that we did for `Create`, and after all, both operations look almost identical, except for the `Model()` macro usage.
+
+<%= info do %>
+There are means and ways in Trailblazer to reduce this kind of complexity using polymorphism and composition - two things we will discuss in a following guide.
+<% end -%>
+
+In case of a successful update we're redirected to the "show" action that is supposed to neatly render one particular blog post.
+
+<%= h3 "Show" %>
+
+The `#show` action in the controller is probably the most boring one so far. The only thing we shall not forget is that we do have the post's ID stored in `params` since this action is triggered from a request like `GET /blog_posts/1`.
+
+<%= code "show", file: "app/controllers/blog_posts_controller.rb" %>
+
+The controller logic is pretty much what we already did with `Index`, which is running `BlogPost::Operation::Show`, find the model and assign `@model`, then render the view.
+
+<%= h4 "Operation", hide_in_toc: true %>
+
+As you might've guessed, the operation class is pretty simple, too.
+
+<%= code "showop", file: "app/concepts/blog_post/operation/show.rb" %>
+
+One lonely step uses the `Model()` macro to retrieve the displayed blog post with `.find_by`. A colorless, but functional view of a particular blog post is the reward for our hard work.
+
+<%= img "guides/03-show-layoutless.png" %>
+
+We're not gonna win a web design award for that but we're here to engineer anyway!
+
+The last missing piece for our simple CRUD example is deleting: we want to be able to trash articles that no longer fit.
+
+<%= h3 "Delete" %>
+
+You can do so by clicking the "Delete" link in the show view, which is sending us to the controller action `#destroy`. The triggered request here is `DELETE /blog_posts/1`, which implies we got the ID in `params`.
+
+<%= code "delete", file: "app/controllers/blog_posts_controller.rb" %>
+
+In this action, we neither have to handle the case that "something went wrong" nor do we need the deleted model for the rendering layer. We don't have to use `run` with a block! After deletion, we get redirected to the index view.
+
+<%= h4 "Operation", hide_in_toc: true %>
+
+The operation has two simple steps.
+
+<%= code "delete", file: "app/concepts/blog_post/operation/delete.rb" %>
+
+The `Model` macro helps finding the blog post instance, and a custom `delete` step actually deletes the model using ActiveRecord's `#destroy` method. Your ingenuis work is lost and gone forever.
+
+<%= h3 "Summary" %>
+
+Building a simple CRUD component with Trailblazer might feel a bit strange and over-engineered at first sight. Operations, steps, macros and form objects are something very different to what the Rails Way™ promised. Trust us, though, the steep but short learning curve is worth the way. Teams of any size relying on the Trailblazer architecture continuously report about their benefits of consistency, extendability and structure.
+
+Nevertheless, we haven't written a single line of tests. There is no excuse for that, given that Trailblazer's test style is much easier to understand than Rails' fragmented testing world. Check out the [testing QUICK START] to make your app bullet-proof.

@@ -1,0 +1,275 @@
+<%= h3 "Verify Account" %>
+
+* When clicking the link in our welcome email, the user opens a URL like `http://example.com/auth/verify_account/158_NvMiR6UVglr4pXT_8dqIJB41c0o3lKul2RQc84Tn2kc`.
+* In the backend we will run `Auth::Operation::VerifyAccount` that splits the token into user ID and verification key, finds the respective user, compares the actual and the stored key, and marks the user account as verified.
+* The `VerifyAccount` class looks massive, but it's a bunch of very simple steps.
+* DISCUSS: should we break down to code sample here?
+
+<%= code "op-verify-find" %>
+
+* We split the token string into user id and verification key in `extract_from_token`. The method `split_token` is implemented in `TokenUtils`. Both values are assigned to `ctx` variables.
+* Note that, if the splitting wasn't successful, `key` will be `nil`. This will make the step return `nil` and deviate to the failure track.
+* In `find_verify_account_key` the token row is retrieved from the database by using the user id. Again, if there's no such row stored, this step will fail.
+* `find_user` finds the user.
+* `compare_keys` uses a hack-proof comparison to compare the provided key and the key stored in our `verify_account_keys` table. See below.
+* `state` sets a new state on the user object.
+* `#save` persists the state.
+* Last, `#expire_verify_account_token` deletes the verification key row from the database, it can't be used anymore.
+
+<%= h4 "TokenUtils" %>
+
+* For completeness, here's the `TokenUtils` class.
+* Both methods are stolen from Rodauth.
+
+<%= code "token-utils" %>
+
+* To avoid timing attacks, we use `Rack::Utils.secure_compare`. See https://codahale.com/a-lesson-in-timing-attacks/ to learn what a timing attack is.
+* Don't worry, I had no idea myself that this exists.
+
+<%= h4 "Testing" %>
+
+* It's a good idea to extract valid options for `CreateAccount` since we will use it a lot.
+
+<%= code "valid-create-options" %>
+
+* Now, let's do the happy-path first.
+
+<%= code "verify-find" %>
+
+* We use `CreateAccount` as a factory for a user account waiting for confirmation.
+* Note how we retrieve the token from the result object and pass it directly into `VerifyAccount`. That's why we have a `:verify_account_token` keyword there.
+* The state of the user object must be `"ready to login"` after a successful run of `VerifyAccount` with the correct input.
+* The row in `verify_account_keys` must be deleted by now as it expired due to being used.
+
+<%= h4 "Testing edge cases" %>
+
+* We must make sure that we fail if an invalid user ID is in the token, e.g. for a user that doesn't exist.
+
+<%= code "verify-invalid-id" %>
+
+<%= img "2.1/book/verify-invalid-id.png" %>
+
+* There is no user with ID=`0` so the OP must fail.
+* As visible in the trace, it fails in `find_verify_account_key` since we don't have a table row with `user_id=0`
+
+<%= code "verify-invalid-token" %>
+
+<%= img "2.1/book/verify-invalid-token.png" %>
+
+* We create a valid account to be verified.
+* In the first test, the prefixed ID is correct but the token is wrong.
+* In the trace, you can see it errors out in `compare_keys`.
+* The second test checks nothing breaks for an empty token.
+* It errors out in `extract_from_token` as the `split` fails.
+
+<%= code "verify-invalid-second" %>
+<%= img "2.1/book/verify-invalid-second.png" %>
+
+* When using the same token twice, it fails in `find_verify_account_key` as the respective row doesn't exist anymore.
+* We finished our second operation for `Tyrant`.
+
+<%= h3 "Reset Password" %>
+
+* When not logged in, you can click a link "Forgot password?" that brings you to a form.
+* The form is an email field and a "Reset password" button.
+* We will implement that in part II of the tutorial.
+* When clicking "Reset password", our new `ResetPassword` operation is hit.
+
+<%= code "op-reset" %>
+
+* We find the respective user by their email or bail out in `find_user`.
+* The `password` field gets reset if user is found in `reset_password`.
+* State is changed in `state` as the account status changes.
+* The following two steps are copied over from `CreateAccount` and slightly modified. This is not good and needs refactoring soon! They create the reset password token that we send in an email to the user account.
+* We send an email to the user with the token so they can open the "Change password" form.
+
+<%= h4 "test" %>
+
+* Let's test if an invalid email really stops the OP.
+
+<%= code "reset-email" %>
+<%= img "2.1/book/reset-email.png" %>
+
+* When passing an unknown email to `ResetPassword`, the operation fails in `find_user`.
+* Check the trace.
+* let's test if a valid email resets the password and sends an email.
+
+<%= code "reset" %>
+<%= img "2.1/book/reset-ok.png" %>
+
+* Note how we use two operations to setup test application state - that's the spirit of TRB!
+* We test that the correct user's password is `nil`ified.
+* Also, the `state` changes.
+* There must be a token in `reset_password_tokens`.
+* A correct email containing the actual reset link must have been sent.
+* Note that we still have `:verify_account_token` in the result because we copied code.
+
+<%= h4 "Subprocess refactoring" %>
+
+* Since we reuse the logic to generate a token and save the token in two places (`CreateAccount` and `ResetPassword`) we have to extract this logic to a separate class.
+* It's easiest to move that to a separate operation.
+* TRB makes it super simple to nest and compose more complex operations.
+* We create `Auth::Activity::CreateToken` which can be "configured" through parameters.
+
+<%= code "create-token" %>
+
+* We store the token in `:token` now.
+* The ActiveRecord class needs to be given into that operation as `:token_model_class`. This is used in `#save_token`.
+* To use this operation in another operation you use `Subprocess`.
+
+<%= code "op-reset-sub" %>
+
+* You can use `:input` to configure what goes into the nested operation.
+* You don't have to configure that, but we need it.
+* We use a proc that receives the current `ctx` and allows to return a hash with the input for the nested `CreateToken` operation.
+* Using `:output`, we can define what from the nested ctx we want in the original ctx.
+* We can also use a hash and define mappings, in our case "map `:token` to `:reset_password_token`".
+* More docs for [variable mapping](/2.1/docs/activity.html#activity-variable-mapping).
+* Running our original tests all pass.
+* Check how `wtf?` neatly shows you the nesting. This is a major improvement to vanilla Ruby.
+
+ <%= img "2.1/book/reset-sub.png" %>
+
+* To complete the refactoring, we also need to update `CreateAccount`.
+* The four `verify_account_token`-related steps get replaced by `CreateToken`.
+
+<%= code "op-create" %>
+<%= img "2.1/book/create-sub.png" %>
+
+* All tests still pass when running the test suite.
+
+<%= h3 "Update Password" %>
+
+* When the user clicks the "Reset password" link in their email, they get sent to the "Change password" form.
+* This form can be opened multiple times (currently) and the link only expires once the password is set.
+* We need two operations: `UpdatePassword::CheckToken` to find the user associated to the reset_password_token, and compare it in order to render the "Change password" form.
+* and `UpdatePassword` to process the submitted form and eventually update the password.
+* As you already guessed, in `VerifyAccount` we have three steps with almost identical logic (`#find_verify_account_key`, `#find_user`, `#compare_keys`).
+* Let's extract the "find user by token, and compare keys" logic.
+
+<%= h4 "Check-Token" %>
+
+The `CheckToken` operation implements all common steps.
+
+<%= code "op-check-token" %>
+
+* It splits the token (`1_xxx`) into user ID and key.
+* Finds both the respective user and the key row.
+* The respective db table for the key needs to be configured by overriding `#key_model_class`. This in an alternative approach to using an injection with `:input`.
+* Compares the keys using the hack-proof method in `#compare_keys`.
+* All steps can fail and will omit the remaining steps.
+
+<%= h4 "check-token / Update-Password" %>
+
+* To use `CheckToken` to find keys in `update_password_keys` we need to subclass it.
+
+<%= code "op-update", collapse: "meth" %>
+
+* We only have to override `key_model_class` and return the class constant `ResetPasswordKey`.
+* Both steps and methods are inherited from `Auth::Activity::CheckToken`.
+* We're ready to test that logic. Remember, we need this to decide whether or not an "update password" request is valid and whether we should render the "Update password" form for the legitimated locked-out user.
+
+<%= code "reset-compare-keys" %>
+
+* We use our formerly written ops as factories.
+* This test checks if the token check works, and asserts there's no application state change, yet.
+* DISCUSS: refactor token-related tests?
+* we also need to test for an incorrect token.
+
+<%= code "reset-check-fail" %>
+
+* By providing an invalid token, the `UpdatePassword::CheckToken` op fails.
+
+<%= h4 "Process Password" %>
+
+* If the token is valid, the user can enter a new password along with its confirmation string.
+* We will implement that form in part II of the book.
+* When submitting, this hits `UpdatePassword`.
+* here, we need to check the token, again.
+* we also have to check password identity and in case of success, hash the new password.
+* This is logic from `CreateAccount` that we now extract to `ProcessPasswords`.
+
+
+<%= code "op-process-passwords" %>
+
+* We discussed this logic earlier.
+* This little op needs `:password` and `:password_confirm` and provides the hashed password - if correct and valid - in `:password_hash`.
+* DISCUSS: show how injection still works.
+* This `ProcessPasswords` can now be used in `UpdatePassword`.
+
+<%= h4 "Update Password" %>
+
+<%= code "op-update", collapse: "check" %>
+
+* The first step runs `UpdatePassword::CheckToken`, which either fails or provides a `:user` variable in the ctx.
+* This nested OP doesn't need  any input/output configuration.
+* The second step runs `ProcessPasswords`,  which fails in case of not matching passwords. If sucessful, it writes the `:password_hash` to the ctx.
+* If `ProcessPasswords` fails, it terminates on `fail_fast`, which is rewired using `fail_fast: true`. TODO: explain better
+* We then set a  new state on user.
+* We update the user with a new `password` and `state`. Note how this step is coupled to ActiveRecord.
+* In the last step, the `reset_password_keys` row is deleted from the database. The user can no longer update their password.
+* Here is a successful run.
+
+<%= code "update" %>
+<%= img "2.1/book/reset-password.png" %>
+
+* Now tell me you do not love this tracing!
+* The updated user must have a password and a new state.
+* The `reset_password_keys` row is deleted.
+* Hell yeah!
+* Let's quickly test a failing outcome.
+
+<%= code "update-fail" %>
+<%= img "2.1/book/reset-password-fail.png" %>
+
+* As visible in the trace, it fails in `passwords_identical?`.
+* The inner OP halts on `fail_fast`.
+* The outer OP halts on `fail_fast` as it's wired automatically in `Subprocess`.
+* We assert there were no side-effects, including no `password` set on user.
+* Wow, all OPs necessary are working.
+
+<%= h3 "Refactorings" %>
+
+* We still need to apply some refactorings to the older code.
+* `CreateAccount` needs to use `ProcessPasswords`.
+
+<%= code "op-create-sub", collapse: "meth" %>
+
+* Instead of repeating logic, it now delegates to the password processing OP.
+* `VerifyAccount` needs to use `CheckToken`.
+
+<%= code "op-verify-sub", collapse: "meth" %>
+
+* All token logic now comes from `CheckToken`.
+* This removes three steps.
+* Everything but `#expire_verify_account_token` stays the same. Here, we now use the more generic `:key` variable instead of `:verify_account_key`.
+* This is personal taste and saves me an output mapping.
+
+<%= h2 "Login" %>
+
+* For completeness, we should also have a `Login` operation that checks the password.
+* Note that this operation is completely decoupled from HTTP, accessing and writing to cookies happens in the application. See part II.
+* A new operation `Login` processes the data from a login form.
+* The login form will send `:email` and `:password`.
+
+<%= code "op-login" %>
+
+* `Login` tries to find the user by their email.
+* If found, it compares the provided password to the actual one.
+* If they match, `Login` is successful.
+* DISCUSS: only allow verified accounts? We will cover that in part II, III and IV. Excited? Me too!
+* A two-in-one test saves a lot of code and setup time: we cover a successful login with correct email/password and the wrong password.
+
+<%= code "login" %>
+
+* DISCUSS: we might change this to two `it`s.
+* We also need to cover the case when the user doesn't exist.
+
+<%= code "login-fail" %>
+
+* This fails, which means success!
+* All operations are tested, we're ready to move to the frontend in part II.
+
+<%= h3 "discuss" %>
+inheritance => control flow not behavior
+ingoing outgoing typing

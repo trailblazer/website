@@ -1,0 +1,335 @@
+<%= h2 "Railway Basics" %>
+
+[Code is here 🕮](https://github.com/trailblazer/tutorial/blob/master/ruby/test/basics_test.rb)
+
+Every modern application is composed of many different domain processes that need to be modeled, implemented, and maintained. Whether this is the life-cycle of a `<user>` entity or just a sign-up function, it has to be defined and coded somewhere.
+
+Trailblazer strikes when it comes to organizing business code.
+
+If you're interested in learning how to organize code, where to use Trailblazer's activities and how to model basic workflows using the `Railway` pattern, this tutorial is for you.
+
+<%= info do %>
+Already know how `step`, `pass` and `fail` work? Keyword arguments from `ctx` and `#wtf?` bore you? Jump right to [the next chapter]!
+<% end %>
+
+<%= h3 "Activities" %>
+
+Trailblazer is an architectural pattern that comes with Ruby libraries to implement that pattern. While there are many interesting layers such as Cells for the view, or Reform for validations and forms, the Activity component is the heart of TRB.
+
+An activity is a high-level concept to structure code flow and provide interfaces so you don't have to think about them. Instead of one big code pile, activities will gently enforce a clean, standardized way for organizing code.
+
+Activities are a necessary abstraction on top of Ruby. They help streamlining the control flow, and take away control code while providing you with an incredibly cool developer experience.
+
+<%= info do %>
+You're allowed to blame us for a terrible developer experience in Trailblazer 2.0. It's been quite painful to find out which step caused an exception. However, don't look back in anger! We've spent a lot of time on working out a beautiful way for both tracing and debugging Trailblazer activities in 2.1.
+<% end %>
+
+Activities can be used for any kind of logic and any level of complexity. Originally designed to "only" implement railways for CRUD logic, we now use activities in many parts of Trailblazer itself, from DSL options processing code, for pluggable, nested components of our applications, up to long-running processes, such as a user's life-cycle, that is comprised of a dozen or more nested activities.
+
+<%= h3 "An Oauth Signup" %>
+
+In this tutorial, we implement a sign-up function for a Ruby application. The first version only allows signups (and signing-in existing users) via Github Oauth. Don't worry, we are not going to discuss the bits 'n bytes of Oauth.
+
+It's a scenario directly taken from the Trailblazer PRO application which allows us to discuss a bunch of important concepts in Trailblazer.
+
+<%= img "2.1/tutorials/github-signin-v1.png" %>
+
+When clicking the Github link, the beautiful [omniauth gem] performs its magic. It handles all Oauth details and will - in case of a successful authorization via Github -  send a hash of login data shared by Github to a pre-configured controller actions of our app.
+
+All we need to do now is receive the data sent from Github, decide whether this is a new user and save their data, or an existing user, and then sign them into our application.
+
+
+At this stage, routing, controllers, etc is irrelevant. Just imagine a Rails controller action, a Sinatra router or a Hanami action as follows.
+
+<%= code "controller" %>
+
+The Trailblazer architectural style encapsulates all business logic for one function in one operation*. In other words: the controllers usually contain only routing and rendering code and dispatch instantly to a particular operation/activity class.
+
+<%= info do %>
+*An Operation is always an activity.
+<% end %>
+
+Whatever data from the outside is needed in the activity has to be passed explicitely into the activity's `call` method.
+
+In our case, the sign-up is handled in the `Signup` activity. We pass the `params` hash into it, which roughly looks like this.
+
+<%= code "omniauth" %>
+
+So, let's review: Omniauth handles Oauth authorization for us. Regardless of the implementation, this is usually automagic for the developer. The gist of it is: Omniauth sends a hash of data to our `auth` controller action once it's done. Now, it's the `Signup`-activity's duty to process that data. We're going to implement just that now. Are you ready?
+
+<%= h3 "A Railway activity" %>
+
+In the first throw of this requirement, we need to parse the omniauth hash, make sure it's in a format we understand, find out what user is signing in, log that successful sign-in somewhere, and finally communicate to the outer world that the signin was successful.
+
+<%= info do %>
+We do ignore new sign-ups at this stage and only allow _existing_ users to sign in.
+<% end %>
+
+A diagram resembling this chain of tasks would look like the following fragment of a BPMN diagram.
+
+<%= img "2.1/tutorials/signup-1.png" %>
+
+Now let's drop our optimism for a second, and face cold reality. Things could go wrong in two places here. First, the validation could fail if Github sends us data we don't understand. Second, we might not know the user signing in, meaning the "find user" logic has to error-out, leading us to a diagram like this.
+
+<%= img "2.1/tutorials/signup-2.png" %>
+
+If anything here did fail in "validate omniauth", all other steps in the chain would be skipped as the flow would follow the path leading to the `failure` terminus.
+
+Assuming the validation was successful, if the user provided by Github wasn't found in our system (in the "find user" box), the remaining logging step would be skipped, ending up in that mysterious `failure` circle, again.
+
+<%= img "2.1/tutorials/signup-3.png" %>
+
+Intuitively, you understand the flow just by looking at the BPMN diagram. And, heck, we haven't even discussed BPMN or any terminology, yet!
+
+Modelling the flow of a program where chunks of code are executed in a certain order, with a successful "happy path" and an "error-out" path is called a *Railway*. It popped up in functional languages [a long time ago].
+
+<%= h3 "Terminology" %>
+
+Before we continue, let us quickly clarify some lingo when working with Trailblazer, BPMN, and activities.
+
+<%= img "2.1/tutorials/voc.png" %>
+
+Be honest, you're loving my handwriting already, aren't you?
+
+* The **start event** is where the flow starts. It's a simple circle.
+* Every path or flow stops in a **terminus event**. Those are the filled circles. Often, we call them **end event**, too!
+* Your actual logic happens in **tasks**, the labeled boxes. A task may be any callable Ruby object, an instance method or even another activity.
+* Every task has at least one **output** which identifies an outgoing connection to the next element. An output in Trailblazer keeps a **semantic** and is triggered by exactly one **signal** from its task. A task is often called **step**.
+* The **"happy path"** or "success track" is the straight path from start to the terminus named `success`.
+* The **"error path"** or "failure track" is the lower path going the the `failure` terminus.
+
+<%= h3 "Implementation" %>
+
+Our present job is to implement those four consecutively invoked steps.
+
+While you could program this little piece of logic and flow yourself using a bunch of Ruby methods along with a considerable amount of `if`s and `else`s, and maybe `elsif`, if you're feeling fancy, a Trailblazer activity provides you a simple API for creating such flow without having to write **and maintain** any control code. It is an abstraction.
+
+<%= code "rw" %>
+
+Six lines of code create an executable object that, when invoked, will run your code in the order as visible in our diagram, plus the ability to "error out" when something goes wrong.
+
+We'll get to explaining what such a step looks like, or how its code chunk can "go wrong". Relax.
+
+Please do note that we're using two different DSL methods: The `#step` method will allow "erroring out", its friend `#pass` enforces successful outcomes, only. More on that later.
+
+<%= h4 "Invocation" %>
+
+In order to invoke, or *run*, this activity we just created, there is one recommended public way: its `invoke` method. You might remember that from the controller example above.
+
+<%= code "invoke" %>
+
+Ignore the clumsy-looking `invoke` API here for a minute. This is what sets off the execution of the activity. From start to end all boxes on the taken path are executed. Each step receives the return value of its predecessor. The return value decides about what next step is called.
+
+Your excitement when running this code the first time will be smashed to pieces in an instant with the following exception.
+
+<%= code "name-error" %>
+
+Obviously, the implementation of the actual tasks is still due. It's a good time to do that now.
+
+<%= h4 "What are Tasks?" %>
+
+Technically, a task in an activity can be any callable Ruby object. There are [numerous ways to define tasks]. What we will be using at this stage of the tutorial is the `:instance_method`-style. This means you define instance methods in the activity class and pass their `:method_name`s to the DSL `step` method.
+
+Let's go through each method step by step (no pun intended!). Here's `#validate` implemented in pure Ruby.
+
+<%= code "rw-meth", collapse: :extr %>
+
+Task methods always expose the so called [task interface] (unless configured otherwise), meaning both its arguments as well as the return value do matter!
+
+<%= h4 "Parameter Signature" %>
+
+Now, have a look at `#validate`. The first argument is the `ctx` data structure. This is whatever you passed into the activity invocation. Use the `ctx` object to access string keys and to write state to.
+
+<%= code "rw-params" %>
+
+Every symbol key in `ctx` is automatically available as a keyword argument, such as `params:` above. Using a hard-core `raise` you can quickly find out what's this about.
+
+To hit the `raise`, invoke the activity.
+
+<%= code "exc-params" %>
+
+As an avid engineer, you instantly realize the `params:` keyword argument in `#validate` represents whatever was passed under that key in the `ctx` object. So simple!
+
+Keyword arguments are very encouraged in Trailblazer as they're elegant and have a bunch of beautiful features.
+
+<%= info do %>
+Keyword arguments allow to define particular parameters as required. Should the parameter be missing, they also provide a way to set a default value. This is all done [with pure Ruby](https://thoughtbot.com/blog/ruby-2-keyword-arguments).
+<% end %>
+
+Always remember that you don't have to use keyword arguments - you could simply go the longer, less elegant way through `ctx`.
+
+<%= code "rw-ctx" %>
+
+The outcome is identical to the above.
+
+Now that we understand what goes *into* a task, let's learn about what goes *out*.
+
+<%= h4 "Return Value" %>
+
+When using the task interface, the return value of a method is important!
+
+<%= code "rw-validate" %>
+
+In `#validate`, our highly sophisticated validation will return either `true` or `false`, causing the activity to proceed to the next step, or "error out".
+
+<%= img "2.1/tutorials/truefalse.png" %>
+
+In other words: different return values will trigger different outputs of the task. The flow will continue on the outgoing connection of the output.
+
+Two things.
+
+* Yes, we are going to use a real validation library later, Reform or Dry-validation, or both.
+* And, yes, you may return other _signals_ from a task and thus have more than two outgoing connections. We'll elaborate on that [in part II]!
+
+We still haven't put all pieces into place in the activity. Some task methods are missing.
+
+<%= h3 "Pass" %>
+
+May I bring your attention to the second step `extract_omniauth`? In this step, we extract relevant data from the Oauth data structure for further processing.
+
+<%= code "rw-meth", collapse: :tasks %>
+
+Since the structure from Github is already validated, we can safely assume there's no "erroring out" necessary here. The `pass` DSL method does ignore the actual return value and will always return `true`.
+
+<%= code "rw-extract" %>
+
+Given Omniauth & Github are providing a proper data structure, we now have the email of the signing-in user directly on the `ctx` object - simply by writing to it. You can use this new value `email:` in following methods as a keyword argument!
+
+<%= info do %>
+A key/value pair written to `ctx`, e.g. by doing `ctx[:email] = "yogi@trb.to"` is sometimes called a _variable_. So, when we're talking about a variable, it's refering to either a key and its value in `ctx`, or to a keyword argument (which is one and the same).
+<% end %>
+
+Again, when using a task method with `pass`, the returned value of your logic is irrelevant, it will always stay on the "happy path".
+
+<%= h3 "Active Record? Logging?" %>
+
+Still some work to do! After validating and extracting the email address from the structure provided by Github, we can finally check if this user is already existing in our system, or needs to be added. The `#find_user` method is our next step.
+
+<%= code "rw-find" %>
+
+In this code chunk we use ActiveRecord* and its `#find_by` method to either retrieve an existing user model, or `nil`. Check out how we can use the variable `email` as a keyword argument, being computed and provided by (one of) the previous step(s).
+
+As this step is added to the activity via `step`, the return value is crucial!
+
+<%= info do %>
+*The fact we're using ActiveRecord (or something looking like it) doesn't mean Trailblazer only works with Rails! Most people are familiar with its API, so we chose to use "ActiveRecord" in this tutorial.
+<% end %>
+
+The activity - at this stage - deviates to the error track when there's no user and skips all remaining logic. This is, of course, because the last statement in `#find_user` will evaluate to `nil` in case of a new signup, as this email address is yet unknown. A _falsey_ return value means "error track".
+
+<%= img "2.1/tutorials/find_user.png" %>
+
+To finish up the activity v1, we add an empty logging step. You probably already got the hang of it, anyway.
+
+<%= code "rw-log" %>
+
+Our `Signup` activity is now ready to be executed, even though it doesn't cover all business requirements, yet, and is unfinished.
+
+<%= h3 "Invocation, for real!" %>
+
+First, let's learn about a failing case where Github sends us data
+of a user we don't have in our system, yet.
+
+The following snippet shows you a realistic data structure coming from Github (given that I'm logged-in there, which... I currently am). The last line shows how the initial `ctx` is created.
+
+<%= code "rw-invocation-setup" %>
+
+Our "database" is initialized to contain no users, which should make the activity end up on the `failure` terminus.
+
+<%= code "rw-invocation-fail" %>
+
+Admittedly, both the signature and the return values of `invoke` feel a bit clumsy. That's becaus we're currently working with the low-level interfaces.
+
+The returned `signal` is the last element in the activity that's being executed. Visually, it's usually represented by a circle. In our railway example, that would be either the `success` or the `failure` terminus event.
+
+Inspecting the `signal`, it looks as if we hit the `failure` terminus. Furthermore, peeking into `ctx`, the `:user` variable is unset, hinting that the path we took is the one visualized here.
+
+<%= img "2.1/tutorials/signup-3.png" %>
+
+To have a successful sign-up, the user must be present in our database. Here's the invocation with the user already exising.
+
+<%= code "rw-invocation-success" %>
+
+This time, the `signal` looks like we're winning. Also, the user is set from the `#find_user` step, suggesting the following flow.
+
+<%= img "2.1/tutorials/signup-4.png" %>
+
+The provided data from Github is sane, the user is found by their email, and we're set to sign them in with a cookie (yet to be done).
+
+<%= h3 "Error handling" %>
+
+For completeness, let's quickly discuss how to place tasks on the error track. `#fail` allows you to add error handlers.
+
+<%= code "fail", collapse: :tasks %>
+
+As visible in the diagram, `#fail` puts the error handler on the error track, while maintaining the linear order of the flow: it sits after `extract_omniauth`, but before `find_user`.
+
+<%= img "2.1/tutorials/fail.png" %>
+
+Per default, the return value from a `fail` task is irrelevant, it will always stay on the error track. In part II we will cover how to jump back to the happy path.
+
+It's also important to understand that `save_validation_data` will only be invoked for an error from `validate` (and if `extract_omniauth` were attached using `step`). In other words, `find_user` and followers do not have an error handler.
+
+We are going to revert this `fail` feature for the time being. In the next tutorial about nesting and the wiring API, we will meet this handler, again.
+
+<%= h3 "Terminus signals" %>
+
+When invoking activities, you will want to find out where it stopped and what end has been hit, so you can decide what to do. For example, a Rails controller could either redirect to the dashboard page, in case of a successful sign-in, or render an error page.
+
+There are two ways to learn that a terminus has been reached. You could simply inspect its semantic.
+
+<%= code "end-semantic" %>
+
+Every element in TRB provides a `#to_h` method to decompose it. Terminus events will have a field `:semantic`, and in a standard railway activity, they're either `:success` or `:failure`.
+
+Alternatively, you can check the signal's identity against the terminus that you're expecting, for instance by using the Introspection API.
+
+<%= code "end-find" %>
+
+The return `signal` is simply the object or task that was executed last. In railways, the automatic IDs for end events are `End.success` and `End.failure`, that why you can [retrieve those object using `Graph#find`].
+
+<%= h3 "Exposing data" %>
+
+You probably already got the idea from previous example code: the only way to expose data to the outer world (whoever invoked the activity) is by reading from the `ctx` object. In other words, if any data from within the activity is needed, say, for rendering an HTML page or taking a routing decision in a controller, it has to be written to `ctx` at some point during execution of the activity.
+
+<%= code "ctx-read" %>
+
+There are [mechanics to filter what goes in and out], but keep in mind that Trailblazer forces you, in a gentle, tender way, to explicitly define what you want the caller to know, by writing it to `ctx`.
+
+<%= h3 "WTF?" %>
+
+Now that we've discussed all basic concepts of activities, let's check out some of the tooling around Trailblazer.
+
+A huge advantage over messy Rails code is that Trailblazer's `Activity` hides logic, flow and variables from the caller. The entire sign-up works by invoking the black box activity in the controller.
+
+While developers appreciate the encapsulation, they used to hate the debugging: finding out what path the execution took. We "recently" added tracing to do just that (it only took three years).
+
+This is my absolute favorite feature ever and [the official reason for (re-)writing Trailblazer 2.1](https://youtu.be/mjsnd8dJbew?t=556). It makes me happy every time I use it.
+
+Simply use `#wtf?` to invoke your operation.
+
+<%= code "wtf" %>
+
+The signature and return values are identical to `#invoke`. However, now, tracing is turned on, and will output the flow to the terminal.
+
+<%= img "2.1/tutorials/trace.png" %>
+
+No more guessing anymore, you can follow the path and even in deeply nested activity structures you won't get lost anymore.
+
+What sounds like a cheesy commercial slogan is actually about to become your best friend. Check out how `#wtf?` also allows to find out where things broke, in case of an exception.
+
+By making the `ctx` object frozen, it will throw an exception whenever we write to `ctx` using `ctx[:something] = ...`, which should be the case in `#extract_omniauth` the first time.
+
+<%= code "wtf-exception" %>
+
+As promised, `#wtf?` catches that and shows you the closest task in red.
+
+<%= img "2.1/tutorials/trace-exception.png" %>
+
+With Ruby only knowing methods and files and stack-traces from hell, Trailblazer is years ahead when it comes to debugging. Having an understanding of higher level abstractions, such as tasks, activities and the historical code path taken, its debugging trace is much closer to how you, as an engineer, think about your code.
+
+This feature has saved me hours of debugging, before it was even released.
+
+<%= h3 "Next!" %>
+
+In the next tutorial we will focus on the Wiring API and learn how to create more complex activities. The sign-up code to enter a new user into our database needs to be written. To help you reduce complexity, we will learn about nesting activities, too.

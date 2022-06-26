@@ -2,35 +2,36 @@
 
 class Documentation::Operation::Compile < Trailblazer::Operation
   TOC_ORDER = {
-    generics: %w[
+    generics:          %w[
       trailblazer
       test
     ],
 
-    activity: %w[
+    activity:          %w[
       activity
       operation
       workflow
       endpoint
     ],
 
-    gems:     %w[
+    gems:              %w[
       reform
       cells
       representable
       disposable
       roar
-    ]
+    ],
 
-    # tutorials_and_pro: [
-    #   "2.1/tutorials/activity.md",
-    #   "2.1/docs/pro.md"
-    # ]
+    tutorials_and_pro: [
+      # "tutorials/activity",
+      "pro"
+    ]
   }
 
   LINKS = {
     "trailblazer"   => "/2.1/docs/trailblazer.html",
     "activity"      => "/2.1/docs/activity.html",
+    # "tutorials/activity" => "/2.1/docs/tutorials/activity.html",
     "test"          => "/2.1/docs/test.html",
     "operation"     => "/2.1/docs/operation.html",
     "workflow"      => "/2.1/docs/workflow.html",
@@ -39,7 +40,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "cells"         => "/2.1/docs/cells.html",
     "representable" => "/2.1/docs/representable.html",
     "disposable"    => "/2.1/docs/disposable.html",
-    "roar"          => "/2.1/docs/roar.html"
+    "roar"          => "/2.1/docs/roar.html",
+    "pro"           => "/2.1/docs/pro.html"
   }
 
   step :build_pages

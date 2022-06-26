@@ -1,0 +1,7 @@
+
+<%= h4 "Discussion" %>
+
+Believe me, I have always despised DSLs that write code, something like `nested_attributes_for`. Activities are not a DSL.
+
+fail
+required keyword, security

@@ -1,0 +1,301 @@
+<%= h2 "Building your own authentication framework with Trailblazer" %>
+
+* If you've never written a library, it's usually best to start in a real app and then extract the logic.
+* We will prototype our authentication library in a Rails app and then move it to a separate gem.
+* This gem is then used in our app and customized.
+* I mostly don't explain why but how. The why I will elaborate in a separate book.
+* We don't use Reform or many macros in this first part.
+* We don't discuss: mailers, AR (to be covered in the book)
+* Book ideas: stronger password, reset verify token, resend account verification token
+
+<%= h3 "Create Account" %>
+
+* Imagine a form with `email`, `password`, and `password_confirm` fields.
+* Obviously, the email has to be valid and both passwords need to match.
+* When submitted, a controller action will invoke an _operation_ to validate the form data and create a new user in the database along with a hashed password.
+
+<%= code "op" %>
+
+
+<%= h4 "Naming" %>
+
+* Naming of Trailblazer assets such as operations or contracts follows the convention `concept name::layer::verb`, where the concept name and verb is completely up to you.
+* Deeper nesting is possible.
+
+<%= h4 "Operation - The Basics" %>
+
+<%= code "steps" %>
+
+* OP implements all business logic necessary to perform a _function_ of your application.
+* Not a god object, it's a delegator that encapsulates vs. controller action and model/SO
+* An operation is structured into steps. Those are usually smaller methods composing the logic but adhering to strict encapsulation.
+* All `step`s are invoked in the order they are declared in the operation body.
+* If one step fails, all following steps are skipped. More on that later.
+
+<%= code "check_email" %>
+
+* A `step` is mostly implemented as an instance method in the operation body. [Any callable objects can be used as a step](/2.1/docs/activity.html#activity-internals-task-interface-instance-method), though.
+* Its return value matters: `nil` or `false` will indicate it "failed".
+* It receives a `ctx` object that is passed from step to step.
+* The keyword arguments can be used to access specific variables from that `ctx`.
+
+<%= h4 "Op - invocation" %>
+
+<%= code "op-call-missing-kw" %>
+
+* TODO: test file/rails setup?
+* To run (or _invoke_) an operation you use its `#call` method and pass an options hash.
+* Simplified, this will call all steps in their defined order and pass the options hash from step to step.
+* The options hash is from now on called `ctx`.
+* However, this breaks in the first step `:check_email` because we're expecting an `:email` keyword argument.
+    <%= code "ruby" do %>
+    def check_email(ctx, email:, **)
+    <% end %>
+* The ctx contains all variables from that options hash we provided when invoking the operation in the test.
+* This `email:` "keyword argument" is automatically extracted by Trailblazer from the ctx object.
+* Since we did not pass any `:email` key/value to the operation, this keyword is not available. So let's fix this.
+
+<%= code "op-call-missing-passwords" %>
+
+* We pass an `:email` variable. But this time, it breaks in the next step `passwords_identical?`.
+* How do we know? We can see it in the stacktrace, but, hang tight, there's another beautiful way to debug in Trailblazer: `wtf?`.
+
+<%= h4 "Debugging" %>
+
+* The `trailblazer-developer` gem provides the `wtf?` method to run an operation and print the flow.
+
+<%= code "op-call-missing-passwords-wtf" %>
+
+Running the operation using `wtf?` prints the following on the terminal.
+
+<%= img "2.1/book/wtf-password.png" %>
+
+* When an exception is thrown, it displays the triggering step in light red.
+* Tracing the flow is a bit more expensive, so you shouldn't use it in performance-critical production environments.
+* It's a beautiful tool especially when you start nesting operations or activities to more complex compounds.
+* Let's make this test pass, finally.
+
+<%= h4 "OP Testing, Assertions" %>
+
+By passing all required signup variables we make the test pass.
+
+<%= code "op-call-wtf" %>
+<%= img "2.1/book/create-account-wtf.png" %>
+
+* When `call`ed, an operation returns a result object.
+* `wtf?` also returns the result object, as it also ran the operation.
+* We can figure out if an operation was run successfully by asking the result for `success?` or `failure?`.
+* Passing all three required variables, the operation runs all steps.
+* The trace shows that both steps were executed successfully.
+
+<%= h4 "Railway" %>
+
+* Let's learn more about steps by breaking things, again.
+
+<%= code "op-call-failure" %>
+
+<%= img "2.1/book/check-email-fail.png" %>
+
+* When passing an invalid email, `check_email` fails because the regular expression matching returns false.
+* The `check_email` method thus returns false when the email is invalid, signalizing that this step has "failed".
+* In the trace, the failing step is marked orange. Or is it brown?
+* If a step fails, all remaining steps are skipped and the operation result is a `failure`.
+* Why is this?
+
+<%= img "2.1/book/create-account-01.png" %>
+
+* Using `step` will place the step on the "success" track (green) which leads to a `success` terminus.
+* This is why - with proper input - your `CreateAccount` is successful.
+* If a step returns a `nil` or `false` value, the flow deviates to the "failure" track (red), leading to the `failure` terminus.
+* This is why the remaining steps on the success track are not executed, for example, when we provided an invalid email address.
+* You can place steps on the failure track, too.
+
+<%= info do %>
+Browse current code: [🤖 01-A](https://github.com/apotonick/buildalib/tree/01-A)
+<% end %>
+
+<%= h4 "Error handling" %>
+
+
+<%= code "op-fail", collapse: "meth" %>
+
+* We add two error handling steps to our operation: `email_invalid_msg` and `passwords_invalid_msg`.
+* Those are placed after their respective steps.
+* Check out how you can also _write_ to the `ctx` object.
+* Our next test case asserts that the error messages are correct.
+
+<%= code "op-wrong-email-wrong" %>
+
+* Passing an incomplete email to our operation, we'd expect the error message to complain about just that.
+* However, the error handler for the passwords must've been called.
+* Let's check the trace.
+
+<%= img "2.1/book/create-account-fail-wrong.png" %>
+
+* Both handlers have been called!
+* The second overriding the first's error message.
+* That's because just like `step`, steps placed with `fail` will be executed in their order, as shown below.
+
+<%= img "2.1/book/create-account-fails.png" %>
+
+* Trailblazer's [Wiring API] allows literally any connections you desire.
+* For this specific case, we make every `fail` step connect directly to the `fail_fast` end, not going down the `failure` track.
+
+<%= code "op-fail-fast", collapse: "meth" %>
+
+* Note the `fail_fast: true` for both `fail` steps.
+* This results in a flow diagram as below.
+
+<%= img "2.1/book/create-account-fail-fast.png" %>
+
+* As noted, there are other ways to achieve this. You don't even have to have separate steps for error messages.
+* Adding two tests to assert the email and password error messages.
+
+<%= code "email-wrong" %>
+
+* Whatever is written to the `ctx` you can read from the result object in tests, controllers, or other scripts.
+* The passwords test now also passes.
+
+<%= code "password-wrong" %>
+
+<%= h4 "Scrambling the password" %>
+
+* When the input is correct, the next step is calculating a scrambled password hash.
+* Since passwords should never be stored plain in the database, we use `bcrypt` to encrypt it.
+
+<%= code "op-password-hash", collapse: "meth" %>
+
+* Keyword arguments in steps can also be defaulted, the way we do it for `:password_hash_cost`.
+* Some of this code is stolen from Rodauth.
+* We write the hashed string to `ctx[:password_hash]`.
+* Now, test.
+
+<%= code "password-hash" %>
+
+* After running the operation successfully, the `:password_hash` is now filled with a random 60-character token. This is the encrypted password.
+
+<%= h4 "Set user state" %>
+
+* It's a good idea to set a `state` field on the user, especially if we want to use the `workflow` gem later.
+
+<%= code "op-set-state", collapse: "meth" %>
+
+* Set a `:state` variable.
+* So far, this is not limited to a one-word token. It's up to us.
+* We write this to the user in the next section.
+
+<%= h4 "Save account" %>
+
+* With an encrypted password in place, it is now time to persist the user to the database.
+* Later, we can make our library database-agnostic, for now we will just use the `User` model and ActiveRecord.
+* TODO: discuss db-cleaner and Gem/migration setup.
+* To persist, we add another step `#save_account` to our operation.
+
+<%= code "op-save-account", collapse: "meth" %>
+
+* This is nothing more than using `User.create()` and passing the sane variables from our operation.
+* We write the created model to `ctx[:user]`.
+* We can update our happy-path test to check the returned `:user` model.
+
+<%= code "save-account", collapse: "meth" %>
+
+* The persisted `User` model should have the provided email and the hashed password.
+
+<%= h4 "Email must be unique" %>
+
+* Since the `users.email` column acts like a user ID and is `UNIQUE`, we must test what happens when two users with the same email sign up.
+
+<%= code "save-account-test-unique" %>
+
+* The `CreateAccount` operation is run twice with the same input.
+* Running this test case fires an exception for the second invocation.
+
+<%= code do %>
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email
+<% end %>
+
+<%= img "2.1/book/save-account-error.png" %>
+
+* Obviously, the error comes from `save_account`.
+* We have to cover this case by catching the `RecordNotUnique` exception that ActiveRecord throws.
+* Instead of the exception, we simply want to indicate a failure.
+* In TRB, we refrain from exceptions wherever possible and rely on wiring activity outcomes accordingly.
+* The `save_account` method needs to handle the potential exception, here's a first version.
+
+<%= code "save-account-def" %>
+<%= img "2.1/book/save-account-fail.png" %>
+
+* By using `begin/rescue` we catch ActiveRecord's uniqueness violation.
+* We can later use the macro `Rescue()` from `trailblazer-macro`.
+* This time, we can set the error message directly in the method.
+* Returning `false` means any further `step`s are not executed and instead the flow diverts to the failure track.
+* All tests pass, we can create users in the database with an encryted password and identified by their email address.
+
+<%= h4 "Verify account token" %>
+
+* We also want the account to be confirmed by the email owner. To do so, we send a confirm link to the email address.
+* When clicking this link in the email, the user proofs that they signed up using our library.
+* The actual confirmation is a separate operation `VerifyAccount`.
+* However, we need to compute the verify or confirm token now.
+* The confirm token is stored in a separate table `account_verification_tokens`.
+
+<%= code "ruby" do %>
+create_table "verify_account_tokens", force: :cascade do |t|
+  t.integer "user_id"
+  t.text "token"
+  t.datetime "created_at", precision: 6, null: false
+  t.datetime "updated_at", precision: 6, null: false
+  t.index ["token"], name: "index_verify_account_tokens_on_token", unique: true
+end
+<% end %>
+
+* To compute the `verify_account_token`, two more steps are added to the `CreateAccount` operation.
+
+<%= code "op-verify-token", collapse: "meth" %>
+
+* In `#generate_verify_account_token` we generate a random token to include in the confirmation email.
+* The token is generated using `SecureRandom`. Note that this class can be injected, we simply default the `secure_random` keyword argument.
+* We need this for testing.
+* `#save_verify_account_token` creates a new row in the respective table. Since the token must be unique, we need to catch a `RecordNotUnique` exception.
+* The exception is very unlikely to happen but still needs to be covered. If it happens, `CreateAccount` fails with an error message.
+* We have to test the happy-path and the uniqueness validation.
+
+<%= code "verify-token" %>
+
+* In addition to the created `User` we now have a matching entry in `verify_account_tokens`.
+* To test the uniqueness for the verify token, we need another test.
+
+<%= code "verify-token-unique" %>
+
+* By using `NotRandom` as our random string generator we can make sure we get two identical tokens.
+* The second run fails as we expect.
+* The trace demonstrates this.
+
+<%= img "2.1/book/verify-account-fail.png" %>
+
+<%= h4 "Send verify account email" %>
+
+* Last thing to do is send a welcome email to the user with the verify account link in it.
+
+<%= code "op-verify-email", collapse: "meth" %>
+
+* The verify token is prefixed with the user ID to mitigate brute force attacks (stolen from Rodauth).
+* `AuthMailer` sends the email.
+* Note how the operation computes the final token, not the mailer or controller.
+* Be wary what you add to `ctx` in the op (e.g. `verify_account_token`). This is public API you're creating.
+
+<%= code "verify-email" %>
+
+* We need to use `assert_emails` provided by Rails to catch the email. This is poor design in Rails.
+* The email we can test by accessing the rendered version from the result.
+* We make sure it contains the verify account link with the token.
+* Our first Tyrant operation is finished.
+
+<%= info do %>
+Browse current code: [🤖 02-H](https://github.com/apotonick/buildalib/tree/02-H)
+<% end %>
+
+<%= h4 "Discussion" %>
+* AR and mailer Rails coupling
+* orchestration vs. god object
+

@@ -1,0 +1,23 @@
+
+<%= h2 "Editor" %>
+
+Whether you want to visualize a complex operation or model a long-running business process with dozens of steps, resume/suspend points and different branches, the editor will be your best friend.
+
+You can import diagrams from the command line into your project using the `trailblazer-developer` gem, transform them into Ruby and implement the steps with your own business logic.
+
+<%= img "editor-september.png" %>
+
+We use a subset of BPMN for the visual language in the editor, but added our own set of restrictions and semantics to it. It is possible to organize huge applications and their workflows in our editor backend, model and debug visually, and import them into your real Ruby applications.
+
+<%= h3 "Known Bugs" %>
+
+The current editor is first-generation and was about 2 years of work. It is sufficient to work with and allows creating complex workflows and collaborations. We use it in several commercial projects.
+
+There are a bunch of known issues with the first-generation editor. **Always save your diagram after you added or rearranged a new element**. You can then reload should you encounter a bug.
+
+<%= info do %>
+We decided to invest into refactoring and are working on `gen2`. The new version simplifies many tasks, has much better handling of arrows, etc.
+<% end %>
+
+* Arrows or connections are a PITA in more complex diagrams. When dragging arrows, they might suddenly snap to some random point or even add another joint. It is very hard to rearrange arrows laying behind other objects. This is one main reason we're working hard on gen2.
+* You can't label arrows. This is annoying when a task or event has several outgoing arrows - you're not able to assign a semantic via the editor. In the meantime, you can do this by #TODO

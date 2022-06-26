@@ -1,0 +1,312 @@
+<%= h2 "Wiring API" %>
+
+[Code is here 🕮](https://github.com/trailblazer/tutorial/blob/master/ruby/test/wiring_test.rb)
+
+In our current version [as written in the previous tutorial](/2.1/tutorials/activity.html#tutorials-railway-basics), we can process an Oauth signup via Github and handle existing users who have signed up before. Those who haven't cause our `Signup` activity to "error-out". It will end in the `failure` terminus.
+
+<%= img "2.1/tutorials/signup-2.png" %>
+
+It's now time to implement signing-up new users! Instead of introducing a new "track" to handle this case, I'd like to play around with some important concepts of the wiring API.
+
+<%= h3 "Output" %>
+
+Why don't we put the "create user" task onto the `failure` track, and in case of successfully persisting the new user, we deviate back to the happy path? This is totally possible with Trailblazer.
+
+Here's a diagram of the flow we're about to implement.
+
+<%= img "2.1/tutorials/fail-output.png" %>
+
+Placing a step on the error track is something we discussed before. However, deviating back to the happy path is new.
+
+<%= code "fail-id", collapse: "tasks" %>
+
+In line 5, where you see `fail :create_user`, we can see something new and unsettling.
+
+Remember, in a railway activity each task has two standard outputs with the "semantics" `success` and `failure`. When returning a trusy value, the task will trigger the output marked with the `success` semantic, and likewise for `failure`.
+
+By using `Output(:semantic)`, you can select an _existing_ output of the task and rewire it.
+
+<%= h3 "Id" %>
+
+To actually connect the selected output to a specific target, you can use `Id()` and provide the ID as the only argument.
+
+<%= code :ruby do %>
+Output(:success) => Id(:log)
+<% end %>
+
+Since IDs are assigned automatically (unless you're [using `:id`]), this is very simple and intuitive.
+
+Reconnecting the `success` output results in a customized flow as visible in the diagram above. We can reassure it works by invoking the activity using `wtf?`.
+
+<%= code "fail-wtf" %>
+
+Since the user database is empty, we're taking the new path via `#create_user` and then back to the happy path to `#log`.
+
+<%= img "2.1/tutorials/fail-wtf.png" %>
+
+The flow is deviated back after `#create_user` if we return a trusy value - exactly what we wanted!
+
+<%= h3 "Track" %>
+
+Instead of connecting an output to a particular task, you can also choose to let it connect to a track. A track is created by taking a task's output, retrieving its semantic, and then connecting it to the next available task that is "magnetic to" this semantic. Repeating this process automatically, the activity's DSL creates "tracks" for you. We will talk about this a bit later.
+
+<%= code "fail-track", collapse: "tasks" %>
+
+When using `Track(:semantic)` the output will "snap to" the closest, following task that is "magnetic to" it, resulting in an identical circuit or flow as above.
+
+<%= h3 "Render the circuit" %>
+
+When reconnecting outputs you might feel the urge to _see_ what monster you've just created. Especially when the flow doesn't flow as you want it to, rendering the circuit of the activity is crucial.
+
+Use `Developer.render` to visualize the activity's circuit.
+
+<%= code "render" %>
+
+Thanks to `puts`, there will be an ugly but sufficient rendering of your activity in the terminal.
+
+<%= img "2.1/tutorials/render.png" %>
+
+It lists each task and its outgoing connections. You can see the signal and its target task, the output semantics are not shown.
+
+Having a closer look, you will see that putting "create user" on the failure track probably isn't such a great idea, as it will also get invoked when `#validate` errors-out.
+
+It's a good idea to introduce a new, separate path for handling new users.
+
+<%= h3 "Adding outputs" %>
+
+When "trailblazing" a new, unbeaten track in your activity you have two options: manually inserting new steps and connecting them forming a new path, or using a macro. We will discuss the manual technique first.
+
+Looking at the new diagram, you understand that our goal is to branch out from `#find_user`, then execute one or more tasks on the new path, and finally end in a new terminus called `new`.
+
+<%= img "2.1/tutorials/magnetic.png" %>
+
+Our activity has slightly changed to introduce the new "track".
+
+<%= code "output", collapse: "tasks" %>
+
+To add a new output to the `#find_user` task, we can use `Output()` with _two_ arguments!
+
+* The first argument (`NewUser`) is the signal that `#find_user` returns in order to trigger that very output. This must be a subclass of `Trailblazer::Activity::Signal`.
+* The second is the semantic of this new output. Semantics are mostly relevant for nesting, which we will discuss later.
+
+Please note that `find_user` now has three outputs.
+
+The new output will snap to a track called `:create`, which is discussed in the next section.
+
+<%= h3 "Returning signals" %>
+
+Below is the new task method `#find_user`. Keep in mind the we got three outputs here, so we somehow need to communicate to the activity which output to take.
+
+<%= code "find-signal" %>
+
+Per default, having just two outgoing connections in a railway, that's easy: a trusy value and a falsey value returned are enough to command which path to take.
+
+However, now we got three outputs, so we need a third "signal". That's exactly why we introduced `NewUser` (it could have any name), and since it's configured to trigger the `:new` output, your activity now has a third path to travel, should `find_user` return this signal.
+
+<%= h3 "Magnetic_to" %>
+
+To understand how tracks work, we need to understand the `:magnetic_to` option.
+
+<%= code "track" %>
+
+We already discussed "polarizing" an outgoing connection using `Track()`. For example, an output using `Track(:create)` will snap to the next possible task that is "magnetic to" `:create`. That's how tracks or paths are created. Nothing more!
+
+This is exactly what we do with `create_user`: it's got `magnetic_to: :create`, which won't put it on the "happy path" (`:success`) but a new path.
+
+Have another look at the new diagram above. While `create_user` sits on a newly branched out path, its `failure` output still goes to the error track automatically. You _could_ change that by redirecting it with `Output(:failure)`.
+
+<%= h3 "Adding a terminus" %>
+
+It is up to the activity modeler what to do next. In our case, from `create_user` we head straight into an additional terminus, or _end event_ as it's called in BPMN.
+
+You can add an additional terminus to an activity [using `End()`].
+
+<%= info do %>
+When using `End(:semantic)` multiple times with the same semantic, they will all refer to the identical terminus.
+<% end %>
+
+Using multiple termini has three magnificent, beautiful advantages.
+
+* You may communicate more than a binary outcome of an activity. For instance, a controller endpoint activity could have end events for success and failure, but also for "not authorized", or "validation failed". You're not limited to a binary setup here.
+* It is much easier to track what is going on within the activity. Instead of transporting additional state via `ctx`, you expose the outcome via an additional end event.
+* When nesting an activity with multiple outcomes, you can wire each terminus to a different route. We will discuss that in a following section.
+
+<%= img "2.1/tutorials/magnetic.png" %>
+
+Our activity has three outcomes now: something went wrong (obviously the `failure` end event), we got an existing user signing-in (`success` terminus) or a new potential payee signed-up, ending in the `new` terminus.
+
+<%= h3 "Path" %>
+
+After installing that third "path", let's assume we wanted more than one step on it. The final `Signup` activity that you've all been waiting for has three steps to perform when a new sign-up occurs.
+
+<%= img "2.1/tutorials/signup.png" %>
+
+While we could achieve this using `Track()` and the `:magnetic_to` option, there's a handy macro for branching out a custom track: `Path()`.
+
+<%= code "path", collapse: "tasks" %>
+
+While it's obvious that all `step` tasks placed into the block will be neatly arranged on the new path, the options for `Path()` need some explanation. The `:end_id` is important since it sets the terminus' ID, and that very terminus is created using `:end_task`. This will lead the path straight into the terminus.
+
+<%= info do %>
+Check [Path()'s docs] for a list of all options. You don't have to terminate in an end event, you can reconnect the path to other elements.
+<% end %>
+
+For completeness, here's the code of the three added tasks.
+
+<%= code "path-tasks" %>
+
+Again, we're not implementing a sophisticated notification framework or an advanced username generator here, but merely focus on structural mechanics of Trailblazer.
+
+Do note, though, that `Path()` only connects the `:success` outputs of its tasks. Put differently, this means if `#compute_username` would fail, things will break.
+
+<%= h3 "Path escape" %>
+
+Why not mock an error in `#compute_username`, even though our validation should protect us from that.
+
+<%= code "compute_username_false" %>
+
+When invoking the `Signup` activity now, it will break with the following exception.
+
+<%= code :ruby do %>
+Trailblazer::Activity::Circuit::IllegalSignalError: <>[][ Trailblazer::Activity::Left ]
+<% end %>
+
+Well, that's because `compute_username` returned false, which is translated into a `Left` signal. This signal, in turn, doesn't have any output configured as `Path()` only handles `:success` outputs per default.
+
+To add this, you need to manually add it.
+
+<%= code "compute_username", collapse: "tasks" %>
+
+We now added a `:failure` output, leading to a new flow as visible in this diagram.
+
+<%= img "2.1/tutorials/path-failure.png" %>
+
+The fragile `#compute_username` task now got its error-out path leading to the `failure` terminus.
+
+<%= h3 "Terminus Interpretation" %>
+
+Reverting `#compute_username` to the original version, let's run the finished and interpret the outcomes real quick.
+
+When running with an empty user database, we should create one!
+
+<%= code "path-new" %>
+
+Given that we hit the `new` terminus and we have a `User` object in `ctx` with the data we're expecting, this must've worked. The trace on the console verifies this, too!
+
+<%= img "2.1/tutorials/path-success.png" %>
+
+Having this user in the system, let's run another sign-in.
+
+<%= code "path-existing" %>
+
+Beautiful! We end up on the `success` end event, and no additional user is created.
+
+<%= img "2.1/tutorials/path-existing.png" %>
+
+The `Signup` activity in its divine entireness is completed! You now know all the mechanics of the wiring API and the underlying concept of the circuit, tasks, signals, outputs and connections.
+
+<%= h3 "Nesting" %>
+
+Knowing about the wiring mechanics in Trailblazer is one thing. However, the real fun starts with nesting activities. That's when the ideas of encapsulation, interfaces and reducing dependencies really come into play.
+
+To demonstrate that, we need to complicate out example application a bit.
+
+<%= code "validate-method" %>
+
+Suppose that the `validate` task was getting quite complex and bloated. When writing "normal" Ruby, you'd break up one method into several. In Trailblazer, that's when you introduce a new, smaller activity.
+
+<%= img "2.1/tutorials/validate.png" %>
+
+In the sketched activity, we are separating the former `#validate` method and its chain of `&&`ed conditions into three steps. Since every step might go wrong, all of them have an "error-out" option.
+
+But, hang on, isn't that the exact layout of a `Railway` activity? Absolutely, that's why implementing this new activity takes five lines of code in Trailblazer.
+
+<%= code "validate" %>
+
+Every condition became a separate step. We didn't use the usual `:method` style [but lambdas as a short-cut]. Should one of the conditions fail, the activity will instantly deviate to the error track and skip the rest of the steps. This will be indicated by the last signal being the `:failure` terminus.
+
+<%= info do %>
+Hey, that's is an imaginary complication of our example - please don't do this with every condition you have in your app.
+<% end %>
+
+You're free to test this activity in a separate unit test. We will skip this for now (*cough), and integrate it directly into our original `Signup` activity.
+
+<%= h3 "Subprocess" %>
+
+To use another activity as a "step", use the `Subprocess()` macro.
+
+<%= code "subprocess", collapse: "tasks" %>
+
+When running the sign-up activity, you will realize the behavior is identical to what we had before our over-engineered refactoring.
+
+<%= code "validate-new" %>
+
+The validation still does its job.
+
+The trace shows the nested activity beautifully intented.
+
+<%= img "2.1/tutorials/subprocess-trace.png" %>
+
+So why the over-complication? What we got now is replicating a chain of `&&` in the former version. This time, however, you will know which condition failed and what went in by using tracing. Look at the trace above - it's impossible to _not_ understand what was going on.
+
+Additionally, you may add debugging steps, error handler or rewire the conditions dynamically without touching the original snippet.
+
+<%= h4 "Automatic wiring" %>
+
+Visualized, our new composed structure would look as follows.
+
+<%= img "2.1/tutorials/subprocess.png" %>
+
+Once the nested `Valdiate` sub process is hit, it is invoked and executes task by task, eventually reaching a terminus. This is where the outer activity continues.
+
+However, how does the outer `Signup` activity know what termini the nested `Validate` activity exposes? And why are they automatically wired to the success and failure track?
+
+This is where all our learnings about semantics, outputs, signals and the DSL come together.
+
+Since a `Railway` knows about the two outputs `failure` and `success`, it automatically connects each task's outputs. Speaking in Ruby, it's a bit as if the following wiring is applied to every task added via `#step`.
+
+<%= code :ruby do %>
+step Subprocess(Validate),
+  Output(:success) => Track(:success),
+  Output(:failure) => Track(:failure)
+<% end %>
+
+The beautiful thing here is: you don't even need to know which _signal_ is emitted by the task (or the nested activity). Since you can reference outputs by their _semantic_, you as a modeller only connect conceptual termini to ongoing connections! Trailblazer takes care of wiring the underlying output and its signal.
+
+<%= info do %>
+Being able to reference outputs by their semantic is incredibly helpful when using third-party activities (from gems, for instance). You should not know details such as "the `:new` terminus emits a `NewUser` signal". The abstract concept of a terminus named `:new` is sufficient for modelling.
+<% end %>
+
+<%= h4 "Multiple Termini" %>
+
+Now that we're rolling, let's go nuts and add another terminus to `Validate`. When the `"info"` key is absent in the `params` structure, it should error-out into a separate end event.
+
+<%= img "2.1/tutorials/no_info.png" %>
+
+To implement such an activity, we only need to rewire the second step's `failure` output to a new terminus.
+
+<%= code "validate-3" %>
+
+When running the nested `Validate` activity separatedly with a insufficiently filled `params` hash, we terminate on the `:no_info` end event.
+
+<%= code "validate-run" %>
+
+However, when running the `Signup` activity with an incomplete `params` hash, it crashes!
+
+<%= code "nested-invoke" %>
+
+The last signal of the nested `Validate` activity happens to be the `no_info` terminus - and that bad boy is not wired to any connection in the outer `Signup` activity, yet!
+
+<%= h4 "Wiring Termini" %>
+
+Remember, the `Railway` strategy only connects success and failure automatically, so we need to connect the third end by ourselves.
+
+<%= code "subprocess-3", collapse: "tasks" %>
+
+It's as easy as using `Output(:no_info)` and connecting it using one of the DSL target methods. Here, we use `End()` to wire the nested activities terminus directly to a new terminus in `Signup`. Feel free to play around with `Track()` or `Id()` to model the flow you desire.
+
+<%= img "2.1/tutorials/validate-3.png" %>
+
+Nesting an activity into another is a bit like calling a library method from another method. However, the explicit modelling has one massive advantage: all possible outcomes of the nested activity are visible and have to be connected in the outer diagram. It's up to the modeler how those ends are connected, if they lead to separate, new termini, or connect to further business flow.
+
+We covered all important aspects about nesting and are ready for more coding! Once understood that nesting activities is all about connecting their termini to ongoing connections, it becomes a very helpful concept to implement more complex flows and to introduce reusable components.
