@@ -47,14 +47,14 @@
 
 <%= code "verify-invalid-id" %>
 
-<%= img "2.1/book/verify-invalid-id.png" %>
+<%= img "book/verify-invalid-id.png" %>
 
 * There is no user with ID=`0` so the OP must fail.
 * As visible in the trace, it fails in `find_verify_account_key` since we don't have a table row with `user_id=0`
 
 <%= code "verify-invalid-token" %>
 
-<%= img "2.1/book/verify-invalid-token.png" %>
+<%= img "book/verify-invalid-token.png" %>
 
 * We create a valid account to be verified.
 * In the first test, the prefixed ID is correct but the token is wrong.
@@ -63,7 +63,7 @@
 * It errors out in `extract_from_token` as the `split` fails.
 
 <%= code "verify-invalid-second" %>
-<%= img "2.1/book/verify-invalid-second.png" %>
+<%= img "book/verify-invalid-second.png" %>
 
 * When using the same token twice, it fails in `find_verify_account_key` as the respective row doesn't exist anymore.
 * We finished our second operation for `Tyrant`.
@@ -88,14 +88,14 @@
 * Let's test if an invalid email really stops the OP.
 
 <%= code "reset-email" %>
-<%= img "2.1/book/reset-email.png" %>
+<%= img "book/reset-email.png" %>
 
 * When passing an unknown email to `ResetPassword`, the operation fails in `find_user`.
 * Check the trace.
 * let's test if a valid email resets the password and sends an email.
 
 <%= code "reset" %>
-<%= img "2.1/book/reset-ok.png" %>
+<%= img "book/reset-ok.png" %>
 
 * Note how we use two operations to setup test application state - that's the spirit of TRB!
 * We test that the correct user's password is `nil`ified.
@@ -128,13 +128,13 @@
 * Running our original tests all pass.
 * Check how `wtf?` neatly shows you the nesting. This is a major improvement to vanilla Ruby.
 
- <%= img "2.1/book/reset-sub.png" %>
+ <%= img "book/reset-sub.png" %>
 
 * To complete the refactoring, we also need to update `CreateAccount`.
 * The four `verify_account_token`-related steps get replaced by `CreateToken`.
 
 <%= code "op-create" %>
-<%= img "2.1/book/create-sub.png" %>
+<%= img "book/create-sub.png" %>
 
 * All tests still pass when running the test suite.
 
@@ -211,7 +211,7 @@ The `CheckToken` operation implements all common steps.
 * Here is a successful run.
 
 <%= code "update" %>
-<%= img "2.1/book/reset-password.png" %>
+<%= img "book/reset-password.png" %>
 
 * Now tell me you do not love this tracing!
 * The updated user must have a password and a new state.
@@ -220,7 +220,7 @@ The `CheckToken` operation implements all common steps.
 * Let's quickly test a failing outcome.
 
 <%= code "update-fail" %>
-<%= img "2.1/book/reset-password-fail.png" %>
+<%= img "book/reset-password-fail.png" %>
 
 * As visible in the trace, it fails in `passwords_identical?`.
 * The inner OP halts on `fail_fast`.

@@ -23,7 +23,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     ],
 
     tutorials_and_pro: [
-      # "tutorials/activity",
+      "tutorials/activity",
       "pro"
     ]
   }
@@ -31,7 +31,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   LINKS = {
     "trailblazer"   => "/2.1/docs/trailblazer.html",
     "activity"      => "/2.1/docs/activity.html",
-    # "tutorials/activity" => "/2.1/docs/tutorials/activity.html",
+    "tutorials/activity" => "/2.1/docs/tutorials/activity.html",
     "test"          => "/2.1/docs/test.html",
     "operation"     => "/2.1/docs/operation.html",
     "workflow"      => "/2.1/docs/workflow.html",

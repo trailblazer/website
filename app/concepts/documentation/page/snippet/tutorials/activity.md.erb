@@ -32,7 +32,7 @@ In this tutorial, we implement a sign-up function for a Ruby application. The fi
 
 It's a scenario directly taken from the Trailblazer PRO application which allows us to discuss a bunch of important concepts in Trailblazer.
 
-<%= img "2.1/tutorials/github-signin-v1.png" %>
+<%= img "tutorials/github-signin-v1.png" %>
 
 When clicking the Github link, the beautiful [omniauth gem] performs its magic. It handles all Oauth details and will - in case of a successful authorization via Github -  send a hash of login data shared by Github to a pre-configured controller actions of our app.
 
@@ -67,17 +67,17 @@ We do ignore new sign-ups at this stage and only allow _existing_ users to sign 
 
 A diagram resembling this chain of tasks would look like the following fragment of a BPMN diagram.
 
-<%= img "2.1/tutorials/signup-1.png" %>
+<%= img "tutorials/signup-1.png" %>
 
 Now let's drop our optimism for a second, and face cold reality. Things could go wrong in two places here. First, the validation could fail if Github sends us data we don't understand. Second, we might not know the user signing in, meaning the "find user" logic has to error-out, leading us to a diagram like this.
 
-<%= img "2.1/tutorials/signup-2.png" %>
+<%= img "tutorials/signup-2.png" %>
 
 If anything here did fail in "validate omniauth", all other steps in the chain would be skipped as the flow would follow the path leading to the `failure` terminus.
 
 Assuming the validation was successful, if the user provided by Github wasn't found in our system (in the "find user" box), the remaining logging step would be skipped, ending up in that mysterious `failure` circle, again.
 
-<%= img "2.1/tutorials/signup-3.png" %>
+<%= img "tutorials/signup-3.png" %>
 
 Intuitively, you understand the flow just by looking at the BPMN diagram. And, heck, we haven't even discussed BPMN or any terminology, yet!
 
@@ -87,7 +87,7 @@ Modelling the flow of a program where chunks of code are executed in a certain o
 
 Before we continue, let us quickly clarify some lingo when working with Trailblazer, BPMN, and activities.
 
-<%= img "2.1/tutorials/voc.png" %>
+<%= img "tutorials/voc.png" %>
 
 Be honest, you're loving my handwriting already, aren't you?
 
@@ -172,7 +172,7 @@ When using the task interface, the return value of a method is important!
 
 In `#validate`, our highly sophisticated validation will return either `true` or `false`, causing the activity to proceed to the next step, or "error out".
 
-<%= img "2.1/tutorials/truefalse.png" %>
+<%= img "tutorials/truefalse.png" %>
 
 In other words: different return values will trigger different outputs of the task. The flow will continue on the outgoing connection of the output.
 
@@ -217,7 +217,7 @@ As this step is added to the activity via `step`, the return value is crucial!
 
 The activity - at this stage - deviates to the error track when there's no user and skips all remaining logic. This is, of course, because the last statement in `#find_user` will evaluate to `nil` in case of a new signup, as this email address is yet unknown. A _falsey_ return value means "error track".
 
-<%= img "2.1/tutorials/find_user.png" %>
+<%= img "tutorials/find_user.png" %>
 
 To finish up the activity v1, we add an empty logging step. You probably already got the hang of it, anyway.
 
@@ -244,7 +244,7 @@ The returned `signal` is the last element in the activity that's being executed.
 
 Inspecting the `signal`, it looks as if we hit the `failure` terminus. Furthermore, peeking into `ctx`, the `:user` variable is unset, hinting that the path we took is the one visualized here.
 
-<%= img "2.1/tutorials/signup-3.png" %>
+<%= img "tutorials/signup-3.png" %>
 
 To have a successful sign-up, the user must be present in our database. Here's the invocation with the user already exising.
 
@@ -252,7 +252,7 @@ To have a successful sign-up, the user must be present in our database. Here's t
 
 This time, the `signal` looks like we're winning. Also, the user is set from the `#find_user` step, suggesting the following flow.
 
-<%= img "2.1/tutorials/signup-4.png" %>
+<%= img "tutorials/signup-4.png" %>
 
 The provided data from Github is sane, the user is found by their email, and we're set to sign them in with a cookie (yet to be done).
 
@@ -264,7 +264,7 @@ For completeness, let's quickly discuss how to place tasks on the error track. `
 
 As visible in the diagram, `#fail` puts the error handler on the error track, while maintaining the linear order of the flow: it sits after `extract_omniauth`, but before `find_user`.
 
-<%= img "2.1/tutorials/fail.png" %>
+<%= img "tutorials/fail.png" %>
 
 Per default, the return value from a `fail` task is irrelevant, it will always stay on the error track. In part II we will cover how to jump back to the happy path.
 
@@ -312,7 +312,7 @@ Simply use `#wtf?` to invoke your operation.
 
 The signature and return values are identical to `#invoke`. However, now, tracing is turned on, and will output the flow to the terminal.
 
-<%= img "2.1/tutorials/trace.png" %>
+<%= img "tutorials/trace.png" %>
 
 No more guessing anymore, you can follow the path and even in deeply nested activity structures you won't get lost anymore.
 
@@ -324,7 +324,7 @@ By making the `ctx` object frozen, it will throw an exception whenever we write 
 
 As promised, `#wtf?` catches that and shows you the closest task in red.
 
-<%= img "2.1/tutorials/trace-exception.png" %>
+<%= img "tutorials/trace-exception.png" %>
 
 With Ruby only knowing methods and files and stack-traces from hell, Trailblazer is years ahead when it comes to debugging. Having an understanding of higher level abstractions, such as tasks, activities and the historical code path taken, its debugging trace is much closer to how you, as an engineer, think about your code.
 

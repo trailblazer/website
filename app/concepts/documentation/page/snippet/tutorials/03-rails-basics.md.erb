@@ -116,7 +116,7 @@ The new view has nothing to do with Trailblazer, it's pure Rails and hence resid
 
 The `@form` object (which is a Reform instance) is passed into `simple_form_for`. Note that we do have to provide `:url` and `:as` manually since Reform - per default - is not completely compatible to Rails' magic form helpers. <%= api "/2.1/docs/reform.html#reform-rails-activemodel-compliance" %>
 
-<img class="thumbnail" src="/images/guides/03-new-form-layoutless.png">
+<%= img "03-new-form-layoutless.png" %>
 
 It looks a bit sad without any layout, but we’ll come to that shortly.
 
@@ -138,7 +138,7 @@ Please note that there's a `return` in the block, causing the controller's execu
 
 If the operation failed, we re-render the form from `new`. The `#run` method also returns the result object from the ran operation, so we can use it outside the block.
 
-<%= img "2.1/blog_post_new_error.png" %>
+<%= img "blog_post_new_error.png" %>
 
 Let's check out the `BlogPost::Operation::Create` operation in detail.
 
@@ -206,7 +206,7 @@ After retrieving the collection of `BlogPost`s, the controller view `index.html.
 
 We simply iterate of each row in `@model` and display the post's attributes and links to update and delete it.
 
-<%= img "2.1/blog_post_index.png" %>
+<%= img "blog_post_index.png" %>
 
 When rendered in the browser, you can see a breathtaking list of posts with buttons and links.
 
@@ -287,7 +287,7 @@ As you might've guessed, the operation class is pretty simple, too.
 
 One lonely step uses the `Model()` macro to retrieve the displayed blog post with `.find_by`. A colorless, but functional view of a particular blog post is the reward for our hard work.
 
-<%= img "guides/03-show-layoutless.png" %>
+<%= img "03-show-layoutless.png" %>
 
 We're not gonna win a web design award for that but we're here to engineer anyway!
 

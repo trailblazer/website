@@ -3,7 +3,8 @@
 class DocumentationController < ApplicationController
   def show
     ctx = Documentation::Operation::Compile.wtf?({})
-    page = ctx[:site].fetch(params[:page_name])
+    page_path = params.values_at(:page_name, :path).compact.join("/")
+    page = ctx[:site].fetch(page_path)
 
     render html: cell(
       Documentation::Cell::Show,
