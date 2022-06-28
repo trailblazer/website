@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= "Trailblazer - #{title}" %></title>
+
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'page' %>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-69514939-1");
+    </script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="<%= vite_asset_path('images/favicon.ico') %>"
+    />
+  </head>
+  <body>
+    <div class="lg-bg">
+      <header
+        id="header"
+        class="<%= page == 'blog' ? '' : 'pt-0' %>"
+      >
+        <% unless page == 'blog' %>
+          <div class="alert alert-primary rounded-0 text-center" role="alert">
+            <span class="alert-text text-center">
+              <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+              Dear Russian friends, please watch President Zelenskyy's
+              <a href="https://twitter.com/PMoelleken/status/1496941845812760577"
+                >speech addressed to you</a
+              >. 🇺🇦 Help our brave mates in Ukraine
+              <a
+                href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+              >
+                with a donation</a
+              >.
+            </span>
+          </div>
+        <% end %>
+
+        <div class="container">
+          <nav
+            class="row static navbar navbar-expand-lg justify-content-between"
+          >
+            <div class="col-lg-3">
+              <h1>
+                <a href="/2.1">Trailblazer</a>
+              </h1>
+
+              <button
+                class="navbar-toggler collapsed"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navBarTrailBlazer"
+                aria-controls="navBarTrailBlazer"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="far fa-bars"></i>
+                <i class="fal fa-times"></i>
+              </button>
+            </div>
+            <div class="static col-lg-9">
+              <div
+                class="collapse navbar-collapse"
+                id="navBarTrailBlazer"
+              >
+                <div class="container justify-content-end">
+                  <%= cell(Application::Cell::Navbar, layout: "page", page: page) %>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <div class="documentation-main p-0">
+        <main class="my-profile pb-5">
+          <div class="session-show">
+            <section
+              class="hero homepage documentation d-flex align-items-center"
+            >
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h2 class="w-100 text-capitalize">
+                      <%= title %>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div class="parallax doc">
+                <div
+                  class="parallax-part front"
+                  data-parallax='{"y" : -250}'
+                ></div>
+                <div
+                  class="parallax-part middle"
+                  data-parallax='{"y" : -450}'
+                ></div>
+                <div
+                  class="parallax-part back"
+                  data-parallax='{"y" : -300}'
+                ></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1"></div>
+
+              <div class="col-md-10">
+                <div class="doc-block">
+                  <div class="section-name session-show">
+                    <ul>
+                      <li>
+                        <i class="far fa-clock pink"></i>
+                        <span> Last updated <%= last_updated %></span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <%= yield %>
+                </div>
+              </div>
+
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+
+          <%= cell(Application::Cell::NewsLetter) %>
+
+          <aside>
+            <span class="deco-purple-cross m-5 wow fadeIn"></span>
+          </aside>
+        </main>
+      </div>
+
+      <%= cell(Application::Cell::Footer, layout: "page", page: page) %>
+    </div>
+  </body>
+</html>
