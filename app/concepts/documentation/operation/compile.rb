@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Documentation::Operation::Compile < Trailblazer::Operation
+  PAGES_PATH = "app/concepts/documentation/page"
+
   TOC_ORDER = {
     generics:          %w[
       trailblazer
@@ -29,19 +31,19 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   }
 
   LINKS = {
-    "trailblazer"        => "/2.1/docs/trailblazer.html",
-    "activity"           => "/2.1/docs/activity.html",
-    "tutorials/activity" => "/2.1/docs/tutorials/activity.html",
-    "test"               => "/2.1/docs/test.html",
-    "operation"          => "/2.1/docs/operation.html",
-    "workflow"           => "/2.1/docs/workflow.html",
-    "endpoint"           => "/2.1/docs/endpoint.html",
-    "reform"             => "/2.1/docs/reform.html",
-    "cells"              => "/2.1/docs/cells.html",
-    "representable"      => "/2.1/docs/representable.html",
-    "disposable"         => "/2.1/docs/disposable.html",
-    "roar"               => "/2.1/docs/roar.html",
-    "pro"                => "/2.1/docs/pro.html"
+    "trailblazer"        => { header: "Trailblazer", url: "/2.1/docs/trailblazer.html" },
+    "activity"           => { header: "Activity", url: "/2.1/docs/activity.html" },
+    "tutorials/activity" => { header: "Tutorials", url: "/2.1/docs/tutorials/activity.html" },
+    "test"               => { header: "Test", url: "/2.1/docs/test.html" },
+    "operation"          => { header: "Operation", url: "/2.1/docs/operation.html" },
+    "workflow"           => { header: "Workflow", url: "/2.1/docs/workflow.html" },
+    "endpoint"           => { header: "Endpoint", url: "/2.1/docs/endpoint.html" },
+    "reform"             => { header: "Reform", url: "/2.1/docs/reform.html" },
+    "cells"              => { header: "Cells", url: "/2.1/docs/cells.html" },
+    "representable"      => { header: "Representable", url: "/2.1/docs/representable.html" },
+    "disposable"         => { header: "Disposable", url: "/2.1/docs/disposable.html" },
+    "roar"               => { header: "Roar", url: "/2.1/docs/roar.html" },
+    "pro"                => { header: "Pro", url: "/2.1/docs/pro.html" }
   }
 
   step :build_pages
@@ -50,8 +52,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   step :build_right_sidebars
 
   def build_pages(ctx, **)
-    site = LINKS.collect do |md_name, url|
-      page = Documentation::Page.for(md_name: md_name, url: url)
+    site = LINKS.collect do |md_name, options|
+      page = Application::Page.for(md_name: md_name, pages_path: PAGES_PATH, **options)
       [md_name, page]
     end
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= "Trailblazer - #{title}" %></title>
+    <title><%= "Trailblazer - #{header}" %></title>
 
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'page' %>
@@ -44,24 +44,22 @@
     <div class="lg-bg">
       <header
         id="header"
-        class="<%= page == 'blog' ? '' : 'pt-0' %>"
+        class="pt-0"
       >
-        <% unless page == 'blog' %>
-          <div class="alert alert-primary rounded-0 text-center" role="alert">
-            <span class="alert-text text-center">
-              <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
-              Dear Russian friends, please watch President Zelenskyy's
-              <a href="https://twitter.com/PMoelleken/status/1496941845812760577"
-                >speech addressed to you</a
-              >. 🇺🇦 Help our brave mates in Ukraine
-              <a
-                href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
-              >
-                with a donation</a
-              >.
-            </span>
-          </div>
-        <% end %>
+        <div class="alert alert-primary rounded-0 text-center" role="alert">
+          <span class="alert-text text-center">
+            <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+            Dear Russian friends, please watch President Zelenskyy's
+            <a href="https://twitter.com/PMoelleken/status/1496941845812760577"
+              >speech addressed to you</a
+            >. 🇺🇦 Help our brave mates in Ukraine
+            <a
+              href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+            >
+              with a donation</a
+            >.
+          </span>
+        </div>
 
         <div class="container">
           <nav
@@ -91,7 +89,7 @@
                 id="navBarTrailBlazer"
               >
                 <div class="container justify-content-end">
-                  <%= cell(Application::Cell::Navbar, layout: "page", page: page) %>
+                  <%= cell(Application::Cell::Navbar, layout: "page", page: md_name) %>
                 </div>
               </div>
             </div>
@@ -109,7 +107,7 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <h2 class="w-100 text-capitalize">
-                      <%= title %>
+                      <%= header %>
                     </h2>
                   </div>
                 </div>
@@ -162,7 +160,7 @@
         </main>
       </div>
 
-      <%= cell(Application::Cell::Footer, layout: "page", page: page) %>
+      <%= cell(Application::Cell::Footer, layout: "page", page: md_name) %>
     </div>
   </body>
 </html>

@@ -1,0 +1,123 @@
+On this page you can find all documents you need to learn about Trailblazer or deepen your knowledge on specific topics. We are constantly updating it and broadcast changes on our [Facebook page](https://www.facebook.com/trailblazer.to).
+
+<%= h2 "Screencasts" %>
+
+Want a quick and easy introduction to Trailblazer? Regardless of your expertise level our [screencast series **TRAILBLAZER TALES**](https://www.youtube.com/channel/UCi2P0tFMtjMUsWLYAD1Ezsw) is for you! In a series of 6 minute episodes we're refactoring a messy Rails controller to a Trailblazer operation.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9elpobV4HSw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+As of now, early 2022, we're still adding episodes that discuss basic TRB mechanics and concepts. Future episodes will discuss further refactorings, new features in Trailblazer or answer questions from users.
+
+<!-- TODO: add what we got so far -->
+
+Coming up are
+
+* Dry-validation, Reform
+* Cells
+* nesting operations
+* variable mapping
+* dependency injection
+
+Do you want to have a particular topic discussed? [Hit us up!](https://trailblazer.zulipchat.com)
+
+<%= h2 "Quick start" %>
+
+We offer short, concise guides for developers who love more code and less words.
+
+1. Operation basics
+2. Trailblazer basic
+3. **Rails basics** implements a quick CRUD Rails app for publishing blog posts. This guide assumes you know basics of `Operation` and macros. [→ Do some CRUD!](/2.1/tutorials/activity.html#tutorials-quick-start-03-rails-basics)
+
+<%= h2 "Beginner" %>
+
+As a beginner you might feel confronted with a massive stack of new technology. But, do not worry, Trailblazer is very simple to approach. We got nice step-by-step guides, books and example applications ready for you.
+
+Our advice: read the following in the listed order.
+
+1. Chapter 2 of [TRAILBLAZER](/2.1/learn.html#learn-expert-books-trailblazer-a-new-architecture-for-rails). This is a good introduction to our ideas, the problems we see with the conventional MVC stack, and how we change it.
+2. The [BUILDALIB](/2.1/learn.html#learn-expert-books-building-your-own-authentication-library-with-trailblazer) book. It teaches you all bread-and-butter mechanics and tools you need to be developing applications with Trailblazer.
+3. Don't miss to read the [overview of all Trailblazer gems](/2.1/docs/trailblazer.html#trailblazer-about-overview) to understand that TRB is not one gigantic monster but a pretty modular framework.
+3. Once you feel comfortable browse through our [API](/2.1/docs/activity.html) docs. After reading the BUILDALIB book, you should've seen a lot of specific docs already.
+4. If you use Reform, make sure to check out the [populator docs](/2.1/docs/reform.html#reform-populators). This is one of the most frequently used (and misunderstood) features or the form gem.
+
+<%= h2 "Expert" %>
+
+If you already know the basics of Trailblazer, you might want to jump directly to our [API documentation](). Here are a few links of the most popular topics.
+
+* **[Wiring API](/2.1/docs/activity.html#activity-wiring-api)** Activities and operations allow for more than just a plain railway. You can have any outcomes and connections in your activity.
+* **[Macros](/2.1/docs/operation.html#operation-macros)** Operation helpers like `Rescue()` or `Contract::Validate()` shipped with TRB.
+* **[Reform](/2.1/docs/reform.html)** The infamous form gem that allows keeping validations out of the models.
+
+
+<%= h3 "Books" %>
+
+At this moment there are two free ebooks available written by us. We try to keep documentation free, however, feel free to chip in to pay off the astronomical comic illustration costs for our artist.
+
+<%= h4 "📙 Building your own authentication library with Trailblazer" %>
+
+<section class="text-block left">
+  <div class="row my-5">
+    <div class="col-md-4">
+      <a href="https://leanpub.com/buildalib">
+        <img src="/images/buildalib-cover.png" alt="BUILDALIB" class="img-fluid">
+      </a>
+    </div>
+    <div class="col-md-8">
+      <p>
+        The second book on Trailblazer, "BUILDALIB", was published June 2021. It is an up-to-date tutorial for learning all aspects of the framework. The tutorial targets beginners but is worth reading for all levels of developers.
+      </p>
+
+      <p>
+        By implementing an authentication library with "Create account" or "Forgot password" workflows, you learn everything you need to know about operations, designing application functions and the wiring API.
+       </p>
+       <p>
+        While working on the library the book constantly extends a test suite and heavily involves refactoring existing code.
+      </p>
+
+      <p>
+        <a href="https://leanpub.com/buildalib" class="btn btn-main btn-primary mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">GET THE BOOK!</a>
+      </p>
+
+      <p>
+        In the second part (ETA early 2022) we cover implementing the frontend in Rails using Cells, Reform and endpoints.
+      </p>
+    </div>
+  </div>
+</section>
+
+<%= h4 "📙 Trailblazer - A new architecture for Rails" %>
+
+<section class="text-block left">
+  <div class="row my-5">
+    <div class="col-md-4">
+      <a href="https://leanpub.com/trailblazer">
+        <img src="/images/s_hero.jpeg" alt="TRAILBLAZER" class="img-fluid">
+      </a>
+    </div>
+    <div class="col-md-8">
+      <p>
+        The book from 2016 plainly called "TRAILBLAZER" put TRB on the map by discussing our new architecture for designing, implementing and testing Rails applications. It's <a href="https://leanpub.com/trailblazer">available for free</a>.
+      </p>
+
+      <p>
+        While the introduction and the Reform chapters are still worth a read, most of this book is terribly outdated. It focuses on Trailblazer 1.1 that has long been superseded by the 2.1 version. Read our new BUILDALIB book instead.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<%= h3 "Tutorials" %>
+
+Find a number of external tutorials below.
+
+<%= h4 "Refactoring a Rails application to Trailblazer" %>
+
+Our partners at 2N wrote a 6-part tutorial about how to refactor a complex Rails application with Trailblazer. In this guide you find a lot of knowledge by an experienced team, written as an easily followable step-by-step tutorial.
+
+ - [Fat controller (part 1)](https://www.2n.pl/blog/trailblazer-tutorial-fat-controller-part-1)
+ - [Move business logic from controller (part 2)](https://www.2n.pl/blog/trailblazer-tutorial-move-business-logic-from-controller-part-2)
+ - [Refactoring fat controller (part 3)](https://www.2n.pl/blog/trailblazer-tutorial-refactoring-fat-controller-part-3)
+ - [Updating old fat controller (part 4)](https://www.2n.pl/blog/trailblazer-tutorial-updating-old-fat-controller-part-4)
+ - [Refactoring legacy rails view with TRB Cells (part 5)](https://www.2n.pl/blog/trailblazer-tutorial:-refactoring-legacy-rails-views-with-trailblazer-cells-part-5)
+ - [Collections, forms, testing Cells (part 6)](https://www.2n.pl/blog/trailblazer-tutorial-collections-forms-testing-cells-part-6)

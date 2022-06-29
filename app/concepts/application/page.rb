@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-module Documentation::Page
+module Application::Page
   module_function
-
-  PAGES_PATH = "app/concepts/documentation/page"
 
   Model = Struct.new(
     :md_name,
+    :header,
     :url,
     :last_updated,
     :html,
@@ -17,12 +16,12 @@ module Documentation::Page
   )
 
   # rubocop:disable Metrics/MethodLength
-  def for(md_name:, url:)
-    last_updated = File.mtime("#{PAGES_PATH}/#{md_name}.md.erb").strftime("%d %b %y")
-    page = Model.new(md_name, url, last_updated)
+  def for(md_name:, header:, url:, pages_path:)
+    last_updated = File.mtime("#{pages_path}/#{md_name}.md.erb").strftime("%d %b %y")
+    page = Model.new(md_name, header, url, last_updated)
 
     html, graph = Torture::Server.compile_page( # compiles Torture::Page::HTML
-      path:   PAGES_PATH,
+      path:   pages_path,
       layout: "../view/layout",
       page:   "#{page.md_name}.md",
       model:  page
