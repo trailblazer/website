@@ -37,3 +37,7 @@ gem "vite_rails"
 gem "torture"
 # Write a short summary, because RubyGems requires one. (https://github.com/apotonick/torture)
 gem "torture-server", path: "/Users/planet/Work/ruby/torture-server"
+# Process manager for applications with multiple components (http://github.com/ddollar/foreman)
+gem "foreman"
+# Listen to file modifications (https://github.com/guard/listen)
+gem "listen"

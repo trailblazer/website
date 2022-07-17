@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Documentation::Cell::Show < Trailblazer::Cell
+  cache :show do
+    ["documentation", "cell", "show", model.md_name, model.last_updated.to_i]
+  end
+
   def show
     Torture::Page::Final.new(nil).call(
       :show,

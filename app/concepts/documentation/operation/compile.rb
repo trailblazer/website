@@ -2,6 +2,7 @@
 
 class Documentation::Operation::Compile < Trailblazer::Operation
   PAGES_PATH = "app/concepts/documentation/page"
+  PUBLIC_DIR_PATH = "public/2.1/docs"
 
   TOC_ORDER = {
     generics:          %w[
@@ -31,32 +32,32 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   }
 
   LINKS = {
-    "trailblazer"        => { header: "Trailblazer", url: "/2.1/docs/trailblazer.html" },
-    "activity"           => { header: "Activity", url: "/2.1/docs/activity.html" },
-    "tutorials/activity" => { header: "Tutorials", url: "/2.1/docs/tutorials/activity.html" },
-    "test"               => { header: "Test", url: "/2.1/docs/test.html" },
-    "operation"          => { header: "Operation", url: "/2.1/docs/operation.html" },
-    "workflow"           => { header: "Workflow", url: "/2.1/docs/workflow.html" },
-    "endpoint"           => { header: "Endpoint", url: "/2.1/docs/endpoint.html" },
-    "reform"             => { header: "Reform", url: "/2.1/docs/reform.html" },
-    "cells"              => { header: "Cells", url: "/2.1/docs/cells.html" },
-    "representable"      => { header: "Representable", url: "/2.1/docs/representable.html" },
-    "disposable"         => { header: "Disposable", url: "/2.1/docs/disposable.html" },
-    "roar"               => { header: "Roar", url: "/2.1/docs/roar.html" },
-    "pro"                => { header: "Pro", url: "/2.1/docs/pro.html" }
+    "trailblazer"        => { header: "Trailblazer", url: "trailblazer.html" },
+    "activity"           => { header: "Activity", url: "activity.html" },
+    "tutorials/activity" => { header: "Tutorials", url: "tutorials/activity.html" },
+    "test"               => { header: "Test", url: "test.html" },
+    "operation"          => { header: "Operation", url: "operation.html" },
+    "workflow"           => { header: "Workflow", url: "workflow.html" },
+    "endpoint"           => { header: "Endpoint", url: "endpoint.html" },
+    "reform"             => { header: "Reform", url: "reform.html" },
+    "cells"              => { header: "Cells", url: "cells.html" },
+    "representable"      => { header: "Representable", url: "representable.html" },
+    "disposable"         => { header: "Disposable", url: "disposable.html" },
+    "roar"               => { header: "Roar", url: "roar.html" },
+    "pro"                => { header: "Pro", url: "pro.html" }
   }
 
   step :build_pages
   step :build_search_map
   step :build_left_sidebars
   step :build_right_sidebars
+  step :write_pages
 
   def build_pages(ctx, **)
     site = LINKS.collect do |md_name, options|
       page = Application::Page.for(md_name: md_name, pages_path: PAGES_PATH, **options)
       [md_name, page]
     end
-
     ctx[:site] = site.to_h
   end
 
@@ -103,6 +104,16 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
         current_page.right_sidebar = right_sidebar.join("\n")
       end
+    end
+  end
+
+  def write_pages(_ctx, site:, search_map:, **)
+    # create all directories including subdirectories
+    FileUtils.mkdir_p(PUBLIC_DIR_PATH + "/tutorials")
+
+    site.each do |md_name, page|
+      html = Documentation::Cell::Show.new(page, search_map: search_map).call(:show)
+      File.write("#{PUBLIC_DIR_PATH}/#{page.url}", html)
     end
   end
 
