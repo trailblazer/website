@@ -19,10 +19,6 @@ class Documentation::Cell::LeftSidebarSection < Cell::ViewModel
     expanded? ? "" : "collapsed"
   end
 
-  def active?(index)
-    index == 0 ? "active" : ""
-  end
-
   property :title
   property :items
 end

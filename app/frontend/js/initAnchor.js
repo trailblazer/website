@@ -8,4 +8,5 @@ jquery(document).ready(function () {
   anchors.add(".doc-block h3");
   anchors.add(".doc-block h4");
   anchors.add(".doc-block ul.navigation li:last-child");
+  anchors.add(".anchored");
 });

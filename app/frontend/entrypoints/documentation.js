@@ -24,7 +24,13 @@ import "~/js/initAnchor.js";
 import "~/js/initSearchModal.js";
 import "~/js/initRightSidebarScrollspy.js";
 
-jquery(function () {
+jquery(document).ready(function () {
+  jquery('a.nav-link[data-toggle="tab"]').click(function (e) {
+    const navContent = jquery(e.target.dataset.tag);
+    navContent.siblings().removeClass("active");
+    navContent.addClass("active");
+  });
+
   hljs.registerLanguage("ruby", ruby);
   hljs.registerLanguage("xml", xml);
   hljs.registerLanguage("json", json);
@@ -35,4 +41,6 @@ jquery(function () {
 
   new Wow().init();
   ParallaxScroll.init();
+
+  jquery("body").scrollspy({ target: ".nav.menu", offset: 110 });
 });

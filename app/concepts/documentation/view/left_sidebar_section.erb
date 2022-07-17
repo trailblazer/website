@@ -17,20 +17,22 @@
     </h2>
   </div>
 
-  <div
-    id="<%= id %>-collapse"
-    class="<%= menu_class %>"
-    aria-labelledby="<%= id %>"
-    data-parent="#accordion"
-  >
-    <ul class="nav vertical menu">
-      <%- items.each_with_index do |chapter, index| %>
-        <li class="nav-item">
-          <a class="nav-link <%= active?(index) %>" href="#<%= chapter.id %>">
-            <%= chapter.title %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <% if expanded? %>
+    <div
+      id="<%= id %>-collapse"
+      class="<%= menu_class %>"
+      aria-labelledby="<%= id %>"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        <%- items.each_with_index do |chapter, index| %>
+          <li class="nav-item">
+            <a class="nav-link" href="#<%= chapter.id %>">
+              <%= chapter.title %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>

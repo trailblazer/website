@@ -19,10 +19,6 @@ class Documentation::Cell::RightSidebarSection < Cell::ViewModel
     expanded? ? "" : "collapsed"
   end
 
-  def active?(index)
-    index == 0 ? "display: block;" : "display: none;"
-  end
-
   property :index
   property :items
 end

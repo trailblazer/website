@@ -20,7 +20,7 @@ import "~/css/tomorrow-night-blue.css";
 import "~/css/font-awesome.css";
 import "~/css/main.css";
 
-jquery(function () {
+jquery(document).ready(function () {
   hljs.registerLanguage("ruby", ruby);
   hljs.registerLanguage("xml", xml);
   hljs.registerLanguage("json", json);

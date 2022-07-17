@@ -22,7 +22,7 @@ import "~/css/main.css";
 
 import "~/js/initAnchor.js";
 
-jquery(function () {
+jquery(document).ready(function () {
   hljs.registerLanguage("ruby", ruby);
   hljs.registerLanguage("xml", xml);
   hljs.registerLanguage("json", json);
