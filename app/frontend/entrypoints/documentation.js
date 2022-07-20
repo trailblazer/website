@@ -7,11 +7,6 @@ import xml from "highlight.js/lib/languages/xml";
 import json from "highlight.js/lib/languages/json";
 import "highlight.js/styles/default.css";
 
-import Wow from "wow.js";
-import "wow.js/css/libs/animate.css";
-
-import { ParallaxScroll } from "~/js/jquery.parallax-scroll.js";
-
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,7 +17,15 @@ import "~/css/main.css";
 
 import "~/js/initAnchor.js";
 import "~/js/initSearchModal.js";
-import "~/js/initRightSidebarScrollspy.js";
+
+function updateRightSidebarScrollspy() {
+  var href = jquery(".nav-item .active").attr("href");
+  var chapter = href;
+  var feature = chapter + "-features";
+  jquery(".features").hide();
+  jquery(feature).show();
+  history.replaceState({}, "", href);
+}
 
 jquery(document).ready(function () {
   jquery('a.nav-link[data-toggle="tab"]').click(function (e) {
@@ -34,13 +37,10 @@ jquery(document).ready(function () {
   hljs.registerLanguage("ruby", ruby);
   hljs.registerLanguage("xml", xml);
   hljs.registerLanguage("json", json);
+  hljs.highlightAll();
 
-  jquery("pre code").each(function (_i, block) {
-    hljs.highlightElement(block);
-  });
+  jquery(window).scrollspy({ target: ".nav.menu", offset: 110 });
+  updateRightSidebarScrollspy();
 
-  new Wow().init();
-  ParallaxScroll.init();
-
-  jquery("body").scrollspy({ target: ".nav.menu", offset: 110 });
+  jquery(window).on("activate.bs.scrollspy", updateRightSidebarScrollspy);
 });

@@ -24,10 +24,7 @@ jquery(document).ready(function () {
   hljs.registerLanguage("ruby", ruby);
   hljs.registerLanguage("xml", xml);
   hljs.registerLanguage("json", json);
-
-  jquery("pre code").each(function (_i, block) {
-    hljs.highlightElement(block);
-  });
+  hljs.highlightAll();
 
   new Wow().init();
   ParallaxScroll.init();

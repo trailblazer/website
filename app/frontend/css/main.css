@@ -1343,9 +1343,6 @@ pre {
   font-weight: 700;
 }
 
-.newsletter.dark-bg input {
-  color: #ffffff;
-}
 .newsletter input {
   margin-bottom: 20px;
   line-height: 50px;

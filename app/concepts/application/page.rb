@@ -20,21 +20,19 @@ module Application::Page
     last_updated = calculate_last_updated_at(md_name: md_name, pages_path: pages_path)
     cache_key = [pages_path, md_name, last_updated.to_i]
 
-    Rails.cache.fetch(cache_key) do
-      page = Model.new(md_name, header, url, last_updated)
+    page = Model.new(md_name, header, url, last_updated)
 
-      html, graph = Torture::Server.compile_page( # compiles Torture::Page::HTML
-        path:   pages_path,
-        layout: "../view/layout",
-        page:   "#{page.md_name}.md",
-        model:  page
-      )
+    html, graph = Torture::Server.compile_page( # compiles Torture::Page::HTML
+      path:   pages_path,
+      layout: "../view/layout",
+      page:   "#{page.md_name}.md",
+      model:  page
+    )
 
-      page.html = html
-      page.graph = graph
+    page.html = html
+    page.graph = graph
 
-      page
-    end
+    page
   end
   # rubocop:enable Metrics/MethodLength
 
