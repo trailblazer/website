@@ -27,7 +27,7 @@ The `trailblazer-workflow` gem is currently a paid feature. It's still unrelease
 
 Via the `:domain_ctx` option, you provide the context object that is directly handed into the workflow/collaboration call.
 
-<%= img "advance-domain-ctx.png" %>
+<%= vite_image_tag "images/advance-domain-ctx.png", class: "mx-auto d-block" %>
 
 * There is no wrapping happening, so building a `Context` instance is up to you.
 * After the workflow invocation, the *returned* ctx is made available under `:domain_ctx` in the outer ctx. In other words, if you want to know what has been going on in the workflow, use `:domain_ctx`.

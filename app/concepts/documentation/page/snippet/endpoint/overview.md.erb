@@ -12,7 +12,7 @@ An endpoint links your routing with your business code. The idea is that your co
 
 Instead of dealing with a mix of `before_filter`s, Rack-middlewares, controller code and callbacks, an endpoint is just another activity and allows to be customized with the well-established Trailblazer mechanics.
 
-<%= img "endpoint-draft.png" %>
+<%= vite_image_tag "images/endpoint-draft.png", class: "mx-auto d-block" %>
 
 The abstract cave painting beautifully illustrates the concept of an endpoint.
 
@@ -62,7 +62,7 @@ An endpoint is separated into two parts: protocol and adapter.
 
 The adapter is where authentication, policy checks, and eventually your domain logic happen. All termini of the protocol's activity are standardized end events - that's how protocol and adapter communicate.
 
-<%= img "endpoint-protocol.png" %>
+<%= vite_image_tag "images/endpoint-protocol.png", class: "mx-auto d-block" %>
 
 Note how a handful of default steps lead into six standardized termini, allowing to plug protocols into different adapters. Imagine replacing your self-written API adapter with a canonical JSON-API adapter, for example.
 
@@ -85,7 +85,7 @@ It is important to understand that the protocol doesn't interact with the enviro
 
 In turn, the adapter knows nothing about what happened in the protocol. Its job is to prepare everything for the response, which usually implies setting HTTP headers, a status and rendering some kind of document.
 
-<%= img "endpoint-adapter-web.png" %>
+<%= vite_image_tag "images/endpoint-adapter-web.png", class: "mx-auto d-block" %>
 
 Structurally, the adapter activity contains the protocol as just another step. The protocol's termini are wired to the handler paths in the adapter (depicted above as dotted lines). As visible, the wiring is completely customizable using the TRB wiring API. For example, `failure` and `invalid_data` are both wired to the same handler path.
 

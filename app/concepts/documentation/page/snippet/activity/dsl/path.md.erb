@@ -7,7 +7,7 @@ For branching out a separate path in an activity, use the `Path()` macro. It's a
 
 By providing the options `:end_id` and `:end_task`, the newly created path will quit in a new end event.
 
-<%= img "path-macro.png" %>
+<%= vite_image_tag "images/path-macro.png", class: "mx-auto d-block" %>
 
 Using `Output` you can create an additional output in `decide_type` with the semantic `:credit_card`. This output is triggered when its task returns a `Trailblazer::Activity::Left` signal.
 
@@ -21,7 +21,7 @@ If you want the path to reconnect and join the activity at some point, use the `
 
 There won't be another end event created.
 
-<%= img "path-macro-join.png" %>
+<%= vite_image_tag "images/path-macro-join.png", class: "mx-auto d-block" %>
 
 <%= h4 "Railway" %>
 
@@ -31,7 +31,7 @@ You can use `Path()` in any Trailblazer strategy, for example in `Railway`.
 
 In this example, we add a third output to `decide_type` to handle the credit card payment scenario (you could also "override" or re-configure the existing `:failure` or `:success` outputs).
 
-<%= img "path-macro-railway.png" %>
+<%= vite_image_tag "images/path-macro-railway.png", class: "mx-auto d-block" %>
 
 Only when `decide_type` returns `MySignal`, the new path alternative is taken.
 

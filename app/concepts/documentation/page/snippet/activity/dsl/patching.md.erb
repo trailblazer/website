@@ -4,7 +4,7 @@ Working with `Subprocess` and deeply nested activities for complex flows is a gr
 
 Suppose the following 3-level nested activity.
 
-<%= img "patching.png" %>
+<%= vite_image_tag "images/patching.png", class: "mx-auto d-block" %>
 
 The public operation `Destroy` contains `Delete` as a nested activity, which itself contains `DeleteAssets`. In order to customize the latter one and add another step `tidy_storage`, you'd normally have to subclass all three activities and override steps.
 
@@ -23,7 +23,7 @@ Also, the automatically assigned ID of a step gets replaced with new a copy. Mak
 
 Looking at the trace of `Destroy`, you can see that `#tidy_storage` is executed where you want it.
 
-<%= img "patching-trace.png" %>
+<%= vite_image_tag "images/patching-trace.png", class: "mx-auto d-block" %>
 
 Patching can be also done at the top-level activity by passing  `:patch` as a block (Take `Delete` from above example).
 

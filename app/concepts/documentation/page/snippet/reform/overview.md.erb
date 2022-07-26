@@ -221,7 +221,7 @@ When experiencing Reform for the first time, it might seem to do a lot, too much
 
 Actually, Reform is very simple and consists of several smaller objects. Each object has a very specific scope one does exactly one thing, where the actual form object orchestrates between those.
 
-<%= img "reform-architecture.png" %>
+<%= vite_image_tag "images/reform-architecture.png", class: "mx-auto d-block" %>
 
 **SETUP** : When instantiating the form object with a model, it will read its properties' values from the model. Internally, this happens because a [form is simply a `Twin`](https://github.com/apotonick/reform/blob/777ea4730bec913582bae78fece78bbb76fb22c4/lib/reform/contract.rb#L6). [Twins are light-weight decorator objects](/2.1/docs/disposable.html#disposable-twin-api) from the Disposable gem.
 

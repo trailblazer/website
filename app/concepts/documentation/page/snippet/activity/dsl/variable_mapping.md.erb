@@ -3,12 +3,12 @@
 
 Since TRB 2.1 it is possible to define the input and output for each step. This is called _variable mapping_, or I/O in short. It provides an interface to define what variable go in and come out of a task, allowing you to limit what invoked tasks or nested activies "see" and what they propagate to the caller context.
 
-<%= img "input.png" %>
+<%= vite_image_tag "images/input.png", class: "mx-auto d-block" %>
 
 The `:input` filter is normally used to create a new context that limits what its task sees.
 
 
-<%= img "output.png" %>
+<%= vite_image_tag "images/output.png", class: "mx-auto d-block" %>
 
 With the `:output` filter, you can control what variables go from the inner scoped context to the outer.
 

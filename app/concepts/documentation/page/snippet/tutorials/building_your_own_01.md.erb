@@ -68,7 +68,7 @@
 
 Running the operation using `wtf?` prints the following on the terminal.
 
-<%= img "book/wtf-password.png" %>
+<%= vite_image_tag "images/book/wtf-password.png", class: "mx-auto d-block" %>
 
 * When an exception is thrown, it displays the triggering step in light red.
 * Tracing the flow is a bit more expensive, so you shouldn't use it in performance-critical production environments.
@@ -80,7 +80,7 @@ Running the operation using `wtf?` prints the following on the terminal.
 By passing all required signup variables we make the test pass.
 
 <%= code "op-call-wtf" %>
-<%= img "book/create-account-wtf.png" %>
+<%= vite_image_tag "images/book/create-account-wtf.png", class: "mx-auto d-block" %>
 
 * When `call`ed, an operation returns a result object.
 * `wtf?` also returns the result object, as it also ran the operation.
@@ -94,7 +94,7 @@ By passing all required signup variables we make the test pass.
 
 <%= code "op-call-failure" %>
 
-<%= img "book/check-email-fail.png" %>
+<%= vite_image_tag "images/book/check-email-fail.png", class: "mx-auto d-block" %>
 
 * When passing an invalid email, `check_email` fails because the regular expression matching returns false.
 * The `check_email` method thus returns false when the email is invalid, signalizing that this step has "failed".
@@ -102,7 +102,7 @@ By passing all required signup variables we make the test pass.
 * If a step fails, all remaining steps are skipped and the operation result is a `failure`.
 * Why is this?
 
-<%= img "book/create-account-01.png" %>
+<%= vite_image_tag "images/book/create-account-01.png", class: "mx-auto d-block" %>
 
 * Using `step` will place the step on the "success" track (green) which leads to a `success` terminus.
 * This is why - with proper input - your `CreateAccount` is successful.
@@ -130,13 +130,13 @@ Browse current code: [🤖 01-A](https://github.com/apotonick/buildalib/tree/01-
 * However, the error handler for the passwords must've been called.
 * Let's check the trace.
 
-<%= img "book/create-account-fail-wrong.png" %>
+<%= vite_image_tag "images/book/create-account-fail-wrong.png", class: "mx-auto d-block" %>
 
 * Both handlers have been called!
 * The second overriding the first's error message.
 * That's because just like `step`, steps placed with `fail` will be executed in their order, as shown below.
 
-<%= img "book/create-account-fails.png" %>
+<%= vite_image_tag "images/book/create-account-fails.png", class: "mx-auto d-block" %>
 
 * Trailblazer's [Wiring API] allows literally any connections you desire.
 * For this specific case, we make every `fail` step connect directly to the `fail_fast` end, not going down the `failure` track.
@@ -146,7 +146,7 @@ Browse current code: [🤖 01-A](https://github.com/apotonick/buildalib/tree/01-
 * Note the `fail_fast: true` for both `fail` steps.
 * This results in a flow diagram as below.
 
-<%= img "book/create-account-fail-fast.png" %>
+<%= vite_image_tag "images/book/create-account-fail-fast.png", class: "mx-auto d-block" %>
 
 * As noted, there are other ways to achieve this. You don't even have to have separate steps for error messages.
 * Adding two tests to assert the email and password error messages.
@@ -214,7 +214,7 @@ Browse current code: [🤖 01-A](https://github.com/apotonick/buildalib/tree/01-
 ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email
 <% end %>
 
-<%= img "book/save-account-error.png" %>
+<%= vite_image_tag "images/book/save-account-error.png", class: "mx-auto d-block" %>
 
 * Obviously, the error comes from `save_account`.
 * We have to cover this case by catching the `RecordNotUnique` exception that ActiveRecord throws.
@@ -223,7 +223,7 @@ ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint f
 * The `save_account` method needs to handle the potential exception, here's a first version.
 
 <%= code "save-account-def" %>
-<%= img "book/save-account-fail.png" %>
+<%= vite_image_tag "images/book/save-account-fail.png", class: "mx-auto d-block" %>
 
 * By using `begin/rescue` we catch ActiveRecord's uniqueness violation.
 * We can later use the macro `Rescue()` from `trailblazer-macro`.
@@ -271,7 +271,7 @@ end
 * The second run fails as we expect.
 * The trace demonstrates this.
 
-<%= img "book/verify-account-fail.png" %>
+<%= vite_image_tag "images/book/verify-account-fail.png", class: "mx-auto d-block" %>
 
 <%= h4 "Send verify account email" %>
 

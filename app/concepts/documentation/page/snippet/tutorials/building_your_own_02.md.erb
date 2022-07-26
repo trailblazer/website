@@ -47,14 +47,14 @@
 
 <%= code "verify-invalid-id" %>
 
-<%= img "book/verify-invalid-id.png" %>
+<%= vite_image_tag "images/book/verify-invalid-id.png", class: "mx-auto d-block" %>
 
 * There is no user with ID=`0` so the OP must fail.
 * As visible in the trace, it fails in `find_verify_account_key` since we don't have a table row with `user_id=0`
 
 <%= code "verify-invalid-token" %>
 
-<%= img "book/verify-invalid-token.png" %>
+<%= vite_image_tag "images/book/verify-invalid-token.png", class: "mx-auto d-block" %>
 
 * We create a valid account to be verified.
 * In the first test, the prefixed ID is correct but the token is wrong.
@@ -63,7 +63,7 @@
 * It errors out in `extract_from_token` as the `split` fails.
 
 <%= code "verify-invalid-second" %>
-<%= img "book/verify-invalid-second.png" %>
+<%= vite_image_tag "images/book/verify-invalid-second.png", class: "mx-auto d-block" %>
 
 * When using the same token twice, it fails in `find_verify_account_key` as the respective row doesn't exist anymore.
 * We finished our second operation for `Tyrant`.
@@ -88,14 +88,14 @@
 * Let's test if an invalid email really stops the OP.
 
 <%= code "reset-email" %>
-<%= img "book/reset-email.png" %>
+<%= vite_image_tag "images/book/reset-email.png", class: "mx-auto d-block" %>
 
 * When passing an unknown email to `ResetPassword`, the operation fails in `find_user`.
 * Check the trace.
 * let's test if a valid email resets the password and sends an email.
 
 <%= code "reset" %>
-<%= img "book/reset-ok.png" %>
+<%= vite_image_tag "images/book/reset-ok.png", class: "mx-auto d-block" %>
 
 * Note how we use two operations to setup test application state - that's the spirit of TRB!
 * We test that the correct user's password is `nil`ified.
@@ -128,13 +128,13 @@
 * Running our original tests all pass.
 * Check how `wtf?` neatly shows you the nesting. This is a major improvement to vanilla Ruby.
 
- <%= img "book/reset-sub.png" %>
+ <%= vite_image_tag "images/book/reset-sub.png", class: "mx-auto d-block" %>
 
 * To complete the refactoring, we also need to update `CreateAccount`.
 * The four `verify_account_token`-related steps get replaced by `CreateToken`.
 
 <%= code "op-create" %>
-<%= img "book/create-sub.png" %>
+<%= vite_image_tag "images/book/create-sub.png", class: "mx-auto d-block" %>
 
 * All tests still pass when running the test suite.
 
@@ -211,7 +211,7 @@ The `CheckToken` operation implements all common steps.
 * Here is a successful run.
 
 <%= code "update" %>
-<%= img "book/reset-password.png" %>
+<%= vite_image_tag "images/book/reset-password.png", class: "mx-auto d-block" %>
 
 * Now tell me you do not love this tracing!
 * The updated user must have a password and a new state.
@@ -220,7 +220,7 @@ The `CheckToken` operation implements all common steps.
 * Let's quickly test a failing outcome.
 
 <%= code "update-fail" %>
-<%= img "book/reset-password-fail.png" %>
+<%= vite_image_tag "images/book/reset-password-fail.png", class: "mx-auto d-block" %>
 
 * As visible in the trace, it fails in `passwords_identical?`.
 * The inner OP halts on `fail_fast`.

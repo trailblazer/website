@@ -501,7 +501,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 27 Jun 22</span>
+                      <span>Last updated 26 Jul 22</span>
                     </li>
                   </ul>
                 </div>
@@ -524,7 +524,7 @@
 
 <p>Instead of dealing with a mix of <code>before_filter</code>s, Rack-middlewares, controller code and callbacks, an endpoint is just another activity and allows to be customized with the well-established Trailblazer mechanics.</p>
 
-<p><img src="/images/endpoint-draft.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-draft.png" /></p>
 
 <p>The abstract cave painting beautifully illustrates the concept of an endpoint.</p>
 
@@ -589,7 +589,7 @@ end
 
 <p>The adapter is where authentication, policy checks, and eventually your domain logic happen. All termini of the protocol’s activity are standardized end events - that’s how protocol and adapter communicate.</p>
 
-<p><img src="/images/endpoint-protocol.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-protocol.png" /></p>
 
 <p>Note how a handful of default steps lead into six standardized termini, allowing to plug protocols into different adapters. Imagine replacing your self-written API adapter with a canonical JSON-API adapter, for example.</p>
 
@@ -621,7 +621,7 @@ end
 
 <p>In turn, the adapter knows nothing about what happened in the protocol. Its job is to prepare everything for the response, which usually implies setting HTTP headers, a status and rendering some kind of document.</p>
 
-<p><img src="/images/endpoint-adapter-web.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-adapter-web.png" /></p>
 
 <p>Structurally, the adapter activity contains the protocol as just another step. The protocol’s termini are wired to the handler paths in the adapter (depicted above as dotted lines). As visible, the wiring is completely customizable using the TRB wiring API. For example, <code>failure</code> and <code>invalid_data</code> are both wired to the same handler path.</p>
 
@@ -837,7 +837,7 @@ end
 
 <p>The <code>API</code> interface is designed to generically render a document response (such as XML or JSON) along with a response status. It does so by placing handler and render steps onto the three outcome tracks for <code>success</code>, <code>failure</code> and <code>protocol_failure</code> in an API-specific <code>Adapter</code>.</p>
 
-<p><img src="/images/endpoint-adapter-api.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-adapter-api.png" /></p>
 
 <p>In <code>Adapter::API</code> there’s one track for a <code>success</code>ful domain execution, one for <code>failure</code> or <code>invalid_data</code> and one <em>protocol failure</em> track that handles <code>not_found</code>, <code>not_authorized</code> and <code>not_authenticated</code>. The idea is to render a generic error with HTTP status code for the latter three cases, hence all three outcomes lead into the same track.</p>
 
@@ -1051,7 +1051,7 @@ end
 
 <p>Putting together the <code>Protocol</code> with the specific <code>Adapter</code> along with the <code>Create</code> domain operation will result in a flow as depicted here.</p>
 
-<p><img src="/images/endpoint-adapter-api.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-adapter-api.png" /></p>
 
 <p>The separation of the <code>Protocol</code> and <code>Adapter</code> allows to use the same business logic in different environments, the <code>Adapter</code> only reacts to well-defined outcomes such as “not found” or “invalid data” and, in an API context, responds with a rendered document and a HTTP status. This behavior could and should be different [in a web UI].</p>
 
@@ -1130,7 +1130,7 @@ assert_equal "{\"id\":1}", response.body
 
 <p>Note the valid JWT token we pass along in the request. The valid token and the appropriate input data results in the following trace.</p>
 
-<p><img src="/images/endpoint-success-trace.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-success-trace.png" /></p>
 
 <p>The next test covers the <code>not_authenticated</code> case where the JWT was not submitted.</p>
 
@@ -1143,7 +1143,7 @@ assert_equal "{\"errors\":{\"message\":\"Authentication credentials were not pro
 
 <p>Here’s the trace.</p>
 
-<p><img src="/images/endpoint-not_authenticated-trace.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-not_authenticated-trace.png" /></p>
 
 <p>As this is a protocol_failure, the endpoint terminates on its <code>fail_fast</code> end.</p>
 
@@ -1178,7 +1178,7 @@ end
 
 <p>The <code>Trailblazer::Endpoint::Adapter::Web</code> adapter is slightly simpler than the API version.</p>
 
-<p><img src="/images/endpoint-adapter-web.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/endpoint-adapter-web.png" /></p>
 
 <p>As oppossed to the <code>Api</code> adapter, there are no handler steps and such installed. Use this adapter if you want to customize the flow or if you don’t need any automatic behavior.</p>
 

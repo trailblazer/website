@@ -507,7 +507,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 27 Jun 22</span>
+                      <span>Last updated 26 Jul 22</span>
                     </li>
                   </ul>
                 </div>
@@ -592,7 +592,7 @@ end
 
 <p>An operation always allows you the fast-track outputs and wiring.</p>
 
-<p><img src="/images/ft-fasttrack.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/ft-fasttrack.png" /></p>
 
 <p>For DSL options, refer to <a href="/2.1/docs/activity.html#activity-strategy-fasttrack">Fast Track</a>.</p>
 
@@ -736,7 +736,7 @@ result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 <p>With the help of <a href="/2.1/docs/endpoint.html">endpoint</a>, it is possible to connect failure of this step to render <strong>404 response</strong> directly.
 As a result, you don’t need to conditionally check if <code>ctx[:model]</code> is present or not.</p>
 
-<p><img src="/images/macro-ends.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/macro-ends.png" /></p>
 
 <p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
 
@@ -1587,7 +1587,7 @@ end
 
 <p>If the <code>Contract::Validate()</code> deviates on a failure track, it is possible to emit a new <a href="/2.1/docs/operation.html#signals">signal</a> suggesting contract failure.</p>
 
-<p><img src="/images/macro-ends.png" class="mx-auto d-block" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/macro-ends.png" /></p>
 
 <p>This becomes really handy when used along with the <a href="/2.1/docs/endpoint.html">endpoint</a>.
 It avoids any conditional checks and can be wired to render <strong>422 response</strong> without accessing the <code>ctx</code>.

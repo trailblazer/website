@@ -18,11 +18,11 @@ Use `wtf?` if you want to
 * Find out which step changed the track to failure.
 * Focus on specific step(s) to find out what `ctx` mutations are happening inside them.
 
-<%= img "wtf.png" %>
+<%= vite_image_tag "images/wtf.png", class: "mx-auto d-block" %>
 
 This will run your activity with tracing enabled, and in case of an exception, print the trace path to the closest point where the exception was thrown.
 
-<%= img "wtf-exception.png" %>
+<%= vite_image_tag "images/wtf-exception.png", class: "mx-auto d-block" %>
 
 Your activity will be called using the `TaskWrap` invoker, a possible exception will be caught and the closest task found. It then prints the "stack trace", however, on a much higher level based on tasks, not methods.
 
@@ -36,7 +36,7 @@ This is possible due to you structuring code into higher abstractions, tasks and
 
 You can **focus** on specific steps and variables to find out what `ctx` comes in and what goes out. The `focus_on` option allows us to capture any key(s) from `ctx` and print any mutations happening within given steps.
 
-<%= img "wtf-focus.png" %>
+<%= vite_image_tag "images/wtf-focus.png", class: "mx-auto d-block" %>
 
 You need to pass one or more step names (either default name or given by explicit `:id`) to capture the mutations.
 
@@ -69,7 +69,7 @@ Inspection runs deeply when `ctx` contains nested structures like hashes or arra
 
 The `color_map` option allows you to customize default coloring scheme being used to render passed or failed steps.
 
-<%= img "wtf-color-map.png" %>
+<%= vite_image_tag "images/wtf-color-map.png", class: "mx-auto d-block" %>
 
 <%= h3 "Render" %>
 

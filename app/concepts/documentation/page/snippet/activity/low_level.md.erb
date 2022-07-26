@@ -3,7 +3,7 @@
 
 The Activity DSL is only one way to define activities. Under the hood, the DSL simply creates a handful of generic objects such as an _intermediate_ structure or an _implementation_. Those standardized objects then get compiled into an `Activity` instance to be used at run-time.
 
-<%= img "dsl_to_activity.png" %>
+<%= vite_image_tag "images/dsl_to_activity.png", class: "mx-auto d-block" %>
 
 This section discusses those underlying concepts - it will be helpful if you want to better understand how the DSL works, write your own DSL or generate activities from your own editor.
 
@@ -12,7 +12,7 @@ This section discusses those underlying concepts - it will be helpful if you wan
 
 When defining an activity, two objects are used: an `Intermediate` and an `Implementation` structure. The intermediate object is a generic definition of the **structure** of the activity: which task got what connections?
 
-<%= img "intermediate.png" %>
+<%= vite_image_tag "images/intermediate.png", class: "mx-auto d-block" %>
 
 It simply lists all tasks, along with the connections they have. The little gray bubbles on the task border are _outputs_. An output has a certain _semantic_ plus a connection (an arrow) pointing to the following task.
 

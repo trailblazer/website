@@ -12,7 +12,7 @@ Use `Subprocess` to nest it into the `Create` activity.
 
 The macro automatically wires all of `Validate`'s ends to the known counter-part tracks.
 
-<%= img "nesting.png" %>
+<%= vite_image_tag "images/nesting.png", class: "mx-auto d-block" %>
 
 The `Subprocess` macro will go through all outputs of the nested activity, query their semantics and search for tracks with the same semantic.
 
@@ -26,7 +26,7 @@ You can use the familiar DSL to reconnect ends.
 
 The nested's `failure` output now goes to the outer `success` track.
 
-<%= img "nesting-reconnect.png" %>
+<%= vite_image_tag "images/nesting-reconnect.png", class: "mx-auto d-block" %>
 
 In this example, regardless of nested's outcome, it will always be interpreted as a successful invocation.
 
@@ -42,7 +42,7 @@ A nested activity doesn't have to have two ends, only.
 
 The new special end is now wired to the `failure` track of the containing activity.
 
-<%= img "nesting-end.png" %>
+<%= vite_image_tag "images/nesting-end.png", class: "mx-auto d-block" %>
 
 There will be an exception thrown if you don't connect unknown ends.
 

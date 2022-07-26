@@ -14,7 +14,7 @@ In addition to your friends `step`, `pass` and `fail`, the DSL provides helpers 
 
 By default, and without additional helpers used, the DSL will connect every `step` task's two outputs to the two respective tracks of a "railway".
 
-<%= img "wire-output.png" %>
+<%= vite_image_tag "images/wire-output.png", class: "mx-auto d-block" %>
 
 <%= h3 "Output()" %>
 
@@ -44,7 +44,7 @@ Since a particular output is triggered by a particular signal, note that each ou
 
 <%= code "pay-add" %>
 
-<%= img "wire-output-add.png" %>
+<%= vite_image_tag "images/wire-output-add.png", class: "mx-auto d-block" %>
 
 
 The `find_provider` task now has three possible outcomes that can be triggered by returning either `Right`, `Left`, or `UsePaypal`.
@@ -59,7 +59,7 @@ You may reference existing ends by their semantic.
 
 This reconnects both outputs to the same end, always ending in a - desirable, yet unrealistic - successful state.
 
-<%= img "wire-output-end.png" %>
+<%= vite_image_tag "images/wire-output-end.png", class: "mx-auto d-block" %>
 
 
 <%= h4 "Adding ends" %>
@@ -70,7 +70,7 @@ Providing a new semantic to the `End()` function will create a new end event.
 
 Adding ends to an activity is a beautiful way to communicate more than two outcomes to the outer world without having to use a state field in the `ctx`. It also allows wiring those outcomes to different tracks in the container activity. [See nesting]
 
-<%= img "wire-output-endadd.png" %>
+<%= vite_image_tag "images/wire-output-endadd.png", class: "mx-auto d-block" %>
 
 This activity now maintains three end events. The path to the `declined` end is taken from the task's `failure` output.
 

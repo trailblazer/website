@@ -57,7 +57,7 @@ Given your database gem provides that finder, it will result in a successful que
 With the help of [endpoint](/2.1/docs/endpoint.html), it is possible to connect failure of this step to render **404 response** directly.
 As a result, you don't need to conditionally check if `ctx[:model]` is present or not.
 
-<%= img "macro-ends.png" %>
+<%= vite_image_tag "images/macro-ends.png", class: "mx-auto d-block" %>
 
 To emit `End.not_found` signal, you need to pass `not_found_terminus` kwarg.
 
