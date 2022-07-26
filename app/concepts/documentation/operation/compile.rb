@@ -2,8 +2,6 @@
 
 class Documentation::Operation::Compile < Trailblazer::Operation
   PAGES_PATH = "app/concepts/documentation/page"
-  PUBLIC_DIR_PATH = "public"
-
   TOC_ORDER = {
     generics:          %w[
       trailblazer
@@ -107,13 +105,13 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     end
   end
 
-  def write_pages(_ctx, site:, search_map:, **)
+  def write_pages(_ctx, site:, search_map:, dir_path: "public", **)
     # create all directories including subdirectories
-    FileUtils.mkdir_p(PUBLIC_DIR_PATH + "/tutorials")
+    FileUtils.mkdir_p(dir_path + "/tutorials")
 
     site.each do |md_name, page|
       html = Documentation::Cell::Show.new(page, search_map: search_map).call(:show)
-      File.write("#{PUBLIC_DIR_PATH}#{page.url}", html)
+      File.write("#{dir_path}#{page.url}", html)
     end
   end
 

@@ -2,7 +2,6 @@
 
 class Page::Operation::Compile < Trailblazer::Operation
   PAGES_PATH = "app/concepts/page/page"
-  PUBLIC_DIR_PATH = "public"
 
   LINKS = {
     "about_us" => { header: "About Us", url: "/2.1/about_us.html" },
@@ -20,13 +19,13 @@ class Page::Operation::Compile < Trailblazer::Operation
     ctx[:site] = site.to_h
   end
 
-  def write_pages(_ctx, site:, **)
+  def write_pages(_ctx, site:, dir_path: "public", **)
     # create all directories including subdirectories
-    FileUtils.mkdir_p(PUBLIC_DIR_PATH)
+    FileUtils.mkdir_p(dir_path)
 
     site.each do |md_name, page|
       html = Page::Cell::Show.new(page).call(:show)
-      File.write("#{PUBLIC_DIR_PATH}#{page.url}", html)
+      File.write("#{dir_path}#{page.url}", html)
     end
   end
 end

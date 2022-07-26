@@ -1,11 +1,4 @@
 PATH
-  remote: /Users/planet/Work/ruby/cells-rails
-  specs:
-    cells-rails (0.1.5)
-      actionpack (>= 5.0)
-      cells (>= 4.1.6, < 5.0.0)
-
-PATH
   remote: /Users/planet/Work/ruby/cells
   specs:
     cells (4.5.0)
@@ -257,7 +250,6 @@ DEPENDENCIES
   annotate_gem
   cells!
   cells-erb
-  cells-rails!
   foreman
   listen
   puma (~> 5.0)

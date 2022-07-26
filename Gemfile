@@ -19,8 +19,6 @@ gem "annotate_gem", require: false
 gem "cells", path: "/Users/planet/Work/ruby/cells"
 # Tilt binding for Erbse. (https://github.com/trailblazer/cells-erb)
 gem "cells-erb"
-# Convenient Rails support for Cells. (http://trailblazer.to)
-gem "cells-rails", path: "/Users/planet/Work/ruby/cells-rails"
 # Automatic Ruby code style checking tool. (https://github.com/rubocop/rubocop)
 gem "rubocop"
 # Automatic Rails code style checking tool. (https://github.com/rubocop/rubocop-rails)
