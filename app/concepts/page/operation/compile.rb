@@ -21,7 +21,7 @@ class Page::Operation::Compile < Trailblazer::Operation
 
   def write_pages(_ctx, site:, dir_path: "public", **)
     # create all directories including subdirectories
-    FileUtils.mkdir_p(dir_path)
+    FileUtils.mkdir_p("#{dir_path}/2.1")
 
     site.each do |md_name, page|
       html = Page::Cell::Show.new(page).call(:show)
