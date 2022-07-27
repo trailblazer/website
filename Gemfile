@@ -16,7 +16,7 @@ gem "puma", "~> 5.0"
 # Add comments to your Gemfile with each dependency's description. (https://github.com/ivantsepp/annotate_gem)
 gem "annotate_gem", require: false
 # View Models for Ruby and Rails. (https://github.com/apotonick/cells)
-gem "cells", path: "/Users/planet/Work/ruby/cells"
+gem "cells", github: "trailblazer/cells"
 # Tilt binding for Erbse. (https://github.com/trailblazer/cells-erb)
 gem "cells-erb"
 # Automatic Ruby code style checking tool. (https://github.com/rubocop/rubocop)
@@ -34,7 +34,7 @@ gem "vite_rails"
 # Tool collection to write and layout programmer's manuals. (https://github.com/apotonick/torture)
 gem "torture"
 # Write a short summary, because RubyGems requires one. (https://github.com/apotonick/torture)
-gem "torture-server", path: "/Users/planet/Work/ruby/torture-server"
+gem "torture-server", github: "apotonick/torture-server"
 # Process manager for applications with multiple components (http://github.com/ddollar/foreman)
 gem "foreman"
 # Listen to file modifications (https://github.com/guard/listen)
