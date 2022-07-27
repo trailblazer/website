@@ -1,0 +1,72 @@
+{
+  "entrypoints/documentation.js": {
+    "file": "assets/documentation.148f29f3.js",
+    "src": "entrypoints/documentation.js",
+    "isEntry": true,
+    "imports": [
+      "_main.49301fc8.js",
+      "_initAnchor.9217f1fb.js"
+    ]
+  },
+  "entrypoints/home.js": {
+    "file": "assets/home.4e4b0717.js",
+    "src": "entrypoints/home.js",
+    "isEntry": true,
+    "imports": [
+      "_main.49301fc8.js"
+    ],
+    "css": [
+      "assets/home.32dcb61d.css"
+    ]
+  },
+  "entrypoints/page.js": {
+    "file": "assets/page.273eaa82.js",
+    "src": "entrypoints/page.js",
+    "isEntry": true,
+    "imports": [
+      "_main.49301fc8.js",
+      "_initAnchor.9217f1fb.js"
+    ]
+  },
+  "_main.49301fc8.js": {
+    "file": "assets/main.49301fc8.js",
+    "css": [
+      "assets/main.afe1ffb6.css"
+    ],
+    "assets": [
+      "assets/fa-brands-400.fffc5be4.eot",
+      "assets/fa-brands-400.e705082b.woff2",
+      "assets/fa-brands-400.c9e3a94b.woff",
+      "assets/fa-brands-400.e12df7f0.ttf",
+      "assets/fa-brands-400.e5919fbb.svg",
+      "assets/fa-light-300.aff834ba.eot",
+      "assets/fa-light-300.448f45a0.woff2",
+      "assets/fa-light-300.9d69cd77.woff",
+      "assets/fa-light-300.468125cc.ttf",
+      "assets/fa-light-300.f7926cf2.svg",
+      "assets/fa-regular-400.36ff285a.eot",
+      "assets/fa-regular-400.ee41bc0e.woff2",
+      "assets/fa-regular-400.678eb4eb.woff",
+      "assets/fa-regular-400.e9ce35d2.ttf",
+      "assets/fa-regular-400.e08127e8.svg",
+      "assets/fa-solid-900.4b31a7c8.eot",
+      "assets/fa-solid-900.88876fcd.woff2",
+      "assets/fa-solid-900.fb6f39bb.woff",
+      "assets/fa-solid-900.5313ca70.ttf",
+      "assets/fa-solid-900.05344fc6.svg",
+      "assets/logo-16.4a7e2887.png",
+      "assets/front.3159a64a.png",
+      "assets/middle.39a9ef04.png",
+      "assets/back.21b03cc4.png",
+      "assets/docu-front.cb4aff90.png",
+      "assets/docu-middle.216b333d.png",
+      "assets/docu-back.dab9f642.png"
+    ]
+  },
+  "_initAnchor.9217f1fb.js": {
+    "file": "assets/initAnchor.9217f1fb.js",
+    "imports": [
+      "_main.49301fc8.js"
+    ]
+  }
+}

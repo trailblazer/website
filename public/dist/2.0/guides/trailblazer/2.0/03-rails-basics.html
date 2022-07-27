@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Trailblazer: 03- Rails Basics</title>
+<meta name="description" content="03- Rails Basics - Trailblazer">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content=", ">
+
+<!-- style -->
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,%20400,700,800%7CRaleway:400,200,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../../../css/application.css">
+
+<!-- script -->
+<script src="../../../javascripts/jquery.min.js"></script>
+<script src="../../../javascripts/application.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    $(document).foundation();
+
+    anchors.add("article h2");
+    anchors.add("article h3");
+
+    hljs.configure({
+      languages: ['ruby', 'haml']
+    });
+
+    hljs.initHighlightingOnLoad();
+
+    // $('#code-slider').slick({arrows: true, dots: true});
+    $('.carousel').slick({arrows: true, dots: true});
+  });
+</script>
+
+
+<meta property="og:title" content="03- Rails Basics">
+<meta property="og:site_name" content="Trailblazer">
+<meta property="og:url" content="http://trailblazer.to/guides/trailblazer/2.0/03-rails-basics.html">
+<meta property="og:description" content="In this guide we're building a simple CRUD application with Trailblazer and Rails.">
+<meta property="og:image" content="http://trailblazer.to/images/go-trailblazer.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@apotonick">
+<meta name="twitter:title" content="03- Rails Basics">
+<meta name="twitter:description" content="In this guide we're building a simple CRUD application with Trailblazer and Rails.">
+<meta name="twitter:image" content="http://trailblazer.to/images/summary/guide-02.png">
+
+  </head>
+  <body>
+
+
+  <!--
+    <div class="secondary callout" data-closable>
+      <strong>TRB JOBS:</strong> Deutschsprachiger Ruby Developer in Hannover - <a href="/inc/jobs.html">Jaaaa!</a>
+      <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  -->
+
+      <a class="notice" style="display: block; overflow: hidden; position: relative; width: 100%; padding: 0.6rem 0; background-color: #3b5998;" href="http://fb.me/trailblazer.to">
+    <div class="info" style="text-align: center;">
+      <h5 style="font-size: 0.9rem; color: white; font-weight: bold;">
+        <i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 1.2rem;"></i>
+        LIKE US FOR UPDATES + GET A FREE STICKER PACK!
+      </h5>
+    </div>
+  </a>
+
+
+    <div data-sticky-container class="top-navbar">
+  <div class="top-bar sticky" data-sticky data-options="marginTop:0;" style="width:100%">
+    <div class="top-bar-title">
+      <ul class="menu horizontal">
+        <li>
+          <a href="../../../index.html"><img style="height: 25px;" src="../../../images/logo-top.svg"></a>
+        </li>
+        <li>
+        <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle></button>
+        </span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="responsive-menu">
+      <div class="top-bar-right">
+        <ul class="dropdown menu     vertical medium-horizontal" data-dropdown-menu>
+          <li><a href="../../../blog/2017-12-trailblazer-2-1-what-you-need-to-know.html">TRB 2.1 IS COMING!</a></li>
+          <li><a href="https://trbpro.herokuapp.com/">PREMIUM SUPPORT <img alt="Premium Support" src="../../../images/pro-white.png"></a></li>
+          <li><a href="../../../newsletter.html">NEWSLETTER</a></li>
+          <li><a href="https://gitter.im/trailblazer/chat" onclick="trackOutboundLink('https://gitter.im/trailblazer/chat'); return false;">CHAT</a></li>
+          <li><a href="../../../guides.html">LEARN</a></li>
+          <li>
+            <a href="03-rails-basics.html#">GEMS</a>
+            <ul class="menu vertical">
+              <li class=""><a href="../../../gems/cells.html">CELLS</a></li>
+              <li class=""><a href="../../../gems/operation/2.0/index.html">OPERATION</a></li>
+              <li class=""><a href="../../../gems/reform.html">REFORM</a></li>
+              <li class=""><a href="../../../gems/representable.html">REPRESENTABLE</a></li>
+              <li class=""><a href="../../../gems/roar.html">ROAR</a></li>
+              <li class=""><a href="../../../gems/formular.html">FORMULAR</a></li>
+              <li class=""><a href="../../../gems/disposable.html">DISPOSABLE</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="https://leanpub.com/trailblazer" class="button secondary" onclick="trackOutboundLink('https://leanpub.com/trailblazer'); return false;">GET THE BOOK</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Hero -->
+<div class="hero gems-hero operation2-hero">
+  <div class="hero-unit">
+    <div class="expanded row">
+      <div class="columns">
+        <h1 id="project_title">
+          Operation
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="expanded row">
+      <div class="medium-9 large-10 medium-push-3 large-push-2 columns">
+        <article class="operation2-body">
+
+          
+            <header id="doc-header">
+  <h1 class="doc-page-title">03- Rails Basics</h1>
+  <span class="doc-last-updated"><i class="fa fa-clock-o" aria-hidden="true"></i> Last updated 09 May 2017</span>
+
+  
+    <span class="doc-last-updated">
+      <i class="fa fa-diamond" aria-hidden="true"></i>
+      <a href="https://github.com/trailblazer/trailblazer">trailblazer</a>
+
+      <a href="03-rails-basics.html">
+      <span class="version">v2.0</span>
+      </a>
+
+    
+
+    </span>
+  
+
+  <hr>
+
+</header>
+
+          
+
+          <div class="row"> <!-- nach doc header -->
+            <div class="large-9 columns" id="docs">   <!-- actual docs -->
+              <p>Now that we’ve learned <a href="http://trailblazer.to/guides/trailblazer/2.0/01-operation-basics.html">what operations do</a> and how Trailblazer <a href="http://trailblazer.to/guides/trailblazer/2.0/02-trailblazer-basics.html">provides convenient macro steps</a> to ease your life as a software engineer, it’s time to check out how to use operations, contracts, and cells in Rails.</p>
+
+<p><i class="fa fa-download" aria-hidden="true"></i> Where’s the <a href="https://github.com/trailblazer/guides/tree/operation-03"><strong>EXAMPLE CODE?</strong></a></p>
+
+<h2 id="setup" data-magellan-target="setup">Setup</h2>
+
+<p>In this example we will use Trailblazer operations with Reform form objects to validate and process incoming data.</p>
+
+<p>Here’s the <code class="highlighter-rouge">Gemfile</code>.</p>
+
+<pre><code>source "https://rubygems.org"
+
+gem "rails", "~&gt; 5.1"
+gem "activerecord"
+gem "sqlite3"
+
+gem "simple_form"
+# gem "formular", github: "trailblazer/formular"
+gem "dry-validation"
+
+gem "trailblazer", "&gt;= 2.0.3"
+gem "trailblazer-rails"
+gem "trailblazer-cells"
+gem "cells-rails"
+gem "cells-slim"
+
+
+group :test do
+  gem "rspec-rails"
+  gem "capybara"
+end
+</code></pre>
+
+<p>The <code class="highlighter-rouge">trailblazer-rails</code> gem makes the integration a walk in the park. It pulls and invokes the <a href="../../../gems/trailblazer/loader.html"><code class="highlighter-rouge">trailblazer-loader</code> gem</a> automatically for you <a href="https://github.com/trailblazer/trailblazer-rails/blob/master/lib/trailblazer/rails/railtie.rb">via a Railtie</a>. All Trailblazer files are eager-loaded.</p>
+
+<div class="callout">
+  
+<p>In Trailblazer, we don’t believe that an ever-changing runtime environment is a good idea. Code that is, maybe, loaded, in a certain order, maybe, is a source of many production problems. Even in development mode we want an environment as close to production as possible.</p>
+
+<p>This is why <code>trailblazer-loader</code> always loads all TRB files at server startup. The speed decrease is about 2 seconds and is ignorable, since the automatic reloading with Rails still works.</p>
+
+</div>
+
+<p>The <code class="highlighter-rouge">traiblazer-rails</code> gem also adds one single method <code class="highlighter-rouge">#run</code> to the <code class="highlighter-rouge">ApplicationController</code> which we’ll discover soon.</p>
+
+<h2 id="file-structure" data-magellan-target="file-structure">File Structure</h2>
+
+<p>You can always discover a Trailblazer application in Rails by the <code class="highlighter-rouge">app/concepts</code> directory.</p>
+
+<section class=" ">
+  <div class="row">
+    <div class="column medium-6 ">
+        <pre><code>├── app
+│   ├── concepts
+│   │   ├── blog_post
+│   │   │   ├── cell
+│   │   │   │   ├── edit.rb
+│   │   │   │   ├── index.rb
+│   │   │   │   ├── item.rb
+│   │   │   │   ├── new.rb
+│   │   │   │   └── show.rb
+│   │   │   ├── contract
+│   │   │   │   ├── create.rb
+│   │   │   │   └── edit.rb
+│   │   │   ├── operation
+│   │   │   │   ├── create.rb
+│   │   │   │   ├── delete.rb
+│   │   │   │   ├── index.rb
+│   │   │   │   ├── show.rb
+│   │   │   │   └── update.rb
+│   │   │   └── view
+│   │   │       ├── edit.slim
+│   │   │       ├── index.slim
+│   │   │       ├── item.slim
+│   │   │       ├── new.slim
+│   │   │       └── show.slim
+│   │   └── user
+│   │       ├── contract
+│   │       │   └── create.rb
+│   │       └── operation
+│   │           └── create.rb
+│   ├── controllers
+│   │   ├── application_controller.rb
+│   │   └── blog_posts_controller.rb
+│   └── models
+│       ├── blog_post.rb
+│       └── user.rb
+</code></pre>
+
+
+      </div>
+    <div class="column medium-6 ">
+        <p>This is where files are structured by <em>concept</em>, and then by technology. What is very different to Rails has proven to be highly intuitive and emphasizes the modularity TRB brings.</p>
+
+<p>For example, all classes and views related to the “blog post” concept are located in <code>app/concepts/blog_post</code>. The different abstractions are represented with their own directories, such as <code>blog_post/operation</code> or <code>blog_post/contract</code>.</p>
+
+<p>Keep in mind that it is also possible to use nested concepts as in <code>app/concepts/admin/ui/post</code>.</p>
+
+<p>Also, in Trailblazer we decided that <strong>all file and class names are singular</strong> which means you don’t have to think about whether or not something should be plural (it is still possible to use plural names, e.g. <code>app/concepts/invoices/..</code>).</p>
+
+<p>Your controllers and models, unless desired differently, are still organized the Rails Way, allowing TRB to be used in existing projects for refactoring.</p>
+
+      </div>
+</div></section>
+
+<h2 id="presentation-operation" data-magellan-target="presentation-operation">Presentation Operation</h2>
+
+<p>Since we already covered the essential mechanics in chapter 02, we can jump directly into the first problem: how do we render a form to create a blog post?</p>
+
+<p>At first, we need a <em>presentation</em> operation that creates an empty <code class="highlighter-rouge">BlogPost</code> for us and sets up a Reform object which can then be rendered in a view. This operation per convention is named <code class="highlighter-rouge">BlogPost::Create::Present</code> and sits in <code class="highlighter-rouge">app/concepts/blog_post/operation/create.rb</code>.</p>
+
+<pre><code>class BlogPost::Create &lt; Trailblazer::Operation
+  class Present &lt; Trailblazer::Operation
+    step Model(BlogPost, :new)
+    step Contract::Build( constant: BlogPost::Contract::Create )
+  end
+
+  # ...
+end
+</code></pre>
+
+<p>Those are all steps we’ve discussed in chapter 02. Create a new model, and use <code class="highlighter-rouge">Contract::Build</code> to instantiate a Reform form that decorates the model.</p>
+
+<div class="callout">
+  
+<p>It’s totally up to you whether or not you want a separate file for <code>Present</code> operations, or if you want to name them <code>New</code> and <code>Edit</code>. The convention shown here is in use in hundreds of applications and has evolved as a best-practice over the last years.</p>
+
+</div>
+
+<h2 id="contract" data-magellan-target="contract">Contract</h2>
+
+<p>The interesting part in the <code class="highlighter-rouge">Present</code> operation is the <code class="highlighter-rouge">:constant</code> option: it references the <code class="highlighter-rouge">BlogPost::Contract::Create</code> class, which itself lives in <code class="highlighter-rouge">app/concepts/blog_post/contract/create.rb</code>.</p>
+
+<pre><code>require "reform"
+require "reform/form/dry"
+
+module BlogPost::Contract
+  class Create &lt; Reform::Form
+    include Dry
+
+    property :title
+    property :body
+
+    validation do
+      required(:title).filled
+      required(:body).maybe(min_size?: 9)
+    end
+  end
+end
+</code></pre>
+
+<p>Contracts can be pure <code class="highlighter-rouge">dry-validation</code> schemas or Reform objects that can in turn use <code class="highlighter-rouge">dry-validation</code> or <code class="highlighter-rouge">ActiveModel::Validations</code> as their validation engine. Using a Reform object, whatsoever, will allow rendering that form in a view.</p>
+
+<h2 id="contract-rendering" data-magellan-target="contract-rendering">Contract Rendering</h2>
+
+<p>We now have the form and operation in place and are ready to hook that into the <code class="highlighter-rouge">BlogPostsController</code>’s <code class="highlighter-rouge">new</code> action.</p>
+
+<pre><code>class BlogPostsController &lt; ApplicationController
+  def new
+    run BlogPost::Create::Present
+    render cell(BlogPost::Cell::New, @form), layout: false
+  end
+</code></pre>
+
+<p>The <code class="highlighter-rouge">run</code> method invokes the operation, optionally passes dependencies such as the <code class="highlighter-rouge">current_user</code> into the operation’s <code class="highlighter-rouge">call</code>, and then sets some default variables such as <code class="highlighter-rouge">@model</code> and <code class="highlighter-rouge">@form</code> for you.</p>
+
+<div class="callout">
+  
+<p>The instance variables in the controller are only set for your convenience and could be retrieved via the result object, too. <a href="../../../gems/trailblazer/2.0/rails.html#run">→ API </a></p>
+
+</div>
+
+<p>After running the operation and retrieving the contract instance, it is now time to render a view with a form, that we can actually fill out and publish our blog post. This happens via <code class="highlighter-rouge">render</code> and by invoking a cell. The cell’s job is rendering the form, so we need to pass the <code class="highlighter-rouge">@form</code> object to it.</p>
+
+<p>BTW, the Cells gem and the rendering layer it brings is completely optional. If you want, you can keep using ActionView rendering along with operations.</p>
+
+<h2 id="form-cell" data-magellan-target="form-cell">Form Cell</h2>
+
+<p>The <code class="highlighter-rouge">BlogPost::Cell::New</code> cell is responsible for rendering this view. We will discuss its internals later, but for a quick preview, here’s the cell class.</p>
+
+<pre><code>module BlogPost::Cell
+  class New &lt; Trailblazer::Cell
+    include ActionView::RecordIdentifier
+    include ActionView::Helpers::FormOptionsHelper
+    include SimpleForm::ActionViewExtensions::FormHelper
+  end
+end
+</code></pre>
+
+<p>The <code class="highlighter-rouge">include</code>s are necessary to import all helpers we need in the view.</p>
+
+<div class="callout">
+  
+<p>The first line <code>module BlogPost::Cell</code> is crucial as it creates the module constant <code>Cell</code> in the <code>BlogPost</code> namespace. It has to be in one single line, otherwise you will get strange constant errors due to a never-fixed bug in Ruby.</p>
+
+</div>
+
+<p>As all we do is rendering the view, there’s no real code yet. Speaking of views, here is the cell’s view in <code class="highlighter-rouge">app/concepts/blog_post/view/new.slim</code>.</p>
+
+<pre><code>.row.new
+  h1 New Post
+
+  = simple_form_for model do |f|
+    .row
+      .col-sm-12
+        = f.input :title, placeholder: "Title", label: false
+    .row
+      .col-sm-12
+        = f.input :body, placeholder: "Say it out loud!", label: false
+    .row
+      .col-sm-12
+        = f.submit 'Create Post'
+</code></pre>
+
+<p>Enough code to render the blog form. It looks a bit sad without any layout, but we’ll come to that shortly.</p>
+
+<p><img class="thumbnail" src="../../../images/guides/03-new-form-layoutless.png"></p>
+
+<p>Submitting this very form will POST it to <code class="highlighter-rouge">/blog_posts/</code>, which is the next controller action we have to implement.</p>
+
+<h2 id="form-processing" data-magellan-target="form-processing">Form Processing</h2>
+
+<p>Again, we run an operation. This time it’s <code class="highlighter-rouge">BlogPost::Create</code>.</p>
+
+<div class="callout">
+  
+<p>Can you see how controller actions map to operations? This is because in Rails apps, actions correspond to specific application functions (“create blog post”, “search user”, “add comment”), and since the <strong>business logic should be encapsulated in operations</strong>, you will always find controller actions simply dispatching to one operation.</p>
+
+<p>However, this doesn’t mean you couldn’t use operations for all kinds of smaller tasks, or in background jobs, or as console commands, too.</p>
+
+</div>
+
+<p>Here’s the controller action dispatching the operation.</p>
+
+<pre><code>def create
+  run BlogPost::Create do |result|
+    return redirect_to blog_posts_path
+  end
+
+  render cell(BlogPost::Cell::New, @form), layout: false
+end
+</code></pre>
+
+<p>A nice detail about <code class="highlighter-rouge">run</code> is: it executes an optional block when the operation was run successfully. This means we can redirect to the index page in case of a successful blog post create. Otherwise, we re-render the form cell.</p>
+
+<div class="callout">
+  
+<p>Please note that there’s a <code>return</code> in the block, causing the controller’s execution to stop. If you forget this, the rest of the <code>create</code> method will be executed, too.</p>
+
+</div>
+
+<p>Let’s check out the <code class="highlighter-rouge">BlogPost::Create</code> operation in detail, now.</p>
+
+<h2 id="create" data-magellan-target="create">Create</h2>
+
+<p>While the operation we implemented earlier only creates an unpersisted model, the <code class="highlighter-rouge">BlogPost::Create</code> operation also processes the submitted form data and physically persists the model in case of validity.</p>
+
+<p>To understand how the operation knows whether or not it was run successful, and how this entire workflow is implemented, we should have a look at the code in <code class="highlighter-rouge">app/concepts/blog_post/operation/create.rb</code>.</p>
+
+<pre><code>class BlogPost::Create &lt; Trailblazer::Operation
+  class Present &lt; Trailblazer::Operation
+    step Model(BlogPost, :new)
+    step Contract::Build( constant: BlogPost::Contract::Create )
+  end
+
+  step Nested( Present )
+  step Contract::Validate( key: :blog_post )
+  step Contract::Persist( )
+  step :notify!
+
+  def notify!(options, model:, **)
+    options["result.notify"] = Rails.logger.info("New blog post #{model.title}.")
+  end
+end
+</code></pre>
+
+<p>Don’t get confused by the nested <code class="highlighter-rouge">Present</code> class in <code class="highlighter-rouge">Create</code>! This is only Ruby’s way of namespacing and doesn’t leak any logic or state into the <code class="highlighter-rouge">Create</code> operation.</p>
+
+<p>The <code class="highlighter-rouge">Create</code> operation definition starts with the <code class="highlighter-rouge">step Nested ( .. )</code> statement. This is where we’re reusing the existing <code class="highlighter-rouge">Present</code> operation to create the model and contract for it. After that’s done, we run validations, persist the data to the model (in case the validation is happy) and send a notification after it.</p>
+
+<div class="callout">
+  
+<p><a href="../../../gems/operation/2.0/api.html#nested">The <code>Nested</code> step macro</a> runs the <code>Present</code> operation and copies the key/value pairs from its result object into <code>Create</code> our result object. Of course, this all happens at run-time.</p>
+
+</div>
+
+<p>We wrote enough code to have a fully working setup to create, validate and persist blog posts along with post-processing logic such as sending out notifications, which would usually happen in an ActiveRecord callback.</p>
+
+<p>While an invalid form submission will re-render the form, sane data causes us to get redirect to <code class="highlighter-rouge">/blog_posts/</code>, aka the <em>index</em> action.</p>
+
+<h2 id="index" data-magellan-target="index">Index</h2>
+
+<p>The controller <code class="highlighter-rouge">index</code> method, again, simply dispatches to the <code class="highlighter-rouge">BlogPost::Index</code> operation and then uses its cell to render the list.</p>
+
+<pre><code>def index
+  run BlogPost::Index
+  render cell(BlogPost::Cell::Index, result["model"]), layout: false
+end
+</code></pre>
+
+<p>We’re going to discuss the cell in another chapter. Here’s the operation found in <code class="highlighter-rouge">app/concepts/blog_post/operation/index.rb</code>.</p>
+
+<pre><code>class BlogPost::Index &lt; Trailblazer::Operation
+  step :model!
+
+  def model!(options, *)
+    options["model"] = ::BlogPost.all.reverse_order
+  end
+end
+</code></pre>
+
+<p>In line with what we did in <code class="highlighter-rouge">Create::Present</code>, the <code class="highlighter-rouge">Index</code> operation’s job is to retrieve a list of posts and expose them via the result object’s <code class="highlighter-rouge">"model"</code> field.</p>
+
+<div class="callout">
+  
+<p>Remember that this is the place where pagination, filtering, or even delegating to <code>Query</code> objects might happen. So far, we didn’t see the need to introduce framework-based query objects, but with increasing usage this might be an optional feature in a future version.</p>
+
+<p>Also, the name <code>"model"</code> - despite it being an array - is purely conventional.</p>
+
+</div>
+
+<p>This array is then passed into the cell and renders an index list. In that list, clicking a link will direct you to a URL such as <code class="highlighter-rouge">/blog_posts/1</code>, which corresponds to a <code class="highlighter-rouge">show</code> action.</p>
+
+<h2 id="show" data-magellan-target="show">Show</h2>
+
+<p>The <code class="highlighter-rouge">show</code> action in the controller now doesn’t look anything special, anymore.</p>
+
+<pre><code>def show
+  run BlogPost::Show
+  render cell(BlogPost::Cell::Show, result["model"]), layout: false
+end
+</code></pre>
+
+<p>Given that we’ve just learned about the <code class="highlighter-rouge">Index</code> operation, the <code class="highlighter-rouge">Show</code> class in <code class="highlighter-rouge">app/concepts/blog_post/operation/index.rb</code> is almost boring.</p>
+
+<pre><code>class BlogPost::Show &lt; Trailblazer::Operation
+  step Model(BlogPost, :find_by)
+end
+</code></pre>
+
+<p>Trailblazer already ships with the <code class="highlighter-rouge">Model</code> macro to retrieve the model and assign it to the <code class="highlighter-rouge">options</code> object.</p>
+
+<div class="callout">
+  
+<p>We use <code>find_by</code>, which will either return the model matching the <code>:id</code> field, or <code>nil</code>. This has the advantage that there won’t be an evil exception breaking our flow, but the operation will automatically jump to the error track if it can’t find a model.</p>
+
+</div>
+
+<p>A colorless, but functional view of a particular blog post is the reward for our hard work.</p>
+
+<section class=" ">
+  <div class="row">
+    <div class="column medium-7 ">
+        <p><img class="thumbnail" src="../../../images/guides/03-show-layoutless.png"></p>
+
+
+      </div>
+    <div class="column medium-5 ">
+        <p>Admittedly, this looks quite bare-bones, but we can read the blog post, and have links to edit and delete it.</p>
+
+<p>When clicking <em>Edit</em> we will be redirect to <code>/blog_posts/1/edit</code>. This is just another controller action dispatching to the <code>BlogPost::Update::Present</code> operation.</p>
+
+      </div>
+</div></section>
+
+<h2 id="edit" data-magellan-target="edit">Edit</h2>
+
+<p>When editing an existing blog post, the <code class="highlighter-rouge">BlogPostsController#edit</code> action is invoked.</p>
+
+<pre><code>def edit
+  run BlogPost::Update::Present
+  render cell(BlogPost::Cell::Edit, @form), layout: false
+end
+</code></pre>
+
+<p>The processing part of the update flow is implemented via the <code class="highlighter-rouge">#update</code> action.</p>
+
+<pre><code>def update
+  run BlogPost::Update do |result|
+    flash[:notice] = "#{result["model"].title} has been saved"
+    return redirect_to blog_post_path(result["model"].id)
+  end
+
+  render cell(BlogPost::Cell::Edit, @form), layout: false
+end
+</code></pre>
+
+<p>Again, the cells views will be discussed in chapter 05. Let’s focus on the business logic here.</p>
+
+<h2 id="update" data-magellan-target="update">Update</h2>
+
+<p>The following code file are the <code class="highlighter-rouge">BlogPost::Update::Present</code> and <code class="highlighter-rouge">BlogPost::Update</code> operations used in the two controller actions just introduced. Just as their <code class="highlighter-rouge">Create</code> counterpart, we put them in <code class="highlighter-rouge">app/concepts/blog_post/update.rb</code>.</p>
+
+<pre><code>class BlogPost::Update &lt; Trailblazer::Operation
+  class Present &lt; Trailblazer::Operation
+    step Model(BlogPost, :find_by)
+    step Contract::Build( constant: BlogPost::Contract::Create )
+  end
+
+  step Nested(Present)
+  step Contract::Validate( key: :blog_post )
+  step Contract::Persist()
+end
+</code></pre>
+
+<p>Note that in the <code class="highlighter-rouge">Model</code> step, we use the <code class="highlighter-rouge">:find_by</code> method, just as we did for <a href="03-rails-basics.html#show">Show</a>. Another interesting fact here’s that the <code class="highlighter-rouge">Create</code> contract is reused. At the moment, we don’t need differing validations for the editing logic, which allows us to lazily point to that existing class.</p>
+
+<p>The last missing piece for our simple CRUD example is deleting: we want to be able to trash articles that no longer fit.</p>
+
+<h2 id="delete" data-magellan-target="delete">Delete</h2>
+
+<p>The controller action <code class="highlighter-rouge">#destroy</code> is responsible for triggering the respective delete logic.</p>
+
+<pre><code>def destroy
+  run BlogPost::Delete
+
+  flash[:alert] = "Post deleted"
+  redirect_to blog_posts_path
+end
+</code></pre>
+
+<p>Since we don’t have anything that could go wrong, <em>yet</em>, we don’t need the block for <code class="highlighter-rouge">run</code>. The operation in <code class="highlighter-rouge">app/concepts/blog_post/operation/delete.rb</code> is very simple, too.</p>
+
+<pre><code>class BlogPost::Delete &lt; Trailblazer::Operation
+  step Model(BlogPost, :find_by)
+  step :delete!
+
+  def delete!(options, model:, **)
+    model.destroy
+  end
+end
+</code></pre>
+
+<p>The <code class="highlighter-rouge">Model</code> macro helps with finding the right blog post instance, and a custom <code class="highlighter-rouge">delete!</code> step actually deletes the model using ActiveRecord’s <code class="highlighter-rouge">destroy</code> method.</p>
+
+<h2 id="summary" data-magellan-target="summary">Summary</h2>
+
+<p>Building a simple CRUD component for a model is very easy with Trailblazer. In this chapter, we really only focused on the business code, and we will learn about Cells in chapter 05.</p>
+
+<p>However, and this is a terrible thing to do, we’ve totally neglected testing! Testing with Trailblazer is incredibly simple and much more straight-forward as compared to Rails and its quite fragmented testing style. We’ll discover the world of <a href="http://trailblazer.to/guides/trailblazer/2.0/04-testing-basics.html">testing in the next chapter</a>, and only once we’re finished you can sit back and be proud of your work.</p>
+
+<section class=" ">
+  <div class="row">
+    <div class="column medium-12 text-center">
+        <p><a href="http://trailblazer.to/guides/trailblazer/2.0/04-testing-basics.html" class="button">GO TO PART 4: TESTING BASICS!</a></p>
+
+      </div>
+</div></section>
+
+            </div>
+
+            <div class="large-3 columns sticky-container" data-sticky-container>
+
+              
+                <nav class="sticky columns docs-toc-wrap sticky is-anchored is-at-top side-nav" data-sticky data-anchor="docs" data-sticky-on="large" data-margin-top="5">
+  
+        <ul class="vertical menu" data-magellan id="page-toc">
+          <li class="page-toc-heading">ON THIS PAGE:</li>
+          <li><a href="03-rails-basics.html#setup">Setup</a></li>
+<li><a href="03-rails-basics.html#file-structure">File Structure</a></li>
+<li><a href="03-rails-basics.html#presentation-operation">Presentation Operation</a></li>
+<li><a href="03-rails-basics.html#contract">Contract</a></li>
+<li><a href="03-rails-basics.html#contract-rendering">Contract Rendering</a></li>
+<li><a href="03-rails-basics.html#form-cell">Form Cell</a></li>
+<li><a href="03-rails-basics.html#form-processing">Form Processing</a></li>
+<li><a href="03-rails-basics.html#create">Create</a></li>
+<li><a href="03-rails-basics.html#index">Index</a></li>
+<li><a href="03-rails-basics.html#show">Show</a></li>
+<li><a href="03-rails-basics.html#edit">Edit</a></li>
+<li><a href="03-rails-basics.html#update">Update</a></li>
+<li><a href="03-rails-basics.html#delete">Delete</a></li>
+<li><a href="03-rails-basics.html#summary">Summary</a></li>
+        </ul>
+      
+</nav>
+
+              
+
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="medium-3 large-2 medium-pull-9 large-pull-10 columns">
+        <ul id="sidebar" class="side-nav accordion" data-accordion>
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>OPERATION</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/operation/2.0/index.html">Overview</a></li>
+        <li><a href="../../../gems/operation/2.0/api.html">API</a></li>
+        <li><a href="../../../gems/operation/2.0/contract.html">Contract</a></li>
+        <!--<li><a href="/gems/operation/2.0/representer.html">Representer</a></li>-->
+        <li><a href="../../../gems/operation/2.0/policy.html">Policy</a></li>
+        <li><a href="../../../gems/operation/2.0/representer.html">Representer</a></li>
+        <!--<li><a href="/gems/operation/2.0/pipetree.html">Pipetree</a></li>-->
+        <li><a href="../../../gems/operation/2.0/endpoint.html">Endpoint</a></li>
+        <li>
+<a href="../../../gems/operation/1.1/index.html">
+            <span class="sidebar-info">→ v1.1</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>TRAILBLAZER</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/trailblazer/index.html">Overview</a></li>
+        <li><a href="../../../gems/trailblazer/2.0/rails.html">Rails</a></li>
+        <li><a href="../../../gems/trailblazer/2.0/test.html">Test</a></li>
+        <li><a href="../../../gems/trailblazer/loader.html">Loader</a></li>
+        <li><a href="../../../gems/trailblazer/upgrading-1-to-2.html">Upgrading</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>CELLS</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/cells.html">Overview</a></li>
+        <li><a href="../../../gems/cells/getting-started.html">Getting Started<span class="sidebar-info">NEW</span></a></li>
+        <li><a href="../../../gems/cells/api.html">API</a></li>
+        <li><a href="../../../gems/cells/trailblazer.html">Trailblazer::Cell</a></li>
+        <li><a href="../../../gems/cells/testing.html">Testing</a></li>
+        <li><a href="../../../gems/cells/render.html">Rendering</a></li>
+        <li><a href="../../../gems/cells/rails.html">Rails</a></li>
+        <li><a href="../../../gems/cells/templates.html">Templates</a></li>
+        <li><a href="../../../gems/cells/troubleshooting.html">Troubleshooting</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>REFORM</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/reform/index.html">Overview</a></li>
+        <li><a href="../../../gems/reform/api.html">API</a></li>
+        <li><a href="../../../gems/reform/options.html">Options</a></li>
+        <li><a href="../../../gems/reform/data-types.html">Data Types</a></li>
+        <li><a href="../../../gems/reform/populator.html">Populator</a></li>
+        <li><a href="../../../gems/reform/prepopulator.html">Prepopulator</a></li>
+        <li><a href="../../../gems/reform/validation.html">Validation</a></li>
+        <li><a href="../../../gems/reform/rails.html">Rails</a></li>
+        <li><a href="../../../gems/reform/debugging.html">Debugging</a></li>
+        <li><a href="../../../gems/reform/upgrading-guide.html">Upgrading Guide</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>REPRESENTABLE</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/representable.html">Overview</a></li>
+        <li><a href="../../../gems/representable/getting-started.html">Getting Started</a></li>
+        <li><a href="../../../gems/representable/3.0/api.html">API</a></li>
+        <li><a href="../../../gems/representable/3.0/function-api.html">Function API</a></li>
+        <li><a href="../../../gems/representable/3.0/populator.html">Populator</a></li>
+        <!--<li><a href="/gems/representable/architecture.html">Architecture</a></li>-->
+        <li><a href="../../../gems/representable/3.0/xml.html">XML</a></li>
+        <li><a href="../../../gems/representable/3.0/yaml.html">YAML</a></li>
+        <li><a href="../../../gems/representable/upgrading-guide.html">Upgrading Guide</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>ROAR</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/roar/index.html">Overview</a></li>
+        <li><a href="../../../gems/roar/jsonapi.html">JSON API</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>FORMULAR</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <!-- <li><a href="/gems/formular/index.html">Overview</a></li> -->
+        <li><a href="../../../gems/formular/bootstrap.html">Bootstrap</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>DISPOSABLE</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../../gems/disposable/index.html">Overview</a></li>
+        <li><a href="../../../gems/disposable/api.html">API</a></li>
+        <li><a href="../../../gems/disposable/default.html">Default</a></li>
+        <li><a href="../../../gems/disposable/callback.html">Callback</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="accordion-item" data-accordion-item>
+    <a href="03-rails-basics.html#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong>GUIDES</strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="../../index.html">Overview</a></li>
+        <li><a href="http://trailblazer.to/guides/trailblazer/2.0/01-operation-basics.html">01 - Operation Basics</a></li>
+        <li><a href="http://trailblazer.to/guides/trailblazer/2.0/02-trailblazer-basics.html">02 - Trailblazer Basics</a></li>
+        <li><a href="03-rails-basics.html" class="active">03 - Rails Basics</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <!--
+  <li class="accordion-item" data-accordion-item>
+    <a href="#" class="accordion-title">
+      <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+      <strong></strong>
+    </a>
+    <div class="accordion-content" data-tab-content>
+      <ul class="vertical menu">
+        <li><a href="">Overview</a></li>
+        
+      </ul>
+    </div>
+  </li>
+
+  -->
+</ul>
+
+<script>
+  (function (document, window) {
+    var $sidebar = $('#sidebar');
+    var $items = $sidebar.find('.accordion-item')
+    var currentPath = window.location.pathname;
+
+    $items.each(function (i, elem) {
+      var $elem = $(elem);
+      var linkHref = $elem
+        .find('.accordion-content li:first-child a')
+        .attr('href')
+        .replace('index.html', '');
+
+      if (currentPath.indexOf(linkHref) !== -1) {
+        $elem.addClass('is-active')
+      }
+    })
+  })(document, window);
+</script>
+
+      </div>
+    </div>
+
+
+    <section class="top-footer">
+  <div class="row">
+    <div class="columns medium-6">
+      <h3>Newsletter</h3>
+      <p>
+        Stay on top of what’s happening in Trailblazer.
+      </p>
+        <div class="row">
+          <div id="mc_embed_signup">
+            <form action="http://trailblazerb.us8.list-manage.com/subscribe/post?u=bbe5021ab6fbdc94a16f0d036&amp;id=a69f6e4652" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+
+              <div class="columns large-9 medium-12 ">
+                <div class="row collapse prefix-radius">
+                  <div class="small-8 medium-7 large-8 columns">
+                    <div id="mc_embed_signup_scroll">
+                      <div class="mc-field-group">
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="youremail@trailblazer.to">
+                      </div>
+                      <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                      </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_bbe5021ab6fbdc94a16f0d036_a69f6e4652" tabindex="-1" value=""></div>
+
+                    </div>
+                  </div>
+                  <div class="small-4 medium-5 large-4 columns">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button postfix secondary">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <script type="text/javascript" src="http://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+        </div>
+      <p>
+        And check out the <a href="../../../newsletter.html">archive of newsletters</a>!
+      </p>
+
+
+    </div>
+    <div class="columns medium-6">
+      <h3>The Book</h3>
+      <p>Learn how to build a Rails app with Trailblazer, step-by-step.</p>
+      <a href="https://leanpub.com/trailblazer" class="button secondary">Get the book!</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="row">
+    <div class="columns medium-4">
+      <div class="logo-box">
+        <a href="../../../index.html"><img src="../../../images/icon_trb.png">
+        </a>
+      </div>
+    </div>
+    <div class="columns medium-8">
+      <div class="row">
+        <div class="columns medium-6">
+          <h4>
+            Trailblazer
+          </h4>
+          <ul class="no-bullet">
+            <li><a href="https://gitter.im/trailblazer/chat">Gitter chat</a></li>
+            <li><a href="https://leanpub.com/trailblazer" onclick="trackOutboundLink('https://leanpub.com/trailblazer'); return false;">The book</a></li>
+          </ul>
+        </div>
+        <div class="columns medium-6">
+          <h4>
+            Follow Us
+          </h4>
+          <ul class="menu">
+            <li>
+              <a href="https://github.com/trailblazer">
+                <i class="footer-icon github-icon"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/trailblazer_to">
+                <i class="footer-icon twitter-icon"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://facebook.com/trailblazer.to">
+                <i class="footer-icon facebook-icon"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">
+        Trailblazer is created by <a href="../../../inc/index.html">Trailblazer GmbH</a> and awesome friends.
+      </p>
+      <p class="copyright">
+        Site designed and handcoded with love by <a href="https://twitter.com/noeliacabane">Noelia Cabane</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69514939-1', 'auto');
+  ga('send', 'pageview');
+
+  /**
+  * Function that tracks a click on an outbound link in Analytics.
+  * This function takes a valid URL string as an argument, and uses that URL string
+  * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+  * using 'navigator.sendBeacon' in browser that support it.
+  */
+  var trackOutboundLink = function(url) {
+     ga('send', 'event', 'outbound', 'click', url, {
+       'transport': 'beacon',
+       'hitCallback': function(){document.location = url;}
+     });
+  }
+</script>
+
+
+
+  </body>
+</html>

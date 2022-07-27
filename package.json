@@ -20,8 +20,8 @@
     "wow.js": "^1.2.2"
   },
   "scripts": {
-    "build": "RAILS_ENV=production bundle exec rails compile_site",
-    "preview": "npm run build && npx http-server public/dist -g -o 2.1.html"
+    "build": "RAILS_ENV=production bundle exec rails pack",
+    "preview": "npm run build && npx http-server public/dist -g -o /2.1"
   },
   "overrides": {
     "autoprefixer": "10.4.5"

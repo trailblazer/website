@@ -1,0 +1,462 @@
+{
+  "images/03-new-form-layoutless.png": {
+    "file": "assets/03-new-form-layoutless.bb3d3050.png",
+    "src": "images/03-new-form-layoutless.png"
+  },
+  "images/03-show-layoutless.png": {
+    "file": "assets/03-show-layoutless.57b564b3.png",
+    "src": "images/03-show-layoutless.png"
+  },
+  "images/Twitter-Facebook-preview-card-image-jungle.png": {
+    "file": "assets/Twitter-Facebook-preview-card-image-jungle.991138c3.png",
+    "src": "images/Twitter-Facebook-preview-card-image-jungle.png"
+  },
+  "images/Twitter-preview-card-image-jungle.png": {
+    "file": "assets/Twitter-preview-card-image-jungle.a471dc52.png",
+    "src": "images/Twitter-preview-card-image-jungle.png"
+  },
+  "images/activity-signal.png": {
+    "file": "assets/activity-signal.318960a5.png",
+    "src": "images/activity-signal.png"
+  },
+  "images/advance-domain-ctx.png": {
+    "file": "assets/advance-domain-ctx.e9b11061.png",
+    "src": "images/advance-domain-ctx.png"
+  },
+  "images/back.png": {
+    "file": "assets/back.21b03cc4.png",
+    "src": "images/back.png"
+  },
+  "images/blog_post_index.png": {
+    "file": "assets/blog_post_index.f2b901c6.png",
+    "src": "images/blog_post_index.png"
+  },
+  "images/blog_post_new_error.png": {
+    "file": "assets/blog_post_new_error.3dc7fcdc.png",
+    "src": "images/blog_post_new_error.png"
+  },
+  "images/buildalib-cover.png": {
+    "file": "assets/buildalib-cover.7a1ad735.png",
+    "src": "images/buildalib-cover.png"
+  },
+  "images/cells-nav-bar.jpg": {
+    "file": "assets/cells-nav-bar.050e75c0.jpg",
+    "src": "images/cells-nav-bar.jpg"
+  },
+  "images/code.png": {
+    "file": "assets/code.3465eed5.png",
+    "src": "images/code.png"
+  },
+  "images/cross-orange-lg.png": {
+    "file": "assets/cross-orange-lg.803bb610.png",
+    "src": "images/cross-orange-lg.png"
+  },
+  "images/cross-purple-lg.png": {
+    "file": "assets/cross-purple-lg.33a61187.png",
+    "src": "images/cross-purple-lg.png"
+  },
+  "images/deco1.png": {
+    "file": "assets/deco1.4308abfb.png",
+    "src": "images/deco1.png"
+  },
+  "images/directory-structure.png": {
+    "file": "assets/directory-structure.8e7a3429.png",
+    "src": "images/directory-structure.png"
+  },
+  "images/docu-back.png": {
+    "file": "assets/docu-back.dab9f642.png",
+    "src": "images/docu-back.png"
+  },
+  "images/docu-front.png": {
+    "file": "assets/docu-front.cb4aff90.png",
+    "src": "images/docu-front.png"
+  },
+  "images/docu-middle.png": {
+    "file": "assets/docu-middle.216b333d.png",
+    "src": "images/docu-middle.png"
+  },
+  "images/double-end.png": {
+    "file": "assets/double-end.b08c6c99.png",
+    "src": "images/double-end.png"
+  },
+  "images/dp.png": {
+    "file": "assets/dp.850b9e48.png",
+    "src": "images/dp.png"
+  },
+  "images/dsl_to_activity.png": {
+    "file": "assets/dsl_to_activity.545e54c8.png",
+    "src": "images/dsl_to_activity.png"
+  },
+  "images/editor-september.png": {
+    "file": "assets/editor-september.ad3ea92b.png",
+    "src": "images/editor-september.png"
+  },
+  "images/endpoint-adapter-api.png": {
+    "file": "assets/endpoint-adapter-api.35ae5cec.png",
+    "src": "images/endpoint-adapter-api.png"
+  },
+  "images/endpoint-adapter-web.png": {
+    "file": "assets/endpoint-adapter-web.f6d74965.png",
+    "src": "images/endpoint-adapter-web.png"
+  },
+  "images/endpoint-draft.png": {
+    "file": "assets/endpoint-draft.747ac197.png",
+    "src": "images/endpoint-draft.png"
+  },
+  "images/endpoint-not_authenticated-trace.png": {
+    "file": "assets/endpoint-not_authenticated-trace.5f93815c.png",
+    "src": "images/endpoint-not_authenticated-trace.png"
+  },
+  "images/endpoint-protocol.png": {
+    "file": "assets/endpoint-protocol.dd17a20a.png",
+    "src": "images/endpoint-protocol.png"
+  },
+  "images/endpoint-success-trace.png": {
+    "file": "assets/endpoint-success-trace.214f9ba6.png",
+    "src": "images/endpoint-success-trace.png"
+  },
+  "images/favicon.ico": {
+    "file": "assets/favicon.39e9303e.ico",
+    "src": "images/favicon.ico"
+  },
+  "images/flow.png": {
+    "file": "assets/flow.0d6e96bd.png",
+    "src": "images/flow.png"
+  },
+  "images/front.png": {
+    "file": "assets/front.3159a64a.png",
+    "src": "images/front.png"
+  },
+  "images/ft-failfast.png": {
+    "file": "assets/ft-failfast.aec95eac.png",
+    "src": "images/ft-failfast.png"
+  },
+  "images/ft-fasttrack.png": {
+    "file": "assets/ft-fasttrack.0da02806.png",
+    "src": "images/ft-fasttrack.png"
+  },
+  "images/ft-passfast.png": {
+    "file": "assets/ft-passfast.07318493.png",
+    "src": "images/ft-passfast.png"
+  },
+  "images/hec.jpg": {
+    "file": "assets/hec.73fed895.jpg",
+    "src": "images/hec.jpg"
+  },
+  "images/illus-lp.png": {
+    "file": "assets/illus-lp.a760a092.png",
+    "src": "images/illus-lp.png"
+  },
+  "images/input.png": {
+    "file": "assets/input.a068bb37.png",
+    "src": "images/input.png"
+  },
+  "images/intermediate.png": {
+    "file": "assets/intermediate.e6e29c23.png",
+    "src": "images/intermediate.png"
+  },
+  "images/logo-16.png": {
+    "file": "assets/logo-16.4a7e2887.png",
+    "src": "images/logo-16.png"
+  },
+  "images/logo-dark.png": {
+    "file": "assets/logo-dark.8d62532a.png",
+    "src": "images/logo-dark.png"
+  },
+  "images/macro-ends.png": {
+    "file": "assets/macro-ends.b7de1668.png",
+    "src": "images/macro-ends.png"
+  },
+  "images/middle.png": {
+    "file": "assets/middle.39a9ef04.png",
+    "src": "images/middle.png"
+  },
+  "images/nesting-end.png": {
+    "file": "assets/nesting-end.0450a0fe.png",
+    "src": "images/nesting-end.png"
+  },
+  "images/nesting-reconnect.png": {
+    "file": "assets/nesting-reconnect.8f92970d.png",
+    "src": "images/nesting-reconnect.png"
+  },
+  "images/nesting.png": {
+    "file": "assets/nesting.1a62b81e.png",
+    "src": "images/nesting.png"
+  },
+  "images/output.png": {
+    "file": "assets/output.651ad214.png",
+    "src": "images/output.png"
+  },
+  "images/patching-trace.png": {
+    "file": "assets/patching-trace.e51ef1f9.png",
+    "src": "images/patching-trace.png"
+  },
+  "images/patching.png": {
+    "file": "assets/patching.d7fb5d93.png",
+    "src": "images/patching.png"
+  },
+  "images/path-end.png": {
+    "file": "assets/path-end.f6515333.png",
+    "src": "images/path-end.png"
+  },
+  "images/path-macro-join.png": {
+    "file": "assets/path-macro-join.c1c5a98e.png",
+    "src": "images/path-macro-join.png"
+  },
+  "images/path-macro-railway.png": {
+    "file": "assets/path-macro-railway.81c5127d.png",
+    "src": "images/path-macro-railway.png"
+  },
+  "images/path-macro.png": {
+    "file": "assets/path-macro.120a1c75.png",
+    "src": "images/path-macro.png"
+  },
+  "images/path.png": {
+    "file": "assets/path.f0114a10.png",
+    "src": "images/path.png"
+  },
+  "images/pro.png": {
+    "file": "assets/pro.72833722.png",
+    "src": "images/pro.png"
+  },
+  "images/quote-close.png": {
+    "file": "assets/quote-close.73fb182f.png",
+    "src": "images/quote-close.png"
+  },
+  "images/quote-open.png": {
+    "file": "assets/quote-open.6ba55b33.png",
+    "src": "images/quote-open.png"
+  },
+  "images/railway-fail.png": {
+    "file": "assets/railway-fail.57547edd.png",
+    "src": "images/railway-fail.png"
+  },
+  "images/railway-pass.png": {
+    "file": "assets/railway-pass.1e360d27.png",
+    "src": "images/railway-pass.png"
+  },
+  "images/railway-wire.png": {
+    "file": "assets/railway-wire.f75f8759.png",
+    "src": "images/railway-wire.png"
+  },
+  "images/railway.png": {
+    "file": "assets/railway.439dbc92.png",
+    "src": "images/railway.png"
+  },
+  "images/reform-architecture.png": {
+    "file": "assets/reform-architecture.5b96a99a.png",
+    "src": "images/reform-architecture.png"
+  },
+  "images/s_hero.jpeg": {
+    "file": "assets/s_hero.411b1d3f.jpeg",
+    "src": "images/s_hero.jpeg"
+  },
+  "images/task-wrap.png": {
+    "file": "assets/task-wrap.7e007763.png",
+    "src": "images/task-wrap.png"
+  },
+  "images/wire-output-add.png": {
+    "file": "assets/wire-output-add.1cfadd58.png",
+    "src": "images/wire-output-add.png"
+  },
+  "images/wire-output-end.png": {
+    "file": "assets/wire-output-end.1829811c.png",
+    "src": "images/wire-output-end.png"
+  },
+  "images/wire-output-endadd.png": {
+    "file": "assets/wire-output-endadd.94842b57.png",
+    "src": "images/wire-output-endadd.png"
+  },
+  "images/wire-output.png": {
+    "file": "assets/wire-output.bd3b7f08.png",
+    "src": "images/wire-output.png"
+  },
+  "images/wtf-color-map.png": {
+    "file": "assets/wtf-color-map.094a8d25.png",
+    "src": "images/wtf-color-map.png"
+  },
+  "images/wtf-exception.png": {
+    "file": "assets/wtf-exception.9fdeea4c.png",
+    "src": "images/wtf-exception.png"
+  },
+  "images/wtf-focus.png": {
+    "file": "assets/wtf-focus.3465eed5.png",
+    "src": "images/wtf-focus.png"
+  },
+  "images/wtf.png": {
+    "file": "assets/wtf.a997c2bd.png",
+    "src": "images/wtf.png"
+  },
+  "images/book/check-email-fail.png": {
+    "file": "assets/check-email-fail.93f9a46a.png",
+    "src": "images/book/check-email-fail.png"
+  },
+  "images/book/create-account-01.png": {
+    "file": "assets/create-account-01.820057cc.png",
+    "src": "images/book/create-account-01.png"
+  },
+  "images/book/create-account-fail-fast.png": {
+    "file": "assets/create-account-fail-fast.19c231fe.png",
+    "src": "images/book/create-account-fail-fast.png"
+  },
+  "images/book/create-account-fail-wrong.png": {
+    "file": "assets/create-account-fail-wrong.bb1d1dff.png",
+    "src": "images/book/create-account-fail-wrong.png"
+  },
+  "images/book/create-account-fails.png": {
+    "file": "assets/create-account-fails.94a62a89.png",
+    "src": "images/book/create-account-fails.png"
+  },
+  "images/book/create-account-wtf.png": {
+    "file": "assets/create-account-wtf.4533cd56.png",
+    "src": "images/book/create-account-wtf.png"
+  },
+  "images/book/create-sub.png": {
+    "file": "assets/create-sub.d7cb8208.png",
+    "src": "images/book/create-sub.png"
+  },
+  "images/book/reset-email.png": {
+    "file": "assets/reset-email.0e0ee72e.png",
+    "src": "images/book/reset-email.png"
+  },
+  "images/book/reset-ok.png": {
+    "file": "assets/reset-ok.1fca201a.png",
+    "src": "images/book/reset-ok.png"
+  },
+  "images/book/reset-password-fail.png": {
+    "file": "assets/reset-password-fail.e62757ae.png",
+    "src": "images/book/reset-password-fail.png"
+  },
+  "images/book/reset-password.png": {
+    "file": "assets/reset-password.b54655d5.png",
+    "src": "images/book/reset-password.png"
+  },
+  "images/book/reset-sub.png": {
+    "file": "assets/reset-sub.206a7567.png",
+    "src": "images/book/reset-sub.png"
+  },
+  "images/book/save-account-error.png": {
+    "file": "assets/save-account-error.661c8852.png",
+    "src": "images/book/save-account-error.png"
+  },
+  "images/book/save-account-fail.png": {
+    "file": "assets/save-account-fail.0b17ef69.png",
+    "src": "images/book/save-account-fail.png"
+  },
+  "images/book/verify-account-fail.png": {
+    "file": "assets/verify-account-fail.b2229fe0.png",
+    "src": "images/book/verify-account-fail.png"
+  },
+  "images/book/verify-invalid-id.png": {
+    "file": "assets/verify-invalid-id.67f96320.png",
+    "src": "images/book/verify-invalid-id.png"
+  },
+  "images/book/verify-invalid-second.png": {
+    "file": "assets/verify-invalid-second.edc90a17.png",
+    "src": "images/book/verify-invalid-second.png"
+  },
+  "images/book/verify-invalid-token.png": {
+    "file": "assets/verify-invalid-token.48979bc3.png",
+    "src": "images/book/verify-invalid-token.png"
+  },
+  "images/book/wtf-password.png": {
+    "file": "assets/wtf-password.8ed71210.png",
+    "src": "images/book/wtf-password.png"
+  },
+  "images/tutorials/fail-output.png": {
+    "file": "assets/fail-output.9dd0a994.png",
+    "src": "images/tutorials/fail-output.png"
+  },
+  "images/tutorials/fail-wtf.png": {
+    "file": "assets/fail-wtf.0266cf20.png",
+    "src": "images/tutorials/fail-wtf.png"
+  },
+  "images/tutorials/fail.png": {
+    "file": "assets/fail.9fd757b2.png",
+    "src": "images/tutorials/fail.png"
+  },
+  "images/tutorials/find_user.png": {
+    "file": "assets/find_user.0bf50fc5.png",
+    "src": "images/tutorials/find_user.png"
+  },
+  "images/tutorials/github-signin-v1.png": {
+    "file": "assets/github-signin-v1.1bed31a2.png",
+    "src": "images/tutorials/github-signin-v1.png"
+  },
+  "images/tutorials/magnetic.png": {
+    "file": "assets/magnetic.d079d40c.png",
+    "src": "images/tutorials/magnetic.png"
+  },
+  "images/tutorials/no_info.png": {
+    "file": "assets/no_info.d75e8906.png",
+    "src": "images/tutorials/no_info.png"
+  },
+  "images/tutorials/path-existing.png": {
+    "file": "assets/path-existing.436b1327.png",
+    "src": "images/tutorials/path-existing.png"
+  },
+  "images/tutorials/path-failure.png": {
+    "file": "assets/path-failure.f03c6981.png",
+    "src": "images/tutorials/path-failure.png"
+  },
+  "images/tutorials/path-success.png": {
+    "file": "assets/path-success.faf83677.png",
+    "src": "images/tutorials/path-success.png"
+  },
+  "images/tutorials/render.png": {
+    "file": "assets/render.37c285ae.png",
+    "src": "images/tutorials/render.png"
+  },
+  "images/tutorials/signup-1.png": {
+    "file": "assets/signup-1.5ac3748b.png",
+    "src": "images/tutorials/signup-1.png"
+  },
+  "images/tutorials/signup-2.png": {
+    "file": "assets/signup-2.689421b3.png",
+    "src": "images/tutorials/signup-2.png"
+  },
+  "images/tutorials/signup-3.png": {
+    "file": "assets/signup-3.539e52a0.png",
+    "src": "images/tutorials/signup-3.png"
+  },
+  "images/tutorials/signup-4.png": {
+    "file": "assets/signup-4.d70d66ad.png",
+    "src": "images/tutorials/signup-4.png"
+  },
+  "images/tutorials/signup.png": {
+    "file": "assets/signup.911a7d55.png",
+    "src": "images/tutorials/signup.png"
+  },
+  "images/tutorials/subprocess-trace.png": {
+    "file": "assets/subprocess-trace.d004854e.png",
+    "src": "images/tutorials/subprocess-trace.png"
+  },
+  "images/tutorials/subprocess.png": {
+    "file": "assets/subprocess.8f24c45c.png",
+    "src": "images/tutorials/subprocess.png"
+  },
+  "images/tutorials/trace-exception.png": {
+    "file": "assets/trace-exception.9fe11c07.png",
+    "src": "images/tutorials/trace-exception.png"
+  },
+  "images/tutorials/trace.png": {
+    "file": "assets/trace.da5ac222.png",
+    "src": "images/tutorials/trace.png"
+  },
+  "images/tutorials/truefalse.png": {
+    "file": "assets/truefalse.04b9d16e.png",
+    "src": "images/tutorials/truefalse.png"
+  },
+  "images/tutorials/validate-3.png": {
+    "file": "assets/validate-3.8eec3ff4.png",
+    "src": "images/tutorials/validate-3.png"
+  },
+  "images/tutorials/validate.png": {
+    "file": "assets/validate.6869a0a0.png",
+    "src": "images/tutorials/validate.png"
+  },
+  "images/tutorials/voc.png": {
+    "file": "assets/voc.37f26352.png",
+    "src": "images/tutorials/voc.png"
+  }
+}
