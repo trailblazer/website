@@ -18,8 +18,6 @@ module Application::Page
   # rubocop:disable Metrics/MethodLength
   def for(md_name:, header:, url:, pages_path:)
     last_updated = calculate_last_updated_at(md_name: md_name, pages_path: pages_path)
-    cache_key = [pages_path, md_name, last_updated.to_i]
-
     page = Model.new(md_name, header, url, last_updated)
 
     html, graph = Torture::Server.compile_page( # compiles Torture::Page::HTML
