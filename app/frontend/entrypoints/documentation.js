@@ -15,8 +15,8 @@ import "~/css/tomorrow-night-blue.css";
 import "~/css/font-awesome.css";
 import "~/css/main.css";
 
-import "~/js/initAnchor.js";
 import "~/js/docSearch.js";
+import "~/js/initAnchor.js";
 
 function updateRightSidebarScrollspy() {
   var href = jquery(".nav-item .active").attr("href");

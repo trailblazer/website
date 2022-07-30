@@ -1,8 +1,6 @@
 import jquery from "jquery";
 import docsearch from "@docsearch/js";
 
-import "@docsearch/css";
-
 jquery(document).ready(function () {
   docsearch({
     container: "#docsearch",
