@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,6 +16,10 @@
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
+    />
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
     />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -44,7 +48,7 @@
     <div class="lg-bg">
       <header
         id="header"
-        class="pt-0"
+        class="trailblazer-header pt-0"
       >
         <div class="alert alert-primary rounded-0 text-center" role="alert">
           <span class="alert-text text-center">
@@ -88,7 +92,7 @@
                 class="collapse navbar-collapse"
                 id="navBarTrailBlazer"
               >
-                <div class="container justify-content-end">
+                <div class="container justify-content-center">
                   <%= cell(Application::Cell::Navbar, layout: "page", page: md_name) %>
                 </div>
               </div>

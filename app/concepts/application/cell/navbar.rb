@@ -7,10 +7,6 @@ class Application::Cell::Navbar < Trailblazer::Cell
 
   private
 
-  def landing_page?
-    model[:layout] == "home"
-  end
-
   def doc_page?
     model[:layout] == "documentation"
   end

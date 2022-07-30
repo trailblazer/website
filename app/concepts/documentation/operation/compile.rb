@@ -46,7 +46,6 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   }
 
   step :build_pages
-  step :build_search_map
   step :build_left_sidebars
   step :build_right_sidebars
   step :write_pages
@@ -57,19 +56,6 @@ class Documentation::Operation::Compile < Trailblazer::Operation
       [md_name, page]
     end
     ctx[:site] = site.to_h
-  end
-
-  def build_search_map(ctx, site:, **)
-    search_map = []
-
-    site.each do |_, page|
-      next unless page.graph
-
-      item = page.graph.page_header
-      search_map_recurrence!(search_map, section: item, breadcrumbs: [], url: page.url)
-    end
-
-    ctx[:search_map] = search_map
   end
 
   def build_left_sidebars(_ctx, site:, **)
@@ -105,28 +91,13 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     end
   end
 
-  def write_pages(_ctx, site:, search_map:, dir_path: "public", **)
+  def write_pages(_ctx, site:, dir_path: "public", **)
     # create all directories including subdirectories
     FileUtils.mkdir_p(dir_path + "/2.1/docs/tutorials")
 
     site.each do |md_name, page|
-      html = Documentation::Cell::Show.new(page, search_map: search_map).call(:show)
+      html = Documentation::Cell::Show.new(page).call(:show)
       File.write("#{dir_path}#{page.url}", html)
-    end
-  end
-
-  private
-
-  def search_map_recurrence!(search_map, section:, breadcrumbs:, url:)
-    fragment = {
-      pattern:     section.id,
-      breadcrumbs: [*breadcrumbs, { title: section.title, link: "#{url}##{section.id}" }]
-    }
-
-    search_map.push(fragment)
-
-    section.items.each do |item|
-      search_map_recurrence!(search_map, section: item, breadcrumbs: fragment[:breadcrumbs], url: url)
     end
   end
 end

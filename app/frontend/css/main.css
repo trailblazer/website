@@ -82,7 +82,7 @@ a {
   background-color: #ffd9e1;
 }
 
-header {
+.trailblazer-header {
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
   background: transparent;
@@ -93,55 +93,55 @@ header {
   top: -5px;
   z-index: 10;
 }
-header.homepage-header {
+.trailblazer-header.homepage-header {
   position: relative;
 }
-header.documentation-navbar {
+.trailblazer-header.documentation-navbar {
   background: #211b3f;
 }
-@media screen and (max-width: 768px) {
-  header.documentation-navbar {
+@media screen and (max-width: 964px) {
+  .trailblazer-header.documentation-navbar {
     padding-right: 0.5rem;
     padding-left: 0.5rem;
   }
-  header.documentation-navbar .navbar-nav-scroll {
+  .trailblazer-header.documentation-navbar .navbar-nav-scroll {
     max-width: 100%;
     margin-top: 0.25rem;
     overflow: hidden;
     float: right;
   }
-  header.documentation-navbar .navbar-nav-scroll .navbar-nav {
+  .trailblazer-header.documentation-navbar .navbar-nav-scroll .navbar-nav {
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
   }
 }
-@media screen and (min-width: 768px) {
-  header.documentation-navbar {
+@media screen and (min-width: 964px) {
+  .trailblazer-header.documentation-navbar {
     height: 5rem;
     padding: 0 5rem;
     position: sticky;
     top: 0;
-    z-index: 1071;
+    z-index: 10;
   }
 }
-header.documentation-navbar .documentation-nav-items {
+.trailblazer-header.documentation-navbar .documentation-nav-items {
   margin: 0;
   list-style: none;
   display: flex;
   flex-direction: row;
 }
-header.documentation-navbar .documentation-nav-items .nav-link {
+.trailblazer-header.documentation-navbar .documentation-nav-items .nav-link {
   padding: 0.5rem 1rem;
 }
-header.session-show {
+.trailblazer-header.session-show {
   background: #211b3f;
 }
-header.sticky {
+.trailblazer-header.sticky {
   top: 0px;
   position: fixed;
 }
-header .navbar-toggler {
+.trailblazer-header .navbar-toggler {
   color: #ffffff;
   padding: 0;
   border: 0;
@@ -150,20 +150,20 @@ header .navbar-toggler {
   font-size: 25px;
   outline: none;
 }
-header .navbar-toggler .fa-bars {
+.trailblazer-header .navbar-toggler .fa-bars {
   display: none;
 }
-header .navbar-toggler .fa-times {
+.trailblazer-header .navbar-toggler .fa-times {
   display: block;
   font-size: 30px;
 }
-header .navbar-toggler.collapsed .fa-bars {
+.trailblazer-header .navbar-toggler.collapsed .fa-bars {
   display: block;
 }
-header .navbar-toggler.collapsed .fa-times {
+.trailblazer-header .navbar-toggler.collapsed .fa-times {
   display: none;
 }
-header .navbar-collapse {
+.trailblazer-header .navbar-collapse {
   background: #3D3580;
   top: 65px;
   padding: 15px;
@@ -171,17 +171,17 @@ header .navbar-collapse {
   left: 0;
   right: 0;
 }
-header .navbar {
+.trailblazer-header .navbar {
   padding: 0;
 }
-header h1 {
+.trailblazer-header h1 {
   font-size: 0;
   color: transparent;
   line-height: normal;
   margin: 0;
   float: left;
 }
-header h1 a {
+.trailblazer-header h1 a {
   font-size: 0;
   color: transparent;
   display: inline-block;
@@ -190,47 +190,47 @@ header h1 a {
   background: url(../images/logo-16.png) no-repeat center center;
   background-size: 100%;
 }
-header ul {
+.trailblazer-header ul {
   text-align: center;
 }
-header ul li {
+.trailblazer-header ul li {
   margin: 15px 0;
 }
-header ul a {
+.trailblazer-header ul a {
   color: #ffffff;
   font-weight: 700;
   font-size: 15px;
 }
-header ul a:hover {
+.trailblazer-header ul a:hover {
   color: #ffffff;
 }
-header ul a.active {
+.trailblazer-header ul a.active {
   border-bottom: 2px solid;
 }
 
-@media screen and (min-width: 768px) {
-  header .navbar-collapse ul {
+@media screen and (min-width: 964px) {
+  .trailblazer-header .navbar-collapse ul {
     -ms-flex-direction: row;
     flex-direction: row;
     height: auto;
   }
-  header .navbar-collapse ul li {
+  .trailblazer-header .navbar-collapse ul li {
     margin: 0 25px 0 0;
   }
-  header .navbar-collapse ul li:last-of-type {
+  .trailblazer-header .navbar-collapse ul li:last-of-type {
     margin-right: 0;
   }
-  header .navbar-collapse ul li:last-of-type a {
+  .trailblazer-header .navbar-collapse ul li:last-of-type a {
     padding-right: 0;
   }
 }
 @media screen and (min-width: 992px) {
-  header .navbar-collapse {
+  .trailblazer-header .navbar-collapse {
     background: transparent;
     position: static;
     padding: 0;
   }
-  header .navbar-collapse ul {
+  .trailblazer-header .navbar-collapse ul {
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
@@ -246,44 +246,44 @@ header ul a.active {
   height: 40px;
 }
 
-footer {
+.trailblazer-footer {
   margin-top: 5rem;
   padding-bottom: 2rem;
   text-align: center;
 }
-footer .logo-footer {
+.trailblazer-footer .logo-footer {
   background: url(../images/logo-16.png) no-repeat center center;
   background-size: cover;
 }
-footer ul {
+.trailblazer-footer ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-footer ul li {
+.trailblazer-footer ul li {
   margin: 15px 0;
 }
-footer ul a {
+.trailblazer-footer ul a {
   font-weight: 700;
   font-size: 14px;
   text-transform: uppercase;
 }
-footer a {
+.trailblazer-footer a {
   color: #ffffff;
 }
-footer a:hover {
+.trailblazer-footer a:hover {
   text-decoration: none;
   color: #ffffff;
 }
 
-.lg-bg footer .logo-footer {
+.lg-bg .trailblazer-footer .logo-footer {
   background: url(../images/logo-dark.png) no-repeat center center;
   background-size: cover;
 }
-.lg-bg footer a {
+.lg-bg .trailblazer-footer a {
   color: #000000;
 }
-.lg-bg footer a:hover {
+.lg-bg .trailblazer-footer a:hover {
   color: #000000;
 }
 
@@ -294,15 +294,15 @@ footer a:hover {
     background-size: 100%;
   }
 
-  footer ul {
+  .trailblazer-footer ul {
     display: block !important;
   }
-  footer ul li {
+  .trailblazer-footer ul li {
     display: inline-block;
     vertical-align: middle;
     margin: 15px 20px 0;
   }
-  footer .social {
+  .trailblazer-footer .social {
     text-align: right;
   }
 }
@@ -311,10 +311,10 @@ footer a:hover {
     margin: 0;
   }
 
-  footer ul li {
+  .trailblazer-footer ul li {
     margin: 0 15px;
   }
-  footer .row > div {
+  .trailblazer-footer .row > div {
     line-height: normal;
     font-size: 0;
   }
@@ -1672,26 +1672,6 @@ ul.navigation > li:last-child {
   margin: 1rem;
 }
 
-#searchModal .search-header i.fa-search {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-#searchModal .search-header input.search-input {
-  font-size: 22px;
-  line-height: 30px;
-  color: #031b4e;
-  background: none;
-  width: 100%;
-  padding: 16px 54px 12px;
-  border-radius: 3px 3px 0 0;
-  border: 1px solid #e5e8ed;
-  box-sizing: border-box;
-}
-#searchModal .search-header input.search-input:focus {
-  outline: none;
-}
-
 .hero {
   background-size: cover;
   background-position: center center;
@@ -2505,6 +2485,17 @@ i.blue {
   .any-slider .slick-arrow.slick-next {
     right: -60px;
   }
+}
+
+.DocSearch-Form .DocSearch-Input {
+  color: #fff;
+}
+
+.DocSearch.DocSearch-Button .DocSearch-Button-Placeholder {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 /*# sourceMappingURL=main.css.map */

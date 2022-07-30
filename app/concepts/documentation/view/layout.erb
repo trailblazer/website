@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -17,10 +17,10 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     >
-
-    <script type="text/javascript">
-      var searchMap = <%= search_map %>;
-    </script>
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
@@ -58,7 +58,7 @@
       <!-- Add class="session-show" if you need a header with dark background -->
       <header
         id="header"
-        class="documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
       >
         <h1 class="m-2">
           <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
@@ -75,23 +75,6 @@
             <div class="row flex-xl-nowrap">
               <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
                 <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1">
-                        <i class="fas fa-search"></i>
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      id="search"
-                      readonly
-                      class="form-control"
-                      placeholder="Click to Search"
-                      aria-label="Search"
-                      data-toggle="modal"
-                      data-target="#searchModal"
-                    >
-                  </div>
                   <button
                     class="navbar-toggler collapsed"
                     type="button"
@@ -104,7 +87,6 @@
                     <i class="far fa-lg fa-bars"></i>
                   </button>
                 </form>
-
                 <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
                   <%= toc %>
                 </div>
@@ -141,32 +123,6 @@
       </main>
 
       <%= cell(Application::Cell::Footer, layout: "documentation", page: @model.md_name) %>
-    </div>
-
-    <div
-      class="modal fade pt-5 mt-5"
-      id="searchModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="searchModal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-0 p-0">
-            <div class="search-header">
-              <i class="fas fa-search"></i>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="basic-addon1"
-              >
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </body>
 </html>

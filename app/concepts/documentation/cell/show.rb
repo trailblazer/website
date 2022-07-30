@@ -6,8 +6,7 @@ class Documentation::Cell::Show < Trailblazer::Cell
       :show,
       table_of_content: model.left_sidebar,
       right_sidebars:   model.right_sidebar,
-      html:             model.html,
-      search_map:       @options.fetch(:search_map)
+      html:             model.html
     )
   end
 end

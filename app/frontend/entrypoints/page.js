@@ -16,6 +16,7 @@ import "~/css/font-awesome.css";
 import "~/css/main.css";
 
 import "~/js/initAnchor.js";
+import "~/js/docSearch.js";
 
 jquery(document).ready(function () {
   hljs.registerLanguage("ruby", ruby);

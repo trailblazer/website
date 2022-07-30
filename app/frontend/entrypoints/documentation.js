@@ -16,7 +16,7 @@ import "~/css/font-awesome.css";
 import "~/css/main.css";
 
 import "~/js/initAnchor.js";
-import "~/js/initSearchModal.js";
+import "~/js/docSearch.js";
 
 function updateRightSidebarScrollspy() {
   var href = jquery(".nav-item .active").attr("href");

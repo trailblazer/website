@@ -15,6 +15,8 @@ import { ParallaxScroll } from "~/js/jquery.parallax-scroll.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "~/js/docSearch.js";
+
 import "~/css/material.css";
 import "~/css/tomorrow-night-blue.css";
 import "~/css/font-awesome.css";
