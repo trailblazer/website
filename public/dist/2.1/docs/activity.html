@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.18fc64a0.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/docSearch.60d7ae5d.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.bda037fb.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.86727198.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -520,7 +520,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 30 Jul 22</span>
+                      <span>Last updated 31 Jul 22</span>
                     </li>
                   </ul>
                 </div>
@@ -558,7 +558,7 @@
 
 <p>Activities can be visualized neatly by taking advantage of the BPMN specification.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/intermediate.e6e29c23.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/intermediate.055eb297.webp" /></p>
 
 <p>Well, this is not entirely BPMN, but you get the idea. Intuitively, you understand that the tasks <code>B</code> and <code>C</code> have only one outcome, whereas <code>A</code> yields two possible results. This works by adding two <em>outputs</em> to <code>A</code>.</p>
 
@@ -662,7 +662,7 @@ end
 
 <p>Without any additional DSL options, this results in a straight path.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/path.f0114a10.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/path.c7a25937.webp" /></p>
 
 <p>In turn, this means that only <code>true</code> return values in your tasks will work. The DSL will, per default, wrap every task with the <code>Binary</code> interface, meaning returning <code>true</code> will result in <code>Activity::Right</code>, and false in <code>Activity::Left</code>. Currently, only <code>Right</code> signals are wired up.</p>
 
@@ -702,7 +702,7 @@ end
 
 <p>This will result in the following circuit.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/path-end.f6515333.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/path-end.33750cc0.webp" /></p>
 
 <p>The <code>validate</code> task now has a <code>success</code> and a <code>failure</code> output. Since it’s wrapped using <code>Binary</code> it may return <code>true</code> or <code>false</code> to dictate the used output (or <code>Activity::Right</code>/<code>Activity::Left</code> since it’s the [task interface]).</p>
 
@@ -744,7 +744,7 @@ end
 
 <p>Since we’re adding a <code>:failure</code> output, <code>create</code> now has two outgoing connections.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/double-end.b08c6c99.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/double-end.e43a4ac3.webp" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -755,7 +755,7 @@ end
 
 <p>Once on the failure track, it stays there (unless you instruct not to do so!).</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/railway.439dbc92.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/railway.0bda5593.webp" /></p>
 
 <p>Three possible execution paths this activity might take.</p>
 
@@ -802,7 +802,7 @@ end
 
 <p>Here, <code>create</code>’s failure output is reconnected.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/railway-wire.f75f8759.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/railway-wire.c615cabc.webp" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -827,7 +827,7 @@ end
 
 <p>For instance, it’s possible to jump back to the success path if <code>log_error</code> decides to do so.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/railway-fail.57547edd.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/railway-fail.c936dcf7.webp" /></p>
 
 <p>The return value of <code>log_error</code> now does matter.</p>
 
@@ -861,7 +861,7 @@ end
 
 <p>Regardless of <code>create</code>’s return value, it will always flow to the next success task.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/railway-pass.1e360d27.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/railway-pass.68c20bc0.webp" /></p>
 
 <p>Both outputs are connected to the following task on the success path (or, in this case, the success end).</p>
 
@@ -908,7 +908,7 @@ end
 
 <p>If <code>validate</code> returns a true value, it will skip the remaining tasks on the success track and end in <code>End.pass_fast</code>.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ft-passfast.07318493.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ft-passfast.1c886dae.webp" /></p>
 
 <p>Note that in the example, the <code>create</code> task not accessable anymore.</p>
 
@@ -931,7 +931,7 @@ end
 
 <p>A falsey return value from <code>#validate</code> will deviate the flow and go straight to <code>End.fail_fast</code>.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ft-failfast.aec95eac.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ft-failfast.d5c817d0.webp" /></p>
 
 <p>Again, this specific example renders the <code>log_errors</code> task unreachable.</p>
 
@@ -967,7 +967,7 @@ end
 
 <p>Note that you don’t have to use both outputs.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ft-fasttrack.0da02806.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ft-fasttrack.01c61356.webp" /></p>
 
 <p>The standard FastTrack setup allows you to communicate and model up to four states from one task.</p>
 
@@ -1008,7 +1008,7 @@ end
 
 <p>By default, and without additional helpers used, the DSL will connect every <code>step</code> task’s two outputs to the two respective tracks of a “railway”.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wire-output.bd3b7f08.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output.c22074db.webp" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -1068,7 +1068,7 @@ end
 end
 </code></pre>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wire-output-add.1cfadd58.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-add.d68b4d30.webp" /></p>
 
 <p>The <code>find_provider</code> task now has three possible outcomes that can be triggered by returning either <code>Right</code>, <code>Left</code>, or <code>UsePaypal</code>.</p>
 
@@ -1089,7 +1089,7 @@ end
 
 <p>This reconnects both outputs to the same end, always ending in a - desirable, yet unrealistic - successful state.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wire-output-end.1829811c.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-end.27493e02.webp" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -1108,7 +1108,7 @@ end
 
 <p>Adding ends to an activity is a beautiful way to communicate more than two outcomes to the outer world without having to use a state field in the <code>ctx</code>. It also allows wiring those outcomes to different tracks in the container activity. [See nesting]</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wire-output-endadd.94842b57.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-endadd.3a9250b8.webp" /></p>
 
 <p>This activity now maintains three end events. The path to the <code>declined</code> end is taken from the task’s <code>failure</code> output.</p>
 
@@ -1173,7 +1173,7 @@ end
 
 <p>By providing the options <code>:end_id</code> and <code>:end_task</code>, the newly created path will quit in a new end event.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/path-macro.120a1c75.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/path-macro.3043370b.webp" /></p>
 
 <p>Using <code>Output</code> you can create an additional output in <code>decide_type</code> with the semantic <code>:credit_card</code>. This output is triggered when its task returns a <code>Trailblazer::Activity::Left</code> signal.</p>
 
@@ -1202,7 +1202,7 @@ end
 
 <p>There won’t be another end event created.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/path-macro-join.c1c5a98e.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/path-macro-join.8cbdf9ea.webp" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -1228,7 +1228,7 @@ end
 
 <p>In this example, we add a third output to <code>decide_type</code> to handle the credit card payment scenario (you could also “override” or re-configure the existing <code>:failure</code> or <code>:success</code> outputs).</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/path-macro-railway.81c5127d.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/path-macro-railway.9e9a621b.webp" /></p>
 
 <p>Only when <code>decide_type</code> returns <code>MySignal</code>, the new path alternative is taken.</p>
 
@@ -1273,7 +1273,7 @@ end
 
 <p>The macro automatically wires all of <code>Validate</code>’s ends to the known counter-part tracks.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/nesting.1a62b81e.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/nesting.e6d94bf5.webp" /></p>
 
 <p>The <code>Subprocess</code> macro will go through all outputs of the nested activity, query their semantics and search for tracks with the same semantic.</p>
 
@@ -1298,7 +1298,7 @@ end
 
 <p>The nested’s <code>failure</code> output now goes to the outer <code>success</code> track.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/nesting-reconnect.8f92970d.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/nesting-reconnect.769b3356.webp" /></p>
 
 <p>In this example, regardless of nested’s outcome, it will always be interpreted as a successful invocation.</p>
 
@@ -1330,7 +1330,7 @@ end
 
 <p>The new special end is now wired to the <code>failure</code> track of the containing activity.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/nesting-end.0450a0fe.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/nesting-end.b3cc30b3.webp" /></p>
 
 <p>There will be an exception thrown if you don’t connect unknown ends.</p>
 
@@ -1496,7 +1496,7 @@ end
 
 <p>Suppose the following 3-level nested activity.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/patching.d7fb5d93.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/patching.cdec2000.webp" /></p>
 
 <p>The public operation <code>Destroy</code> contains <code>Delete</code> as a nested activity, which itself contains <code>DeleteAssets</code>. In order to customize the latter one and add another step <code>tidy_storage</code>, you’d normally have to subclass all three activities and override steps.</p>
 
@@ -1535,7 +1535,7 @@ Also, the automatically assigned ID of a step gets replaced with new a copy. Mak
 
 <p>Looking at the trace of <code>Destroy</code>, you can see that <code>#tidy_storage</code> is executed where you want it.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/patching-trace.e51ef1f9.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/patching-trace.3e979f58.webp" /></p>
 
 <p>Patching can be also done at the top-level activity by passing  <code>:patch</code> as a block (Take <code>Delete</code> from above example).</p>
 
@@ -1579,11 +1579,11 @@ end
 
 <p>Since TRB 2.1 it is possible to define the input and output for each step. This is called <em>variable mapping</em>, or I/O in short. It provides an interface to define what variable go in and come out of a task, allowing you to limit what invoked tasks or nested activies “see” and what they propagate to the caller context.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/input.a068bb37.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/input.c137d33b.webp" /></p>
 
 <p>The <code>:input</code> filter is normally used to create a new context that limits what its task sees.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/output.651ad214.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/output.643dda0e.webp" /></p>
 
 <p>With the <code>:output</code> filter, you can control what variables go from the inner scoped context to the outer.</p>
 
@@ -2169,7 +2169,7 @@ left = outputs[0] #=&gt; output object
 
 <p>The Activity DSL is only one way to define activities. Under the hood, the DSL simply creates a handful of generic objects such as an <em>intermediate</em> structure or an <em>implementation</em>. Those standardized objects then get compiled into an <code>Activity</code> instance to be used at run-time.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/dsl_to_activity.545e54c8.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/dsl_to_activity.30333948.webp" /></p>
 
 <p>This section discusses those underlying concepts - it will be helpful if you want to better understand how the DSL works, write your own DSL or generate activities from your own editor.</p>
 
@@ -2182,7 +2182,7 @@ left = outputs[0] #=&gt; output object
 
 <p>When defining an activity, two objects are used: an <code>Intermediate</code> and an <code>Implementation</code> structure. The intermediate object is a generic definition of the <strong>structure</strong> of the activity: which task got what connections?</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/intermediate.e6e29c23.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/intermediate.055eb297.webp" /></p>
 
 <p>It simply lists all tasks, along with the connections they have. The little gray bubbles on the task border are <em>outputs</em>. An output has a certain <em>semantic</em> plus a connection (an arrow) pointing to the following task.</p>
 
@@ -2578,7 +2578,7 @@ end
 
 <p>The exemplary <code>DatabaseError</code> is being passed through to the routing and interpreted. It’s your job to make sure this signal is wired to a following task, track, or end (line 16).</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/activity-signal.318960a5.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/activity-signal.2c87914d.webp" /></p>
 
 <p>Note that you don’t have to use the default binary signals at all (<code>Left</code> and <code>Right</code>).
 <a href="#" class="pink">
@@ -2710,7 +2710,7 @@ end
 
 <p>Some prominent examples for taskWrap usage in the wild are the <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb"><code>:input</code>/<code>:output</code> variable mapping</a> and tracing happening in <a href="https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb"><code>#wtf?</code></a>.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/task-wrap.7e007763.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/task-wrap.da2d9521.webp" /></p>
 
 <p>You can maintain a taskWrap for each specific task of an activity, or run the same “around steps” for every task, even in nested activities. Also, taskWraps can be configured statically at compile-time or defined dynamically at run-time, which is how tracing in <code>#wtf?</code> works.</p>
 
@@ -2941,7 +2941,7 @@ Create.([ctx])
               </main>
 
               <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
-                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.4308abfb.png" />
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
                 <div class="features" id="activity-overview-features">
   <h3>
     <i class="fas fa-times"></i>
