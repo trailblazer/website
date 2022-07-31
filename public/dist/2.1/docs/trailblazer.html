@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.18fc64a0.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/docSearch.60d7ae5d.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.86727198.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.999e4d80.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -91,7 +91,7 @@
   </li>
 
   <li class="d-none d-md-block">
-    <a class="nav-item nav-link" href="/2.0">
+    <a class="nav-item nav-link" href="/2.0/index.html">
       <i class="fas fa-arrow-right"></i>
       2.0
     </a>
@@ -104,9 +104,11 @@
     </a>
   </li>
 
-  <li>
-    <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
-  </li>
+  
+    <li>
+      <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
+    </li>
+  
 </ul>
 
         </div>
@@ -168,12 +170,6 @@
           </li>
         
           <li class="nav-item">
-            <a class="nav-link " href="#trailblazer-rails">
-              Rails
-            </a>
-          </li>
-        
-          <li class="nav-item">
             <a class="nav-link " href="#trailblazer-2-1-migration">
               2.1 Migration
             </a>
@@ -199,6 +195,28 @@
         
       </ul>
     </div>
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
   
 </div>
 
@@ -836,281 +854,6 @@
     </tr>
   </tbody>
 </table>
-
-<!-- @trailblazer-rails <trailblazer-rails[] loader, trailblazer-loader, rails support, -->
-<p><span class="divider"></span></p>
-
-<h2 id="trailblazer-rails">Rails</h2>
-<p><!-- {trailblazer-rails-toc} --></p>
-
-<p>Trailblazer runs with any Ruby web framework. However, if you’re using Rails, you’re lucky since we provide convenient glue code in the <code>trailblazer-rails</code> gem.</p>
-
-<pre><code>gem "trailblazer-rails"
-</code></pre>
-
-<p>This will automatically pull <code>trailblazer</code> and <code>trailblazer-loader</code>.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>The <code>Trailblazer::Rails::Railtie</code> railtie will activate all necessary convenience methods for you. You don’t have to do anything manually here.</p>
-</div>
-
-<p>Use <code>trailblazer-rails</code> &gt;= 2.0 for TRB 2.1 and above.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="trailblazer-rails-controller">Controller</h3>
-<p><!-- {trailblazer-rails-controller-toc} --></p>
-
-<p>In order to run an operation in a controller you may simply invoke it manually.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  def create
-    ctx = Song::Operation::Create.(params: params)
-
-    @form = ctx[:contract]
-    render :new
-  end
-end
-</code></pre>
-
-<p><span class="divider"></span></p>
-
-<h3 id="trailblazer-rails-run">Run</h3>
-<p><!-- {trailblazer-rails-run-toc} --></p>
-
-<p>However, <code>trailblazer-rails</code> gives you <code>#run</code> for this to simplify the task.</p>
-
-<pre><code>  class SongsController &lt; ApplicationController
-    def create
-      run Song::Operation::Create
-
-      render :new
-    end
-  end
-</code></pre>
-
-<p>Without any configuration, <code>#run</code> passes the controller’s <code>params</code> hash into the operation call as in the example above.</p>
-
-<p>It automatically assigns <code>@model</code> and, if available, <code>@form</code> for you.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Run</li>
-    <li id="trailblazer-rails-run-return-value">Return value</li>
-</ul>
-
-<p>The ctx result object is returned.</p>
-
-<pre><code>def create
-  ctx = run Song::Operation::Create
-  ctx[:model] #=&gt; #&lt;Song title=...&gt;
-
-  render :new
-end
-</code></pre>
-
-<p>The ctx object is also assigned to <code>@_result</code>.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Run</li>
-    <li id="trailblazer-rails-run-with-block">With Block</li>
-</ul>
-
-<p>To handle success and failure cases, run accepts an optional block.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  def create
-    run Song::Operation::Create do |ctx|
-      return redirect_to song_path(ctx[:model].id)
-    end
-
-    render :new
-  end
-end
-</code></pre>
-
-<p>The block is only run for <code>success?</code>. The block argument is the operation’s result ctx.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Run</li>
-    <li id="trailblazer-rails-run-controller-runtime-variables">Controller runtime variables</li>
-</ul>
-
-<p>In general, it’s a good idea to inject runtime dependencies such as <code>:current_user</code> into the operation call.</p>
-
-<pre><code>Song::Operation::Create.(params: params, current_user: current_user)
-</code></pre>
-
-<p>Override <code>#_run_options</code> to do that automatically for all <code>run</code> calls in a controller.</p>
-
-<pre><code>class ApplicationController &lt; ActionController::Base
-private
-  def _run_options(options)
-    options.merge(
-      current_user: current_user
-    )
-  end
-end
-</code></pre>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Run</li>
-    <li id="trailblazer-rails-run-runtime-variables">Runtime variables</li>
-</ul>
-
-<p>Instead of configuring variables on the controller-level, you can also fine-tune variables when invoking <code>#run</code>.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  def create
-    run Song::Operation::Create, current_user: current_user, cookie: session do |ctx|
-      return redirect_to song_path(ctx[:model].id)
-    end
-
-    render :new
-  end
-end
-</code></pre>
-
-<p>This will add <code>:current_user</code> and <code>:cookie</code> to the ctx passed into the <code>Song::Operation::Create</code> operation.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="trailblazer-rails-cells">Cells</h3>
-<p><!-- {trailblazer-rails-cells-toc} --></p>
-
-<p>The <code>trailblazer-rails</code> gem makes it very simple to use the Cells gem along with TRB. It overrides <code>ActionController#render</code> and allows to render a cell.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  def create
-    run Song::New # optional
-
-    render cell(Song::Cell::New, @model)
-  end
-end
-</code></pre>
-
-<p>You simply invoke <code>#cell</code> the way you did it before, and pass it to <code>render</code>. If the first argument to <code>#render</code> is not a cell, the original Rails <code>render</code> version will be used, allowing you to use serializers, partials or whatever else you need.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Cells</li>
-    <li id="trailblazer-rails-cells-skip-controller-layout">Skip controller layout</li>
-</ul>
-
-<p>Per default, <code>#render</code> will add <code>layout: true</code> to render the controller’s ActionView layout.</p>
-
-<p>The controller’s layout can be disabled using <code>layout: false</code>. These are pure Rails mechanics.</p>
-
-<pre><code>render cell(Song::Cell::New, @model), layout: false
-</code></pre>
-
-<p>In fact, any option passed to <code>render</code> will be passed through to the controller’s <code>#render</code>.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Cells</li>
-    <li id="trailblazer-rails-cells-cell-options">Cell options</li>
-</ul>
-
-<p>As you’re using <code>#cell</code> from the Cells gem you may pass any option the cell understands.</p>
-
-<pre><code>render cell(Song::Cell::New, model, layout: Song::Cell::DarkLayout)
-</code></pre>
-
-<p>For instance, you can instruct the cell to use a separate layout cell. Note that this option is passed to <code>#cell</code>, not to <code>#render</code>.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Cells</li>
-    <li id="trailblazer-rails-cells-configuration">Configuration</li>
-</ul>
-
-<p>You can set controller-wide options passed to every <code>#cell</code> call by overriding the <code>#options_for_cell</code> method.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  private def options_for_cell(model, options)
-    {
-      layout: Song::Cell::DarkLayout # used for all #cell calls.
-    }
-  end
-end
-</code></pre>
-
-<p>This is extremely helpful for providing controller-wide options like <code>:layout</code>, allowing you to skip this specific option in all actions.</p>
-
-<pre><code>class SongsController &lt; ApplicationController
-  def create
-    # ..
-    render cell(Song::Cell::New, model) # no need to pass {layout: Song::Cell::DarkLayout}
-  end
-</code></pre>
-
-<div class="bd-callout bd-callout-info">
-<p>This feature was added in <code>trailblazer-rails</code> version 2.2.0.</p>
-</div>
-
-<p><span class="divider"></span></p>
-
-<h3 id="trailblazer-rails-loader">Loader</h3>
-<p><!-- {trailblazer-rails-loader-toc} --></p>
-
-<p>The <code>trailblazer-loader</code> gem implements a very simple way to load all files in your <code>concepts</code> directory in a heuristically meaningful order. It can be used in any environment.</p>
-
-<!-- @trailblazer-loader, <trailblazer-loader[] disable loader, file structure -->
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Loader</li>
-    <li id="trailblazer-rails-loader-loader-with-rails">Loader with Rails</li>
-</ul>
-
-<p>The <code>trailblazer-loader</code> gem comes pre-bundled with <code>trailblazer-rails</code> for historical reasons: in the early days of Trailblazer, the conventional file name <code>concepts/product/operation/create.rb</code> didn’t match the short operation name, such as <code>Product::Create</code>.</p>
-
-<p>The <code>trailblazer-loader</code> gem’s duty was to load all concept files without using Rails’ autoloader, overcoming the latter’s conventions.</p>
-
-<p>Over the years, and with the emerge of controller helpers or our workflow engine calling operations for you, the class name of an operation more and becomes a thing not to worry about.</p>
-
-<p>Many projects use Trailblazer along with the Rails naming convention now. This means you can disable the loader gem, and benefit from Rails auto-magic behavior such as faster loading in the “correct” order, reloading and all the flaws that come with this non-deterministic behavior.</p>
-
-<p>As a first step, add <code>Operation</code> to your operation’s class name, matching the Rails naming convention.</p>
-
-<pre><code># app/concepts/product/operation/create.rb
-
-module Product::Operation
-  class Create &lt; Trailblazer::Operation
-    # ...
-  end
-end
-</code></pre>
-
-<p>It’s a Trailblazer convention to put <code>[ConceptName]::Operation</code> in one line: it will force Rails to load the concept name constant, so you don’t have to reopen the class yourself.</p>
-
-<p>This will result in a class name <code>Product::Operation::Create</code>.</p>
-
-<p>Next, disable the loader gem, in <code>config/initializers/trailblazer.rb</code>.</p>
-
-<pre><code># config/initializers/trailblazer.rb
-
-YourApp::Application.config.trailblazer.enable_loader = false
-</code></pre>
-
-<p>Trailblazer files will now be loaded by Rails - you need to follow the Rails autoloading file naming from here on, and things should run smoothly. A nice side-effect here is that in bigger projects (with hundreds of operations), the start-up time in development accelerates significantly.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>The infamous <code>warning: toplevel constant Cell referenced by Notification::Cell</code> warning <a href="https://blog.bigbinary.com/2017/10/18/ruby-2.5-has-removed-top-level-constant-lookup.html">is a bug in Ruby</a>. You should upgrade to Ruby &gt;= 2.5.</p>
-
-</div>
 
 <p><span class="divider"></span></p>
 
@@ -1886,89 +1629,6 @@ option.(exec_context: Object.new) # =&gt; 1234567
   </ul>
 </div>
 
-<div class="features" id="trailblazer-rails-features">
-  <h3>
-    <i class="fas fa-times"></i>
-    <span>Rails</span>
-  </h3>
-
-  <ul class="vertical menu">
-    
-      <li>
-        <a href="#trailblazer-rails-controller">
-          <i class="fas fa-arrow-right"></i>
-          Controller
-        </a>
-      </li>
-      
-    
-      <li>
-        <a href="#trailblazer-rails-run">
-          <i class="fas fa-arrow-right"></i>
-          Run
-        </a>
-      </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-run-return-value">Return value</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-run-with-block">With Block</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-run-controller-runtime-variables">Controller runtime variables</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-run-runtime-variables">Runtime variables</a>
-        </li>
-      
-    
-      <li>
-        <a href="#trailblazer-rails-cells">
-          <i class="fas fa-arrow-right"></i>
-          Cells
-        </a>
-      </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-cells-skip-controller-layout">Skip controller layout</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-cells-cell-options">Cell options</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-cells-configuration">Configuration</a>
-        </li>
-      
-    
-      <li>
-        <a href="#trailblazer-rails-loader">
-          <i class="fas fa-arrow-right"></i>
-          Loader
-        </a>
-      </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-rails-loader-loader-with-rails">Loader with Rails</a>
-        </li>
-      
-    
-  </ul>
-</div>
-
 <div class="features" id="trailblazer-2-1-migration-features">
   <h3>
     <i class="fas fa-times"></i>
@@ -2218,7 +1878,7 @@ option.(exec_context: Object.new) # =&gt; 1234567
     <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
   </li>
 
-  <li class="d-none d-md-block">
+  <li class="">
     <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
   </li>
 
@@ -2226,8 +1886,8 @@ option.(exec_context: Object.new) # =&gt; 1234567
     <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
   </li>
 
-  <li class="d-none d-md-block">
-    <a class="nav-item nav-link" href="/2.0">
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
       <i class="fas fa-arrow-right"></i>
       2.0
     </a>
@@ -2240,9 +1900,7 @@ option.(exec_context: Object.new) # =&gt; 1234567
     </a>
   </li>
 
-  <li>
-    <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
-  </li>
+  
 </ul>
 
         </nav>

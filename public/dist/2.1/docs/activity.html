@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.18fc64a0.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/docSearch.60d7ae5d.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.86727198.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.999e4d80.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -91,7 +91,7 @@
   </li>
 
   <li class="d-none d-md-block">
-    <a class="nav-item nav-link" href="/2.0">
+    <a class="nav-item nav-link" href="/2.0/index.html">
       <i class="fas fa-arrow-right"></i>
       2.0
     </a>
@@ -104,9 +104,11 @@
     </a>
   </li>
 
-  <li>
-    <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
-  </li>
+  
+    <li>
+      <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
+    </li>
+  
 </ul>
 
         </div>
@@ -147,6 +149,28 @@
           <i class="fas fa-chevron-right"></i>
           <i class="fas fa-times"></i>
           <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
         </button>
       </a>
     </h2>
@@ -231,6 +255,12 @@
           <li class="nav-item">
             <a class="nav-link " href="#activity-dsl-options">
               DSL Options
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-variable-mapping">
+              Variable Mapping
             </a>
           </li>
         
@@ -578,9 +608,9 @@
 </div>
 
 <pre><code>class Upsert &lt; Trailblazer::Activity::Path
-  step :find_model, Output(Activity::Left, :failure) =&gt; Id(:create)
+  step :find_model, Output(Trailblazer::Activity::Left, :failure) =&gt; Id(:create)
   step :update
-  step :create, magnetic_to: nil, Output(Activity::Right, :success) =&gt; Id(:update)
+  step :create, magnetic_to: nil, Output(Trailblazer::Activity::Right, :success) =&gt; Id(:update)
 
   # ...
 end
@@ -607,7 +637,7 @@ end
 
   def find_model(ctx, id:, **) # A
     ctx[:memo] = Memo.find(id)
-    ctx[:memo] ? Activity::Right : Activity::Left # can be omitted.
+    ctx[:memo] ? Trailblazer::Activity::Right : Trailblazer::Activity::Left # can be omitted.
   end
 
   def update(ctx, params:, **) # B
@@ -676,7 +706,7 @@ end
 <p>You may add as many outputs to a task as you need. The DSL provides the <code>Output()</code> helper to do so.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Path
-  step :validate, Output(Activity::Left, :failure) =&gt; End(:invalid)
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
   step :create
   # ...
 end
@@ -694,7 +724,7 @@ end
 <p>The <code>End()</code> helper allows creating a new end event labelled with the specified semantic.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Path
-  step :validate, Output(Activity::Left, :failure) =&gt; End(:invalid)
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
   step :create
   # ...
 end
@@ -736,8 +766,8 @@ puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:invalid&gt;
 <p>Note that repeatedly using the same semantic (<code>End(:semantic)</code>) will reference the same end event.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Path
-  step :validate, Output(Activity::Left, :failure) =&gt; End(:invalid)
-  step :create,   Output(Activity::Left, :failure) =&gt; End(:invalid)
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
+  step :create,   Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
   # ...
 end
 </code></pre>
@@ -953,7 +983,7 @@ end
     begin
       ctx[:input] = Form.validate(params) # true/false
     rescue
-      return Activity::FastTrack::FailFast # signal
+      return Trailblazer::Activity::FastTrack::FailFast # signal
     end
 
     ctx[:input] # true/false
@@ -1163,7 +1193,7 @@ end
 <pre><code>class Charge &lt; Trailblazer::Activity::Path
   # ...
   step :validate
-  step :decide_type, Output(Activity::Left, :credit_card) =&gt; Path(end_id: "End.cc", end_task: End(:with_cc)) do
+  step :decide_type, Output(Trailblazer::Activity::Left, :credit_card) =&gt; Path(end_id: "End.cc", end_task: End(:with_cc)) do
     step :authorize
     step :charge
   end
@@ -1577,7 +1607,232 @@ end
 <h2 id="activity-variable-mapping">Variable Mapping</h2>
 <p><!-- {activity-variable-mapping-toc} --></p>
 
-<p>Since TRB 2.1 it is possible to define the input and output for each step. This is called <em>variable mapping</em>, or I/O in short. It provides an interface to define what variable go in and come out of a task, allowing you to limit what invoked tasks or nested activies “see” and what they propagate to the caller context.</p>
+<p>Since TRB 2.1 it is possible to define the input and output variables for each step. This is called <em>variable mapping</em>, or I/O in short. It provides an interface to define what variable go in and come out of a task, enabling you to limit what steps “see” and what “output” they can add to the context.</p>
+
+<p>It’s one of the most frequently used features in Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-overview">Overview</h3>
+<p><!-- {activity-variable-mapping-overview-toc} --></p>
+
+<p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create # an imaginary policy step.
+  # ...
+end
+</code></pre>
+
+<p>The <code>Policy::Create</code> is a simple callable class following the <a href="">step interface</a>.</p>
+
+<pre><code>module Policy
+  # Explicit policy, not ideal as it results in a lot of code.
+  class Create
+    def self.call(ctx, model:, user:, **)
+      decision = ApplicationPolicy.can?(model, user, :create) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>Note that it requires two variables <code>:model</code> and <code>:user</code> from the ctx. For whatever reasons, the author of this class dictated that the “current user” must be passed named <code>:user</code>, not, as it’s a convention in Trailblazer, named <code>:current_user</code>.</p>
+
+<p>Last, depending on the policy decision, the step code returns true or false.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Overview</li>
+    <li id="activity-variable-mapping-overview-missing-mapping">Missing mapping</li>
+</ul>
+
+<p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
+
+<pre><code>result = Trailblazer::Activity::TaskWrap.invoke(AA::Create, [{current_user: Module}])
+
+#=&gt; ArgumentError: missing keyword: :user
+</code></pre>
+
+<p>Since the “current user” is handed into the operation as the <code>:current_user</code> variable, and no other step preceding <code>Policy::Create</code> is setting this variable, the step expecting <code>:user</code> crashes.</p>
+
+<p>And this is why we need variable mapping in Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-composable-i-o">Composable I/o</h3>
+<p><!-- {activity-variable-mapping-composable-i-o-toc} --></p>
+
+<p>Variable mapping (short: i/o) can be done manually, with ugly “helper” steps before or after the respective step, or by using <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. Before these helpers got introduced, we used the <code>:input</code> and <code>:output</code> option - both works, the latter one coming with several drawbacks.</p>
+
+<p>All helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
+
+<p>In Out allows composing which is great for debugging/rendering, with inheritance, macros (you can add to macro options, or change)</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-in-">In()</h3>
+<p><!-- {activity-variable-mapping-in--toc} --></p>
+
+<p>As you might have guessed, <code>In()</code> helps creating input filters. It allows to configure or dynamically compute variables going <em>into</em> the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).</p>
+
+<p>Be wary that once you use <code>In()</code> only the variables defined in your filters will be passed into the step, remaining variables from ctx are invisible in the step.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-mapping-hash">Mapping hash</li>
+</ul>
+
+<p>Picking up the example from above, here’s how a mapping hash “translates” the selected variables from the original ctx object to a new ctx, one that is compatible with <code>Policy::Create</code>’s interface.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {
+      :current_user =&gt; :user, # rename {:current_user} to {:user}
+      :model        =&gt; :model # add {:model} to the inner ctx.
+    }
+  # ...
+end
+</code></pre>
+
+<p>The <code>In()</code> filter will result in <code>:current_user</code> being renamed to <code>:user</code>. Since the policy step also needs <code>:model</code> we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to <code>Policy::Create</code>!</p>
+
+<p>When replacing the original policy step with a <code>#show_ctx</code> method you instantly see what new ctx is passed into the configured step.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step :show_ctx,
+    In() =&gt; {
+      :current_user =&gt; :user, # rename {:current_user} to {:user}
+      :model        =&gt; :model # add {:model} to the inner ctx.
+    }
+
+  def show_ctx(ctx, **)
+    p ctx.to_h
+    #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+  end
+  # ...
+end
+</code></pre>
+
+<p>You should use the mapping hash when variables need to be renamed. If variables need to be added without renaming, a limiting array is your friend.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-limiting-array">Limiting array</li>
+</ul>
+
+<p><code>In()</code> accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model]
+  # ...
+end
+</code></pre>
+
+<p>This configuration will lead to the exact same new ctx for <code>Policy::Create</code> as in the <a href="#activity-variable-mapping-in-mapping-hash">example above</a>, producing a new ctx that will look as below.</p>
+
+<pre><code>#=&gt; {
+#     :user  =&gt; #&lt;User email:...&gt;,
+#     :model =&gt; #&lt;Song name=nil&gt;}
+#   }
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-callable">Callable</li>
+</ul>
+
+<p>As always, you may implement your own input filter with any callable object [adhering to the step interface])().</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; -&gt;(ctx, **) do
+      # only rename {:current_user} if it's there.
+      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    end,
+    In() =&gt; [:model]
+  # ...
+end
+</code></pre>
+
+<p>Callable <code>In()</code> filters <strong>have to</strong> return a hash. This hash will be merged with the other <code>In()</code> filters and comprise the new ctx.</p>
+
+<p>And again, when the operation is invoked with a <code>:current_user</code>, this will, result in the same new ctx as above.</p>
+
+<pre><code>#=&gt; {
+#     :user  =&gt; #&lt;User email:...&gt;,
+#     :model =&gt; #&lt;Song name=nil&gt;}
+#   }
+</code></pre>
+
+<p>However, if <code>:current_user</code> is <code>nil</code>, <code>Policy::Create</code> will raise an exception complaining about the <code>:user</code> keyword missing.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-filter-method">Filter method</li>
+</ul>
+
+<p>Following the TRB option standard, an <code>In()</code> filter may even be implemented as an instance method. All you need to do is pass a symbol to <code>In()</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; :input_for_policy, # You can use an {:instance_method}!
+    In() =&gt; [:model]
+
+  def input_for_policy(ctx, **)
+    # only rename {:current_user} if it's there.
+    ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+  end
+  # ...
+end
+</code></pre>
+
+<p>The method needs to expose a step interface just like any other callable.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-keyword-arguments">Keyword arguments</li>
+</ul>
+
+<p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it extremely convenient to access them and have Ruby perform a loose existance test automatically.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+                  # vvvvvvvvvvvv keyword arguments rock!
+    In() =&gt; -&gt;(ctx, current_user: nil, **) do
+      current_user.nil? ? {} : {user: current_user}
+    end,
+    In() =&gt; [:model]
+  # ...
+end
+</code></pre>
+
+<p>Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-variable-mapping">Variable Mapping</h2>
+<p><!-- {activity-variable-mapping-toc} --></p>
 
 <p><img class="mx-auto d-block" src="/vite/assets/input.c137d33b.webp" /></p>
 
@@ -1586,6 +1841,10 @@ end
 <p><img class="mx-auto d-block" src="/vite/assets/output.643dda0e.webp" /></p>
 
 <p>With the <code>:output</code> filter, you can control what variables go from the inner scoped context to the outer.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>With <code>trailblazer-2.1.1</code> and the bundled <code>trailblazer-activity-dsl-linear-1.0.0</code> gems, the recommended way of I/O is using <a href="">composable variable mapping</a> via <code>In()</code> and <code>Out()</code>.</p>
+</div>
 
 <p><span class="divider"></span></p>
 
@@ -1637,7 +1896,7 @@ end
   <li>The following task <code>create_model</code> will see the original ctx plus <code>:current_user</code> that was written in the previous step using <code>:output</code>.</li>
 </ol>
 
-<pre><code>signal, (ctx, flow_options) = Activity::TaskWrap.invoke(A::Memo::Create, [{params: {id: 1}}, {}])
+<pre><code>signal, (ctx, flow_options) = Trailblazer::Activity::TaskWrap.invoke(A::Memo::Create, [{params: {id: 1}}, {}])
 </code></pre>
 
 <p>An array passed to <code>:output</code> will exclusively copy the specified variables to the original ctx, only.</p>
@@ -1788,7 +2047,7 @@ TODO: maybe use Operation API instead?</p>
 
 <p>The <code>#write</code> step requires a variable <code>:time</code>, which is a dependency. The variable’s default is hard-wired and applied if no other value is provided. However, by injecting <code>:time</code> when invoking the activity, you can override this value at run-time.</p>
 
-<pre><code>signal, (ctx, _) = Activity::TaskWrap.invoke(Log, [{time: "yesterday"}, {}])
+<pre><code>signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(Log, [{time: "yesterday"}, {}])
 </code></pre>
 
 <p>This is extremely helpful when you have to replace a “hard-wired” dependency, for example in a test where you want to know and define <code>:time</code>’s value upfront.</p>
@@ -3248,6 +3507,71 @@ Create.([ctx])
   <ul class="vertical menu">
     
       <li>
+        <a href="#activity-variable-mapping-overview">
+          <i class="fas fa-arrow-right"></i>
+          Overview
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-overview-missing-mapping">Missing mapping</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-composable-i-o">
+          <i class="fas fa-arrow-right"></i>
+          Composable I/o
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-in-">
+          <i class="fas fa-arrow-right"></i>
+          In()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-mapping-hash">Mapping hash</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-limiting-array">Limiting array</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-filter-method">Filter method</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-keyword-arguments">Keyword arguments</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-variable-mapping-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Variable Mapping</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
         <a href="#activity-variable-mapping-limiting">
           <i class="fas fa-arrow-right"></i>
           Limiting
@@ -3649,7 +3973,7 @@ Create.([ctx])
     <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
   </li>
 
-  <li class="d-none d-md-block">
+  <li class="">
     <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
   </li>
 
@@ -3657,8 +3981,8 @@ Create.([ctx])
     <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
   </li>
 
-  <li class="d-none d-md-block">
-    <a class="nav-item nav-link" href="/2.0">
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
       <i class="fas fa-arrow-right"></i>
       2.0
     </a>
@@ -3671,9 +3995,7 @@ Create.([ctx])
     </a>
   </li>
 
-  <li>
-    <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
-  </li>
+  
 </ul>
 
         </nav>
