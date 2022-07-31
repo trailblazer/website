@@ -8,7 +8,7 @@ The simplest strategy is `Path`, which does nothing but connecting each task's `
 
 Without any additional DSL options, this results in a straight path.
 
-<%= vite_image_tag "images/path.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/path.webp", class: "mx-auto d-block" %>
 
 In turn, this means that only `true` return values in your tasks will work. The DSL will, per default, wrap every task with the `Binary` interface, meaning returning `true` will result in `Activity::Right`, and false in `Activity::Left`. Currently, only `Right` signals are wired up.
 
@@ -28,7 +28,7 @@ The `End()` helper allows creating a new end event labelled with the specified s
 
 This will result in the following circuit.
 
-<%= vite_image_tag "images/path-end.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/path-end.webp", class: "mx-auto d-block" %>
 
 The `validate` task now has a `success` and a `failure` output. Since it's wrapped using `Binary` it may return `true` or `false` to dictate the used output (or `Activity::Right`/`Activity::Left` since it's the [task interface]).
 
@@ -46,7 +46,7 @@ Note that repeatedly using the same semantic (`End(:semantic)`) will reference t
 
 Since we're adding a `:failure` output, `create` now has two outgoing connections.
 
-<%= vite_image_tag "images/double-end.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/double-end.webp", class: "mx-auto d-block" %>
 
 <%= h3 "Railway" %>
 
@@ -54,7 +54,7 @@ The [`Railway` pattern](http://fsharpforfunandprofit.com/rop/) is used for "auto
 
 Once on the failure track, it stays there (unless you instruct not to do so!).
 
-<%= vite_image_tag "images/railway.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/railway.webp", class: "mx-auto d-block" %>
 
 Three possible execution paths this activity might take.
 
@@ -82,7 +82,7 @@ Railway automatically connects a task's `success` output to the next possible ta
 
 Here, `create`'s failure output is reconnected.
 
-<%= vite_image_tag "images/railway-wire.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/railway-wire.webp", class: "mx-auto d-block" %>
 
 <%= h4 "Fail" %>
 
@@ -96,7 +96,7 @@ You may rewire or add outputs on failure tasks, too.
 
 For instance, it's possible to jump back to the success path if `log_error` decides to do so.
 
-<%= vite_image_tag "images/railway-fail.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/railway-fail.webp", class: "mx-auto d-block" %>
 
 The return value of `log_error` now does matter.
 
@@ -110,7 +110,7 @@ If the return value of a "right" task shouldn't matter, use `#pass`.
 
 Regardless of `create`'s return value, it will always flow to the next success task.
 
-<%= vite_image_tag "images/railway-pass.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/railway-pass.webp", class: "mx-auto d-block" %>
 
 Both outputs are connected to the following task on the success path (or, in this case, the success end).
 
@@ -136,7 +136,7 @@ The `:pass_fast` option wires the `:success` output straight to the new `pass_fa
 
 If `validate` returns a true value, it will skip the remaining tasks on the success track and end in `End.pass_fast`.
 
-<%= vite_image_tag "images/ft-passfast.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/ft-passfast.webp", class: "mx-auto d-block" %>
 
 Note that in the example, the `create` task not accessable anymore.
 
@@ -148,7 +148,7 @@ The counter-part for `:pass_fast` is `:fail_fast`.
 
 A falsey return value from `#validate` will deviate the flow and go straight to `End.fail_fast`.
 
-<%= vite_image_tag "images/ft-failfast.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/ft-failfast.webp", class: "mx-auto d-block" %>
 
 Again, this specific example renders the `log_errors` task unreachable.
 
@@ -162,7 +162,7 @@ The `validate` task now has four outputs. You can instruct the two new FastTrack
 
 Note that you don't have to use both outputs.
 
-<%= vite_image_tag "images/ft-fasttrack.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/ft-fasttrack.webp", class: "mx-auto d-block" %>
 
 The standard FastTrack setup allows you to communicate and model up to four states from one task.
 

@@ -4,7 +4,7 @@ The _taskWrap_ is the "`around_filter`" of Trailblazer. It allows adding steps b
 
 Some prominent examples for taskWrap usage in the wild are the [`:input`/`:output` variable mapping](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb) and tracing happening in [`#wtf?`](https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb).
 
-<%= vite_image_tag "images/task-wrap.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/task-wrap.webp", class: "mx-auto d-block" %>
 
 You can maintain a taskWrap for each specific task of an activity, or run the same "around steps" for every task, even in nested activities. Also, taskWraps can be configured statically at compile-time or defined dynamically at run-time, which is how tracing in `#wtf?` works.
 

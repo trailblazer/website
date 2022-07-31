@@ -14,7 +14,7 @@ In addition to your friends `step`, `pass` and `fail`, the DSL provides helpers 
 
 By default, and without additional helpers used, the DSL will connect every `step` task's two outputs to the two respective tracks of a "railway".
 
-<%= vite_image_tag "images/wire-output.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/wire-output.webp", class: "mx-auto d-block" %>
 
 <%= h3 "Output()" %>
 
@@ -44,7 +44,7 @@ Since a particular output is triggered by a particular signal, note that each ou
 
 <%= code "pay-add" %>
 
-<%= vite_image_tag "images/wire-output-add.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/wire-output-add.webp", class: "mx-auto d-block" %>
 
 
 The `find_provider` task now has three possible outcomes that can be triggered by returning either `Right`, `Left`, or `UsePaypal`.
@@ -59,7 +59,7 @@ You may reference existing ends by their semantic.
 
 This reconnects both outputs to the same end, always ending in a - desirable, yet unrealistic - successful state.
 
-<%= vite_image_tag "images/wire-output-end.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/wire-output-end.webp", class: "mx-auto d-block" %>
 
 
 <%= h4 "Adding ends" %>
@@ -70,7 +70,7 @@ Providing a new semantic to the `End()` function will create a new end event.
 
 Adding ends to an activity is a beautiful way to communicate more than two outcomes to the outer world without having to use a state field in the `ctx`. It also allows wiring those outcomes to different tracks in the container activity. [See nesting]
 
-<%= vite_image_tag "images/wire-output-endadd.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/wire-output-endadd.webp", class: "mx-auto d-block" %>
 
 This activity now maintains three end events. The path to the `declined` end is taken from the task's `failure` output.
 
@@ -86,7 +86,7 @@ An output can be connected to a particular task by using `Id()`.
 
 This connects the `failure` output to the previous task, which might create an infinity loop and waste your computing time - it is solely here for demonstrational purposes.
 
-<%#= img "wire-output-id.png" %>
+<%#= img "wire-output-id.webp" %>
 
 <%= h3 "Track()" %>
 
@@ -96,7 +96,7 @@ The `Track()` function will snap the output to the next task that is "magnetic t
 
 Since `notify` sits on the "failure" track and hence is "magnetic to" `:failure`, `find_provider` will be connected to it.
 
-<%#= img "wire-track.png" %>
+<%#= img "wire-track.webp" %>
 
 Using `Track()` with a new track semantic only makes sense when using the [`:magnetic_to` option] on other tasks.
 

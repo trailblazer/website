@@ -4,7 +4,7 @@
 
 In our current version [as written in the previous tutorial](/2.1/docs/tutorials/activity.html#tutorials-railway-basics), we can process an Oauth signup via Github and handle existing users who have signed up before. Those who haven't cause our `Signup` activity to "error-out". It will end in the `failure` terminus.
 
-<%= vite_image_tag "images/tutorials/signup-2.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/signup-2.webp", class: "mx-auto d-block" %>
 
 It's now time to implement signing-up new users! Instead of introducing a new "track" to handle this case, I'd like to play around with some important concepts of the wiring API.
 
@@ -14,7 +14,7 @@ Why don't we put the "create user" task onto the `failure` track, and in case of
 
 Here's a diagram of the flow we're about to implement.
 
-<%= vite_image_tag "images/tutorials/fail-output.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/fail-output.webp", class: "mx-auto d-block" %>
 
 Placing a step on the error track is something we discussed before. However, deviating back to the happy path is new.
 
@@ -42,7 +42,7 @@ Reconnecting the `success` output results in a customized flow as visible in the
 
 Since the user database is empty, we're taking the new path via `#create_user` and then back to the happy path to `#log`.
 
-<%= vite_image_tag "images/tutorials/fail-wtf.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/fail-wtf.webp", class: "mx-auto d-block" %>
 
 The flow is deviated back after `#create_user` if we return a trusy value - exactly what we wanted!
 
@@ -64,7 +64,7 @@ Use `Developer.render` to visualize the activity's circuit.
 
 Thanks to `puts`, there will be an ugly but sufficient rendering of your activity in the terminal.
 
-<%= vite_image_tag "images/tutorials/render.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/render.webp", class: "mx-auto d-block" %>
 
 It lists each task and its outgoing connections. You can see the signal and its target task, the output semantics are not shown.
 
@@ -78,7 +78,7 @@ When "trailblazing" a new, unbeaten track in your activity you have two options:
 
 Looking at the new diagram, you understand that our goal is to branch out from `#find_user`, then execute one or more tasks on the new path, and finally end in a new terminus called `new`.
 
-<%= vite_image_tag "images/tutorials/magnetic.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/magnetic.webp", class: "mx-auto d-block" %>
 
 Our activity has slightly changed to introduce the new "track".
 
@@ -131,7 +131,7 @@ Using multiple termini has three magnificent, beautiful advantages.
 * It is much easier to track what is going on within the activity. Instead of transporting additional state via `ctx`, you expose the outcome via an additional end event.
 * When nesting an activity with multiple outcomes, you can wire each terminus to a different route. We will discuss that in a following section.
 
-<%= vite_image_tag "images/tutorials/magnetic.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/magnetic.webp", class: "mx-auto d-block" %>
 
 Our activity has three outcomes now: something went wrong (obviously the `failure` end event), we got an existing user signing-in (`success` terminus) or a new potential payee signed-up, ending in the `new` terminus.
 
@@ -139,7 +139,7 @@ Our activity has three outcomes now: something went wrong (obviously the `failur
 
 After installing that third "path", let's assume we wanted more than one step on it. The final `Signup` activity that you've all been waiting for has three steps to perform when a new sign-up occurs.
 
-<%= vite_image_tag "images/tutorials/signup.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/signup.webp", class: "mx-auto d-block" %>
 
 While we could achieve this using `Track()` and the `:magnetic_to` option, there's a handy macro for branching out a custom track: `Path()`.
 
@@ -179,7 +179,7 @@ To add this, you need to manually add it.
 
 We now added a `:failure` output, leading to a new flow as visible in this diagram.
 
-<%= vite_image_tag "images/tutorials/path-failure.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/path-failure.webp", class: "mx-auto d-block" %>
 
 The fragile `#compute_username` task now got its error-out path leading to the `failure` terminus.
 
@@ -193,7 +193,7 @@ When running with an empty user database, we should create one!
 
 Given that we hit the `new` terminus and we have a `User` object in `ctx` with the data we're expecting, this must've worked. The trace on the console verifies this, too!
 
-<%= vite_image_tag "images/tutorials/path-success.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/path-success.webp", class: "mx-auto d-block" %>
 
 Having this user in the system, let's run another sign-in.
 
@@ -201,7 +201,7 @@ Having this user in the system, let's run another sign-in.
 
 Beautiful! We end up on the `success` end event, and no additional user is created.
 
-<%= vite_image_tag "images/tutorials/path-existing.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/path-existing.webp", class: "mx-auto d-block" %>
 
 The `Signup` activity in its divine entireness is completed! You now know all the mechanics of the wiring API and the underlying concept of the circuit, tasks, signals, outputs and connections.
 
@@ -215,7 +215,7 @@ To demonstrate that, we need to complicate out example application a bit.
 
 Suppose that the `validate` task was getting quite complex and bloated. When writing "normal" Ruby, you'd break up one method into several. In Trailblazer, that's when you introduce a new, smaller activity.
 
-<%= vite_image_tag "images/tutorials/validate.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/validate.webp", class: "mx-auto d-block" %>
 
 In the sketched activity, we are separating the former `#validate` method and its chain of `&&`ed conditions into three steps. Since every step might go wrong, all of them have an "error-out" option.
 
@@ -245,7 +245,7 @@ The validation still does its job.
 
 The trace shows the nested activity beautifully intented.
 
-<%= vite_image_tag "images/tutorials/subprocess-trace.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/subprocess-trace.webp", class: "mx-auto d-block" %>
 
 So why the over-complication? What we got now is replicating a chain of `&&` in the former version. This time, however, you will know which condition failed and what went in by using tracing. Look at the trace above - it's impossible to _not_ understand what was going on.
 
@@ -255,7 +255,7 @@ Additionally, you may add debugging steps, error handler or rewire the condition
 
 Visualized, our new composed structure would look as follows.
 
-<%= vite_image_tag "images/tutorials/subprocess.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/subprocess.webp", class: "mx-auto d-block" %>
 
 Once the nested `Valdiate` sub process is hit, it is invoked and executes task by task, eventually reaching a terminus. This is where the outer activity continues.
 
@@ -281,7 +281,7 @@ Being able to reference outputs by their semantic is incredibly helpful when usi
 
 Now that we're rolling, let's go nuts and add another terminus to `Validate`. When the `"info"` key is absent in the `params` structure, it should error-out into a separate end event.
 
-<%= vite_image_tag "images/tutorials/no_info.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/no_info.webp", class: "mx-auto d-block" %>
 
 To implement such an activity, we only need to rewire the second step's `failure` output to a new terminus.
 
@@ -305,7 +305,7 @@ Remember, the `Railway` strategy only connects success and failure automatically
 
 It's as easy as using `Output(:no_info)` and connecting it using one of the DSL target methods. Here, we use `End()` to wire the nested activities terminus directly to a new terminus in `Signup`. Feel free to play around with `Track()` or `Id()` to model the flow you desire.
 
-<%= vite_image_tag "images/tutorials/validate-3.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/tutorials/validate-3.webp", class: "mx-auto d-block" %>
 
 Nesting an activity into another is a bit like calling a library method from another method. However, the explicit modelling has one massive advantage: all possible outcomes of the nested activity are visible and have to be connected in the outer diagram. It's up to the modeler how those ends are connected, if they lead to separate, new termini, or connect to further business flow.
 

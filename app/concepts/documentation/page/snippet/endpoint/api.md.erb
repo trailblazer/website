@@ -4,7 +4,7 @@ If a controller exposes a generic behavior, the `API` interface is your pick. Wh
 
 The `API` interface is designed to generically render a document response (such as XML or JSON) along with a response status. It does so by placing handler and render steps onto the three outcome tracks for `success`, `failure` and `protocol_failure` in an API-specific `Adapter`.
 
-<%= vite_image_tag "images/endpoint-adapter-api.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/endpoint-adapter-api.webp", class: "mx-auto d-block" %>
 
 In `Adapter::API` there's one track for a `success`ful domain execution, one for `failure` or `invalid_data` and one _protocol failure_ track that handles `not_found`, `not_authorized` and `not_authenticated`. The idea is to render a generic error with HTTP status code for the latter three cases, hence all three outcomes lead into the same track.
 
@@ -107,7 +107,7 @@ Since the error rendering is generic, the `:errors_representer_class` variable i
 
 Putting together the `Protocol` with the specific `Adapter` along with the `Create` domain operation will result in a flow as depicted here.
 
-<%= vite_image_tag "images/endpoint-adapter-api.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/endpoint-adapter-api.webp", class: "mx-auto d-block" %>
 
 The separation of the `Protocol` and `Adapter` allows to use the same business logic in different environments, the `Adapter` only reacts to well-defined outcomes such as "not found" or "invalid data" and, in an API context, responds with a rendered document and a HTTP status. This behavior could and should be different [in a web UI].
 
@@ -163,7 +163,7 @@ When `POST`ing a valid document to your `Create` action, a `200` HTTP is returne
 
 Note the valid JWT token we pass along in the request. The valid token and the appropriate input data results in the following trace.
 
-<%= vite_image_tag "images/endpoint-success-trace.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/endpoint-success-trace.webp", class: "mx-auto d-block" %>
 
 The next test covers the `not_authenticated` case where the JWT was not submitted.
 
@@ -173,6 +173,6 @@ In case you're wondering - the error message is set by the `handle_not_authentic
 
 Here's the trace.
 
-<%= vite_image_tag "images/endpoint-not_authenticated-trace.png", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/endpoint-not_authenticated-trace.webp", class: "mx-auto d-block" %>
 
 As this is a protocol_failure, the endpoint terminates on its `fail_fast` end.

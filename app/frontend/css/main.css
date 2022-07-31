@@ -187,7 +187,7 @@ a {
   display: inline-block;
   width: 145px;
   height: 30px;
-  background: url(../images/logo-16.png) no-repeat center center;
+  background: url(../images/logo-16.webp) no-repeat center center;
   background-size: 100%;
 }
 .trailblazer-header ul {
@@ -252,7 +252,7 @@ a {
   text-align: center;
 }
 .trailblazer-footer .logo-footer {
-  background: url(../images/logo-16.png) no-repeat center center;
+  background: url(../images/logo-16.webp) no-repeat center center;
   background-size: cover;
 }
 .trailblazer-footer ul {
@@ -277,7 +277,7 @@ a {
 }
 
 .lg-bg .trailblazer-footer .logo-footer {
-  background: url(../images/logo-dark.png) no-repeat center center;
+  background: url(../images/logo-dark.webp) no-repeat center center;
   background-size: cover;
 }
 .lg-bg .trailblazer-footer a {
@@ -1739,18 +1739,18 @@ ul.navigation > li:last-child {
   left: 0;
 }
 .parallax .front {
-  background-image: url(../images/front.png);
+  background-image: url(../images/front.webp);
   z-index: 3;
   bottom: -210px;
   left: 0;
 }
 .parallax .middle {
-  background-image: url(../images/middle.png);
+  background-image: url(../images/middle.webp);
   z-index: 2;
   bottom: -35px;
 }
 .parallax .back {
-  background-image: url(../images/back.png);
+  background-image: url(../images/back.webp);
   z-index: 1;
   bottom: -30px;
 }
@@ -1760,17 +1760,17 @@ ul.navigation > li:last-child {
   height: 65vh;
 }
 .parallax.doc .front {
-  background-image: url(../images/docu-front.png);
+  background-image: url(../images/docu-front.webp);
   z-index: 2;
   bottom: 15px;
 }
 .parallax.doc .middle {
-  background-image: url(../images/docu-middle.png);
+  background-image: url(../images/docu-middle.webp);
   z-index: 3;
   bottom: 0;
 }
 .parallax.doc .back {
-  background-image: url(../images/docu-back.png);
+  background-image: url(../images/docu-back.webp);
   bottom: 0;
 }
 
@@ -1957,10 +1957,10 @@ i.blue {
   margin: 18px 0;
   padding-left: 26px;
   line-height: 20px;
-  background: url(../images/circle-pink-sm.png) no-repeat 0 0 transparent;
+  background: url(../images/circle-pink-sm.webp) no-repeat 0 0 transparent;
 }
 .bullet-list li.blocked {
-  background: url(../images/cross-orange-sm.png) no-repeat 0 0 transparent;
+  background: url(../images/cross-orange-sm.webp) no-repeat 0 0 transparent;
 }
 .bullet-list li.blocked span {
   position: relative;
@@ -2139,7 +2139,7 @@ i.blue {
     display: block;
     left: 50%;
     top: -75px;
-    background: url(../images/rombo-pink-sm.png) no-repeat 0 0 transparent;
+    background: url(../images/rombo-pink-sm.webp) no-repeat 0 0 transparent;
     background-size: 100%;
     width: 150px;
     height: 150px;
@@ -2149,7 +2149,7 @@ i.blue {
   .deco-purple-cross {
     display: block;
     height: 350px;
-    background: url(../images/cross-purple-lg.png) no-repeat center center;
+    background: url(../images/cross-purple-lg.webp) no-repeat center center;
     background-size: 35%;
   }
 
@@ -2196,7 +2196,7 @@ i.blue {
     display: block;
     left: -75px;
     bottom: -75px;
-    background: url(../images/cross-orange-lg.png) no-repeat 0 0 transparent;
+    background: url(../images/cross-orange-lg.webp) no-repeat 0 0 transparent;
     background-size: 100%;
     width: 150px;
     height: 150px;
@@ -2207,7 +2207,7 @@ i.blue {
     height: 80px;
     display: block;
     margin: auto;
-    background: url(../images/cross-orange-md.png) no-repeat 0 0 transparent;
+    background: url(../images/cross-orange-md.webp) no-repeat 0 0 transparent;
     background-size: contain;
   }
 
@@ -2216,7 +2216,7 @@ i.blue {
     height: 80px;
     display: block;
     margin: auto;
-    background: url(../images/circle-pink-md.png) no-repeat 0 0 transparent;
+    background: url(../images/circle-pink-md.webp) no-repeat 0 0 transparent;
     background-size: contain;
   }
 
@@ -2225,7 +2225,7 @@ i.blue {
     height: 20px;
     display: block;
     margin: auto;
-    background: url(../images/circle-pink-md.png) no-repeat 0 0 transparent;
+    background: url(../images/circle-pink-md.webp) no-repeat 0 0 transparent;
     background-size: contain;
   }
 
@@ -2234,7 +2234,7 @@ i.blue {
     height: 80px;
     display: block;
     margin: auto;
-    background: url(../images/rombo-pink-sm.png) no-repeat 0 0 transparent;
+    background: url(../images/rombo-pink-sm.webp) no-repeat 0 0 transparent;
     background-size: contain;
   }
 
@@ -2254,12 +2254,12 @@ i.blue {
     background-repeat: no-repeat;
   }
   .quotes:before {
-    background-image: url(../images/quote-open.png);
+    background-image: url(../images/quote-open.webp);
     left: -30px;
     top: -90px;
   }
   .quotes:after {
-    background-image: url(../images/quote-close.png);
+    background-image: url(../images/quote-close.webp);
     right: -30px;
     bottom: -20px;
   }
@@ -2460,11 +2460,11 @@ i.blue {
   opacity: 0.8;
 }
 .any-slider .slick-arrow.slick-prev {
-  background-image: url(../images/arrow-left.png);
+  background-image: url(../images/arrow-left.webp);
   left: -20px;
 }
 .any-slider .slick-arrow.slick-next {
-  background-image: url(../images/arrow-right.png);
+  background-image: url(../images/arrow-right.webp);
   right: -20px;
 }
 .any-slider:not(.slick-initialized) {

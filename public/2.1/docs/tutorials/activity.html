@@ -742,7 +742,7 @@ end
 
 <p>The <code>@form</code> object (which is a Reform instance) is passed into <code>simple_form_for</code>. Note that we do have to provide <code>:url</code> and <code>:as</code> manually since Reform - per default - is not completely compatible to Rails’ magic form helpers. <a href="/2.1/docs/reform.html#reform-rails-activemodel-compliance"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/03-new-form-layoutless.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/03-new-form-layoutless.webp" /></p>
 
 <p>It looks a bit sad without any layout, but we’ll come to that shortly.</p>
 
@@ -776,7 +776,7 @@ end
 
 <p>If the operation failed, we re-render the form from <code>new</code>. The <code>#run</code> method also returns the result object from the ran operation, so we can use it outside the block.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/blog_post_new_error.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/blog_post_new_error.webp" /></p>
 
 <p>Let’s check out the <code>BlogPost::Operation::Create</code> operation in detail.</p>
 
@@ -934,7 +934,7 @@ end
 
 <p>We simply iterate of each row in <code>@model</code> and display the post’s attributes and links to update and delete it.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/blog_post_index.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/blog_post_index.webp" /></p>
 
 <p>When rendered in the browser, you can see a breathtaking list of posts with buttons and links.</p>
 
@@ -1117,7 +1117,7 @@ end
 
 <p>One lonely step uses the <code>Model()</code> macro to retrieve the displayed blog post with <code>.find_by</code>. A colorless, but functional view of a particular blog post is the reward for our hard work.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/03-show-layoutless.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/03-show-layoutless.webp" /></p>
 
 <p>We’re not gonna win a web design award for that but we’re here to engineer anyway!</p>
 
@@ -1217,7 +1217,7 @@ end
 
 <p>It’s a scenario directly taken from the Trailblazer PRO application which allows us to discuss a bunch of important concepts in Trailblazer.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/github-signin-v1.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/github-signin-v1.webp" /></p>
 
 <p>When clicking the Github link, the beautiful [omniauth gem] performs its magic. It handles all Oauth details and will - in case of a successful authorization via Github -  send a hash of login data shared by Github to a pre-configured controller actions of our app.</p>
 
@@ -1266,17 +1266,17 @@ end
 
 <p>A diagram resembling this chain of tasks would look like the following fragment of a BPMN diagram.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-1.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-1.webp" /></p>
 
 <p>Now let’s drop our optimism for a second, and face cold reality. Things could go wrong in two places here. First, the validation could fail if Github sends us data we don’t understand. Second, we might not know the user signing in, meaning the “find user” logic has to error-out, leading us to a diagram like this.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-2.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-2.webp" /></p>
 
 <p>If anything here did fail in “validate omniauth”, all other steps in the chain would be skipped as the flow would follow the path leading to the <code>failure</code> terminus.</p>
 
 <p>Assuming the validation was successful, if the user provided by Github wasn’t found in our system (in the “find user” box), the remaining logging step would be skipped, ending up in that mysterious <code>failure</code> circle, again.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-3.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-3.webp" /></p>
 
 <p>Intuitively, you understand the flow just by looking at the BPMN diagram. And, heck, we haven’t even discussed BPMN or any terminology, yet!</p>
 
@@ -1289,7 +1289,7 @@ end
 
 <p>Before we continue, let us quickly clarify some lingo when working with Trailblazer, BPMN, and activities.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/voc.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/voc.webp" /></p>
 
 <p>Be honest, you’re loving my handwriting already, aren’t you?</p>
 
@@ -1442,7 +1442,7 @@ end
 
 <p>In <code>#validate</code>, our highly sophisticated validation will return either <code>true</code> or <code>false</code>, causing the activity to proceed to the next step, or “error out”.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/truefalse.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/truefalse.webp" /></p>
 
 <p>In other words: different return values will trigger different outputs of the task. The flow will continue on the outgoing connection of the output.</p>
 
@@ -1511,7 +1511,7 @@ end
 
 <p>The activity - at this stage - deviates to the error track when there’s no user and skips all remaining logic. This is, of course, because the last statement in <code>#find_user</code> will evaluate to <code>nil</code> in case of a new signup, as this email address is yet unknown. A <em>falsey</em> return value means “error track”.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/find_user.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/find_user.webp" /></p>
 
 <p>To finish up the activity v1, we add an empty logging step. You probably already got the hang of it, anyway.</p>
 
@@ -1560,7 +1560,7 @@ puts ctx[:user] #=&gt; nil
 
 <p>Inspecting the <code>signal</code>, it looks as if we hit the <code>failure</code> terminus. Furthermore, peeking into <code>ctx</code>, the <code>:user</code> variable is unset, hinting that the path we took is the one visualized here.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-3.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-3.webp" /></p>
 
 <p>To have a successful sign-up, the user must be present in our database. Here’s the invocation with the user already exising.</p>
 
@@ -1574,7 +1574,7 @@ puts ctx[:user] #=&gt; #&lt;User email: "apotonick@gmail.com"&gt;
 
 <p>This time, the <code>signal</code> looks like we’re winning. Also, the user is set from the <code>#find_user</code> step, suggesting the following flow.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-4.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-4.webp" /></p>
 
 <p>The provided data from Github is sane, the user is found by their email, and we’re set to sign them in with a cookie (yet to be done).</p>
 
@@ -1601,7 +1601,7 @@ end
 
 <p>As visible in the diagram, <code>#fail</code> puts the error handler on the error track, while maintaining the linear order of the flow: it sits after <code>extract_omniauth</code>, but before <code>find_user</code>.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail.webp" /></p>
 
 <p>Per default, the return value from a <code>fail</code> task is irrelevant, it will always stay on the error track. In part II we will cover how to jump back to the happy path.</p>
 
@@ -1662,7 +1662,7 @@ end
 
 <p>The signature and return values are identical to <code>#invoke</code>. However, now, tracing is turned on, and will output the flow to the terminal.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/trace.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/trace.webp" /></p>
 
 <p>No more guessing anymore, you can follow the path and even in deeply nested activity structures you won’t get lost anymore.</p>
 
@@ -1677,7 +1677,7 @@ signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, ctx)
 
 <p>As promised, <code>#wtf?</code> catches that and shows you the closest task in red.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/trace-exception.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/trace-exception.webp" /></p>
 
 <p>With Ruby only knowing methods and files and stack-traces from hell, Trailblazer is years ahead when it comes to debugging. Having an understanding of higher level abstractions, such as tasks, activities and the historical code path taken, its debugging trace is much closer to how you, as an engineer, think about your code.</p>
 
@@ -1699,7 +1699,7 @@ signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, ctx)
 
 <p>In our current version <a href="/2.1/docs/tutorials/activity.html#tutorials-railway-basics">as written in the previous tutorial</a>, we can process an Oauth signup via Github and handle existing users who have signed up before. Those who haven’t cause our <code>Signup</code> activity to “error-out”. It will end in the <code>failure</code> terminus.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-2.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup-2.webp" /></p>
 
 <p>It’s now time to implement signing-up new users! Instead of introducing a new “track” to handle this case, I’d like to play around with some important concepts of the wiring API.</p>
 
@@ -1712,7 +1712,7 @@ signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, ctx)
 
 <p>Here’s a diagram of the flow we’re about to implement.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail-output.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail-output.webp" /></p>
 
 <p>Placing a step on the error track is something we discussed before. However, deviating back to the happy path is new.</p>
 
@@ -1759,7 +1759,7 @@ signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
 
 <p>Since the user database is empty, we’re taking the new path via <code>#create_user</code> and then back to the happy path to <code>#log</code>.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail-wtf.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/fail-wtf.webp" /></p>
 
 <p>The flow is deviated back after <code>#create_user</code> if we return a trusy value - exactly what we wanted!</p>
 
@@ -1797,7 +1797,7 @@ end
 
 <p>Thanks to <code>puts</code>, there will be an ugly but sufficient rendering of your activity in the terminal.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/render.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/render.webp" /></p>
 
 <p>It lists each task and its outgoing connections. You can see the signal and its target task, the output semantics are not shown.</p>
 
@@ -1814,7 +1814,7 @@ end
 
 <p>Looking at the new diagram, you understand that our goal is to branch out from <code>#find_user</code>, then execute one or more tasks on the new path, and finally end in a new terminus called <code>new</code>.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/magnetic.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/magnetic.webp" /></p>
 
 <p>Our activity has slightly changed to introduce the new “track”.</p>
 
@@ -1900,7 +1900,7 @@ step :create_user, Output(:success) =&gt; End(:new), magnetic_to: :create
   <li>When nesting an activity with multiple outcomes, you can wire each terminus to a different route. We will discuss that in a following section.</li>
 </ul>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/magnetic.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/magnetic.webp" /></p>
 
 <p>Our activity has three outcomes now: something went wrong (obviously the <code>failure</code> end event), we got an existing user signing-in (<code>success</code> terminus) or a new potential payee signed-up, ending in the <code>new</code> terminus.</p>
 
@@ -1911,7 +1911,7 @@ step :create_user, Output(:success) =&gt; End(:new), magnetic_to: :create
 
 <p>After installing that third “path”, let’s assume we wanted more than one step on it. The final <code>Signup</code> activity that you’ve all been waiting for has three steps to perform when a new sign-up occurs.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/signup.webp" /></p>
 
 <p>While we could achieve this using <code>Track()</code> and the <code>:magnetic_to</code> option, there’s a handy macro for branching out a custom track: <code>Path()</code>.</p>
 
@@ -1995,7 +1995,7 @@ end
 
 <p>We now added a <code>:failure</code> output, leading to a new flow as visible in this diagram.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-failure.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-failure.webp" /></p>
 
 <p>The fragile <code>#compute_username</code> task now got its error-out path leading to the <code>failure</code> terminus.</p>
 
@@ -2019,7 +2019,7 @@ ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=
 
 <p>Given that we hit the <code>new</code> terminus and we have a <code>User</code> object in <code>ctx</code> with the data we’re expecting, this must’ve worked. The trace on the console verifies this, too!</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-success.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-success.webp" /></p>
 
 <p>Having this user in the system, let’s run another sign-in.</p>
 
@@ -2034,7 +2034,7 @@ ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=
 
 <p>Beautiful! We end up on the <code>success</code> end event, and no additional user is created.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-existing.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/path-existing.webp" /></p>
 
 <p>The <code>Signup</code> activity in its divine entireness is completed! You now know all the mechanics of the wiring API and the underlying concept of the circuit, tasks, signals, outputs and connections.</p>
 
@@ -2056,7 +2056,7 @@ end
 
 <p>Suppose that the <code>validate</code> task was getting quite complex and bloated. When writing “normal” Ruby, you’d break up one method into several. In Trailblazer, that’s when you introduce a new, smaller activity.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/validate.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/validate.webp" /></p>
 
 <p>In the sketched activity, we are separating the former <code>#validate</code> method and its chain of <code>&amp;&amp;</code>ed conditions into three steps. Since every step might go wrong, all of them have an “error-out” option.</p>
 
@@ -2116,7 +2116,7 @@ ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=
 
 <p>The trace shows the nested activity beautifully intented.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/subprocess-trace.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/subprocess-trace.webp" /></p>
 
 <p>So why the over-complication? What we got now is replicating a chain of <code>&amp;&amp;</code> in the former version. This time, however, you will know which condition failed and what went in by using tracing. Look at the trace above - it’s impossible to <em>not</em> understand what was going on.</p>
 
@@ -2131,7 +2131,7 @@ ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=
 
 <p>Visualized, our new composed structure would look as follows.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/subprocess.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/subprocess.webp" /></p>
 
 <p>Once the nested <code>Valdiate</code> sub process is hit, it is invoked and executes task by task, eventually reaching a terminus. This is where the outer activity continues.</p>
 
@@ -2161,7 +2161,7 @@ ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=
 
 <p>Now that we’re rolling, let’s go nuts and add another terminus to <code>Validate</code>. When the <code>"info"</code> key is absent in the <code>params</code> structure, it should error-out into a separate end event.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/no_info.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/no_info.webp" /></p>
 
 <p>To implement such an activity, we only need to rewire the second step’s <code>failure</code> output to a new terminus.</p>
 
@@ -2221,7 +2221,7 @@ end
 
 <p>It’s as easy as using <code>Output(:no_info)</code> and connecting it using one of the DSL target methods. Here, we use <code>End()</code> to wire the nested activities terminus directly to a new terminus in <code>Signup</code>. Feel free to play around with <code>Track()</code> or <code>Id()</code> to model the flow you desire.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/validate-3.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/tutorials/validate-3.webp" /></p>
 
 <p>Nesting an activity into another is a bit like calling a library method from another method. However, the explicit modelling has one massive advantage: all possible outcomes of the nested activity are visible and have to be connected in the outer diagram. It’s up to the modeler how those ends are connected, if they lead to separate, new termini, or connect to further business flow.</p>
 
@@ -2255,7 +2255,7 @@ end
               </main>
 
               <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
-                <img alt="Trailblazer" class="wow fadeIn" src="/vite-dev/images/deco1.png" />
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite-dev/images/deco1.webp" />
                 <div class="features" id="tutorials-quick-start-01-operation-basics-features">
   <h3>
     <i class="fas fa-times"></i>
