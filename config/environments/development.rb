@@ -58,4 +58,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Insert middleware which reloads and rewrites entire website if any of the
+  # files under `./app/concepts` is modified.
+  # It writes all files under `public` dir, so `ActionDispatch::Static` can serve them directly.
+  require "./lib/middleware/website_compiler.rb"
+  config.middleware.insert_before ActionDispatch::Static, Middleware::WebsiteCompiler
 end
