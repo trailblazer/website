@@ -22,4 +22,8 @@ class Application::Cell::Navbar < Trailblazer::Cell
   def learn_page?
     model[:page] == "learn"
   end
+
+  def inside_footer?
+    model[:inside_footer]
+  end
 end

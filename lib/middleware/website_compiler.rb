@@ -19,6 +19,8 @@ module Middleware
     end
 
     def website_should_compile?
+      return true if Dir["public/2.1/**/*"].empty?
+
       new_mtime = get_current_website_mtime
       old_mtime = @@previous_website_mtime
 

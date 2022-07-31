@@ -1,0 +1,107 @@
+
+<%= h2 "Cells" %>
+
+<a href="https://github.com/trailblazer/trailblazer-rails" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-rails</a>
+
+[Cells](/2.1/docs/cells.html) is a separate gem, it provides view components to maintain strong encapsulation in your partial world.
+
+The `trailblazer-rails` gem makes it very simple to use the Cells gem along with TRB. It overrides `ActionController#render` and allows to render a cell.
+
+<%= h3 "File structure" %>
+
+In the early, adventurous days of Cells - the project was kicked off in 2007 - both naming of cell classes and their file structure was following the Rails Way™ style. In a Rails app, you could find a structure as below.
+
+<%= code :shell do %>
+gem "cells"
+
+app
+├── cells
+│   ├── song_cell.rb
+│   ├── song
+│   │   ├── show.erb
+│   │   ├── list.erb
+<% end %>
+
+While this is still possible by simply using the `cells` gem stand-alone, most projects using Trailblazer prefer the new file structure implemented in the `trailblazer-cells` gem.
+
+<%= code :shell do %>
+gem "trailblazer-cells"
+
+app
+├── concepts
+│   ├── song
+│   │   ├── cell
+│   │   │   ├── show.rb # Song::Cell::Show
+│   │   │   ├── list.rb
+│   │   ├── view
+│   │   │   ├── show.erb
+│   │   │   ├── list.erb
+<% end %>
+
+This results in your cells being named `Song::Cell::Show`, adhering to the Trailblazer convention. Refer to the <%= api "cells.html#cells-trailblazer" %> to learn more about Trailblazer cells.
+
+<%= h3 "Render" %>
+
+The `trailblazer-rails` gem extends the `#render` method and allows you to render cells in controllers and views.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    run Song::New # optional
+
+    render cell(Song::Cell::New, @model)
+  end
+end
+<% end %>
+
+You simply invoke `#cell` the way you did it before, and pass it to `render`. If the first argument to `#render` is not a cell, the original Rails `render` version will be used, allowing you to use serializers, partials or whatever else you need.
+
+<%= h4 "Skip controller layout" %>
+
+Per default, `#render` will add `layout: true` to render the controller's ActionView layout.
+
+The controller's layout can be disabled using `layout: false`. These are pure Rails mechanics.
+
+<%= code :ruby do %>
+render cell(Song::Cell::New, @model), layout: false
+<% end %>
+
+In fact, any option passed to `render` will be passed through to the controller's `#render`.
+
+<%= h4 "Cell options" %>
+
+As you're using `#cell` from the Cells gem you may pass any option the cell understands.
+
+<%= code :ruby do %>
+render cell(Song::Cell::New, model, layout: Song::Cell::DarkLayout)
+<% end %>
+
+For instance, you can instruct the cell to use a separate layout cell. Note that this option is passed to `#cell`, not to `#render`.
+
+<%= h3 "Configuration" %>
+
+You can set controller-wide options passed to every `#cell` call by overriding the `#options_for_cell` method.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  private def options_for_cell(model, options)
+    {
+      layout: Song::Cell::DarkLayout # used for all #cell calls.
+    }
+  end
+end
+<% end %>
+
+This is extremely helpful for providing controller-wide options like `:layout`, allowing you to skip this specific option in all actions.
+
+<%= code :ruby do %>
+class SongsController < ApplicationController
+  def create
+    # ..
+    render cell(Song::Cell::New, model) # no need to pass {layout: Song::Cell::DarkLayout}
+  end
+<% end %>
+
+<%= info do %>
+This feature was added in `trailblazer-rails` version 2.2.0.
+<% end %>

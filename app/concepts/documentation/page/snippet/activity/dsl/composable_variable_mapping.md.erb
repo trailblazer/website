@@ -1,0 +1,108 @@
+<%= h2 "Variable Mapping", name: "variable-mapping" %>
+
+Since TRB 2.1 it is possible to define the input and output variables for each step. This is called _variable mapping_, or I/O in short. It provides an interface to define what variable go in and come out of a task, enabling you to limit what steps "see" and what "output" they can add to the context.
+
+It's one of the most frequently used features in Trailblazer.
+
+<%= h3 "Overview" %>
+
+Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.
+
+<%= code "no-in", collapse: :meths %>
+
+The `Policy::Create` is a simple callable class following the [step interface]().
+
+<%= code "policy", collapse: :decision %>
+
+Note that it requires two variables `:model` and `:user` from the ctx. For whatever reasons, the author of this class dictated that the "current user" must be passed named `:user`, not, as it's a convention in Trailblazer, named `:current_user`.
+
+Last, depending on the policy decision, the step code returns true or false.
+
+<%= h4 "Missing mapping" %>
+
+When executing the `Create` operation using the `:current_user` variable, an `ArgumentError` is raised.
+
+<%= code "no-in-invoke" %>
+
+Since the "current user" is handed into the operation as the `:current_user` variable, and no other step preceding `Policy::Create` is setting this variable, the step expecting `:user` crashes.
+
+And this is why we need variable mapping in Trailblazer.
+
+<%= h3 "Composable I/o" %>
+
+Variable mapping (short: i/o) can be done manually, with ugly "helper" steps before or after the respective step, or by using `In()`, `Out()` and `Inject()`. Before these helpers got introduced, we used the `:input` and `:output` option - both works, the latter one coming with several drawbacks.
+
+All helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.
+
+In Out allows composing which is great for debugging/rendering, with inheritance, macros (you can add to macro options, or change)
+
+
+<%= h3 "In()" %>
+
+As you might have guessed, `In()` helps creating input filters. It allows to configure or dynamically compute variables going _into_ the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).
+
+Be wary that once you use `In()` only the variables defined in your filters will be passed into the step, remaining variables from ctx are invisible in the step.
+
+<%= h4 "Mapping hash" %>
+
+Picking up the example from above, here's how a mapping hash "translates" the selected variables from the original ctx object to a new ctx, one that is compatible with `Policy::Create`'s interface.
+
+<%= code "in-mapping", collapse: "meths" %>
+
+The `In()` filter will result in `:current_user` being renamed to `:user`. Since the policy step also needs `:model` we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to `Policy::Create`!
+
+When replacing the original policy step with a `#show_ctx` method you instantly see what new ctx is passed into the configured step.
+
+<%= code "in-mapping-keys", collapse: :meths %>
+
+You should use the mapping hash when variables need to be renamed. If variables need to be added without renaming, a limiting array is your friend.
+
+<%= h4 "Limiting array" %>
+
+`In()` accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).
+
+<%= code "in-limit", collapse: :meths %>
+
+This configuration will lead to the exact same new ctx for `Policy::Create` as in the [example above](#activity-variable-mapping-in-mapping-hash), producing a new ctx that will look as below.
+
+<%= code :ruby do %>
+#=> {
+#     :user  => #<User email:...>,
+#     :model => #<Song name=nil>}
+#   }
+<% end %>
+
+<%= h4 "Callable" %>
+
+As always, you may implement your own input filter with any callable object [adhering to the step interface])().
+
+<%= code "in-callable", collapse: :meths %>
+
+Callable `In()` filters **have to** return a hash. This hash will be merged with the other `In()` filters and comprise the new ctx.
+
+And again, when the operation is invoked with a `:current_user`, this will, result in the same new ctx as above.
+
+<%= code :ruby do %>
+#=> {
+#     :user  => #<User email:...>,
+#     :model => #<Song name=nil>}
+#   }
+<% end %>
+
+However, if `:current_user` is `nil`, `Policy::Create` will raise an exception complaining about the `:user` keyword missing.
+
+<%= h4 "Filter method" %>
+
+Following the TRB option standard, an `In()` filter may even be implemented as an instance method. All you need to do is pass a symbol to `In()`.
+
+<%= code "in-method", collapse: :meths %>
+
+The method needs to expose a step interface just like any other callable.
+
+<%= h4 "Keyword arguments" %>
+
+Both callables and filter methods for `In()` can receive ctx variables as keyword arguments, making it extremely convenient to access them and have Ruby perform a loose existance test automatically.
+
+<%= code "in-kwargs", collapse: :meths %>
+
+Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.

@@ -5,6 +5,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
   TOC_ORDER = {
     generics:          %w[
       trailblazer
+      rails
       test
     ],
 
@@ -31,6 +32,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
   LINKS = {
     "trailblazer"        => { header: "Trailblazer", url: "/2.1/docs/trailblazer.html" },
+    "rails"              => { header: "Rails", url: "/2.1/docs/rails.html" },
     "activity"           => { header: "Activity", url: "/2.1/docs/activity.html" },
     "tutorials/activity" => { header: "Tutorials", url: "/2.1/docs/tutorials/activity.html" },
     "test"               => { header: "Test", url: "/2.1/docs/test.html" },

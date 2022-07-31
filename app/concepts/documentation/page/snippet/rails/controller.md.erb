@@ -1,0 +1,125 @@
+Trailblazer runs with any Ruby web framework, whether that is Rails, Hanami or Grape. Why? Because it's a set of additional abstraction layers like forms, service objects ("operations") or view components. Those are designed to be completely isolated and decoupled from the hosting infrastructure framework.
+
+Nevertheless, you're lucky if your project is using Rails since we provide convenient glue code in the `trailblazer-rails` gem.
+
+<%= code :ruby do %>
+gem "trailblazer-rails"
+<% end %>
+
+This will automatically pull the `trailblazer` gem along with its commonly used dependencies. The `Trailblazer::Rails::Railtie` railtie will activate all necessary convenience methods for you. You don’t have to do anything manually.
+
+<%= info do %>
+There's a beautiful QUICK START tutorial introducing you to [Trailblazer in Rails](/2.1/tutorials/activity.html#tutorials-quick-start-03-rails-basics).
+<% end %>
+
+<%= h2 "Controller" %>
+
+<a href="https://github.com/trailblazer/trailblazer-rails" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-rails</a>
+
+Controller extensions help with
+
+* invoking operations and dealing with the outcome
+* rendering cells that access variables from the operation's result object
+
+Please note, though, that we're slowly moving towards using [endpoint](/2.1/docs/endpoint.html)s in controllers. Once this new layer becomes stable we will support both approaches.
+
+<%= h3 "Manual invoke" %>
+
+In order to run an operation in a controller you may simply invoke it manually.
+
+<%= code "manual", collapse: :meths %>
+
+Note how you have to pass all data into the `#call`, even variables such as `params`, that are  "magically everywhere" in Rails. This is per design - we want encapsulation!
+
+After running the operation, you need to handle different outcomes.
+
+<%= code "manual" %>
+
+In a bit more complex situations, with more data being passed into the operation, this might become repetitive and quite complex.
+
+<%# /2.1/docs/trailblazer.html#trailblazer-rails-run %>
+<a name="trailblazer-rails-run" /><!-- @old-link -->
+<a name="trailblazer-rails-run-return-value" /><!-- @old-link -->
+<!-- http://localhost:4000/2.1/docs/rails.html#rails-support-controller-run-return-value -->
+<%= h3 "Run" %>
+
+The `trailblazer-rails` gem provides `#run` to simplify the task of invoking operations.
+
+<%= code "ctx" %>
+
+The `#run` method will always return the result object (or ctx) from the operation.
+
+While it invokes the specified operation it does three things for you.
+
+* Without any additional configuration, `#run` passes the controller’s `params` hash into the operation call as in the example above.
+* It automatically assigns `@model` and, if available, `@form` for you, after invoking the operation.
+* The `ctx` object is assigned to `@_result`.
+
+<%= h4 "Block syntax" %>
+
+To handle success and failure cases, run accepts an optional block.
+
+<%= code "block" %>
+
+The block is only run for a successful outcome of the operation - or in other words, when `ctx.success?` is true. Into the block is passed the result object (or `ctx`) as a block argument.
+
+<%= info do %>
+Do not forget to use `return` in the block, otherwise Ruby will execute the remaining code under the block, too.
+<% end %>
+
+After the block, you usually add code for handling a failing outcome of the operation run. Here, you can use the `ctx` object returned from `#run`.
+
+<%= h4 "Keyword arguments" %>
+
+The success block of `#run` can also hand you variables from `ctx` as keyword arguments, just as you know it from [operation steps].
+
+<%= code "block-kwargs" %>
+
+This is convenient shortcut to access ctx variables, and gives you a runtime error should that variable be absent.
+
+<%= info do %>
+Keyword arguments for `#run` are available from `trailblazer-rails` >= 2.4.2.
+<% end %>
+
+<%= h4 "Runtime variables" %>
+
+If your operation needs more variables in the ctx you can hand in those via `#run`.
+
+<%= code "runtime-variables", collapse: :meths %>
+
+This will add `:current_user` to the ctx passed into the `Song::Operation::Create` operation, allowing you to access it in the steps, as done in the example step below.
+
+<%= code :ruby do %>
+class Song::Operation::Create < Trailblazer::Operation
+  # ...
+  step :user_allowed?
+
+  def user_allowed?(ctx, current_user:, **)
+    # do something with {current_user}
+  end
+end
+<% end %>
+
+You can also configure generic [variables on the controller level](#rails-support-controller-run-run-options), they will be passed to all operations of that controller.
+
+<%= h4 "Run Options" %>
+
+Often, several operations across an application slice have generic variables, such as the `current_user`. Instead of redundantly passing them to `#run` in every controller action, you can configuring variables on the controller-level.
+
+Override `#_run_options` to do that automatically for all `run` calls in a controller.
+
+<%= code "run-options", collapse: :body %>
+
+The overridden `#_run_options` method will result in `:current_user` being passed into the operation when using `#run` without having to specify that particular parameter.
+
+<%= code "run-options-create" %>
+
+When mixing both styles, options passed directly to `#run` will win over possible same-named options in `#_run_options`.
+
+<%= h3 "Endpoint" %>
+
+<a href="https://github.com/trailblazer/trailblazer-endpoint" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-endpoint</a>
+
+During the past few years of Trailblazer a new layer emerged, we call it _endpoint_. An endpoint is literally an "operation" getting invoked straight from the controller and running your business operation (like `Song::Operation::Create`) at some point. Before and after that, you can place code steps you'd normally use in `before_filter` and friends.
+
+We will document this new (completely optional!) layer once it is fully presentable. Until then, check out the [API docs](/2.1/docs/endpoint.html).

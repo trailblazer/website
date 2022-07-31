@@ -10,7 +10,7 @@
     <a class="nav-item nav-link <%= blog_page? ? 'active' : '' %>" href="https://dev.to/trailblazer">BLOG</a>
   </li>
 
-  <li class="<%= doc_page? ? "d-none d-md-block" : "" %>">
+  <li class="<%= doc_page? && !inside_footer? ? "d-none d-md-block" : "" %>">
     <a class="nav-item nav-link <%= about_us_page? ? 'active' : '' %>" href="/2.1/about_us.html">ABOUT US</a>
   </li>
 
@@ -18,7 +18,7 @@
     <a class="nav-item nav-link <%= learn_page? ? 'active' : '' %>" href="/2.1/learn.html">LEARN</a>
   </li>
 
-  <li class="<%= doc_page? ? "d-none d-md-block" : "" %>">
+  <li class="<%= doc_page? && !inside_footer? ? "d-none d-md-block" : "" %>">
     <a class="nav-item nav-link" href="/2.0/index.html">
       <i class="fas fa-arrow-right"></i>
       2.0
@@ -32,7 +32,9 @@
     </a>
   </li>
 
-  <li>
-    <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
-  </li>
+  <% unless inside_footer? %>
+    <li>
+      <div id="docsearch"></div> <!-- https://docsearch.algolia.com/docs/DocSearch-v3 -->
+    </li>
+  <% end %>
 </ul>

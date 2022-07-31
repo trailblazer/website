@@ -21,16 +21,16 @@ a {
   font-size: 500;
 }
 
-.social li {
+.trailblazer-footer .social li {
   display: inline-block;
   vertical-align: middle;
   margin: 0 9px;
 }
-.social li a {
+.trailblazer-footer .social li a {
   font-size: 26px;
   font-weight: 400;
 }
-.social.purple a {
+.trailblazer-footer .social.purple a {
   color: #3D3580;
 }
 
