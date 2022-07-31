@@ -23,8 +23,6 @@ gem "cells-erb"
 gem "rubocop"
 # Automatic Rails code style checking tool. (https://github.com/rubocop/rubocop-rails)
 gem "rubocop-rails"
-# Rails application preloader (https://github.com/rails/spring)
-gem "spring"
 # Trailblazer's file layout with Cells. (http://trailblazer.to/gems/cells)
 gem "trailblazer-cells"
 # Trailblazer's operation object with railway flow and integrated error handling. (http://trailblazer.to)
@@ -37,5 +35,3 @@ gem "torture"
 gem "torture-server", github: "apotonick/torture-server"
 # Process manager for applications with multiple components (http://github.com/ddollar/foreman)
 gem "foreman"
-# Listen to file modifications (https://github.com/guard/listen)
-gem "listen"

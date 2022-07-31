@@ -5,7 +5,8 @@ class Page::Operation::Compile < Trailblazer::Operation
 
   LINKS = {
     "about_us" => { header: "About Us", url: "/2.1/about_us.html" },
-    "learn"    => { header: "Learn", url: "/2.1/learn.html" }
+    "learn"    => { header: "Learn", url: "/2.1/learn.html" },
+    "404"     =>  { header: "404 :(", url: "/404.html" }
   }
 
   step :build_pages
@@ -23,7 +24,7 @@ class Page::Operation::Compile < Trailblazer::Operation
     # create all directories including subdirectories
     FileUtils.mkdir_p("#{dir_path}/2.1")
 
-    site.each do |md_name, page|
+    site.each do |_md_name, page|
       html = Page::Cell::Show.new(page).call(:show)
       File.write("#{dir_path}#{page.url}", html)
     end

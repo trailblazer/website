@@ -93,9 +93,9 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
   def write_pages(_ctx, site:, dir_path: "public", **)
     # create all directories including subdirectories
-    FileUtils.mkdir_p(dir_path + "/2.1/docs/tutorials")
+    FileUtils.mkdir_p("#{dir_path}/2.1/docs/tutorials")
 
-    site.each do |md_name, page|
+    site.each do |_md_name, page|
       html = Documentation::Cell::Show.new(page).call(:show)
       File.write("#{dir_path}#{page.url}", html)
     end

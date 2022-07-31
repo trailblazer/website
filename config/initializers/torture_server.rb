@@ -7,7 +7,7 @@ Snippets.class_eval do
     %(<a href="#{path}"><i class="fa fa-book" aria-hidden="true"></i> API docs</a>)
   end
 
-  def img(path)
+  def img(_path)
     raise "Please replace `img` with `vite_image_tag`"
   end
 end

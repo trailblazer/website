@@ -18,7 +18,7 @@ class Application::Operation::Pack < Trailblazer::Operation
   def compile_assets(_ctx, **)
     Rake::Task["vite:build"].invoke
 
-    FileUtils.mkdir_p(DIST_PATH + "/vite")
+    FileUtils.mkdir_p("#{DIST_PATH}/vite")
     FileUtils.cp_r(VITE_PATH, DIST_PATH)
 
     true
