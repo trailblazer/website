@@ -4,7 +4,7 @@
 - rails (~> 7.0.2)
 - node (~> 16.14)
 
-## HOW TO GET THIS SHIT GOING
+## Setup
 
 Run `./bin/setup` to install any application dependencies and boot the application using `foreman`,
 
@@ -14,7 +14,16 @@ foremane start -f Procfile.dev
 
 `foreman` will start both rails and vite server in development mode.
 
-## Structure
+## How does this work ?
+
+- This is a fairly simple Rails app with sprinkles of cells and trailblazer.
+- All documentation MD files and it's compilation logic is stored under `app/concepts`.
+- All MD files are compiled and generated HTML is stored in `public` to be served as statically.
+- In local development, if you change any MD file and reload the page in browser, `Middleware::WebsiteCompiler` will detect the change and compile website again.
+- Newly made changes are persisted in `public` directory again and will be served back in same the request :tada:
+- Any asset changes are reloaded using [vite](https://vitejs.dev/) in HMR mode :fire:
+
+## Directory Structure
 
 ```
 1. app/concepts (Contains all the operations and MD files to generate documentation HTML)
@@ -27,6 +36,7 @@ foremane start -f Procfile.dev
 4. public/dist (Contains the documentation HTML generated in production mode (using `rails publish` task))
 5. lib/tasks/publish.rake (Contains the rake task to create and push publish commit)
 6. lib/middleware/website_compiler.rb (Contains the middleware to check and compile the documentation MD files)
+7. config/routes.rb (Contains redirect rules for development env)
 ```
 
 ## Deployment
@@ -53,7 +63,3 @@ trailblazer-cells/
 reform/
 etc.
 ```
-
-## Known Issues
-
-1. `Middleware::WesbiteCompiler` will compile website in development for any new changes, but `Torture::Server` doesn't load recently updated `.md.erb` files. You will need to restart `foreman` in order to pick those changes up and generate correct HTML.
