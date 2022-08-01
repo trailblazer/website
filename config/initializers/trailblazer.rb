@@ -6,3 +6,8 @@ Cell::ViewModel.class_eval do
   include ViteRails::TagHelpers
   include Cell::Erb
 end
+
+if Rails.env.development?
+  require "cell/development"
+  Cell::ViewModel.include Cell::Development
+end
