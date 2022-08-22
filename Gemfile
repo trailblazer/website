@@ -33,5 +33,3 @@ gem "vite_rails"
 gem "torture"
 # Write a short summary, because RubyGems requires one. (https://github.com/apotonick/torture)
 gem "torture-server", github: "apotonick/torture-server"
-# Process manager for applications with multiple components (http://github.com/ddollar/foreman)
-gem "foreman"
