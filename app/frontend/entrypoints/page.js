@@ -11,11 +11,11 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "~/css/material.css";
-import "~/css/tomorrow-night-blue.css";
 import "~/css/font-awesome.css";
+import "~/css/documentation-hljs.css";
 import "~/css/main.css";
 
-import "~/js/docSearch.js";
+// import "~/js/docSearch.js";
 import "~/js/initAnchor.js";
 
 jquery(document).ready(function () {
