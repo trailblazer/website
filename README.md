@@ -9,7 +9,7 @@
 Run `./bin/setup` to install any application dependencies and boot the application using `foreman`,
 
 ```
-foremane start -f Procfile.dev
+foreman start -f Procfile.dev
 ```
 
 `foreman` will start both rails and vite server in development mode.
