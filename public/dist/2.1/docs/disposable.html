@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Disposable</title>
+
+    
+    <script src="/vite/assets/documentation.18fc64a0.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/docSearch.60d7ae5d.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.999e4d80.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-69514939-1");
+    </script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="true"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="disposable-collapse"
+      class="collapse show"
+      aria-labelledby="disposable"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#disposable-twin-api">
+              Twin API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#disposable-twin-default">
+              Twin: Default
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#disposable-disposable-callback">
+              Disposable: Callback
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Disposable</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 27 Jun 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p>Disposable provides <a href="#disposable-twin-api">twins</a>.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="disposable-twin-api">Twin API</h2>
+<p><!-- {disposable-twin-api-toc} --></p>
+
+<p><strong>A twin is an intermediate object</strong> that usually sits between persistence layer and your application code. It’s a <em>domain object</em> that helps you model your application domain. Sometimes this is called <em>decorator</em>.</p>
+
+<p>Often, a twin maps directly to one persistent <em>“model”</em>. However, twins are absolutely not limited to your database layout - the opposite is the case. One twin can be a composition of many underlying models, with renaming, delegating, and more mapping features, that allow you modeling objects for your application, and not objects dictated by your database layout.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-declarative-api">Declarative API</h3>
+<p><!-- {disposable-twin-api-declarative-api-toc} --></p>
+
+<p>Every twin is based on a schema which comes in form of a <code>Disposable::Twin</code> class.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  property :title
+
+  collection :songs do
+    property :name
+    property :index
+  end
+
+  property :artist do
+    property :full_name
+  end
+end
+</code></pre>
+
+<p>The self-explaining DSL known from many Trailblazer gems allows to define flat or nested twins.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-unnest">Unnest</h3>
+<p><!-- {disposable-twin-api-unnest-toc} --></p>
+
+<p>To expose a nested property on an outer level, use <code>::unnest</code>.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  property :artist do
+    property :email
+  end
+
+  unnest :email, from: :artist
+end
+</code></pre>
+
+<p>The <code>email</code> accessors will now be on top-level, hiding the nested structure to the outside world.</p>
+
+<pre><code>album = Album.find(1)
+twin  = AlbumTwin.new(album)
+
+twin.email #=&gt; "duran@duran.to"
+twin.email = "duran@duran.com"
+</code></pre>
+
+<p>When <code>sync</code>ing, only the nested structure will be considered.</p>
+
+<pre><code>twin.sync
+album.artist.email #=&gt; "duran@duran.com"
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-public-api">Public API</h3>
+<p><!-- {disposable-twin-api-public-api-toc} --></p>
+
+<p>The public twin API is unbelievably simple.</p>
+
+<ol>
+  <li><code>Twin::new</code> creates and populates the twin.</li>
+  <li><code>Twin#"reader"</code> returns the value or nested twin of the property.</li>
+  <li><code>Twin#"writer"=(v)</code> writes the value to the twin, not the model.</li>
+  <li><code>Twin#sync</code> writes all values to the model. Needs to be enabled explicity with <code>feature Sync</code>.</li>
+  <li><code>Twin#save</code> writes all values to the model, then calls <code>save</code> on configured models. Needs to be enabled explicity with <code>feature Save</code>.</li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-constructor">Constructor</h3>
+<p><!-- {disposable-twin-api-constructor-toc} --></p>
+
+<p>Twins get populated from the decorated models.</p>
+
+<pre><code class="language-ruby">Song   = Struct.new(:name, :index)
+Artist = Struct.new(:full_name)
+Album  = Struct.new(:title, :songs, :artist)
+</code></pre>
+
+<p>You need to pass model and the facultative options to the twin constructor.</p>
+
+<pre><code class="language-ruby">album = Album.new("Nice Try")
+twin  = AlbumTwin.new(album, playable?: current_user.can?(:play))
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-readers">Readers</h3>
+<p><!-- {disposable-twin-api-readers-toc} --></p>
+
+<p>This will create a composition object of the actual model and the hash.</p>
+
+<pre><code class="language-ruby">twin.title     #=&gt; "Nice Try"
+twin.playable? #=&gt; true
+</code></pre>
+
+<p>You can also override <code>property</code> values in the constructor:</p>
+
+<pre><code class="language-ruby">twin = AlbumTwin.new(album, title: "Plasticash")
+twin.title #=&gt; "Plasticash"
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-writers">Writers</h3>
+<p><!-- {disposable-twin-api-writers-toc} --></p>
+
+<p>Writers change values on the twin and are <em>not</em> propagated to the model.</p>
+
+<pre><code class="language-ruby">twin.title = "Skamobile"
+twin.title  #=&gt; "Skamobile"
+album.title #=&gt; "Nice Try"
+</code></pre>
+
+<p>Writers on nested twins will “twin” the value.</p>
+
+<pre><code class="language-ruby">twin.songs #=&gt; []
+twin.songs &lt;&lt; Song.new("Adondo", 1)
+twin.songs  #=&gt; [&lt;Twin::Song name="Adondo" index=1 model=&lt;Song ..&gt;&gt;]
+album.songs #=&gt; []
+</code></pre>
+
+<p>The added twin is <em>not</em> passed to the model. Note that the nested song is a twin, not the model itself.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-sync">Sync</h3>
+<p><!-- {disposable-twin-api-sync-toc} --></p>
+
+<p>To write twin data back to the models, use <code>sync</code>. You have to include <code>Sync</code>.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  feature Sync
+  #..
+end
+</code></pre>
+
+<p>Given the above state change on the twin, here is what happens when calling <code>#sync</code>.</p>
+
+<pre><code class="language-ruby">album.title  #=&gt; "Nice Try"
+album.songs #=&gt; []
+
+twin.sync
+
+album.title  #=&gt; "Skamobile"
+album.songs #=&gt; [&lt;Song name="Adondo" index=1&gt;]
+</code></pre>
+
+<p><code>#sync</code> writes all configured attributes back to the models using public setters such as <code>album.name=</code> or <code>album.songs=</code>. This works recursively and will sync the entire object graph.</p>
+
+<div class="callout warning">
+  <p>
+    Note that <code>sync</code> might unexpectedly trigger saving of the model. Some persistence layers, for instance ActiveRecord, can't deal with <code>collection= []</code> and instantly persist that.
+  </p>
+</div>
+
+<h4 id="sync-with-block">Sync with Block</h4>
+
+<p>You may implement your syncing manually by passing a block to <code>sync</code>. The block argument is a nested hash of property/value pairs.</p>
+
+<pre><code class="language-ruby">twin.sync do |hash|
+  hash #=&gt; {
+  #  "title"     =&gt; "Skamobile",
+  #  "playable?" =&gt; true,
+  #  "songs"     =&gt; [{ "name"=&gt;"Adondo", ..}],
+  #  "composer"  =&gt; nil
+  # }
+end
+</code></pre>
+
+<p>Invoking <code>sync</code> with a block will <em>not</em> write anything to the models. Note that <code>nil</code> values are included into the hash, too (0.4.0).</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-save">Save</h3>
+<p><!-- {disposable-twin-api-save-toc} --></p>
+
+<p>Calling <code>#save</code> will do <code>sync</code>, then call <code>save</code> on all nested models. This implies that the models need to implement <code>#save</code>. <code>save</code> is unavailable by default; you have to explicitly include it with <code>feature Save</code>:</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; DispoableTwin
+  feature Sync
+  feature Save
+
+	property :title
+
+  collection :songs do
+    property :name
+    property :index
+  end
+end
+
+album = Album.find(1)
+twin  = AlbumTwin.new(album)
+twin.save
+#=&gt; syncs data back to the models, then calls:
+#=&gt;   album.save
+#=&gt;   album.songs.each { |song| song.save }
+
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-nested-twin">Nested Twin</h3>
+<p><!-- {disposable-twin-api-nested-twin-toc} --></p>
+
+<p>Nested objects can be declared with an inline twin.</p>
+
+<pre><code class="language-ruby">property :artist do
+  property :full_name
+end
+</code></pre>
+
+<p>The setter will automatically “twin” the model.</p>
+
+<pre><code class="language-ruby">twin.artist = Artist.new
+twin.artist #=&gt; &lt;Twin::Artist model=&lt;Artist ..&gt;&gt;
+</code></pre>
+
+<p>You can also specify nested objects with an explicit class.</p>
+
+<pre><code class="language-ruby">property :artist, twin: TwinArtist
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-features">Features</h3>
+<p><!-- {disposable-twin-api-features-toc} --></p>
+
+<p>You can simply <code>include</code> feature modules into twins. If you want a feature to be included into all inline twins of your schema, use <code>::feature</code>.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Coercion
+
+  property :artist do
+    # this will now include Coercion, too.
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-coercion">Coercion</h3>
+<p><!-- {disposable-twin-api-coercion-toc} --></p>
+
+<p>Twins can use <a href="https://github.com/dry-rb/dry-types">dry-types</a> coercion. This will override the setter in your twin, coerce the incoming value, and call the original setter. <em>Nothing more</em> will happen.</p>
+
+<p>Disposable already defines a module <code>Disposable::Twin::Coercion::Types</code> with all the Dry::Types built-in types. So you can use any of the <a href="https://dry-rb.org/gems/dry-types/1.2/built-in-types/">documented types</a>.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Coercion
+
+  property :id, type: Types::Form::Int
+</code></pre>
+
+<p>The <code>:type</code> option defines the coercion type. You may include <code>Setup::SkipSetter</code>, too, as otherwise the coercion will happen at initialization time and in the setter.</p>
+
+<pre><code class="language-ruby">twin.id = "1"
+twin.id #=&gt; 1
+</code></pre>
+
+<p>Again, coercion only happens in the setter.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-nilify">Nilify</h3>
+<p><!-- {disposable-twin-api-nilify-toc} --></p>
+
+<p>Coercion also supports the conversion of blank strings (<code>""</code>) into <code>nil</code>. This is known as <em>nilify</em> and provided via the <code>:nilify</code> option.</p>
+
+<pre><code>property :id, type: Types::Form::Int, nilify: true
+</code></pre>
+
+<p>This will result in the following behavior.</p>
+
+<pre><code>twin.id = ""
+twin.id #=&gt; nil
+</code></pre>
+
+<p>Note that you can use <code>:nilify</code> without specifying a <code>:type</code>.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Nilify has been deprecated for dry-v &gt;= 1.x</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-defaults">Defaults</h3>
+<p><!-- {disposable-twin-api-defaults-toc} --></p>
+
+<p>Default values can be set via <code>:default</code>.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Default
+
+  property :title, default: "The Greatest Songs Ever Written"
+  property :composer, default: Composer.new do
+    property :name, default: -&gt; { "Object-#{id}" }
+  end
+end
+</code></pre>
+
+<p>Default value is applied when the model’s getter returns <code>nil</code> when <em>initializing</em> the twin.</p>
+
+<p>Note that <code>:default</code> also works with <code>:virtual</code> and <code>readable: false</code>. <code>:default</code> can also be a lambda which is then executed in twin context.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-collections">Collections</h3>
+<p><!-- {disposable-twin-api-collections-toc} --></p>
+
+<p>Collections can be defined analogue to <code>property</code>. The exposed API is the <code>Array</code> API.</p>
+
+<ul>
+  <li><code>twin.songs = [..]</code> will override the existing value and “twin” every item.</li>
+  <li><code>twin.songs &lt;&lt; Song.new</code> will add and twin.</li>
+  <li><code>twin.insert(0, Song.new)</code> will insert at the specified position and twin.</li>
+</ul>
+
+<p>You can also delete, replace and move items.</p>
+
+<ul>
+  <li><code>twin.songs.delete( twin.songs[0] )</code></li>
+</ul>
+
+<p>None of these operations are propagated to the model.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-collection-semantics">Collection Semantics</h3>
+<p><!-- {disposable-twin-api-collection-semantics-toc} --></p>
+
+<p>In addition to the standard <code>Array</code> API the collection adds a handful of additional semantics.</p>
+
+<ul>
+  <li><code>songs=</code>, <code>songs&lt;&lt;</code> and <code>songs.insert</code> track twin via <code>#added</code>.</li>
+  <li><code>songs.delete</code> tracks via <code>#deleted</code>.</li>
+  <li><code>twin.destroy( twin.songs[0] )</code> deletes the twin and marks it for destruction in <code>#to_destroy</code>.</li>
+  <li><code>twin.songs.save</code> will call <code>destroy</code> on all models marked for destruction in <code>to_destroy</code>. Tracks destruction via <code>#destroyed</code>.</li>
+</ul>
+
+<p>Again, the model is left alone until you call <code>sync</code> or <code>save</code>.</p>
+
+<p><a name="jsonb"></a></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-property-hash">Property::Hash</h3>
+<p><!-- {disposable-twin-api-property-hash-toc} --></p>
+
+<p><span class="gem-version">0.3.2</span></p>
+
+<p>The <code>Property::Hash</code> module allows working with generic hash fields with any level of nesting. Instead of clumsy hash operations, you have Ruby objects.</p>
+
+<div class="panel">
+   This module is not limited to Postgres' JSONB and hstore column type, but may also interact with <a href="http://apidock.com/rails/v4.2.1/ActiveRecord/AttributeMethods/Serialization/ClassMethods/serialize">JSON or serialized-hash columns</a>.
+</div>
+
+<p>A serialized hash field must return a Ruby hash.</p>
+
+<pre><code>album = Album.find(1)
+album.payload #=&gt;
+  {
+    "title"=&gt; "A View To A Kill",
+    "band" =&gt; {
+      "name" =&gt; "Duran Duran"
+    }
+  }
+</code></pre>
+
+<p>Here, the <code>payload</code> field is such a serialized hash field.</p>
+
+<p>Letting the twin handle the hash field works via the <code>:field</code> option.</p>
+
+<pre><code>require "disposable/twin/property/hash"
+
+class Album::Twin &lt; Disposable::Twin
+  feature Sync
+  include Property::Hash
+
+  property :id # or whatever you need.
+  property :payload, field: :hash do
+    property :title
+    property :band do
+      property :name
+    end
+  end
+end
+</code></pre>
+
+<p>Note that you can have any level of nesting, and are free to use <code>collection</code>.</p>
+
+<p>You get fully object-oriented access to your properties.</p>
+
+<pre><code class="language-ruby">twin = Album::Twin.new(album)
+
+twin.payload.band.name #=&gt; "Duran Duran"
+</code></pre>
+
+<p>This works for writing, too.</p>
+
+<pre><code class="language-ruby">twin.payload.band.name = "James Bond"
+</code></pre>
+
+<p>After <code>sync</code>ing, the model’s hash field will be updated.</p>
+
+<pre><code>album.payload #=&gt;
+  {
+    "title"=&gt; "A View To A Kill",
+    "band" =&gt; {
+      "name" =&gt; "James Bond"
+    }
+  }
+</code></pre>
+
+<p>If you don’t know the field names, you can define a scalar <code>property</code>.</p>
+
+<pre><code>class Album::Twin &lt; Disposable::Twin
+  feature Sync
+  include Property::Hash
+
+  property :id # or whatever you need.
+  property :payload, field: :hash do
+    property :title
+    property :band # scalar!
+  end
+end
+</code></pre>
+
+<p>This will return the native hash.</p>
+
+<pre><code>twin.payload.band #=&gt; { "band" =&gt; { "name" =&gt; "Duran Duran" } }
+</code></pre>
+
+<p>The <code>Property::Hash</code> module also works great with <a href="#disposable-twin-api-unnest">::unnest</a> and is a fantastic way to get rid of migrations and data that doesn’t need a dedicated column.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-twin-collections">Twin Collections</h3>
+<p><!-- {disposable-twin-api-twin-collections-toc} --></p>
+
+<p>To twin a collection of models, you can use <code>::from_collection</code>.</p>
+
+<pre><code class="language-ruby">SongTwin.from_collection([song, song])
+</code></pre>
+
+<p>This will decorate every song instance using a fresh twin.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-renaming">Renaming</h3>
+<p><!-- {disposable-twin-api-renaming-toc} --></p>
+
+<p>The <code>Expose</code> module allows renaming properties.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Expose
+
+  property :song_title, from: :title
+</code></pre>
+
+<p>The public accessor is now <code>song_title</code> whereas the model’s accessor needs to be <code>title</code>.</p>
+
+<pre><code class="language-ruby">album = OpenStruct.new(title: "Run For Cover")
+AlbumTwin.new(album).song_title #=&gt; "Run For Cover"
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-composition">Composition</h3>
+<p><!-- {disposable-twin-api-composition-toc} --></p>
+
+<p>Compositions of objects can be mapped, too.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  include Composition
+
+  property :id,    on: :album
+  property :title, on: :album
+  property :songs, on: :cd
+  property :cd_id, on: :cd, from: :id
+</code></pre>
+
+<p>When initializing a composition, you have to pass a hash that contains the composees.</p>
+
+<pre><code class="language-ruby">AlbumTwin.new(album: album, cd: CD.find(1))
+</code></pre>
+
+<p>Note that renaming works here, too.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-overriding-getter-for-presentation">Overriding Getter for Presentation</h3>
+<p><!-- {disposable-twin-api-overriding-getter-for-presentation-toc} --></p>
+
+<p>You can override getters for presentation.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+    property :title
+
+    def title
+      super.upcase
+    end
+  end
+</code></pre>
+
+<p>Be careful, though. The getter normally is also called in <code>sync</code> when writing properties to the models.</p>
+
+<p>You can skip invocation of getters in <code>sync</code> and read values from <code>@fields</code> directly by including <code>Sync::SkipGetter</code>.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Sync
+  feature Sync::SkipGetter
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-manual-coercion">Manual Coercion</h3>
+<p><!-- {disposable-twin-api-manual-coercion-toc} --></p>
+
+<p>You can override setters for manual coercion.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+    property :title
+
+    def title=(v)
+      super(v.trim)
+    end
+  end
+</code></pre>
+
+<p>Be careful, though. The setter normally is also called in <code>setup</code> when copying properties from the models to the twin.</p>
+
+<p>Analogue to <code>SkipGetter</code>, include <code>Setup::SkipSetter</code> to write values directly to <code>@fields</code>.</p>
+
+<pre><code class="language-ruby">class AlbumTwin &lt; Disposable::Twin
+  feature Setup::SkipSetter
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-api-change-tracking">Change Tracking</h3>
+<p><!-- {disposable-twin-api-change-tracking-toc} --></p>
+
+<p>The <code>Changed</code> module will allow tracking of state changes in all properties, even nested structures.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  feature Changed
+</code></pre>
+
+<p>Now, consider the following operations.</p>
+
+<pre><code class="language-ruby">twin.name = "Skamobile"
+twin.songs &lt;&lt; Song.new("Skate", 2) # this adds second song.
+</code></pre>
+
+<p>This results in the following tracking results.</p>
+
+<pre><code class="language-ruby">twin.changed?             #=&gt; true
+twin.changed?(:name)      #=&gt; true
+twin.changed?(:playable?) #=&gt; false
+twin.songs.changed?       #=&gt; true
+twin.songs[0].changed?    #=&gt; false
+twin.songs[1].changed?    #=&gt; true
+</code></pre>
+
+<p>Assignments from the constructor are <em>not</em> tracked as changes.</p>
+
+<pre><code class="language-ruby">twin = AlbumTwin.new(album)
+twin.changed? #=&gt; false
+</code></pre>
+
+<p>When used with <code>Coercion</code>, note that first coercion happens, then the assignment, then the tracking logic.</p>
+
+<p>That will lead to the following assignment <em>not</em> being marked as change.</p>
+
+<pre><code class="language-ruby">twin.released #=&gt; true
+twin.released = 1
+twin.released #=&gt; true
+twin.changed?(:released) #=&gt; false
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="disposable-twin-default">Twin: Default</h2>
+<p><!-- {disposable-twin-default-toc} --></p>
+
+<p>Twins allow default values to be set on the twin. This is provided by the <code>Default</code> module.</p>
+
+<p>Default values can be set via <code>:default</code>.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  feature Default
+
+  property :title, default: "The Greatest Songs Ever Written"
+  property :composer, default: Composer.new do
+    property :name
+  end
+end
+</code></pre>
+
+<p>The default value is applied when the model’s getter returns <code>nil</code> in <code>Setup</code>.</p>
+
+<p>Note that this also works for nested properties.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-twin-default-struct-defaults">Struct Defaults</h3>
+<p><!-- {disposable-twin-default-struct-defaults-toc} --></p>
+
+<p>Defaults also work for <code>Struct</code>.</p>
+
+<pre><code>class AlbumTwin &lt; Disposable::Twin
+  feature Default
+
+  property :settings, default: Hash.new do
+    include Struct
+
+    property :enabled, default: "yes"
+    property :roles, default: Hash.new do
+      include Struct
+      property :admin, default: "maybe"
+    end
+  end
+end
+</code></pre>
+
+<p>You can now access nested hashes even if they were not present initially.</p>
+
+<pre><code>album = Album.new
+album.settings #=&gt; nil
+
+twin = AlbumTwin.new(album)
+twin.settings.enabled #=&gt; "yes"
+twin.settings.roles.admin #=&gt; "maybe"
+</code></pre>
+
+<p>Naturally, this will then write a valid hash back in <code>sync</code>.</p>
+
+<pre><code>twin.sync
+album.settings #=&gt; {"enabled"=&gt;"yes", "roles"=&gt;{"admin"=&gt;"maybe"}}
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="disposable-disposable-callback">Disposable: Callback</h2>
+<p><!-- {disposable-disposable-callback-toc} --></p>
+
+<p>Callbacks in Disposable implement the <a href="/gems/operation/1.1/callback.html">Imperative Callback</a> pattern.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-disposable-callback-declarative-api">Declarative API</h3>
+<p><!-- {disposable-disposable-callback-declarative-api-toc} --></p>
+
+<p>A <code>Callback::Group</code> allows defining nested callbacks.</p>
+
+<pre><code>class Group &lt; Disposable::Callback::Group
+  on_change :change!
+
+  collection :songs do
+    on_add :notify_album!
+  end
+
+  # on_change :rehash_name!, property: :title
+end
+</code></pre>
+
+<p>Per default, callback methods will be invoked on the respective group. In nested setups, this means you also need to nest the method implementation.</p>
+
+<pre><code>class Group &lt; Disposable::Callback::Group
+  on_change :change!
+
+  def change!(twin, options)
+    options[:string] &lt;&lt; "change!"
+  end
+
+  collection :songs do
+    on_add :notify_album!
+
+    def notify_album!(twin, options)
+      options[:string] &lt;&lt; "notify_album!"
+    end
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-disposable-callback-invocation">Invocation</h3>
+<p><!-- {disposable-disposable-callback-invocation-toc} --></p>
+
+<p>A group is invoked using <code>call</code>.</p>
+
+<pre><code class="language-ruby">Group.new(twin).()
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-disposable-callback-context">Context</h3>
+<p><!-- {disposable-disposable-callback-context-toc} --></p>
+
+<p>You can use an arbitrary context object to implement the callback methods.</p>
+
+<pre><code>class CallbackImplementation
+  def change!(twin, options)
+    options[:string] &lt;&lt; "change!"
+  end
+
+  def notify_album!(twin, options)
+    options[:string] &lt;&lt; "notify_album!"
+  end
+end
+</code></pre>
+
+<p>When invoking, specify it using the <code>:context</code> option.</p>
+
+<pre><code class="language-ruby">Group.new(twin).(context: CallbackImplementation.new)
+</code></pre>
+
+<p>This allows leaving the <code>Group</code> free of implementation, as a pure definition of events, only. Also, note that you don’t have any nesting with a context object, all methods are implemented on the same level in a simple object.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="disposable-disposable-callback-options">Options</h3>
+<p><!-- {disposable-disposable-callback-options-toc} --></p>
+
+<p>You may pass arbitrary options to all callback methods.</p>
+
+<pre><code class="language-ruby">Group.new(twin).(context: CallbackImplementation.new, string: "")
+</code></pre>
+
+<p>This allows injecting dependencies without global state.</p>
+
+<pre><code>class CallbackImplementation
+  def change!(twin, options)
+    options[:string] &lt;&lt; "change!"
+  end
+</code></pre>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="disposable-twin-api-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Twin API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#disposable-twin-api-declarative-api">
+          <i class="fas fa-arrow-right"></i>
+          Declarative API
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-unnest">
+          <i class="fas fa-arrow-right"></i>
+          Unnest
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-public-api">
+          <i class="fas fa-arrow-right"></i>
+          Public API
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-constructor">
+          <i class="fas fa-arrow-right"></i>
+          Constructor
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-readers">
+          <i class="fas fa-arrow-right"></i>
+          Readers
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-writers">
+          <i class="fas fa-arrow-right"></i>
+          Writers
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-sync">
+          <i class="fas fa-arrow-right"></i>
+          Sync
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-save">
+          <i class="fas fa-arrow-right"></i>
+          Save
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-nested-twin">
+          <i class="fas fa-arrow-right"></i>
+          Nested Twin
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-features">
+          <i class="fas fa-arrow-right"></i>
+          Features
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-coercion">
+          <i class="fas fa-arrow-right"></i>
+          Coercion
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-nilify">
+          <i class="fas fa-arrow-right"></i>
+          Nilify
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-defaults">
+          <i class="fas fa-arrow-right"></i>
+          Defaults
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-collections">
+          <i class="fas fa-arrow-right"></i>
+          Collections
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-collection-semantics">
+          <i class="fas fa-arrow-right"></i>
+          Collection Semantics
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-property-hash">
+          <i class="fas fa-arrow-right"></i>
+          Property::Hash
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-twin-collections">
+          <i class="fas fa-arrow-right"></i>
+          Twin Collections
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-renaming">
+          <i class="fas fa-arrow-right"></i>
+          Renaming
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-composition">
+          <i class="fas fa-arrow-right"></i>
+          Composition
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-overriding-getter-for-presentation">
+          <i class="fas fa-arrow-right"></i>
+          Overriding Getter for Presentation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-manual-coercion">
+          <i class="fas fa-arrow-right"></i>
+          Manual Coercion
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-twin-api-change-tracking">
+          <i class="fas fa-arrow-right"></i>
+          Change Tracking
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="disposable-twin-default-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Twin: Default</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#disposable-twin-default-struct-defaults">
+          <i class="fas fa-arrow-right"></i>
+          Struct Defaults
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="disposable-disposable-callback-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Disposable: Callback</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#disposable-disposable-callback-declarative-api">
+          <i class="fas fa-arrow-right"></i>
+          Declarative API
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-disposable-callback-invocation">
+          <i class="fas fa-arrow-right"></i>
+          Invocation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-disposable-callback-context">
+          <i class="fas fa-arrow-right"></i>
+          Context
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#disposable-disposable-callback-options">
+          <i class="fas fa-arrow-right"></i>
+          Options
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

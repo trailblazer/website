@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Tutorials</title>
+
+    
+    <script src="/vite/assets/documentation.18fc64a0.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/docSearch.60d7ae5d.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.7147cf7a.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/docSearch.999e4d80.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-69514939-1");
+    </script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="true"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="tutorials-collapse"
+      class="collapse show"
+      aria-labelledby="tutorials"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#tutorials-quick-start-01-operation-basics">
+              QUICK START 01 | Operation Basics
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#tutorials-quick-start-02-trailblazer-basics">
+              QUICK START 02 | Trailblazer Basics
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#tutorials-quick-start-03-rails-basics">
+              QUICK START 03 | Rails Basics
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#tutorials-railway-basics">
+              Railway Basics
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#tutorials-wiring-api">
+              Wiring API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#tutorials-external-tutorials">
+              External tutorials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Tutorials</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 27 Jun 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p><span class="divider"></span></p>
+
+<h2 id="tutorials-quick-start-01-operation-basics">QUICK START 01 | Operation Basics</h2>
+<p><!-- {tutorials-quick-start-01-operation-basics-toc} -->
+<span class="divider"></span></p>
+
+<h2 id="tutorials-quick-start-02-trailblazer-basics">QUICK START 02 | Trailblazer Basics</h2>
+<p><!-- {tutorials-quick-start-02-trailblazer-basics-toc} -->
+<span class="divider"></span></p>
+
+<h2 id="tutorials-quick-start-03-rails-basics">QUICK START 03 | Rails Basics</h2>
+<p><!-- {tutorials-quick-start-03-rails-basics-toc} --></p>
+
+<p>Now that we’ve learned <a href="01-operation-basics.html">what operations do</a> and how Trailblazer <a href="02-trailblazer-basics.html">provides convenient macro steps</a> to ease your life as a software engineer, it’s time to check out how to leverage operations and form objects in Rails.</p>
+
+<p>In this guide you will learn</p>
+
+<ul>
+  <li>where files live and what Trailblazer’s file structure in a Rails application looks like</li>
+  <li>how to build basic CRUD operations to implement a blog post lifecycle</li>
+  <li>why it’s a good idea to harness <code>trailblazer-rails</code> gem in your controller</li>
+</ul>
+
+<p>You will <strong>not</strong> learn</p>
+
+<ul>
+  <li>how to use Cells to replace Rails views with a better abstraction - in this guide will are using vanilla Rails views</li>
+  <li>how tests works (this is covered in the next guide)</li>
+</ul>
+
+<p><i class="fa fa-download" aria-hidden="true"></i> Where’s the <a href="https://github.com/trailblazer/guides/tree/operation-03"><strong>EXAMPLE CODE?</strong></a></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-setup">Setup</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-setup-toc} --></p>
+
+<p>We are going to create very primitive CRUD operations to create, update, show, and delete a <code>BlogPost</code> model. The operations use simple form objects provided by <code>reform</code> to validate data.</p>
+
+<p>Here’s the <code>Gemfile</code>.</p>
+
+<pre><code>source "https://rubygems.org"
+
+gem "rails", "~&gt; 6.1"
+gem "activerecord"
+gem "sqlite3"
+gem "puma"
+gem 'webpacker'
+
+gem "simple_form"
+gem "dry-validation"
+
+gem "trailblazer", "&gt;= 2.1.0"
+gem "trailblazer-rails"
+
+group :test do
+  gem "capybara"
+
+  gem "minitest-line"
+end
+</code></pre>
+
+<p>The <code>trailblazer</code> gem pulls all best-practice gems of the Trailblazer project, like the operation, macros, and reform bindings.</p>
+
+<p><code>traiblazer-rails</code> adds one single method <code>#run</code> to the <code>ApplicationController</code> which provides a short-cut to invoke operations in controller actions.</p>
+
+<p>For the rendering part, we require <code>simpleform</code> because it makes rendering forms (and erroring forms) super simple! The <code>dry-validation</code> gem integrates with Reform and allows defining validations for our form objects.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-file-structure">File Structure</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-file-structure-toc} --></p>
+
+<p>You can always discover a Trailblazer application in Rails by the <code>app/concepts</code> directory.</p>
+
+<pre><code>app/concepts/
+├── blog_post
+│   ├── contract
+│   │   ├── create.rb
+│   │   └── update.rb
+│   └── operation
+│       ├── create.rb
+│       ├── delete.rb
+│       ├── index.rb
+│       ├── show.rb
+│       └── update.rb
+</code></pre>
+
+<p>Trailblazer files are structured first by <em>concept</em>, then by <em>technology</em>, where the first represents the domain name like “blog post” and the latter an abstraction layer like <code>operation</code>, <code>contract</code> or <code>cell</code>.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Keep in mind that it is also possible to use nested concepts as in <code>app/concepts/admin/ui/post</code>.</p>
+</div>
+
+<p>In Trailblazer <strong>all file and class names are singular</strong> which means you don’t have to think about whether or not something should be plural (it is still possible to use plural names, e.g. <code>app/concepts/invoices/..</code>).</p>
+
+<p>Existing controllers, models and other code can peacefully coexist with TRB files - it’s a refactoring framework meant to be used in your seasoned application.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-presentation-operation">Presentation Operation</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-presentation-operation-toc} --></p>
+
+<p>We already covered the essential mechanics in chapter 02 and can jump directly into the first problem: how do we render a form to create a blog post?</p>
+
+<p>Since we’re going to use Reform for our forms, we need a <em>presentation</em> operation that creates an empty <code>BlogPost</code> and sets up a Reform object which can then be rendered in a Rails view. The new operation is named <code>BlogPost::Operation::Create::Present</code> and usually sits <em>inline</em> in the <code>Create</code> operation class (and file).</p>
+
+<pre><code># app/concepts/blog_post/operation/create.rb
+module BlogPost::Operation
+  class Create &lt; Trailblazer::Operation
+    # Only used to setup the form.
+    class Present &lt; Trailblazer::Operation
+      step Model(BlogPost, :new)
+      step Contract::Build(constant: BlogPost::Contract::Create)
+    end
+
+    step Subprocess(Present) # Here, we actually run the {Present} operation.
+    step Contract::Validate(key: :blog_post)
+    step Contract::Persist()
+    step :notify!
+
+    def notify!(ctx, model:, **)
+      ctx["result.notify"] = Rails.logger.info("New blog post #{model.title}.")
+    end
+  end
+end
+</code></pre>
+
+<p>The inlined <code>Present</code> operation is a convention to save you from creating another superfluous file. The operation’s sole purpose is to instantiate an empty model and construct a form object for it.</p>
+
+<pre><code># app/concepts/blog_post/operation/create.rb
+module BlogPost::Operation
+  class Create &lt; Trailblazer::Operation
+    # Only used to setup the form.
+    class Present &lt; Trailblazer::Operation
+      step Model(BlogPost, :new)
+      step Contract::Build(constant: BlogPost::Contract::Create)
+    end
+
+    # ...
+  end
+end
+</code></pre>
+
+<p>Those are all steps we’ve discussed in chapter 02. Create a new model, and use <code>Contract::Build()</code> to instantiate a Reform form that decorates the model. The form object will be stored in the <code>ctx["contract.default"]</code> variable. <a href="/2.1/docs/operation.html#operation-contract-build"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-contract-dry-validation-">Contract (Dry-validation)</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-contract-dry-validation--toc} --></p>
+
+<p>The interesting part in the <code>Present</code> operation is the <code>:constant</code> option: it references the <code>BlogPost::Contract::Create</code> class which defines the form object (or “contract”, we use that interchangeable) for a create context.</p>
+
+<pre><code># app/concepts/blog_post/contract/create.rb
+module BlogPost::Contract
+  class Create &lt; Reform::Form
+    include Dry
+
+    property :title
+    property :body
+
+    validation do
+      params do
+        required(:title).filled
+        required(:body).maybe(min_size?: 9)
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Including the <code>Dry</code> module activates Dry-validation. In the <code>validation</code> block you can use all mechanics provided by Dry-validation. <a href="https://dry-rb.org/gems/dry-validation/"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>While you could be validating your incoming data directly with a Dry-validation contract, using a Reform object, whatsoever, will allow rendering that form in a view.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>You are free to chose between ActiveModel validations or Dry-validation in Reform.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-rendering-forms">Rendering Forms</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-rendering-forms-toc} --></p>
+
+<p>We now have the form and operation in place and are ready to hook that into the <code>BlogPostsController</code>’s <code>new</code> action.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+class BlogPostsController &lt; ApplicationController
+  # ...
+  def new
+    run BlogPost::Operation::Create::Present do |ctx|
+
+      @form = ctx["contract.default"]
+      render
+    end
+  end
+</code></pre>
+
+<p>Instead of invoking the operation manually, we use the handy <code>#run</code> method provided by the <code>trailblazer-rails</code> gem. <a href="/2.1/docs/trailblazer.html#trailblazer-rails-run"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>The <code>run</code> helper yields the block we passed to it, but only in case of a successful operation run. The <code>ctx</code> block argument is the result object from the - successfully - run operation.</p>
+
+<p>This is really nothing more as so.</p>
+
+<pre><code>if ctx = BlogPost::Operation::Create::Present.(params: params)
+  @form = ctx["contract.default"]
+  render
+end
+</code></pre>
+
+<p>After running the operation, retrieving the contract instance, and storing it in <code>@form</code> it is now time to render a view with a form, that we can actually fill out and publish our blog post.</p>
+
+<p>We will use a vanilla Rails view.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Rendering Forms</li>
+    <li id="tutorials-quick-start-03-rails-basics-rendering-forms-forms-and-rails-views">Forms and Rails views</li>
+</ul>
+
+<p>The new view has nothing to do with Trailblazer, it’s pure Rails and hence resides in the good-ol’ <code>app/views</code> directory.</p>
+
+<pre><code>&lt;!-- app/views/blog_posts/new.html.erb --&gt;
+&lt;h1&gt;New Post&lt;/h1&gt;
+
+&lt;%= simple_form_for @form, as: :blog_post, url: blog_posts_path do |f| %&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.input :title, placeholder: "Title", label: false %&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.input :body, placeholder: "Say it out loud!", label: false %&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.submit "Create Post" %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>The <code>@form</code> object (which is a Reform instance) is passed into <code>simple_form_for</code>. Note that we do have to provide <code>:url</code> and <code>:as</code> manually since Reform - per default - is not completely compatible to Rails’ magic form helpers. <a href="/2.1/docs/reform.html#reform-rails-activemodel-compliance"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/03-new-form-layoutless.0cf0f81c.webp" /></p>
+
+<p>It looks a bit sad without any layout, but we’ll come to that shortly.</p>
+
+<p>Submitting this very form will POST data to <code>/blog_posts/</code>, which is the next controller action we are going to implement.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-create">Create</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-create-toc} --></p>
+
+<p>And again, we simply run an operation in the controller action. This time it’s <code>BlogPost::Operation::Create</code>.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def create
+  _ctx = run BlogPost::Operation::Create do |ctx|
+    return redirect_to blog_posts_path
+  end
+
+  @form = _ctx["contract.default"]
+  render :new
+end
+</code></pre>
+
+<p>Do you start seeing how controller actions map to operations? This is because in Rails apps, actions correspond to specific application functions (“create blog post”, “search user” or “add a comment”). Since the business logic is encapsulated in operations, you will always find controller actions simply dispatching to a particular operation.</p>
+
+<p>The <code>#run</code> helper executes the block when the operation was run successfully: we are redirected to the index page in case of creating a new blog post.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Please note that there’s a <code>return</code> in the block, causing the controller’s execution to stop. If you forget this, the rest of the <code>create</code> method will be executed, too.</p>
+</div>
+
+<p>If the operation failed, we re-render the form from <code>new</code>. The <code>#run</code> method also returns the result object from the ran operation, so we can use it outside the block.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/blog_post_new_error.6f17f38a.webp" /></p>
+
+<p>Let’s check out the <code>BlogPost::Operation::Create</code> operation in detail.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Create</li>
+    <li id="tutorials-quick-start-03-rails-basics-create-create-operation">Create operation</li>
+</ul>
+
+<p>While the <code>Present</code> operation we implemented earlier only creates an unpersisted model, the <code>BlogPost::Operation::Create</code> operation requires additional logic. It needs to process the submitted form data and physically persists the model in case of validity.</p>
+
+<p>To understand how the operation knows whether or not it was run successful, and how this entire workflow is implemented, we should have a look at its code.</p>
+
+<pre><code># app/concepts/blog_post/operation/create.rb
+module BlogPost::Operation
+  class Create &lt; Trailblazer::Operation
+    # Only used to setup the form.
+    class Present &lt; Trailblazer::Operation
+      step Model(BlogPost, :new)
+      step Contract::Build(constant: BlogPost::Contract::Create)
+    end
+
+    step Subprocess(Present) # Here, we actually run the {Present} operation.
+    step Contract::Validate(key: :blog_post)
+    step Contract::Persist()
+    step :notify!
+
+    def notify!(ctx, model:, **)
+      ctx["result.notify"] = Rails.logger.info("New blog post #{model.title}.")
+    end
+  end
+end
+</code></pre>
+
+<p>Now don’t get confused by the nested <code>Present</code> class in <code>Create</code>! This is only Ruby’s way of namespacing and doesn’t leak any logic or state into the <code>Create</code> operation.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Create</li>
+    <li id="tutorials-quick-start-03-rails-basics-create-nesting-operations">Nesting operations</li>
+</ul>
+
+<p>The actual <code>Create</code> class starts after the <code>Present</code> body, with the <code>step Subprocess()</code> statement. This is where we reuse the existing <code>Present</code> operation to create an fresh <code>BlogPost</code> model and form object for it.</p>
+
+<p>The nested <code>Present</code> operation will be run when the <code>Subprocess</code> step is hit.</p>
+
+<pre><code>step Subprocess(Present) # Here, we actually run the {Present} operation.
+</code></pre>
+
+<p>Without configuration, the nested operation receives the current <code>ctx</code> object. In addition to that, when it finishes running, all its variables are copied back onto the original <code>ctx</code> and hence allowing you to “see” variables like <code>ctx["contract.default"]</code> on the outside. <a href="/2.1/docs/activity.html#activity-variable-mapping"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>After building the model and contract is done, we run validations using the <code>Validate()</code> macro, persist the data to the model (in case the validation is happy) and send a notification after it in <code>#notify!</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Create</li>
+    <li id="tutorials-quick-start-03-rails-basics-create-macros">Macros</li>
+</ul>
+
+<p>In this operation we make use of a lot of macros. Those are handy short cuts for frequently used steps such as creating or finding a model, building a contract, validating <code>params</code> using a form object, and so on.</p>
+
+<ul>
+  <li><code>Contract::Validate()</code> uses the form it finds in <code>ctx["contract.default"]</code> and runs its validations against the <code>params</code> hash.</li>
+  <li><code>Contract::Persist()</code> pushes the validated form data to <code>ctx[:model]</code> and calls <code>save</code> on the latter. <a href="/2.1/docs/operation.html#operation-contract-persist"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></li>
+</ul>
+
+<p>We wrote enough code to have a fully working setup to create, validate and persist blog posts along with post-processing logic such as sending out notifications, which would usually happen in an ActiveRecord callback.</p>
+
+<p>While an invalid form submission will re-render the form with errors. Sane input data causes a redirect to <code>/blog_posts/</code>, aka the <em>index</em> action.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-index">Index</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-index-toc} --></p>
+
+<p>Again, the controller method <code>#index</code> simply dispatches to the <code>BlogPost::Operation::Index</code> operation and then renders a view.</p>
+
+<p>Yes, even data-aggregating functions (that do not alter application state) are embraced in operations.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def index
+  run BlogPost::Operation::Index do |ctx|
+    @model = ctx[:model]
+    @total = @model.count
+
+    render
+  end
+
+end
+</code></pre>
+
+<p>The collection of <code>BlogPost</code> models is exposed to the controller via <code>ctx[:model]</code>. Using the term <code>:model</code> is a convention and should not mean there’s only exactly one model here.</p>
+
+<p>The total amount of posts is computed in the controller. This is okay to do, but could also be calculated in the <code>Index</code> operation. We are going to refactor this in a later guide.</p>
+
+<p>The collecting <code>Index</code> operation is very straight-forward.</p>
+
+<pre><code>module BlogPost::Operation
+  class Index &lt; Trailblazer::Operation
+    step :find_all
+
+    def find_all(ctx, **)
+      ctx[:model] = ::BlogPost.all.reverse_order
+    end
+  end
+end
+</code></pre>
+
+<p>The retrieved list is stored in <code>ctx[:model]</code> and exposed to the public under that very key.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>This is the place where pagination, filtering, or even delegating to <code>Query</code> objects might happen. You are not limited to basic ActiveRecord usage here. We do <a href="https://github.com/trailblazer/trailblazer-finder/">offer <code>trailblazer-finder</code></a> but it’s still under development.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Index</li>
+    <li id="tutorials-quick-start-03-rails-basics-index-rails-view">Rails View</li>
+</ul>
+
+<p>After retrieving the collection of <code>BlogPost</code>s, the controller view <code>index.html.erb</code> is rendered.</p>
+
+<pre><code># app/views/blog_posts/index.html.erb
+&lt;div class="header"&gt;
+  Total: &lt;%= @total %&gt;
+&lt;/div&gt;
+
+&lt;%= @model.each do |blog_post| %&gt;
+  &lt;h2&gt;
+    &lt;%= blog_post.title %&gt;
+  &lt;/h2&gt;
+
+  &lt;div class="created_at"&gt;
+    Posted at &lt;%= blog_post.created_at %&gt;
+  &lt;/div&gt;
+
+  &lt;div class="body"&gt;
+    &lt;%= blog_post.body %&gt;
+
+  &lt;/div&gt;
+  &lt;p&gt;
+   &lt;%= link_to "Edit", edit_blog_post_path(blog_post.id) %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+   &lt;%= button_to "Delete", blog_post_path(blog_post.id), method: :delete %&gt;
+  &lt;/p&gt;
+
+  &lt;hr&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>We simply iterate of each row in <code>@model</code> and display the post’s attributes and links to update and delete it.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/blog_post_index.c066ae12.webp" /></p>
+
+<p>When rendered in the browser, you can see a breathtaking list of posts with buttons and links.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-edit">Edit</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-edit-toc} --></p>
+
+<p>Clicking “Edit” brings you to the editing form that is rendered by the <code>BlogPostsController#edit</code> action. Keep in mind that the requested URL for this action is something like <code>/blog_posts/edit/1</code> with an ID in it!</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def edit
+  run BlogPost::Operation::Update::Present do |ctx|
+    @form   = ctx["contract.default"]
+    @title  = "Editing #{ctx[:model].title}"
+
+    render
+  end
+
+end
+</code></pre>
+
+<p>Just like with <code>Create</code>, we use a “present operation” name <code>BlogPost::Operation::Update::Present</code> to prepare the form object, the latter being assigned to <code>@form</code> in the controller.</p>
+
+<p>Note that we also compute a <code>@title</code> for the HTML form in the controller. As this is rendering-specific, it’s totally fine to do so in the controller. Check out, though, how we use <code>ctx[:model]</code> to access the currently edited <code>BlogPost</code> instance and grab its title.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Edit</li>
+    <li id="tutorials-quick-start-03-rails-basics-edit-operation">Operation</li>
+</ul>
+
+<p>The <code>Update::Present</code> operation has to retrieve the matching model by somehow reading the ID from the URL, and then find the <code>BlogPost</code> row. Here is the operation.</p>
+
+<pre><code># app/concepts/blog_post/operation/update.rb
+module BlogPost::Operation
+  class Update &lt; Trailblazer::Operation
+    class Present &lt; Trailblazer::Operation
+      step Model(BlogPost, :find_by)
+      step Contract::Build(constant: BlogPost::Contract::Create)
+    end
+
+    # ...
+  end
+end
+</code></pre>
+
+<p>Again, the <code>Present</code> operation (that finds the post model) is inlined.</p>
+
+<p>The <code>Model()</code> macro here is configured to use <code>find_by</code> to retrieve a particular model. It does so by looking into <code>params[:id]</code>, here’s what <code>Model()</code> does, in pseudo-code.</p>
+
+<pre><code>ctx[:model] = BlogPost.find_by(ctx[:params][:id])
+</code></pre>
+
+<p>You might be wondering, where is <code>ctx[:params]</code> coming from all at sudden? It is always passed automatically into the operation call when using <code>#run</code> in the controller action. That makes <code>ctx[:params]</code> accessible throughout the operation without being a global. <a href="/2.1/docs/trailblazer.html#trailblazer-rails-run"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>Since we don’t need differing validations when editing, we reuse the <code>BlogPost::Contract::Create</code> contract we also used earlier. However, and this is one big advantage of this architecture, you <em>could</em> use different contracts for create, update, etc. without any need for <code>if</code>s as the forms are separate classes and not hard-wired into the model.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Edit</li>
+    <li id="tutorials-quick-start-03-rails-basics-edit-rails-view">Rails view</li>
+</ul>
+
+<p>The rendered view <code>edit.html.erb</code> is very similar to the create view.</p>
+
+<pre><code># app/views/blog_posts/edit.html.erb
+&lt;h1&gt;Editing "&lt;%= @model.title %&gt;"&lt;/h1&gt;
+
+&lt;%= simple_form_for @form, as: :blog_post, url: blog_post_path(@model.id), method: :patch do |f| %&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.input :title, placeholder: "Title", label: false %&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.input :body, placeholder: "Say it out loud!", label: false %&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+      &lt;%= f.submit "Create Post" %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>And as we’re still not using Reform’s ActiveModel magic we have to provide a <code>:url</code> as well as the <code>:method</code> option to SimpleForm in order to submit the form via <code>PATCH /blog_posts/:id</code>.</p>
+
+<p>Submitting the edit form will send us to the <code>#update</code> controller action. Do not forget, this form is sent to <code>/blog_posts/:id</code> - meaning we still do have the post’s ID in <code>params</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-update">Update</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-update-toc} --></p>
+
+<p>Here’s the controller action receiving the edited form.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def update
+  _ctx = run BlogPost::Operation::Update do |ctx|
+    flash[:notice] = "#{ctx[:model].title} has been saved"
+    return redirect_to blog_post_path(ctx[:model].id)
+  end
+
+  @form   = _ctx["contract.default"] # FIXME: redundant to #create!
+  @title  = "Editing #{_ctx[:model].title}"
+
+  render :edit
+end
+</code></pre>
+
+<p>When <code>BlogPost::Operation::Update</code> wasn’t happy with the input data, we render the editing form again, just as we did in <code>#edit</code>. There’s quite some redundancy going on here which we could get rid off using the Cells gem, or introducing methods for the controller. Another time.</p>
+
+<p>Nevertheless, if the operation ran successfully, a flash message is set and we’re redirected to the “show” action of the controller.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Update</li>
+    <li id="tutorials-quick-start-03-rails-basics-update-operation">Operation</li>
+</ul>
+
+<p>The work-horse of this use case is obviously the operation with its steps, which you can check out below.</p>
+
+<pre><code># app/concepts/blog_post/operation/update.rb
+module BlogPost::Operation
+  class Update &lt; Trailblazer::Operation
+    class Present &lt; Trailblazer::Operation
+      step Model(BlogPost, :find_by)
+      step Contract::Build(constant: BlogPost::Contract::Create)
+    end
+
+    step Subprocess(Present)
+    step Contract::Validate(key: :blog_post)
+    step Contract::Persist()
+  end
+end
+</code></pre>
+
+<p>We apply the same <code>Present</code> pattern that we did for <code>Create</code>, and after all, both operations look almost identical, except for the <code>Model()</code> macro usage.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>There are means and ways in Trailblazer to reduce this kind of complexity using polymorphism and composition - two things we will discuss in a following guide.</p>
+</div>
+
+<p>In case of a successful update we’re redirected to the “show” action that is supposed to neatly render one particular blog post.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-show">Show</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-show-toc} --></p>
+
+<p>The <code>#show</code> action in the controller is probably the most boring one so far. The only thing we shall not forget is that we do have the post’s ID stored in <code>params</code> since this action is triggered from a request like <code>GET /blog_posts/1</code>.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def show
+  run BlogPost::Operation::Show do |ctx|
+    @model = ctx[:model]
+    render
+  end
+end
+</code></pre>
+
+<p>The controller logic is pretty much what we already did with <code>Index</code>, which is running <code>BlogPost::Operation::Show</code>, find the model and assign <code>@model</code>, then render the view.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Show</li>
+    <li id="tutorials-quick-start-03-rails-basics-show-operation">Operation</li>
+</ul>
+
+<p>As you might’ve guessed, the operation class is pretty simple, too.</p>
+
+<pre><code># app/concepts/blog_post/operation/show.rb
+module BlogPost::Operation
+  class Show &lt; Trailblazer::Operation
+    step Model(BlogPost, :find_by)
+  end
+end
+</code></pre>
+
+<p>One lonely step uses the <code>Model()</code> macro to retrieve the displayed blog post with <code>.find_by</code>. A colorless, but functional view of a particular blog post is the reward for our hard work.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/03-show-layoutless.e2103134.webp" /></p>
+
+<p>We’re not gonna win a web design award for that but we’re here to engineer anyway!</p>
+
+<p>The last missing piece for our simple CRUD example is deleting: we want to be able to trash articles that no longer fit.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-delete">Delete</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-delete-toc} --></p>
+
+<p>You can do so by clicking the “Delete” link in the show view, which is sending us to the controller action <code>#destroy</code>. The triggered request here is <code>DELETE /blog_posts/1</code>, which implies we got the ID in <code>params</code>.</p>
+
+<pre><code># app/controllers/blog_posts_controller.rb
+def destroy
+  run BlogPost::Operation::Delete
+
+  flash[:notice] = "Post deleted"
+  redirect_to blog_posts_path
+end
+</code></pre>
+
+<p>In this action, we neither have to handle the case that “something went wrong” nor do we need the deleted model for the rendering layer. We don’t have to use <code>run</code> with a block! After deletion, we get redirected to the index view.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Delete</li>
+    <li id="tutorials-quick-start-03-rails-basics-delete-operation">Operation</li>
+</ul>
+
+<p>The operation has two simple steps.</p>
+
+<pre><code># app/concepts/blog_post/operation/delete.rb
+module BlogPost::Operation
+  class Delete &lt; Trailblazer::Operation
+    step Model(BlogPost, :find_by)
+    step :delete
+
+    def delete(ctx, model:, **)
+      model.destroy
+    end
+  end
+end
+</code></pre>
+
+<p>The <code>Model</code> macro helps finding the blog post instance, and a custom <code>delete</code> step actually deletes the model using ActiveRecord’s <code>#destroy</code> method. Your ingenuis work is lost and gone forever.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-quick-start-03-rails-basics-summary">Summary</h3>
+<p><!-- {tutorials-quick-start-03-rails-basics-summary-toc} --></p>
+
+<p>Building a simple CRUD component with Trailblazer might feel a bit strange and over-engineered at first sight. Operations, steps, macros and form objects are something very different to what the Rails Way™ promised. Trust us, though, the steep but short learning curve is worth the way. Teams of any size relying on the Trailblazer architecture continuously report about their benefits of consistency, extendability and structure.</p>
+
+<p>Nevertheless, we haven’t written a single line of tests. There is no excuse for that, given that Trailblazer’s test style is much easier to understand than Rails’ fragmented testing world. Check out the [testing QUICK START] to make your app bullet-proof.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="tutorials-railway-basics">Railway Basics</h2>
+<p><!-- {tutorials-railway-basics-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/tutorial/blob/master/ruby/test/basics_test.rb">Code is here 🕮</a></p>
+
+<p>Every modern application is composed of many different domain processes that need to be modeled, implemented, and maintained. Whether this is the life-cycle of a <code>&lt;user&gt;</code> entity or just a sign-up function, it has to be defined and coded somewhere.</p>
+
+<p>Trailblazer strikes when it comes to organizing business code.</p>
+
+<p>If you’re interested in learning how to organize code, where to use Trailblazer’s activities and how to model basic workflows using the <code>Railway</code> pattern, this tutorial is for you.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Already know how <code>step</code>, <code>pass</code> and <code>fail</code> work? Keyword arguments from <code>ctx</code> and <code>#wtf?</code> bore you? Jump right to [the next chapter]!</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-activities">Activities</h3>
+<p><!-- {tutorials-railway-basics-activities-toc} --></p>
+
+<p>Trailblazer is an architectural pattern that comes with Ruby libraries to implement that pattern. While there are many interesting layers such as Cells for the view, or Reform for validations and forms, the Activity component is the heart of TRB.</p>
+
+<p>An activity is a high-level concept to structure code flow and provide interfaces so you don’t have to think about them. Instead of one big code pile, activities will gently enforce a clean, standardized way for organizing code.</p>
+
+<p>Activities are a necessary abstraction on top of Ruby. They help streamlining the control flow, and take away control code while providing you with an incredibly cool developer experience.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>You’re allowed to blame us for a terrible developer experience in Trailblazer 2.0. It’s been quite painful to find out which step caused an exception. However, don’t look back in anger! We’ve spent a lot of time on working out a beautiful way for both tracing and debugging Trailblazer activities in 2.1.</p>
+</div>
+
+<p>Activities can be used for any kind of logic and any level of complexity. Originally designed to “only” implement railways for CRUD logic, we now use activities in many parts of Trailblazer itself, from DSL options processing code, for pluggable, nested components of our applications, up to long-running processes, such as a user’s life-cycle, that is comprised of a dozen or more nested activities.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-an-oauth-signup">An Oauth Signup</h3>
+<p><!-- {tutorials-railway-basics-an-oauth-signup-toc} --></p>
+
+<p>In this tutorial, we implement a sign-up function for a Ruby application. The first version only allows signups (and signing-in existing users) via Github Oauth. Don’t worry, we are not going to discuss the bits ‘n bytes of Oauth.</p>
+
+<p>It’s a scenario directly taken from the Trailblazer PRO application which allows us to discuss a bunch of important concepts in Trailblazer.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/github-signin-v1.c2b08b8f.webp" /></p>
+
+<p>When clicking the Github link, the beautiful [omniauth gem] performs its magic. It handles all Oauth details and will - in case of a successful authorization via Github -  send a hash of login data shared by Github to a pre-configured controller actions of our app.</p>
+
+<p>All we need to do now is receive the data sent from Github, decide whether this is a new user and save their data, or an existing user, and then sign them into our application.</p>
+
+<p>At this stage, routing, controllers, etc is irrelevant. Just imagine a Rails controller action, a Sinatra router or a Hanami action as follows.</p>
+
+<pre><code>def auth
+  # at this stage, we're already authenticated, it's a valid Github user!
+  result = Signup.call(params: params)
+end
+</code></pre>
+
+<p>The Trailblazer architectural style encapsulates all business logic for one function in one operation*. In other words: the controllers usually contain only routing and rendering code and dispatch instantly to a particular operation/activity class.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>*An Operation is always an activity.</p>
+</div>
+
+<p>Whatever data from the outside is needed in the activity has to be passed explicitely into the activity’s <code>call</code> method.</p>
+
+<p>In our case, the sign-up is handled in the <code>Signup</code> activity. We pass the <code>params</code> hash into it, which roughly looks like this.</p>
+
+<pre><code>{
+ :provider=&gt;"github",
+ :info=&gt;{
+  :nickname=&gt;"apotonick",
+  :email=&gt;"apotonick@gmail.com",
+  :name=&gt;"Nick Sutterer"
+ }
+}
+</code></pre>
+
+<p>So, let’s review: Omniauth handles Oauth authorization for us. Regardless of the implementation, this is usually automagic for the developer. The gist of it is: Omniauth sends a hash of data to our <code>auth</code> controller action once it’s done. Now, it’s the <code>Signup</code>-activity’s duty to process that data. We’re going to implement just that now. Are you ready?</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-a-railway-activity">A Railway activity</h3>
+<p><!-- {tutorials-railway-basics-a-railway-activity-toc} --></p>
+
+<p>In the first throw of this requirement, we need to parse the omniauth hash, make sure it’s in a format we understand, find out what user is signing in, log that successful sign-in somewhere, and finally communicate to the outer world that the signin was successful.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>We do ignore new sign-ups at this stage and only allow <em>existing</em> users to sign in.</p>
+</div>
+
+<p>A diagram resembling this chain of tasks would look like the following fragment of a BPMN diagram.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-1.a66127b5.webp" /></p>
+
+<p>Now let’s drop our optimism for a second, and face cold reality. Things could go wrong in two places here. First, the validation could fail if Github sends us data we don’t understand. Second, we might not know the user signing in, meaning the “find user” logic has to error-out, leading us to a diagram like this.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-2.675e77f0.webp" /></p>
+
+<p>If anything here did fail in “validate omniauth”, all other steps in the chain would be skipped as the flow would follow the path leading to the <code>failure</code> terminus.</p>
+
+<p>Assuming the validation was successful, if the user provided by Github wasn’t found in our system (in the “find user” box), the remaining logging step would be skipped, ending up in that mysterious <code>failure</code> circle, again.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-3.aec69cc4.webp" /></p>
+
+<p>Intuitively, you understand the flow just by looking at the BPMN diagram. And, heck, we haven’t even discussed BPMN or any terminology, yet!</p>
+
+<p>Modelling the flow of a program where chunks of code are executed in a certain order, with a successful “happy path” and an “error-out” path is called a <em>Railway</em>. It popped up in functional languages [a long time ago].</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-terminology">Terminology</h3>
+<p><!-- {tutorials-railway-basics-terminology-toc} --></p>
+
+<p>Before we continue, let us quickly clarify some lingo when working with Trailblazer, BPMN, and activities.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/voc.96c4b0e7.webp" /></p>
+
+<p>Be honest, you’re loving my handwriting already, aren’t you?</p>
+
+<ul>
+  <li>The <strong>start event</strong> is where the flow starts. It’s a simple circle.</li>
+  <li>Every path or flow stops in a <strong>terminus event</strong>. Those are the filled circles. Often, we call them <strong>end event</strong>, too!</li>
+  <li>Your actual logic happens in <strong>tasks</strong>, the labeled boxes. A task may be any callable Ruby object, an instance method or even another activity.</li>
+  <li>Every task has at least one <strong>output</strong> which identifies an outgoing connection to the next element. An output in Trailblazer keeps a <strong>semantic</strong> and is triggered by exactly one <strong>signal</strong> from its task. A task is often called <strong>step</strong>.</li>
+  <li>The <strong>“happy path”</strong> or “success track” is the straight path from start to the terminus named <code>success</code>.</li>
+  <li>The <strong>“error path”</strong> or “failure track” is the lower path going the the <code>failure</code> terminus.</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-implementation">Implementation</h3>
+<p><!-- {tutorials-railway-basics-implementation-toc} --></p>
+
+<p>Our present job is to implement those four consecutively invoked steps.</p>
+
+<p>While you could program this little piece of logic and flow yourself using a bunch of Ruby methods along with a considerable amount of <code>if</code>s and <code>else</code>s, and maybe <code>elsif</code>, if you’re feeling fancy, a Trailblazer activity provides you a simple API for creating such flow without having to write <strong>and maintain</strong> any control code. It is an abstraction.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  step :find_user
+  pass :log
+end
+</code></pre>
+
+<p>Six lines of code create an executable object that, when invoked, will run your code in the order as visible in our diagram, plus the ability to “error out” when something goes wrong.</p>
+
+<p>We’ll get to explaining what such a step looks like, or how its code chunk can “go wrong”. Relax.</p>
+
+<p>Please do note that we’re using two different DSL methods: The <code>#step</code> method will allow “erroring out”, its friend <code>#pass</code> enforces successful outcomes, only. More on that later.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Implementation</li>
+    <li id="tutorials-railway-basics-implementation-invocation">Invocation</li>
+</ul>
+
+<p>In order to invoke, or <em>run</em>, this activity we just created, there is one recommended public way: its <code>invoke</code> method. You might remember that from the controller example above.</p>
+
+<pre><code>ctx = {params: {provider: "Nickhub"}}
+
+signal, (ctx, _) = Signup.invoke([ctx], {})
+</code></pre>
+
+<p>Ignore the clumsy-looking <code>invoke</code> API here for a minute. This is what sets off the execution of the activity. From start to end all boxes on the taken path are executed. Each step receives the return value of its predecessor. The return value decides about what next step is called.</p>
+
+<p>Your excitement when running this code the first time will be smashed to pieces in an instant with the following exception.</p>
+
+<pre><code>NameError: undefined method `validate' for class `Signup'
+</code></pre>
+
+<p>Obviously, the implementation of the actual tasks is still due. It’s a good time to do that now.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Implementation</li>
+    <li id="tutorials-railway-basics-implementation-what-are-tasks-">What are Tasks?</li>
+</ul>
+
+<p>Technically, a task in an activity can be any callable Ruby object. There are [numerous ways to define tasks]. What we will be using at this stage of the tutorial is the <code>:instance_method</code>-style. This means you define instance methods in the activity class and pass their <code>:method_name</code>s to the DSL <code>step</code> method.</p>
+
+<p>Let’s go through each method step by step (no pun intended!). Here’s <code>#validate</code> implemented in pure Ruby.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  step :find_user
+  pass :log
+
+  # Validate the incoming Github data.
+  # Yes, we could and should use Reform or Dry-validation here.
+  def validate(ctx, params:, **)
+    is_valid = params.is_a?(Hash) &amp;&amp; params["info"].is_a?(Hash) &amp;&amp; params["info"]["email"]
+
+    is_valid # return value matters!
+  end
+
+  # ...
+end
+</code></pre>
+
+<p>Task methods always expose the so called [task interface] (unless configured otherwise), meaning both its arguments as well as the return value do matter!</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Implementation</li>
+    <li id="tutorials-railway-basics-implementation-parameter-signature">Parameter Signature</li>
+</ul>
+
+<p>Now, have a look at <code>#validate</code>. The first argument is the <code>ctx</code> data structure. This is whatever you passed into the activity invocation. Use the <code>ctx</code> object to access string keys and to write state to.</p>
+
+<pre><code>def validate(ctx, params:, **)
+  raise params.inspect
+end
+</code></pre>
+
+<p>Every symbol key in <code>ctx</code> is automatically available as a keyword argument, such as <code>params:</code> above. Using a hard-core <code>raise</code> you can quickly find out what’s this about.</p>
+
+<p>To hit the <code>raise</code>, invoke the activity.</p>
+
+<pre><code>ctx = {params: {provider: "Nickhub"}}
+
+signal, (ctx, _) = Signup.invoke([ctx], {})
+
+#=&gt; RuntimeError: {:provider=&gt;"Nickhub"}
+</code></pre>
+
+<p>As an avid engineer, you instantly realize the <code>params:</code> keyword argument in <code>#validate</code> represents whatever was passed under that key in the <code>ctx</code> object. So simple!</p>
+
+<p>Keyword arguments are very encouraged in Trailblazer as they’re elegant and have a bunch of beautiful features.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Keyword arguments allow to define particular parameters as required. Should the parameter be missing, they also provide a way to set a default value. This is all done <a href="https://thoughtbot.com/blog/ruby-2-keyword-arguments">with pure Ruby</a>.</p>
+</div>
+
+<p>Always remember that you don’t have to use keyword arguments - you could simply go the longer, less elegant way through <code>ctx</code>.</p>
+
+<pre><code>def validate(ctx, **)
+  params = ctx[:params] # no keyword argument used!
+  raise params.inspect
+end
+</code></pre>
+
+<p>The outcome is identical to the above.</p>
+
+<p>Now that we understand what goes <em>into</em> a task, let’s learn about what goes <em>out</em>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Implementation</li>
+    <li id="tutorials-railway-basics-implementation-return-value">Return Value</li>
+</ul>
+
+<p>When using the task interface, the return value of a method is important!</p>
+
+<pre><code>def validate(ctx, params:, **)
+  is_valid = params.is_a?(Hash) &amp;&amp; params["info"].is_a?(Hash) &amp;&amp; params["info"]["email"]
+
+  is_valid # return value matters!
+end
+</code></pre>
+
+<p>In <code>#validate</code>, our highly sophisticated validation will return either <code>true</code> or <code>false</code>, causing the activity to proceed to the next step, or “error out”.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/truefalse.0d64221a.webp" /></p>
+
+<p>In other words: different return values will trigger different outputs of the task. The flow will continue on the outgoing connection of the output.</p>
+
+<p>Two things.</p>
+
+<ul>
+  <li>Yes, we are going to use a real validation library later, Reform or Dry-validation, or both.</li>
+  <li>And, yes, you may return other <em>signals</em> from a task and thus have more than two outgoing connections. We’ll elaborate on that [in part II]!</li>
+</ul>
+
+<p>We still haven’t put all pieces into place in the activity. Some task methods are missing.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-pass">Pass</h3>
+<p><!-- {tutorials-railway-basics-pass-toc} --></p>
+
+<p>May I bring your attention to the second step <code>extract_omniauth</code>? In this step, we extract relevant data from the Oauth data structure for further processing.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  step :find_user
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>Since the structure from Github is already validated, we can safely assume there’s no “erroring out” necessary here. The <code>pass</code> DSL method does ignore the actual return value and will always return <code>true</code>.</p>
+
+<pre><code>def extract_omniauth(ctx, params:, **)
+  ctx[:email] = params["info"]["email"]
+end
+</code></pre>
+
+<p>Given Omniauth &amp; Github are providing a proper data structure, we now have the email of the signing-in user directly on the <code>ctx</code> object - simply by writing to it. You can use this new value <code>email:</code> in following methods as a keyword argument!</p>
+
+<div class="bd-callout bd-callout-info">
+<p>A key/value pair written to <code>ctx</code>, e.g. by doing <code>ctx[:email] = "yogi@trb.to"</code> is sometimes called a <em>variable</em>. So, when we’re talking about a variable, it’s refering to either a key and its value in <code>ctx</code>, or to a keyword argument (which is one and the same).</p>
+</div>
+
+<p>Again, when using a task method with <code>pass</code>, the returned value of your logic is irrelevant, it will always stay on the “happy path”.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-active-record-logging-">Active Record? Logging?</h3>
+<p><!-- {tutorials-railway-basics-active-record-logging--toc} --></p>
+
+<p>Still some work to do! After validating and extracting the email address from the structure provided by Github, we can finally check if this user is already existing in our system, or needs to be added. The <code>#find_user</code> method is our next step.</p>
+
+<pre><code>def find_user(ctx, email:, **)
+  user = User.find_by(email: email)
+
+  ctx[:user] = user
+end
+</code></pre>
+
+<p>In this code chunk we use ActiveRecord* and its <code>#find_by</code> method to either retrieve an existing user model, or <code>nil</code>. Check out how we can use the variable <code>email</code> as a keyword argument, being computed and provided by (one of) the previous step(s).</p>
+
+<p>As this step is added to the activity via <code>step</code>, the return value is crucial!</p>
+
+<div class="bd-callout bd-callout-info">
+<p>*The fact we’re using ActiveRecord (or something looking like it) doesn’t mean Trailblazer only works with Rails! Most people are familiar with its API, so we chose to use “ActiveRecord” in this tutorial.</p>
+</div>
+
+<p>The activity - at this stage - deviates to the error track when there’s no user and skips all remaining logic. This is, of course, because the last statement in <code>#find_user</code> will evaluate to <code>nil</code> in case of a new signup, as this email address is yet unknown. A <em>falsey</em> return value means “error track”.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/find_user.f29ca1c4.webp" /></p>
+
+<p>To finish up the activity v1, we add an empty logging step. You probably already got the hang of it, anyway.</p>
+
+<pre><code>def log(ctx, **)
+  # run some logging here
+end
+</code></pre>
+
+<p>Our <code>Signup</code> activity is now ready to be executed, even though it doesn’t cover all business requirements, yet, and is unfinished.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-invocation-for-real-">Invocation, for real!</h3>
+<p><!-- {tutorials-railway-basics-invocation-for-real--toc} --></p>
+
+<p>First, let’s learn about a failing case where Github sends us data
+of a user we don’t have in our system, yet.</p>
+
+<p>The following snippet shows you a realistic data structure coming from Github (given that I’m logged-in there, which… I currently am). The last line shows how the initial <code>ctx</code> is created.</p>
+
+<pre><code>data_from_github = {
+ "provider"=&gt;"github",
+ "info"=&gt;{
+  "nickname"=&gt;"apotonick",
+  "email"=&gt;"apotonick@gmail.com",
+  "name"=&gt;"Nick Sutterer"
+ }
+}
+
+ctx = {params: data_from_github}
+</code></pre>
+
+<p>Our “database” is initialized to contain no users, which should make the activity end up on the <code>failure</code> terminus.</p>
+
+<pre><code>User.init! # Empty users table.
+
+signal, (ctx, _) = Signup.invoke([ctx], {})
+
+puts signal     #=&gt; #&lt;Trailblazer::Activity::End semantic=:failure&gt;
+puts ctx[:user] #=&gt; nil
+</code></pre>
+
+<p>Admittedly, both the signature and the return values of <code>invoke</code> feel a bit clumsy. That’s becaus we’re currently working with the low-level interfaces.</p>
+
+<p>The returned <code>signal</code> is the last element in the activity that’s being executed. Visually, it’s usually represented by a circle. In our railway example, that would be either the <code>success</code> or the <code>failure</code> terminus event.</p>
+
+<p>Inspecting the <code>signal</code>, it looks as if we hit the <code>failure</code> terminus. Furthermore, peeking into <code>ctx</code>, the <code>:user</code> variable is unset, hinting that the path we took is the one visualized here.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-3.aec69cc4.webp" /></p>
+
+<p>To have a successful sign-up, the user must be present in our database. Here’s the invocation with the user already exising.</p>
+
+<pre><code>User.init!(User.new("apotonick@gmail.com"))
+
+signal, (ctx, _) = Signup.invoke([ctx], {})
+
+puts signal     #=&gt; #&lt;Trailblazer::Activity::End semantic=:success&gt;
+puts ctx[:user] #=&gt; #&lt;User email: "apotonick@gmail.com"&gt;
+</code></pre>
+
+<p>This time, the <code>signal</code> looks like we’re winning. Also, the user is set from the <code>#find_user</code> step, suggesting the following flow.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-4.14cb1538.webp" /></p>
+
+<p>The provided data from Github is sane, the user is found by their email, and we’re set to sign them in with a cookie (yet to be done).</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-error-handling">Error handling</h3>
+<p><!-- {tutorials-railway-basics-error-handling-toc} --></p>
+
+<p>For completeness, let’s quickly discuss how to place tasks on the error track. <code>#fail</code> allows you to add error handlers.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  fail :save_validation_data
+  step :find_user
+  pass :log
+  # ...
+
+  def save_validation_data(ctx, params:, **)
+    Logger.info "Signup: params was #{params.inspect}"
+  end
+end
+</code></pre>
+
+<p>As visible in the diagram, <code>#fail</code> puts the error handler on the error track, while maintaining the linear order of the flow: it sits after <code>extract_omniauth</code>, but before <code>find_user</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/fail.ecf3be50.webp" /></p>
+
+<p>Per default, the return value from a <code>fail</code> task is irrelevant, it will always stay on the error track. In part II we will cover how to jump back to the happy path.</p>
+
+<p>It’s also important to understand that <code>save_validation_data</code> will only be invoked for an error from <code>validate</code> (and if <code>extract_omniauth</code> were attached using <code>step</code>). In other words, <code>find_user</code> and followers do not have an error handler.</p>
+
+<p>We are going to revert this <code>fail</code> feature for the time being. In the next tutorial about nesting and the wiring API, we will meet this handler, again.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-terminus-signals">Terminus signals</h3>
+<p><!-- {tutorials-railway-basics-terminus-signals-toc} --></p>
+
+<p>When invoking activities, you will want to find out where it stopped and what end has been hit, so you can decide what to do. For example, a Rails controller could either redirect to the dashboard page, in case of a successful sign-in, or render an error page.</p>
+
+<p>There are two ways to learn that a terminus has been reached. You could simply inspect its semantic.</p>
+
+<pre><code>signal.to_h[:semantic] #=&gt; :success
+</code></pre>
+
+<p>Every element in TRB provides a <code>#to_h</code> method to decompose it. Terminus events will have a field <code>:semantic</code>, and in a standard railway activity, they’re either <code>:success</code> or <code>:failure</code>.</p>
+
+<p>Alternatively, you can check the signal’s identity against the terminus that you’re expecting, for instance by using the Introspection API.</p>
+
+<pre><code>Trailblazer::Activity::Introspect::Graph(Signup).find("End.success")[:task] == signal
+</code></pre>
+
+<p>The return <code>signal</code> is simply the object or task that was executed last. In railways, the automatic IDs for end events are <code>End.success</code> and <code>End.failure</code>, that why you can [retrieve those object using <code>Graph#find</code>].</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-exposing-data">Exposing data</h3>
+<p><!-- {tutorials-railway-basics-exposing-data-toc} --></p>
+
+<p>You probably already got the idea from previous example code: the only way to expose data to the outer world (whoever invoked the activity) is by reading from the <code>ctx</code> object. In other words, if any data from within the activity is needed, say, for rendering an HTML page or taking a routing decision in a controller, it has to be written to <code>ctx</code> at some point during execution of the activity.</p>
+
+<pre><code>ctx[:user] #=&gt; #&lt;struct User email=\"apotonick@gmail.com\"&gt;
+</code></pre>
+
+<p>There are [mechanics to filter what goes in and out], but keep in mind that Trailblazer forces you, in a gentle, tender way, to explicitly define what you want the caller to know, by writing it to <code>ctx</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-wtf-">WTF?</h3>
+<p><!-- {tutorials-railway-basics-wtf--toc} --></p>
+
+<p>Now that we’ve discussed all basic concepts of activities, let’s check out some of the tooling around Trailblazer.</p>
+
+<p>A huge advantage over messy Rails code is that Trailblazer’s <code>Activity</code> hides logic, flow and variables from the caller. The entire sign-up works by invoking the black box activity in the controller.</p>
+
+<p>While developers appreciate the encapsulation, they used to hate the debugging: finding out what path the execution took. We “recently” added tracing to do just that (it only took three years).</p>
+
+<p>This is my absolute favorite feature ever and <a href="https://youtu.be/mjsnd8dJbew?t=556">the official reason for (re-)writing Trailblazer 2.1</a>. It makes me happy every time I use it.</p>
+
+<p>Simply use <code>#wtf?</code> to invoke your operation.</p>
+
+<pre><code>signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, ctx)
+</code></pre>
+
+<p>The signature and return values are identical to <code>#invoke</code>. However, now, tracing is turned on, and will output the flow to the terminal.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/trace.790a724b.webp" /></p>
+
+<p>No more guessing anymore, you can follow the path and even in deeply nested activity structures you won’t get lost anymore.</p>
+
+<p>What sounds like a cheesy commercial slogan is actually about to become your best friend. Check out how <code>#wtf?</code> also allows to find out where things broke, in case of an exception.</p>
+
+<p>By making the <code>ctx</code> object frozen, it will throw an exception whenever we write to <code>ctx</code> using <code>ctx[:something] = ...</code>, which should be the case in <code>#extract_omniauth</code> the first time.</p>
+
+<pre><code>ctx = {params: data_from_github}.freeze #=&gt; no setter anymore!
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, ctx)
+</code></pre>
+
+<p>As promised, <code>#wtf?</code> catches that and shows you the closest task in red.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/trace-exception.8713b391.webp" /></p>
+
+<p>With Ruby only knowing methods and files and stack-traces from hell, Trailblazer is years ahead when it comes to debugging. Having an understanding of higher level abstractions, such as tasks, activities and the historical code path taken, its debugging trace is much closer to how you, as an engineer, think about your code.</p>
+
+<p>This feature has saved me hours of debugging, before it was even released.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-railway-basics-next-">Next!</h3>
+<p><!-- {tutorials-railway-basics-next--toc} --></p>
+
+<p>In the next tutorial we will focus on the Wiring API and learn how to create more complex activities. The sign-up code to enter a new user into our database needs to be written. To help you reduce complexity, we will learn about nesting activities, too.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="tutorials-wiring-api">Wiring API</h2>
+<p><!-- {tutorials-wiring-api-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/tutorial/blob/master/ruby/test/wiring_test.rb">Code is here 🕮</a></p>
+
+<p>In our current version <a href="/2.1/docs/tutorials/activity.html#tutorials-railway-basics">as written in the previous tutorial</a>, we can process an Oauth signup via Github and handle existing users who have signed up before. Those who haven’t cause our <code>Signup</code> activity to “error-out”. It will end in the <code>failure</code> terminus.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup-2.675e77f0.webp" /></p>
+
+<p>It’s now time to implement signing-up new users! Instead of introducing a new “track” to handle this case, I’d like to play around with some important concepts of the wiring API.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-output">Output</h3>
+<p><!-- {tutorials-wiring-api-output-toc} --></p>
+
+<p>Why don’t we put the “create user” task onto the <code>failure</code> track, and in case of successfully persisting the new user, we deviate back to the happy path? This is totally possible with Trailblazer.</p>
+
+<p>Here’s a diagram of the flow we’re about to implement.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/fail-output.0e4b81ca.webp" /></p>
+
+<p>Placing a step on the error track is something we discussed before. However, deviating back to the happy path is new.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  step :find_user
+  fail :create_user, Output(:success) =&gt; Id(:log)
+  pass :log
+
+  def create_user(ctx, email:, **)
+    ctx[:user] = User.create(email: email)
+  end
+  # ...
+end
+</code></pre>
+
+<p>In line 5, where you see <code>fail :create_user</code>, we can see something new and unsettling.</p>
+
+<p>Remember, in a railway activity each task has two standard outputs with the “semantics” <code>success</code> and <code>failure</code>. When returning a trusy value, the task will trigger the output marked with the <code>success</code> semantic, and likewise for <code>failure</code>.</p>
+
+<p>By using <code>Output(:semantic)</code>, you can select an <em>existing</em> output of the task and rewire it.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-id">Id</h3>
+<p><!-- {tutorials-wiring-api-id-toc} --></p>
+
+<p>To actually connect the selected output to a specific target, you can use <code>Id()</code> and provide the ID as the only argument.</p>
+
+<pre><code>Output(:success) =&gt; Id(:log)
+</code></pre>
+
+<p>Since IDs are assigned automatically (unless you’re [using <code>:id</code>]), this is very simple and intuitive.</p>
+
+<p>Reconnecting the <code>success</code> output results in a customized flow as visible in the diagram above. We can reassure it works by invoking the activity using <code>wtf?</code>.</p>
+
+<pre><code>User.init!()
+
+ctx = {params: data_from_github}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
+</code></pre>
+
+<p>Since the user database is empty, we’re taking the new path via <code>#create_user</code> and then back to the happy path to <code>#log</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/fail-wtf.90567488.webp" /></p>
+
+<p>The flow is deviated back after <code>#create_user</code> if we return a trusy value - exactly what we wanted!</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-track">Track</h3>
+<p><!-- {tutorials-wiring-api-track-toc} --></p>
+
+<p>Instead of connecting an output to a particular task, you can also choose to let it connect to a track. A track is created by taking a task’s output, retrieving its semantic, and then connecting it to the next available task that is “magnetic to” this semantic. Repeating this process automatically, the activity’s DSL creates “tracks” for you. We will talk about this a bit later.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  step :validate
+  pass :extract_omniauth
+  step :find_user
+  fail :create_user, Output(:success) =&gt; Track(:success)
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>When using <code>Track(:semantic)</code> the output will “snap to” the closest, following task that is “magnetic to” it, resulting in an identical circuit or flow as above.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-render-the-circuit">Render the circuit</h3>
+<p><!-- {tutorials-wiring-api-render-the-circuit-toc} --></p>
+
+<p>When reconnecting outputs you might feel the urge to <em>see</em> what monster you’ve just created. Especially when the flow doesn’t flow as you want it to, rendering the circuit of the activity is crucial.</p>
+
+<p>Use <code>Developer.render</code> to visualize the activity’s circuit.</p>
+
+<pre><code>puts Trailblazer::Developer.render(Signup)
+</code></pre>
+
+<p>Thanks to <code>puts</code>, there will be an ugly but sufficient rendering of your activity in the terminal.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/render.ce78acd8.webp" /></p>
+
+<p>It lists each task and its outgoing connections. You can see the signal and its target task, the output semantics are not shown.</p>
+
+<p>Having a closer look, you will see that putting “create user” on the failure track probably isn’t such a great idea, as it will also get invoked when <code>#validate</code> errors-out.</p>
+
+<p>It’s a good idea to introduce a new, separate path for handling new users.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-adding-outputs">Adding outputs</h3>
+<p><!-- {tutorials-wiring-api-adding-outputs-toc} --></p>
+
+<p>When “trailblazing” a new, unbeaten track in your activity you have two options: manually inserting new steps and connecting them forming a new path, or using a macro. We will discuss the manual technique first.</p>
+
+<p>Looking at the new diagram, you understand that our goal is to branch out from <code>#find_user</code>, then execute one or more tasks on the new path, and finally end in a new terminus called <code>new</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/magnetic.abeaccdc.webp" /></p>
+
+<p>Our activity has slightly changed to introduce the new “track”.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  NewUser = Class.new(Trailblazer::Activity::Signal)
+
+  step :validate
+  pass :extract_omniauth
+  step :find_user, Output(NewUser, :new) =&gt; Track(:create)
+  step :create_user, Output(:success) =&gt; End(:new), magnetic_to: :create
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>To add a new output to the <code>#find_user</code> task, we can use <code>Output()</code> with <em>two</em> arguments!</p>
+
+<ul>
+  <li>The first argument (<code>NewUser</code>) is the signal that <code>#find_user</code> returns in order to trigger that very output. This must be a subclass of <code>Trailblazer::Activity::Signal</code>.</li>
+  <li>The second is the semantic of this new output. Semantics are mostly relevant for nesting, which we will discuss later.</li>
+</ul>
+
+<p>Please note that <code>find_user</code> now has three outputs.</p>
+
+<p>The new output will snap to a track called <code>:create</code>, which is discussed in the next section.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-returning-signals">Returning signals</h3>
+<p><!-- {tutorials-wiring-api-returning-signals-toc} --></p>
+
+<p>Below is the new task method <code>#find_user</code>. Keep in mind the we got three outputs here, so we somehow need to communicate to the activity which output to take.</p>
+
+<pre><code>def find_user(ctx, email:, **)
+  user = User.find_by(email: email)
+
+  ctx[:user] = user
+
+  user ? true : NewUser
+end
+</code></pre>
+
+<p>Per default, having just two outgoing connections in a railway, that’s easy: a trusy value and a falsey value returned are enough to command which path to take.</p>
+
+<p>However, now we got three outputs, so we need a third “signal”. That’s exactly why we introduced <code>NewUser</code> (it could have any name), and since it’s configured to trigger the <code>:new</code> output, your activity now has a third path to travel, should <code>find_user</code> return this signal.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-magnetic_to">Magnetic_to</h3>
+<p><!-- {tutorials-wiring-api-magnetic_to-toc} --></p>
+
+<p>To understand how tracks work, we need to understand the <code>:magnetic_to</code> option.</p>
+
+<pre><code>step :find_user, Output(NewUser, :new) =&gt; Track(:create)
+step :create_user, Output(:success) =&gt; End(:new), magnetic_to: :create
+</code></pre>
+
+<p>We already discussed “polarizing” an outgoing connection using <code>Track()</code>. For example, an output using <code>Track(:create)</code> will snap to the next possible task that is “magnetic to” <code>:create</code>. That’s how tracks or paths are created. Nothing more!</p>
+
+<p>This is exactly what we do with <code>create_user</code>: it’s got <code>magnetic_to: :create</code>, which won’t put it on the “happy path” (<code>:success</code>) but a new path.</p>
+
+<p>Have another look at the new diagram above. While <code>create_user</code> sits on a newly branched out path, its <code>failure</code> output still goes to the error track automatically. You <em>could</em> change that by redirecting it with <code>Output(:failure)</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-adding-a-terminus">Adding a terminus</h3>
+<p><!-- {tutorials-wiring-api-adding-a-terminus-toc} --></p>
+
+<p>It is up to the activity modeler what to do next. In our case, from <code>create_user</code> we head straight into an additional terminus, or <em>end event</em> as it’s called in BPMN.</p>
+
+<p>You can add an additional terminus to an activity [using <code>End()</code>].</p>
+
+<div class="bd-callout bd-callout-info">
+<p>When using <code>End(:semantic)</code> multiple times with the same semantic, they will all refer to the identical terminus.</p>
+</div>
+
+<p>Using multiple termini has three magnificent, beautiful advantages.</p>
+
+<ul>
+  <li>You may communicate more than a binary outcome of an activity. For instance, a controller endpoint activity could have end events for success and failure, but also for “not authorized”, or “validation failed”. You’re not limited to a binary setup here.</li>
+  <li>It is much easier to track what is going on within the activity. Instead of transporting additional state via <code>ctx</code>, you expose the outcome via an additional end event.</li>
+  <li>When nesting an activity with multiple outcomes, you can wire each terminus to a different route. We will discuss that in a following section.</li>
+</ul>
+
+<p><img class="mx-auto d-block" src="/vite/assets/magnetic.abeaccdc.webp" /></p>
+
+<p>Our activity has three outcomes now: something went wrong (obviously the <code>failure</code> end event), we got an existing user signing-in (<code>success</code> terminus) or a new potential payee signed-up, ending in the <code>new</code> terminus.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-path">Path</h3>
+<p><!-- {tutorials-wiring-api-path-toc} --></p>
+
+<p>After installing that third “path”, let’s assume we wanted more than one step on it. The final <code>Signup</code> activity that you’ve all been waiting for has three steps to perform when a new sign-up occurs.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/signup.0720881b.webp" /></p>
+
+<p>While we could achieve this using <code>Track()</code> and the <code>:magnetic_to</code> option, there’s a handy macro for branching out a custom track: <code>Path()</code>.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  NewUser = Class.new(Trailblazer::Activity::Signal)
+
+  step :validate
+  pass :extract_omniauth
+  step :find_user, Output(NewUser, :new) =&gt; Path(end_id: "End.new", end_task: End(:new)) do
+    step :compute_username
+    step :create_user
+    step :notify
+  end
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>While it’s obvious that all <code>step</code> tasks placed into the block will be neatly arranged on the new path, the options for <code>Path()</code> need some explanation. The <code>:end_id</code> is important since it sets the terminus’ ID, and that very terminus is created using <code>:end_task</code>. This will lead the path straight into the terminus.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Check [Path()’s docs] for a list of all options. You don’t have to terminate in an end event, you can reconnect the path to other elements.</p>
+</div>
+
+<p>For completeness, here’s the code of the three added tasks.</p>
+
+<pre><code>def compute_username(ctx, email:, **)
+  ctx[:username] = email.split("@")[0]
+end
+
+def create_user(ctx, email:, username:, **)
+  ctx[:user] = User.create(email: email, username: username)
+end
+
+def notify(ctx, **)
+  true
+end
+</code></pre>
+
+<p>Again, we’re not implementing a sophisticated notification framework or an advanced username generator here, but merely focus on structural mechanics of Trailblazer.</p>
+
+<p>Do note, though, that <code>Path()</code> only connects the <code>:success</code> outputs of its tasks. Put differently, this means if <code>#compute_username</code> would fail, things will break.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-path-escape">Path escape</h3>
+<p><!-- {tutorials-wiring-api-path-escape-toc} --></p>
+
+<p>Why not mock an error in <code>#compute_username</code>, even though our validation should protect us from that.</p>
+
+<pre><code>def compute_username(ctx, email:, **)
+  false
+end
+</code></pre>
+
+<p>When invoking the <code>Signup</code> activity now, it will break with the following exception.</p>
+
+<pre><code>Trailblazer::Activity::Circuit::IllegalSignalError: &lt;&gt;[][ Trailblazer::Activity::Left ]
+</code></pre>
+
+<p>Well, that’s because <code>compute_username</code> returned false, which is translated into a <code>Left</code> signal. This signal, in turn, doesn’t have any output configured as <code>Path()</code> only handles <code>:success</code> outputs per default.</p>
+
+<p>To add this, you need to manually add it.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  NewUser = Class.new(Trailblazer::Activity::Signal)
+
+  step :validate
+  pass :extract_omniauth
+  step :find_user, Output(NewUser, :new) =&gt; Path(end_id: "End.new", end_task: End(:new)) do
+    step :compute_username, Trailblazer::Activity.Output(Trailblazer::Activity::Left, :failure) =&gt; Trailblazer::Activity::DSL::Linear.Track(:failure)
+    step :create_user
+    step :notify
+  end
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>We now added a <code>:failure</code> output, leading to a new flow as visible in this diagram.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-failure.bb7c78db.webp" /></p>
+
+<p>The fragile <code>#compute_username</code> task now got its error-out path leading to the <code>failure</code> terminus.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-terminus-interpretation">Terminus Interpretation</h3>
+<p><!-- {tutorials-wiring-api-terminus-interpretation-toc} --></p>
+
+<p>Reverting <code>#compute_username</code> to the original version, let’s run the finished and interpret the outcomes real quick.</p>
+
+<p>When running with an empty user database, we should create one!</p>
+
+<pre><code>User.init!()
+ctx = {params: data_from_github}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
+
+signal.to_h[:semantic] #=&gt; :new
+ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=\"apotonick\"&gt;
+</code></pre>
+
+<p>Given that we hit the <code>new</code> terminus and we have a <code>User</code> object in <code>ctx</code> with the data we’re expecting, this must’ve worked. The trace on the console verifies this, too!</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-success.a8ca9f4c.webp" /></p>
+
+<p>Having this user in the system, let’s run another sign-in.</p>
+
+<pre><code>User.init!(User.new("apotonick@gmail.com", 1, "apotonick"))
+ctx = {params: data_from_github}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
+
+signal.to_h[:semantic] #=&gt; :success
+ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=\"apotonick\"&gt;
+</code></pre>
+
+<p>Beautiful! We end up on the <code>success</code> end event, and no additional user is created.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-existing.f637e7bc.webp" /></p>
+
+<p>The <code>Signup</code> activity in its divine entireness is completed! You now know all the mechanics of the wiring API and the underlying concept of the circuit, tasks, signals, outputs and connections.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-nesting">Nesting</h3>
+<p><!-- {tutorials-wiring-api-nesting-toc} --></p>
+
+<p>Knowing about the wiring mechanics in Trailblazer is one thing. However, the real fun starts with nesting activities. That’s when the ideas of encapsulation, interfaces and reducing dependencies really come into play.</p>
+
+<p>To demonstrate that, we need to complicate out example application a bit.</p>
+
+<pre><code>def validate(ctx, params:, **)
+  is_valid = params.is_a?(Hash) &amp;&amp; params["info"].is_a?(Hash) &amp;&amp; params["info"]["email"]
+
+  is_valid # return value matters!
+end
+</code></pre>
+
+<p>Suppose that the <code>validate</code> task was getting quite complex and bloated. When writing “normal” Ruby, you’d break up one method into several. In Trailblazer, that’s when you introduce a new, smaller activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/validate.bd0cf293.webp" /></p>
+
+<p>In the sketched activity, we are separating the former <code>#validate</code> method and its chain of <code>&amp;&amp;</code>ed conditions into three steps. Since every step might go wrong, all of them have an “error-out” option.</p>
+
+<p>But, hang on, isn’t that the exact layout of a <code>Railway</code> activity? Absolutely, that’s why implementing this new activity takes five lines of code in Trailblazer.</p>
+
+<pre><code>class Validate &lt; Trailblazer::Activity::Railway
+  # Yes, you  can use lambdas as steps, too!
+  step -&gt;(ctx, params:, **) { params.is_a?(Hash) }
+  step -&gt;(ctx, params:, **) { params["info"].is_a?(Hash) }
+  step -&gt;(ctx, params:, **) { params["info"]["email"] }
+end
+</code></pre>
+
+<p>Every condition became a separate step. We didn’t use the usual <code>:method</code> style [but lambdas as a short-cut]. Should one of the conditions fail, the activity will instantly deviate to the error track and skip the rest of the steps. This will be indicated by the last signal being the <code>:failure</code> terminus.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Hey, that’s is an imaginary complication of our example - please don’t do this with every condition you have in your app.</p>
+</div>
+
+<p>You’re free to test this activity in a separate unit test. We will skip this for now (*cough), and integrate it directly into our original <code>Signup</code> activity.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-wiring-api-subprocess">Subprocess</h3>
+<p><!-- {tutorials-wiring-api-subprocess-toc} --></p>
+
+<p>To use another activity as a “step”, use the <code>Subprocess()</code> macro.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  NewUser = Class.new(Trailblazer::Activity::Signal)
+
+  step Subprocess(Validate)
+  pass :extract_omniauth
+  step :find_user, Output(NewUser, :new) =&gt; Path(end_id: "End.new", end_task: End(:new)) do
+    step :compute_username
+    step :create_user
+    step :notify
+  end
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>When running the sign-up activity, you will realize the behavior is identical to what we had before our over-engineered refactoring.</p>
+
+<pre><code>User.init!()
+ctx = {params: data_from_github}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
+
+signal.to_h[:semantic] #=&gt; :new
+ctx[:user]             #=&gt; #&lt;User email=\"apotonick@gmail.com\", username=\"apotonick\"&gt;
+</code></pre>
+
+<p>The validation still does its job.</p>
+
+<p>The trace shows the nested activity beautifully intented.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/subprocess-trace.4bb97235.webp" /></p>
+
+<p>So why the over-complication? What we got now is replicating a chain of <code>&amp;&amp;</code> in the former version. This time, however, you will know which condition failed and what went in by using tracing. Look at the trace above - it’s impossible to <em>not</em> understand what was going on.</p>
+
+<p>Additionally, you may add debugging steps, error handler or rewire the conditions dynamically without touching the original snippet.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Subprocess</li>
+    <li id="tutorials-wiring-api-subprocess-automatic-wiring">Automatic wiring</li>
+</ul>
+
+<p>Visualized, our new composed structure would look as follows.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/subprocess.1e1f69de.webp" /></p>
+
+<p>Once the nested <code>Valdiate</code> sub process is hit, it is invoked and executes task by task, eventually reaching a terminus. This is where the outer activity continues.</p>
+
+<p>However, how does the outer <code>Signup</code> activity know what termini the nested <code>Validate</code> activity exposes? And why are they automatically wired to the success and failure track?</p>
+
+<p>This is where all our learnings about semantics, outputs, signals and the DSL come together.</p>
+
+<p>Since a <code>Railway</code> knows about the two outputs <code>failure</code> and <code>success</code>, it automatically connects each task’s outputs. Speaking in Ruby, it’s a bit as if the following wiring is applied to every task added via <code>#step</code>.</p>
+
+<pre><code>step Subprocess(Validate),
+  Output(:success) =&gt; Track(:success),
+  Output(:failure) =&gt; Track(:failure)
+</code></pre>
+
+<p>The beautiful thing here is: you don’t even need to know which <em>signal</em> is emitted by the task (or the nested activity). Since you can reference outputs by their <em>semantic</em>, you as a modeller only connect conceptual termini to ongoing connections! Trailblazer takes care of wiring the underlying output and its signal.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Being able to reference outputs by their semantic is incredibly helpful when using third-party activities (from gems, for instance). You should not know details such as “the <code>:new</code> terminus emits a <code>NewUser</code> signal”. The abstract concept of a terminus named <code>:new</code> is sufficient for modelling.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Subprocess</li>
+    <li id="tutorials-wiring-api-subprocess-multiple-termini">Multiple Termini</li>
+</ul>
+
+<p>Now that we’re rolling, let’s go nuts and add another terminus to <code>Validate</code>. When the <code>"info"</code> key is absent in the <code>params</code> structure, it should error-out into a separate end event.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/no_info.9b7ec2d7.webp" /></p>
+
+<p>To implement such an activity, we only need to rewire the second step’s <code>failure</code> output to a new terminus.</p>
+
+<pre><code>class Validate &lt; Trailblazer::Activity::Railway
+  # Yes, you  can use lambdas as steps, too!
+  step -&gt;(ctx, params:, **) { params.is_a?(Hash) }
+  step -&gt;(ctx, params:, **) { params["info"].is_a?(Hash) },
+    Output(:failure) =&gt; End(:no_info)
+  step -&gt;(ctx, params:, **) { params["info"]["email"] }
+end
+</code></pre>
+
+<p>When running the nested <code>Validate</code> activity separatedly with a insufficiently filled <code>params</code> hash, we terminate on the <code>:no_info</code> end event.</p>
+
+<pre><code>ctx = {params: {}}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Validate, [ctx])
+
+signal.to_h[:semantic] #=&gt; :no_info
+</code></pre>
+
+<p>However, when running the <code>Signup</code> activity with an incomplete <code>params</code> hash, it crashes!</p>
+
+<pre><code>ctx = {params: {}}
+
+signal, (ctx, _) = Trailblazer::Developer.wtf?(Signup, [ctx])
+
+#=&gt; Trailblazer::Activity::Circuit::IllegalSignalError: &lt;&gt;[][ #&lt;Trailblazer::Activity::End semantic=:no_info&gt; ]
+</code></pre>
+
+<p>The last signal of the nested <code>Validate</code> activity happens to be the <code>no_info</code> terminus - and that bad boy is not wired to any connection in the outer <code>Signup</code> activity, yet!</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Subprocess</li>
+    <li id="tutorials-wiring-api-subprocess-wiring-termini">Wiring Termini</li>
+</ul>
+
+<p>Remember, the <code>Railway</code> strategy only connects success and failure automatically, so we need to connect the third end by ourselves.</p>
+
+<pre><code>class Signup &lt; Trailblazer::Activity::Railway
+  NewUser = Class.new(Trailblazer::Activity::Signal)
+
+  step Subprocess(Validate), Output(:no_info) =&gt; End(:no_info)
+  pass :extract_omniauth
+  step :find_user, Output(NewUser, :new) =&gt; Path(end_id: "End.new", end_task: End(:new)) do
+    step :compute_username
+    step :create_user
+    step :notify
+  end
+  pass :log
+
+  # ...
+end
+</code></pre>
+
+<p>It’s as easy as using <code>Output(:no_info)</code> and connecting it using one of the DSL target methods. Here, we use <code>End()</code> to wire the nested activities terminus directly to a new terminus in <code>Signup</code>. Feel free to play around with <code>Track()</code> or <code>Id()</code> to model the flow you desire.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/validate-3.017949df.webp" /></p>
+
+<p>Nesting an activity into another is a bit like calling a library method from another method. However, the explicit modelling has one massive advantage: all possible outcomes of the nested activity are visible and have to be connected in the outer diagram. It’s up to the modeler how those ends are connected, if they lead to separate, new termini, or connect to further business flow.</p>
+
+<p>We covered all important aspects about nesting and are ready for more coding! Once understood that nesting activities is all about connecting their termini to ongoing connections, it becomes a very helpful concept to implement more complex flows and to introduce reusable components.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="tutorials-external-tutorials">External tutorials</h2>
+<p><!-- {tutorials-external-tutorials-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="tutorials-external-tutorials-step-by-step-refactoring">Step by step refactoring</h3>
+<p><!-- {tutorials-external-tutorials-step-by-step-refactoring-toc} --></p>
+
+<p>A series about refactoring a typical Rails spaghetti into Trailblazer architecture:</p>
+
+<ul>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial-fat-controller-part-1">Fat controller (part 1)</a></li>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial-move-business-logic-from-controller-part-2">Move business logic from controller (part 2)</a></li>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial-refactoring-fat-controller-part-3">Refactoring fat controller (part 3)</a></li>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial-updating-old-fat-controller-part-4">Updating old fat controller (part 4)</a></li>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial:-refactoring-legacy-rails-views-with-trailblazer-cells-part-5">Refactoring legacy rails view with TRB Cells (part 5)</a></li>
+  <li><a href="https://www.2n.pl/blog/trailblazer-tutorial-collections-forms-testing-cells-part-6">Collections, forms, testing Cells (part 6)</a></li>
+</ul>
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="tutorials-quick-start-01-operation-basics-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>QUICK START 01 | Operation Basics</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="tutorials-quick-start-02-trailblazer-basics-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>QUICK START 02 | Trailblazer Basics</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="tutorials-quick-start-03-rails-basics-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>QUICK START 03 | Rails Basics</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-setup">
+          <i class="fas fa-arrow-right"></i>
+          Setup
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-file-structure">
+          <i class="fas fa-arrow-right"></i>
+          File Structure
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-presentation-operation">
+          <i class="fas fa-arrow-right"></i>
+          Presentation Operation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-contract-dry-validation-">
+          <i class="fas fa-arrow-right"></i>
+          Contract (Dry-validation)
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-rendering-forms">
+          <i class="fas fa-arrow-right"></i>
+          Rendering Forms
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-quick-start-03-rails-basics-rendering-forms-forms-and-rails-views">Forms and Rails views</a>
+        </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-create">
+          <i class="fas fa-arrow-right"></i>
+          Create
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-quick-start-03-rails-basics-create-create-operation">Create operation</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-quick-start-03-rails-basics-create-nesting-operations">Nesting operations</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-quick-start-03-rails-basics-create-macros">Macros</a>
+        </li>
+      
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-index">
+          <i class="fas fa-arrow-right"></i>
+          Index
+        </a>
+      </li>
+      
+        
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-edit">
+          <i class="fas fa-arrow-right"></i>
+          Edit
+        </a>
+      </li>
+      
+        
+        
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-update">
+          <i class="fas fa-arrow-right"></i>
+          Update
+        </a>
+      </li>
+      
+        
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-show">
+          <i class="fas fa-arrow-right"></i>
+          Show
+        </a>
+      </li>
+      
+        
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-delete">
+          <i class="fas fa-arrow-right"></i>
+          Delete
+        </a>
+      </li>
+      
+        
+    
+      <li>
+        <a href="#tutorials-quick-start-03-rails-basics-summary">
+          <i class="fas fa-arrow-right"></i>
+          Summary
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="tutorials-railway-basics-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Railway Basics</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#tutorials-railway-basics-activities">
+          <i class="fas fa-arrow-right"></i>
+          Activities
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-an-oauth-signup">
+          <i class="fas fa-arrow-right"></i>
+          An Oauth Signup
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-a-railway-activity">
+          <i class="fas fa-arrow-right"></i>
+          A Railway activity
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-terminology">
+          <i class="fas fa-arrow-right"></i>
+          Terminology
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-implementation">
+          <i class="fas fa-arrow-right"></i>
+          Implementation
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-railway-basics-implementation-invocation">Invocation</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-railway-basics-implementation-what-are-tasks-">What are Tasks?</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-railway-basics-implementation-parameter-signature">Parameter Signature</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-railway-basics-implementation-return-value">Return Value</a>
+        </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-pass">
+          <i class="fas fa-arrow-right"></i>
+          Pass
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-active-record-logging-">
+          <i class="fas fa-arrow-right"></i>
+          Active Record? Logging?
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-invocation-for-real-">
+          <i class="fas fa-arrow-right"></i>
+          Invocation, for real!
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-error-handling">
+          <i class="fas fa-arrow-right"></i>
+          Error handling
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-terminus-signals">
+          <i class="fas fa-arrow-right"></i>
+          Terminus signals
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-exposing-data">
+          <i class="fas fa-arrow-right"></i>
+          Exposing data
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-wtf-">
+          <i class="fas fa-arrow-right"></i>
+          WTF?
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-railway-basics-next-">
+          <i class="fas fa-arrow-right"></i>
+          Next!
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="tutorials-wiring-api-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Wiring API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#tutorials-wiring-api-output">
+          <i class="fas fa-arrow-right"></i>
+          Output
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-id">
+          <i class="fas fa-arrow-right"></i>
+          Id
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-track">
+          <i class="fas fa-arrow-right"></i>
+          Track
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-render-the-circuit">
+          <i class="fas fa-arrow-right"></i>
+          Render the circuit
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-adding-outputs">
+          <i class="fas fa-arrow-right"></i>
+          Adding outputs
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-returning-signals">
+          <i class="fas fa-arrow-right"></i>
+          Returning signals
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-magnetic_to">
+          <i class="fas fa-arrow-right"></i>
+          Magnetic_to
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-adding-a-terminus">
+          <i class="fas fa-arrow-right"></i>
+          Adding a terminus
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-path">
+          <i class="fas fa-arrow-right"></i>
+          Path
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-path-escape">
+          <i class="fas fa-arrow-right"></i>
+          Path escape
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-terminus-interpretation">
+          <i class="fas fa-arrow-right"></i>
+          Terminus Interpretation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-nesting">
+          <i class="fas fa-arrow-right"></i>
+          Nesting
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#tutorials-wiring-api-subprocess">
+          <i class="fas fa-arrow-right"></i>
+          Subprocess
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-wiring-api-subprocess-automatic-wiring">Automatic wiring</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-wiring-api-subprocess-multiple-termini">Multiple Termini</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#tutorials-wiring-api-subprocess-wiring-termini">Wiring Termini</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="tutorials-external-tutorials-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>External tutorials</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#tutorials-external-tutorials-step-by-step-refactoring">
+          <i class="fas fa-arrow-right"></i>
+          Step by step refactoring
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
