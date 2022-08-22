@@ -6,7 +6,7 @@ It's one of the most frequently used features in Trailblazer.
 
 <%= h3 "Overview" %>
 
-Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.
+Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.
 
 <%= code "no-in", collapse: :meths %>
 
@@ -18,7 +18,7 @@ Note that it requires two variables `:model` and `:user` from the ctx. For whate
 
 Last, depending on the policy decision, the step code returns true or false.
 
-<%= h4 "Missing mapping" %>
+<%#= h4 "Missing mapping" %>
 
 When executing the `Create` operation using the `:current_user` variable, an `ArgumentError` is raised.
 
@@ -32,10 +32,11 @@ And this is why we need variable mapping in Trailblazer.
 
 Variable mapping (short: i/o) can be done manually, with ugly "helper" steps before or after the respective step, or by using `In()`, `Out()` and `Inject()`. Before these helpers got introduced, we used the `:input` and `:output` option - both works, the latter one coming with several drawbacks.
 
-All helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.
+Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.
 
-In Out allows composing which is great for debugging/rendering, with inheritance, macros (you can add to macro options, or change)
+<%= code "out-array", collapse: "meths" %>
 
+Not only are those input and output pipelines easy to [debug](#activity-variable-mapping-introspect), they also allow to be altered in derived operations, when [using inheritance](#activity-variable-mapping-inheritance), and  work in [combination with macros](#activity-variable-mapping-macro).
 
 <%= h3 "In()" %>
 
@@ -101,8 +102,183 @@ The method needs to expose a step interface just like any other callable.
 
 <%= h4 "Keyword arguments" %>
 
-Both callables and filter methods for `In()` can receive ctx variables as keyword arguments, making it extremely convenient to access them and have Ruby perform a loose existance test automatically.
+Both callables and filter methods for `In()` can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.
 
 <%= code "in-kwargs", collapse: :meths %>
 
 Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.
+
+<%= h3 "Out()" %>
+!!!!!!You can only configure what outgoing variables are
+
+Without any output configuration on the exemplary policy step, any variable written to `ctx` will be automatically set on the outer ctx. In other words, anything a step writes to `ctx` is passed to the following step. The behavior is identical to the way before you were using i/o.
+
+However, it is often necessary to rename or limit the outgoing variables of a particular step. Especially when using nested operations you probably don't want the entire nested ctx to be copied into the outer context. This is where output filters enter the stage.
+
+Consider the following updated `Policy::Create` step.
+
+<%= code "policy" %>
+
+Both `ctx[:status]` and `ctx[:message]` will be visible in all steps following `Policy::Create`. This might lead to "misunderstandings" and bugs in more complex applications.
+
+As soon as you use `Out()`, only variables specified through the filters will be merged with the original (outer) ctx and passed on to the next step.
+
+<%= h4 "Limiting array" %>
+
+In order to limit variables added to the outer ctx, `Out()` accepts an array similar to `In()`. Consider this as a whitelisting to specify exposed variables.
+
+<%= code "out-array", collapse: :meths %>
+
+This single `Out()` usage will result in only the `:message` variable being written to the outer ctx that is passed on. The `:status` variable is discarded.
+
+You may pass any number of variables in the limiting array.
+
+<%= h4 "Mapping hash" %>
+
+Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the "old" inner name points to the outer name that you want to use in the operation hosting that step.
+
+<%= code "out-hash", collapse: :meths %>
+
+Here, steps following `Policy::Create` will see a variable `:message_from_policy` merged into the ctx - which is the original `:message`, renamed.
+
+<%= h4 "Callable" %>
+
+An `Out()` filter can be any callable object following the [step interface]().
+
+<%= code "out-callable", collapse: :meths %>
+
+The callable receives the inner ctx that just left the actual step, here `Policy::Create`. You may run any Ruby code in the callable, even `if`s.
+
+Note that a callable always must return a hash, which is then merged with the original outer ctx.
+
+Be adviced that it is usually a better idea to maintain multiple smaller `Out()` callables for different variables. You might later decide to override them, debugging will be easier and the code is more maintainable. This was different when `:output` was the only way to filter outgoing variables and you had to create one big hash in a one single filter.
+
+<%= info do %>
+You may also use an `:instance_method` to filter outgoing variables, similar to [how it's done with In()](#activity-variable-mapping-in-filter-method).
+<% end %>
+
+<%= h4 "Keyword arguments" %>
+
+Just as with `In()` callables can receive keyword arguments.
+
+<%= code "out-kw" %>
+
+Any variable readable on the inner `ctx` that just left `Policy::Create` is available as a keyword argument for a callable. Note that you need to default it if its presence is not guaranteed.
+
+<%= h4 "Outer context" %>
+
+You can access the outer, original ctx by passing the `:with_outer_ctx` option to `Out()`.
+
+<%= code "out-outer", collapse: :meths %>
+
+While the callable still needs to return a hash that is then merged with the original ctx, it's possible to access variables from the outer ctx before that merge. This allows for merging deeper data structures, such as error objects.
+
+<%= h3 "Inject()" %>
+
+An `Inject()` filter, as opposed to `In()`, does an existance check on the ctx using `ctx.key?(:variable)` before performing its logic. It is helpful in combination with `In()` filters, when using defaulted keyword arguments in a step or in nested operations.
+
+* It allows defaulting a variable when it's absent in the ctx.
+* It can pass-through a variable when it is present in the ctx, and only then.
+
+Check the following exemplary policy code.
+
+<%= code "policy-check", collapse: "decision" %>
+
+This policy implementation uses keyword arguments to automatically extract `:model`, `:user` and `:action` from the ctx. Note that the latter is defaulted to `:create`. Defaulting kwargs only works when the keyword variable is **not passed** into the step - if it's `nil`, the defaulting will not get triggered.
+
+You could now use `In()` filters to embed this policy step into your operation.
+
+<%= code "no-inject", collapse: "meths" %>
+
+However, this will break because the `action` variable will never be defaulted to `:create`. The `In()` filter will _always_ pass `:action` through when calling the policy, even when it's absent.
+
+The `Inject()` helper is designed to handle this case.
+
+<%= h4 "Array style" %>
+
+Use `Inject()` in combination with `In()` to add variables to the filtered ctx, but only when they're present in the outer ctx.
+
+<%= code "inject", collapse: "meths" %>
+
+We call this _qualified pass-through_, it means the `:action` variable will only be passed into the filtered ctx if it exists on `ctx` when the filter is invoked.
+
+<%= h4 "Defaulting" %>
+
+Instead of hard-wiring defaulted keyword arguments into your step implementations, you can configure `Inject()` to set a default value to variables, if they're absent in the ctx.
+
+Here's an example policy without any defaulting in the signature.
+
+<%= code "policy-check-nodef", collapse: :decision %>
+
+Defaulting the `:action` variable via `Inject()` will improve the policy component's reusability.
+
+<%= code "inject-default", collapse: :meths %>
+
+The lambda is executed at runtime, just before the actual step is invoked. It provides access to the ctx object and allows extracting keyword arguments.
+
+<%= h3 "Macro" %>
+
+As all DSL options the `In()`, `Out()` and `Inject()` helpers can be used from macros, providing the macro author a convenient way to define default filters. <%= api "/2.1/docs/activity.html#activity-macro-api" %>
+
+<%= code "macro" %>
+
+In the options hash that a macro must return, you can use the helpers by referencing `Trailblazer::Activity::Railway`. Except for the prefixed constant, there is no difference or limitation to their usage.
+
+They can be extended with options the macro user provides.
+
+<%= code "macro-merge", collapse: :meths %>
+
+The user options will be merged into the macro options, resulting in `:message` being renamed to `:message_from_policy` and copied to `:copied_message`.
+
+<%= info do %>
+Before `trailblazer-activity-dsl-linear-1.0.0` and the `In()` and `Out()` helper shipped with it, any `:input` from the user would always override the macro's `:input` option.
+<% end %>
+
+<%= h3 "Inheritance" %>
+
+Subclasses can add and remove input and output filters - hence the term _composable_. This is a great tool when inherited operations replace particular steps and need to fine-tune ingoing or returned variables.
+
+Consider the following base operation.
+
+<%= code "inheritance-base", collapse: "meths" %>
+
+It defines two input and one output filter.
+
+A sub operation could now replace the policy step. However, instead of redefining the i/o filters, they can be inherited and extended.
+
+<%= info do %>
+As `inherit: [:variable_mapping]` is still an experimental feature, you need to explicitely `extend` the `VariableMapping::Inherit` module into the top-most operation where the inheritance chain should begin.
+<% end %>
+
+Here's a potential inheriting operation.
+
+<%= code "inheritance-sub", collapse: "meths" %>
+
+This configuration is adding another `Out()` filter, resulting in a total filter setup as follows in the introspection.
+
+<%= code "sub-pipe" %>
+
+The new `Out()` filter setting `:raw_message_for_admin` is placed behind the inherited filter.
+
+
+<!--
+<%#= h3 "Manual filter" %>
+
+TODO: decompose trick (input )
+-->
+
+<%= h3 "Introspect" %>
+
+You can visualize the pipelines around each step by using the `trailblazer-developer` gem.
+
+<%= code "tw-render" %>
+
+This handy invocation will render the task wrap around `Song::Operation::Create`'s step `:policy`.
+
+<%= code "tw-render-out" %>
+
+In i/o context, the interesting branches here are `task_wrap.input` and `task_wrap.output`. Sandwiched between generic library steps are your filter steps. The visualizer even renders filter configuration where possible.
+
+<%= info do %>
+We're planning improvements on this part of `trailblazer-developer`. If you want to help out with better rendering, please [come chat to us](https://trailblazer.zulipchat.com).
+<% end %>

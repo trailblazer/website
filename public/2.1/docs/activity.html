@@ -264,12 +264,6 @@
           </li>
         
           <li class="nav-item">
-            <a class="nav-link " href="#activity-variable-mapping">
-              Variable Mapping
-            </a>
-          </li>
-        
-          <li class="nav-item">
             <a class="nav-link " href="#activity-dependency-injection">
               Dependency Injection
             </a>
@@ -549,7 +543,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 31 Jul 22</span>
+                      <span>Last updated 22 Aug 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1615,7 +1609,7 @@ end
 <h3 id="activity-variable-mapping-overview">Overview</h3>
 <p><!-- {activity-variable-mapping-overview-toc} --></p>
 
-<p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
+<p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Railway
   step :create_model
@@ -1641,13 +1635,6 @@ end
 
 <p>Last, depending on the policy decision, the step code returns true or false.</p>
 
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Overview</li>
-    <li id="activity-variable-mapping-overview-missing-mapping">Missing mapping</li>
-</ul>
-
 <p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
 
 <pre><code>result = Trailblazer::Activity::TaskWrap.invoke(AA::Create, [{current_user: Module}])
@@ -1666,9 +1653,19 @@ end
 
 <p>Variable mapping (short: i/o) can be done manually, with ugly “helper” steps before or after the respective step, or by using <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. Before these helpers got introduced, we used the <code>:input</code> and <code>:output</code> option - both works, the latter one coming with several drawbacks.</p>
 
-<p>All helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
+<p>Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
 
-<p>In Out allows composing which is great for debugging/rendering, with inheritance, macros (you can add to macro options, or change)</p>
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; [:message]
+  # ...
+end
+</code></pre>
+
+<p>Not only are those input and output pipelines easy to <a href="#activity-variable-mapping-introspect">debug</a>, they also allow to be altered in derived operations, when <a href="#activity-variable-mapping-inheritance">using inheritance</a>, and  work in <a href="#activity-variable-mapping-macro">combination with macros</a>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1812,7 +1809,7 @@ end
     <li id="activity-variable-mapping-in-keyword-arguments">Keyword arguments</li>
 </ul>
 
-<p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it extremely convenient to access them and have Ruby perform a loose existance test automatically.</p>
+<p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Railway
   step :create_model
@@ -1830,8 +1827,420 @@ end
 
 <p><span class="divider"></span></p>
 
-<h2 id="activity-variable-mapping">Variable Mapping</h2>
-<p><!-- {activity-variable-mapping-toc} --></p>
+<h3 id="activity-variable-mapping-out-">Out()</h3>
+<p><!-- {activity-variable-mapping-out--toc} -->
+!!!!!!You can only configure what outgoing variables are</p>
+
+<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx. In other words, anything a step writes to <code>ctx</code> is passed to the following step. The behavior is identical to the way before you were using i/o.</p>
+
+<p>However, it is often necessary to rename or limit the outgoing variables of a particular step. Especially when using nested operations you probably don’t want the entire nested ctx to be copied into the outer context. This is where output filters enter the stage.</p>
+
+<p>Consider the following updated <code>Policy::Create</code> step.</p>
+
+<pre><code>module Policy
+  # Explicit policy, not ideal as it results in a lot of code.
+  class Create
+    def self.call(ctx, model:, user:, **)
+      decision = ApplicationPolicy.can?(model, user, :create) # FIXME: how does pundit/cancan do this exactly?
+
+      if decision.allowed?
+        return true
+      else
+        ctx[:status]  = 422 # we're not interested in this field.
+        ctx[:message] = "Command {create} not allowed!"
+        return false
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Both <code>ctx[:status]</code> and <code>ctx[:message]</code> will be visible in all steps following <code>Policy::Create</code>. This might lead to “misunderstandings” and bugs in more complex applications.</p>
+
+<p>As soon as you use <code>Out()</code>, only variables specified through the filters will be merged with the original (outer) ctx and passed on to the next step.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-limiting-array">Limiting array</li>
+</ul>
+
+<p>In order to limit variables added to the outer ctx, <code>Out()</code> accepts an array similar to <code>In()</code>. Consider this as a whitelisting to specify exposed variables.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; [:message]
+  # ...
+end
+</code></pre>
+
+<p>This single <code>Out()</code> usage will result in only the <code>:message</code> variable being written to the outer ctx that is passed on. The <code>:status</code> variable is discarded.</p>
+
+<p>You may pass any number of variables in the limiting array.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-mapping-hash">Mapping hash</li>
+</ul>
+
+<p>Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the “old” inner name points to the outer name that you want to use in the operation hosting that step.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; {:message =&gt; :message_from_policy}
+  # ...
+end
+</code></pre>
+
+<p>Here, steps following <code>Policy::Create</code> will see a variable <code>:message_from_policy</code> merged into the ctx - which is the original <code>:message</code>, renamed.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-callable">Callable</li>
+</ul>
+
+<p>An <code>Out()</code> filter can be any callable object following the <a href="">step interface</a>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; -&gt;(ctx, **) do
+      return {} unless ctx[:message]
+
+      { # you always have to return a hash from a callable!
+        :message_from_policy =&gt; ctx[:message]
+      }
+    end
+  # ...
+end
+</code></pre>
+
+<p>The callable receives the inner ctx that just left the actual step, here <code>Policy::Create</code>. You may run any Ruby code in the callable, even <code>if</code>s.</p>
+
+<p>Note that a callable always must return a hash, which is then merged with the original outer ctx.</p>
+
+<p>Be adviced that it is usually a better idea to maintain multiple smaller <code>Out()</code> callables for different variables. You might later decide to override them, debugging will be easier and the code is more maintainable. This was different when <code>:output</code> was the only way to filter outgoing variables and you had to create one big hash in a one single filter.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>You may also use an <code>:instance_method</code> to filter outgoing variables, similar to <a href="#activity-variable-mapping-in-filter-method">how it’s done with In()</a>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-keyword-arguments">Keyword arguments</li>
+</ul>
+
+<p>Just as with <code>In()</code> callables can receive keyword arguments.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; -&gt;(ctx, message: nil, **) do
+      return {} if message.nil?
+
+      { # you always have to return a hash from a callable!
+        :message_from_policy =&gt; message
+      }
+    end
+  include Steps
+end
+</code></pre>
+
+<p>Any variable readable on the inner <code>ctx</code> that just left <code>Policy::Create</code> is available as a keyword argument for a callable. Note that you need to default it if its presence is not guaranteed.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-outer-context">Outer context</li>
+</ul>
+
+<p>You can access the outer, original ctx by passing the <code>:with_outer_ctx</code> option to <code>Out()</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; [:message],
+
+    Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx, **) do
+      {
+        errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
+      }
+    end
+  # ...
+end
+</code></pre>
+
+<p>While the callable still needs to return a hash that is then merged with the original ctx, it’s possible to access variables from the outer ctx before that merge. This allows for merging deeper data structures, such as error objects.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-inject-">Inject()</h3>
+<p><!-- {activity-variable-mapping-inject--toc} --></p>
+
+<p>An <code>Inject()</code> filter, as opposed to <code>In()</code>, does an existance check on the ctx using <code>ctx.key?(:variable)</code> before performing its logic. It is helpful in combination with <code>In()</code> filters, when using defaulted keyword arguments in a step or in nested operations.</p>
+
+<ul>
+  <li>It allows defaulting a variable when it’s absent in the ctx.</li>
+  <li>It can pass-through a variable when it is present in the ctx, and only then.</li>
+</ul>
+
+<p>Check the following exemplary policy code.</p>
+
+<pre><code>module Policy
+  class Check
+                                    # vvvvvvvvvvvvvvv-- defaulted keyword arguments
+    def self.call(ctx, model:, user:, action: :create, **)
+      decision = ApplicationPolicy.can?(model, user, action) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>This policy implementation uses keyword arguments to automatically extract <code>:model</code>, <code>:user</code> and <code>:action</code> from the ctx. Note that the latter is defaulted to <code>:create</code>. Defaulting kwargs only works when the keyword variable is <strong>not passed</strong> into the step - if it’s <code>nil</code>, the defaulting will not get triggered.</p>
+
+<p>You could now use <code>In()</code> filters to embed this policy step into your operation.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Check,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model, :action]
+  # ...
+end
+</code></pre>
+
+<p>However, this will break because the <code>action</code> variable will never be defaulted to <code>:create</code>. The <code>In()</code> filter will <em>always</em> pass <code>:action</code> through when calling the policy, even when it’s absent.</p>
+
+<p>The <code>Inject()</code> helper is designed to handle this case.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-array-style">Array style</li>
+</ul>
+
+<p>Use <code>Inject()</code> in combination with <code>In()</code> to add variables to the filtered ctx, but only when they’re present in the outer ctx.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Check,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Inject() =&gt; [:action]
+  # ...
+end
+</code></pre>
+
+<p>We call this <em>qualified pass-through</em>, it means the <code>:action</code> variable will only be passed into the filtered ctx if it exists on <code>ctx</code> when the filter is invoked.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-defaulting">Defaulting</li>
+</ul>
+
+<p>Instead of hard-wiring defaulted keyword arguments into your step implementations, you can configure <code>Inject()</code> to set a default value to variables, if they’re absent in the ctx.</p>
+
+<p>Here’s an example policy without any defaulting in the signature.</p>
+
+<pre><code>module Policy
+  class Check
+                                    # vvvvvvv-- no defaulting!
+    def self.call(ctx, model:, user:, action:, **)
+      decision = ApplicationPolicy.can?(model, user, action) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>Defaulting the <code>:action</code> variable via <code>Inject()</code> will improve the policy component’s reusability.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Check,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Inject() =&gt; {
+      action: -&gt;(ctx, **) { :create }
+    }
+  # ...
+end
+</code></pre>
+
+<p>The lambda is executed at runtime, just before the actual step is invoked. It provides access to the ctx object and allows extracting keyword arguments.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-macro">Macro</h3>
+<p><!-- {activity-variable-mapping-macro-toc} --></p>
+
+<p>As all DSL options the <code>In()</code>, <code>Out()</code> and <code>Inject()</code> helpers can be used from macros, providing the macro author a convenient way to define default filters. <a href="/2.1/docs/activity.html#activity-macro-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<pre><code>module Policy
+  def self.Create()
+    {
+      task: Policy::Create,
+      wrap_task: true,
+      Trailblazer::Activity::Railway.In()  =&gt; {:current_user =&gt; :user},
+      Trailblazer::Activity::Railway.In()  =&gt; [:model],
+      Trailblazer::Activity::Railway.Out() =&gt; {:message =&gt; :message_from_policy},
+    }
+  end
+end
+</code></pre>
+
+<p>In the options hash that a macro must return, you can use the helpers by referencing <code>Trailblazer::Activity::Railway</code>. Except for the prefixed constant, there is no difference or limitation to their usage.</p>
+
+<p>They can be extended with options the macro user provides.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create(),
+    Out() =&gt; {:message =&gt; :copied_message} # user options!
+  # ...
+end
+</code></pre>
+
+<p>The user options will be merged into the macro options, resulting in <code>:message</code> being renamed to <code>:message_from_policy</code> and copied to <code>:copied_message</code>.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Before <code>trailblazer-activity-dsl-linear-1.0.0</code> and the <code>In()</code> and <code>Out()</code> helper shipped with it, any <code>:input</code> from the user would always override the macro’s <code>:input</code> option.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-inheritance">Inheritance</h3>
+<p><!-- {activity-variable-mapping-inheritance-toc} --></p>
+
+<p>Subclasses can add and remove input and output filters - hence the term <em>composable</em>. This is a great tool when inherited operations replace particular steps and need to fine-tune ingoing or returned variables.</p>
+
+<p>Consider the following base operation.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  extend Trailblazer::Activity::DSL::Linear::VariableMapping::Inherit # this has to be done on the root level!
+
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {:current_user =&gt; :user},
+    In() =&gt; [:model],
+    Out() =&gt; [:message],
+    id: :policy
+  # ...
+end
+</code></pre>
+
+<p>It defines two input and one output filter.</p>
+
+<p>A sub operation could now replace the policy step. However, instead of redefining the i/o filters, they can be inherited and extended.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>As <code>inherit: [:variable_mapping]</code> is still an experimental feature, you need to explicitely <code>extend</code> the <code>VariableMapping::Inherit</code> module into the top-most operation where the inheritance chain should begin.</p>
+</div>
+
+<p>Here’s a potential inheriting operation.</p>
+
+<pre><code>class Admin &lt; Create
+  step Policy::Create,
+    Out() =&gt; {:message =&gt; :raw_message_for_admin},
+    inherit: [:variable_mapping],
+    id: :policy,      # you need to reference the :id when your step
+    replace: :policy
+end
+</code></pre>
+
+<p>This configuration is adding another <code>Out()</code> filter, resulting in a total filter setup as follows in the introspection.</p>
+
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Admin, id: :policy)
+
+ComposableVariableMappingDocTest::EEE::Admin
+# `-- policy
+#     |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
+#     |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
+#     |   |-- input.add_variables.0.994[...]............... {:current_user=&gt;:user}....................... VariableMapping::AddVariables
+#     |   |-- input.add_variables.0.592[...]............... [:model]..................................... VariableMapping::AddVariables
+#     |   `-- input.scope.................................. ............................................. VariableMapping.scope
+#     |-- task_wrap.call_task..............Method
+#     `-- task_wrap.output.................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Output
+#         |-- output.init_hash............................. ............................................. VariableMapping.initial_aggregate
+#         |-- output.add_variables.0.599[...].............. [:message]................................... VariableMapping::AddVariables::Output
+#         |-- output.add_variables.0.710[...].............. {:message=&gt;:raw_message_for_admin}........... VariableMapping::AddVariables::Output
+#        `-- output.merge_with_original................... ............................................. VariableMapping.merge_with_original
+</code></pre>
+
+<p>The new <code>Out()</code> filter setting <code>:raw_message_for_admin</code> is placed behind the inherited filter.</p>
+
+<!--
+
+
+TODO: decompose trick (input )
+-->
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-introspect">Introspect</h3>
+<p><!-- {activity-variable-mapping-introspect-toc} --></p>
+
+<p>You can visualize the pipelines around each step by using the <code>trailblazer-developer</code> gem.</p>
+
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Operation::Create, id: :policy)
+</code></pre>
+
+<p>This handy invocation will render the task wrap around <code>Song::Operation::Create</code>’s step <code>:policy</code>.</p>
+
+<pre><code>Song::Operation::Create
+`-- policy
+    |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
+    |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
+    |   |-- input.add_variables.0.994[...]............... {:current_user=&gt;:user}....................... VariableMapping::AddVariables
+    |   |-- input.add_variables.0.592[...]............... [:model]..................................... VariableMapping::AddVariables
+    |   `-- input.scope.................................. ............................................. VariableMapping.scope
+    |-- task_wrap.call_task..............Method
+    `-- task_wrap.output.................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Output
+        |-- output.init_hash............................. ............................................. VariableMapping.initial_aggregate
+        |-- output.add_variables.0.599[...].............. [:message]................................... VariableMapping::AddVariables::Output
+        `-- output.merge_with_original................... ............................................. VariableMapping.merge_with_original
+</code></pre>
+
+<p>In i/o context, the interesting branches here are <code>task_wrap.input</code> and <code>task_wrap.output</code>. Sandwiched between generic library steps are your filter steps. The visualizer even renders filter configuration where possible.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>We’re planning improvements on this part of <code>trailblazer-developer</code>. If you want to help out with better rendering, please <a href="https://trailblazer.zulipchat.com">come chat to us</a>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-input-output">Input / Output</h3>
+<p><!-- {activity-variable-mapping-input-output-toc} --></p>
+
+<p>Before the introduction of the composable <code>In()</code>, <code>Out()</code> and <code>Inject()</code> filters, variable mapping was done with the <code>:input</code> and <code>:output</code> option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>With <code>trailblazer-2.1.1</code> and the bundled <code>trailblazer-activity-dsl-linear-1.0.0</code> gems, the recommended way of I/O is using <a href="">composable variable mapping</a> via <code>In()</code> and <code>Out()</code>.</p>
+</div>
 
 <p><img class="mx-auto d-block" src="/vite-dev/images/input.webp" /></p>
 
@@ -1841,15 +2250,6 @@ end
 
 <p>With the <code>:output</code> filter, you can control what variables go from the inner scoped context to the outer.</p>
 
-<div class="bd-callout bd-callout-info">
-<p>With <code>trailblazer-2.1.1</code> and the bundled <code>trailblazer-activity-dsl-linear-1.0.0</code> gems, the recommended way of I/O is using <a href="">composable variable mapping</a> via <code>In()</code> and <code>Out()</code>.</p>
-</div>
-
-<p><span class="divider"></span></p>
-
-<h3 id="activity-variable-mapping-limiting">Limiting</h3>
-<p><!-- {activity-variable-mapping-limiting-toc} --></p>
-
 <p>Without any I/O configuration, all values written in a task to <code>ctx</code> will be visible in the following tasks. This might - sometimes - lead to context pollution or, even worse, certain tasks “seeing” wrong values.</p>
 
 <p>When using the DSL, the filter options <code>:input</code> and <code>:output</code> are your interface for variable mapping.</p>
@@ -1858,8 +2258,10 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="activity-variable-mapping-filter">Filter</h3>
-<p><!-- {activity-variable-mapping-filter-toc} --></p>
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-overview">Overview</li>
+</ul>
 
 <p>The variable mapping API provides some shortcuts to control the scope.</p>
 
@@ -1904,8 +2306,10 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="activity-variable-mapping-callable">Callable</h3>
-<p><!-- {activity-variable-mapping-callable-toc} --></p>
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-callable">Callable</li>
+</ul>
 
 <p>As usual, you may provide your own code for dynamic filtering or renaming.</p>
 
@@ -1930,8 +2334,8 @@ end
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Callable</li>
-    <li id="activity-variable-mapping-callable-filter-methods">Filter Methods</li>
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-filter-methods">Filter Methods</li>
 </ul>
 
 <p>For better readability, you may use instance methods for your filters.</p>
@@ -1955,8 +2359,8 @@ end
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Callable</li>
-    <li id="activity-variable-mapping-callable-keyword-arguments">Keyword Arguments</li>
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-keyword-arguments">Keyword Arguments</li>
 </ul>
 
 <p>You may use keyword arguments in your filters for type safety and better readable code.</p>
@@ -1973,14 +2377,9 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="activity-variable-mapping-output">Output</h3>
-<p><!-- {activity-variable-mapping-output-toc} --></p>
-
-<p><span class="divider"></span></p>
-
 <ul class="navigation">
-    <li>Output</li>
-    <li id="activity-variable-mapping-output-with-outer-ctx">With Outer Ctx</li>
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-with-outer-ctx">With Outer Ctx</li>
 </ul>
 
 <p>It is possible to access the outer context (in addition to the inner ctx) in an <code>:output</code> filter using the <code>:output_with_outer_ctx</code> DSL option.</p>
@@ -2005,8 +2404,10 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="activity-variable-mapping-notes">Notes</h3>
-<p><!-- {activity-variable-mapping-notes-toc} --></p>
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-notes">Notes</li>
+</ul>
 
 <p> </p>
 
@@ -3512,11 +3913,6 @@ Create.([ctx])
         </a>
       </li>
       
-        
-        <li class="sub-item">
-          <a href="#activity-variable-mapping-overview-missing-mapping">Missing mapping</a>
-        </li>
-      
     
       <li>
         <a href="#activity-variable-mapping-composable-i-o">
@@ -3559,70 +3955,117 @@ Create.([ctx])
         </li>
       
     
-  </ul>
-</div>
-
-<div class="features" id="activity-variable-mapping-features">
-  <h3>
-    <i class="fas fa-times"></i>
-    <span>Variable Mapping</span>
-  </h3>
-
-  <ul class="vertical menu">
-    
       <li>
-        <a href="#activity-variable-mapping-limiting">
+        <a href="#activity-variable-mapping-out-">
           <i class="fas fa-arrow-right"></i>
-          Limiting
-        </a>
-      </li>
-      
-    
-      <li>
-        <a href="#activity-variable-mapping-filter">
-          <i class="fas fa-arrow-right"></i>
-          Filter
-        </a>
-      </li>
-      
-    
-      <li>
-        <a href="#activity-variable-mapping-callable">
-          <i class="fas fa-arrow-right"></i>
-          Callable
+          Out()
         </a>
       </li>
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-callable-filter-methods">Filter Methods</a>
+          <a href="#activity-variable-mapping-out-limiting-array">Limiting array</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-callable-keyword-arguments">Keyword Arguments</a>
+          <a href="#activity-variable-mapping-out-mapping-hash">Mapping hash</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-keyword-arguments">Keyword arguments</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-outer-context">Outer context</a>
         </li>
       
     
       <li>
-        <a href="#activity-variable-mapping-output">
+        <a href="#activity-variable-mapping-inject-">
           <i class="fas fa-arrow-right"></i>
-          Output
+          Inject()
         </a>
       </li>
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-output-with-outer-ctx">With Outer Ctx</a>
+          <a href="#activity-variable-mapping-inject-array-style">Array style</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-inject-defaulting">Defaulting</a>
         </li>
       
     
       <li>
-        <a href="#activity-variable-mapping-notes">
+        <a href="#activity-variable-mapping-macro">
           <i class="fas fa-arrow-right"></i>
-          Notes
+          Macro
         </a>
       </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-inheritance">
+          <i class="fas fa-arrow-right"></i>
+          Inheritance
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-introspect">
+          <i class="fas fa-arrow-right"></i>
+          Introspect
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-input-output">
+          <i class="fas fa-arrow-right"></i>
+          Input / Output
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-overview">Overview</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-filter-methods">Filter Methods</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-keyword-arguments">Keyword Arguments</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-with-outer-ctx">With Outer Ctx</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-notes">Notes</a>
+        </li>
       
     
   </ul>

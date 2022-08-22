@@ -1,5 +1,10 @@
+<%= h3 "Input / Output" %>
 
-<%= h2 "Variable Mapping", name: "variable-mapping" %>
+Before the introduction of the composable `In()`, `Out()` and `Inject()` filters, variable mapping was done with the `:input` and `:output` option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.
+
+<%= info do %>
+With `trailblazer-2.1.1` and the bundled `trailblazer-activity-dsl-linear-1.0.0` gems, the recommended way of I/O is using [composable variable mapping]() via `In()` and `Out()`.
+<% end %>
 
 <%= vite_image_tag "images/input.webp", class: "mx-auto d-block" %>
 
@@ -10,11 +15,7 @@ The `:input` filter is normally used to create a new context that limits what it
 
 With the `:output` filter, you can control what variables go from the inner scoped context to the outer.
 
-<%= info do %>
-With `trailblazer-2.1.1` and the bundled `trailblazer-activity-dsl-linear-1.0.0` gems, the recommended way of I/O is using [composable variable mapping]() via `In()` and `Out()`.
-<% end %>
 
-<%= h3 "Limiting" %>
 
 Without any I/O configuration, all values written in a task to `ctx` will be visible in the following tasks. This might - sometimes - lead to context pollution or, even worse, certain tasks "seeing" wrong values.
 
@@ -22,7 +23,7 @@ When using the DSL, the filter options `:input` and `:output` are your interface
 
 Please note that I/O works for both "simple" tasks as well as nested activities.
 
-<%= h3 "Filter" %>
+<%= h4 "Overview" %>
 
 The variable mapping API provides some shortcuts to control the scope.
 
@@ -47,7 +48,7 @@ An array passed to `:output` will exclusively copy the specified variables to th
 
 A hash passed to `:input` results in the called task only "seeing" the specified variables, but renamed to the hash values.
 
-<%= h3 "Callable" %>
+<%= h4 "Callable" %>
 
 As usual, you may provide your own code for dynamic filtering or renaming.
 
@@ -78,8 +79,6 @@ You may use keyword arguments in your filters for type safety and better readabl
 * `:input` provides all variables from the original context as kw args.
 * `:output` will receive a list of all variables you added to the scoped, inner context.
 
-<%= h3 "Output" %>
-
 <%= h4 "With Outer Ctx" %>
 
 It is possible to access the outer context (in addition to the inner ctx) in an `:output` filter using the `:output_with_outer_ctx` DSL option.
@@ -94,7 +93,7 @@ As usual, the returned hash is then merged into the outer context.
 The `:output_with_outer_ctx` option is available since `trailblazer-activity-dsl-linear-0.4.0`.
 <% end %>
 
-<%= h3 "Notes" %>
+<%= h4 "Notes" %>
 
 &nbsp;
 
