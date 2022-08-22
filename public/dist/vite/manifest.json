@@ -1,37 +1,37 @@
 {
   "entrypoints/documentation.js": {
-    "file": "assets/documentation.18fc64a0.js",
+    "file": "assets/documentation.34a9a836.js",
     "src": "entrypoints/documentation.js",
     "isEntry": true,
     "imports": [
-      "_docSearch.60d7ae5d.js",
-      "_initAnchor.7147cf7a.js"
+      "_main.856e24d3.js",
+      "_initAnchor.997783a9.js"
     ]
   },
   "entrypoints/home.js": {
-    "file": "assets/home.ae051891.js",
+    "file": "assets/home.c786d5c3.js",
     "src": "entrypoints/home.js",
     "isEntry": true,
     "imports": [
-      "_docSearch.60d7ae5d.js"
+      "_main.856e24d3.js"
     ],
     "css": [
-      "assets/home.32dcb61d.css"
+      "assets/home.64960c31.css"
     ]
   },
   "entrypoints/page.js": {
-    "file": "assets/page.58c173b2.js",
+    "file": "assets/page.22caf2d9.js",
     "src": "entrypoints/page.js",
     "isEntry": true,
     "imports": [
-      "_docSearch.60d7ae5d.js",
-      "_initAnchor.7147cf7a.js"
+      "_main.856e24d3.js",
+      "_initAnchor.997783a9.js"
     ]
   },
-  "_docSearch.60d7ae5d.js": {
-    "file": "assets/docSearch.60d7ae5d.js",
+  "_main.856e24d3.js": {
+    "file": "assets/main.856e24d3.js",
     "css": [
-      "assets/docSearch.999e4d80.css"
+      "assets/main.2a3d4e86.css"
     ],
     "assets": [
       "assets/fa-brands-400.fffc5be4.eot",
@@ -62,10 +62,13 @@
       "assets/docu-back.2b5b2557.webp"
     ]
   },
-  "_initAnchor.7147cf7a.js": {
-    "file": "assets/initAnchor.7147cf7a.js",
+  "_initAnchor.997783a9.js": {
+    "file": "assets/initAnchor.997783a9.js",
     "imports": [
-      "_docSearch.60d7ae5d.js"
+      "_main.856e24d3.js"
+    ],
+    "css": [
+      "assets/initAnchor.947cda8b.css"
     ]
   }
 }
