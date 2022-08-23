@@ -7,9 +7,9 @@
     <title>Trailblazer - Activity</title>
 
     
-    <script src="/vite/assets/documentation.49aee2dd.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.9990d77f.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.84ab08f7.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.9fbfbb9d.css" media="screen" />
-<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.402976e3.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -1223,8 +1223,19 @@ end
 
 <p><img class="mx-auto d-block" src="/vite/assets/wiring-terminus-track.799e44d6.png" /></p>
 
+<p>Invoking this activity with an unsolicited provider will stop on the newly added terminus.</p>
+
+<pre><code>signal, (ctx, _) = Payment::Operation::Create.(provider: "bla-unknown")
+puts signal.to_h[:semantic] #=&gt; :provider_invalid
+</code></pre>
+
 <div class="bd-callout bd-callout-info">
-<p>The default semantic is <code>:provider_invalid</code>. Note that the options <code>:id</code> and <code>:magnetic_to</code> can be configured.</p>
+<p>The default semantic is <code>:provider_invalid</code>. Note that the following options <code>:id</code> and <code>:magnetic_to</code> can be passed to <code>#terminus</code>:</p>
+
+<ul>
+  <li><code>:id</code></li>
+  <li><code>:magnetic_to</code></li>
+</ul>
 </div>
 
 <p><span class="divider"></span></p>
