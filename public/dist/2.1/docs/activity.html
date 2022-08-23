@@ -1680,7 +1680,7 @@ end
 end
 </code></pre>
 
-<p>The <code>Policy::Create</code> is a simple callable class following the <a href="">step interface</a>.</p>
+<p>The <code>Policy::Create</code> implementaition is a simple callable class following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
 <pre><code>module Policy
   # Explicit policy, not ideal as it results in a lot of code.
@@ -1813,7 +1813,7 @@ end
     <li id="activity-variable-mapping-in-callable">Callable</li>
 </ul>
 
-<p>As always, you may implement your own input filter with any callable object [adhering to the step interface])().</p>
+<p>As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Railway
   step :create_model
@@ -1972,7 +1972,7 @@ end
     <li id="activity-variable-mapping-out-callable">Callable</li>
 </ul>
 
-<p>An <code>Out()</code> filter can be any callable object following the <a href="">step interface</a>.</p>
+<p>An <code>Out()</code> filter can be any callable object following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Railway
   step :create_model
@@ -3200,41 +3200,52 @@ end
 
 <!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
 
-<p><span class="divider"></span></p>
+<p><a name="activity-internals-task-interface"><!-- old name/link -->
+<span class="divider"></span></a></p>
 
-<h3 id="activity-internals-task-interface">Task Interface</h3>
-<p><!-- {activity-internals-task-interface-toc} --></p>
+<h3 id="activity-internals-step-interface">Step Interface</h3>
+<p><!-- {activity-internals-step-interface-toc} --></p>
+
+<p><em>a.k.a. <strong>Task interface</strong></em></p>
 
 <p>The convenient high-level interface for a task implementation is - surprisingly - called <em>task interface</em>. It’s the one you will be working with 95% of your time when writing task logic.</p>
 
-<p>This interface comprises of two elements.</p>
+<p>This interface comprises of two parts.</p>
 
 <ul>
   <li>The <strong>signature</strong> receives a mutable <code>ctx</code> object, and an optional list of keywords, often seen as <code>(ctx, **)</code>.</li>
   <li>The <strong>return value</strong> can be <code>true</code>, <code>false</code>, or a subclass of <code>Activity::Signal</code> to dictate the control flow.</li>
 </ul>
 
-<p>The return value does not control what is the next task, though. A task does inform the circuit about its outcome, it’s the circuit’s job to wire that specific result to the following task.</p>
+<p>The return value does not control what is the next task. Instead, it informs the circuit runner about its outcome, and the circuit runner will find the task executed next.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
-  def self.create_model(ctx, **)
-    attributes = ctx[:attrs]           # read from ctx
+<pre><code>module Memo::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    def self.create_model(ctx, **)
+      attributes = ctx[:attrs]           # read from ctx
 
-    ctx[:model] = Memo.new(attributes) # write to ctx
+      ctx[:model] = Memo.new(attributes) # write to ctx
 
-    ctx[:model].save ? true : false    # return value matters
+      ctx[:model].save ? true : false    # return value matters
+    end
+
+    step method(:create_model)
+    # ...
   end
-
-  step method(:create_model)
-  # ...
 end
 </code></pre>
+
+<p>Components (such as methods or callable objects) exposing the step interface always receive the <code>ctx</code> as the first (and only) positional argument. Keyword arguments may be used to extract variables from the <code>ctx</code>.</p>
+
+<p>Depending on the step’s logic, you can write variables to the <code>ctx</code> object.</p>
+
+<p>The return value can be either a subclass of <code>Trailblazer::Activity::Signal</code> or it will be evaluated to <code>true</code> or <code>false</code>.</p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-keyword-arguments">Keyword Arguments</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-keyword-arguments">Keyword Arguments</li>
 </ul>
 
 <p>A cleaner way to access data from the <code>ctx</code> object is to use keyword arguments in the method signature. Trailblazer makes all <code>ctx</code> options available as kw args.</p>
@@ -3253,11 +3264,11 @@ end
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-return-value">Return Value</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-return-value">Return Value</li>
 </ul>
 
-<p>Using the DSL, your task will usually be wrapped using the <code>TaskBuilder::Binary</code> strategy, which translates a <code>nil</code> and <code>false</code> return value to an <code>Activity::Left</code> signal, and all other return values to <code>Activity::Right</code>.</p>
+<p>Using the DSL, your task will usually be wrapped in a <code>TaskBuilder::Binary</code> object, which translates a <code>nil</code> and <code>false</code> return value to an <code>Activity::Left</code> signal, and all other return values to <code>Activity::Right</code>.</p>
 
 <pre><code>def self.create_model(ctx, attrs:, **) # kw args!
   # ...
@@ -3265,53 +3276,57 @@ end
 end
 </code></pre>
 
-<p>In a Railway activity, a true value will usually result in the flow staying on the “success” path, where a falsey return value deviates to the “failure” track. However, eventually it’s the developer’s decision how to <a href="#activity-wiring">wire signals to connections</a>.</p>
+<p>In a Railway activity, a true value will usually result in the flow staying on the “success” path, where a falsey return value deviates to the “failure” track. However, eventually it’s the developer’s decision how to <a href="#activity-wiring-api">wire signals to connections</a>.</p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-return-signal">Return Signal</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-return-signal">Return Signal</li>
 </ul>
 
 <p>You are not limited to true and falsey return values. Any subclass of <code>Activity::Signal</code> will simply be passed through without getting “translated” by the <code>Binary</code> wrapper. This allows to emit more than two possible states from a task.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
-  DatabaseError = Class.new(Trailblazer::Activity::Signal) # subclass Signal
+<pre><code>module Memo::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    DatabaseError = Class.new(Trailblazer::Activity::Signal) # subclass Signal
 
-  def self.create_model(ctx, attrs:, **)
-    ctx[:model] = Memo.new(attrs)
+    def create_model(ctx, attrs:, **)
+      ctx[:model] = Memo.new(attrs)
 
-    begin
-      return ctx[:model].save ? true : false  # binary return values
-    rescue
-      return DatabaseError                    # third return value
+      begin
+        return ctx[:model].save ? true : false  # binary return values
+      rescue
+        return DatabaseError                    # third return value
+      end
     end
-  end
-  # ...
+    # ...
 
-  step method(:create_model),
-    Output(DatabaseError, :handle_error) =&gt; Id(:handle_db_error)
-  step method(:handle_db_error),
-    id: :handle_db_error, magnetic_to: nil, Output(:success) =&gt; Track(:failure)
+    step :create_model,
+      Output(DatabaseError, :handle_error) =&gt; Id(:handle_db_error)
+    step :handle_db_error,
+      id: :handle_db_error, magnetic_to: nil, Output(:success) =&gt; Track(:failure)
+  end
 end
 </code></pre>
 
 <p>The exemplary <code>DatabaseError</code> is being passed through to the routing and interpreted. It’s your job to make sure this signal is wired to a following task, track, or end (line 16).</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/activity-signal.2c87914d.webp" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/activity-signal.56eb92ff.png" /></p>
 
 <p>Note that you don’t have to use the default binary signals at all (<code>Left</code> and <code>Right</code>).
-<a href="#" class="pink">
+<!-- <a href="#" class="pink">
    <i class="far fa-arrow-alt-circle-right"></i>
    <span class="medium">wiring</span>
-</a></p>
+</a>
+ -->
+<a href="#wiring-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-instance-method">Instance Method</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-instance-method">Instance Method</li>
 </ul>
 
 <p>The most convenient way is to use instance methods. Those may be declared after the <code>step</code> definitions, allowing you to first define the flow, then implement it.</p>
@@ -3328,13 +3343,15 @@ end
 
 <p>Use <code>:method_name</code> to refer to instance methods.</p>
 
+<div class="bd-callout bd-callout-info">
 <p>Do <em>not use instance variables</em> (<code>@ivar</code>) ever as they’re not guaranteed to work as expected. Always transport state via <code>ctx</code>.</p>
+</div>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-class-method">Class Method</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-class-method">Class Method</li>
 </ul>
 
 <p>A class method can implement a task of an activity. It needs to be declared as a class method using <code>self.method_name</code> and must precede the <code>step</code> declaration. Using Ruby’s <code>#method</code>, it can be passed to the <code>step</code> DSL.</p>
@@ -3371,8 +3388,8 @@ end
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-callable">Callable</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-callable">Callable</li>
 </ul>
 
 <p>As a matter of fact, you can use any callable object. That means, any object that responds to <code>#call</code> is suitable as a task implementation.</p>
@@ -3397,8 +3414,8 @@ end
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Task Interface</li>
-    <li id="activity-internals-task-interface-module">Module</li>
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-module">Module</li>
 </ul>
 
 <p>Keep in mind that you don’t have to implement every task in the activity itself - it can be outsourced to a module.</p>
@@ -4337,45 +4354,45 @@ Create.([ctx])
       
     
       <li>
-        <a href="#activity-internals-task-interface">
+        <a href="#activity-internals-step-interface">
           <i class="fas fa-arrow-right"></i>
-          Task Interface
+          Step Interface
         </a>
       </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-keyword-arguments">Keyword Arguments</a>
+          <a href="#activity-internals-step-interface-keyword-arguments">Keyword Arguments</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-return-value">Return Value</a>
+          <a href="#activity-internals-step-interface-return-value">Return Value</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-return-signal">Return Signal</a>
+          <a href="#activity-internals-step-interface-return-signal">Return Signal</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-instance-method">Instance Method</a>
+          <a href="#activity-internals-step-interface-instance-method">Instance Method</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-class-method">Class Method</a>
+          <a href="#activity-internals-step-interface-class-method">Class Method</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-callable">Callable</a>
+          <a href="#activity-internals-step-interface-callable">Callable</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-internals-task-interface-module">Module</a>
+          <a href="#activity-internals-step-interface-module">Module</a>
         </li>
       
     
