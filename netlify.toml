@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/"
-  to = "/2.1/index.html"
+  to = "/2.1"
 [[redirects]]
   from = "/gems/:name"
   to = "/2.0/gems/:name"
