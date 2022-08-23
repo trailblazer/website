@@ -50,7 +50,7 @@ Run `rails publish` to publish any current changes. This will
   3. Commit `public/dist` into the repository
   4. Push changes to the current branch
 
-If changes are pushed on main branch, [render.com](render.com) will automatically deploy and update the website.
+If changes are pushed on `main` branch, [netlify](https://netlify.com/) will automatically deploy and update the website.
 
 ## Code Snippets
 
