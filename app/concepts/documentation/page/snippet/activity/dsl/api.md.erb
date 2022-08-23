@@ -127,7 +127,14 @@ The failure output will be connected to the next following element that is magne
 
 <%= vite_image_tag "images/wiring-terminus-track.png", class: "mx-auto d-block" %>
 
+Invoking this activity with an unsolicited provider will stop on the newly added terminus.
+
+<%= code "terminus-invalid", file: "wiring_api_test.rb" %>
+
 <%= info do %>
-The default semantic is `:provider_invalid`. Note that the options `:id` and `:magnetic_to` can be configured.
+The default semantic is `:provider_invalid`. Note that the following options `:id` and `:magnetic_to` can be passed to `#terminus`:
+
+* `:id`
+* `:magnetic_to`
 <% end %>
 

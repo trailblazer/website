@@ -1221,8 +1221,19 @@ end
 
 <p><img class="mx-auto d-block" src="/vite-dev/images/wiring-terminus-track.png" /></p>
 
+<p>Invoking this activity with an unsolicited provider will stop on the newly added terminus.</p>
+
+<pre><code>signal, (ctx, _) = Payment::Operation::Create.(provider: "bla-unknown")
+puts signal.to_h[:semantic] #=&gt; :provider_invalid
+</code></pre>
+
 <div class="bd-callout bd-callout-info">
-<p>The default semantic is <code>:provider_invalid</code>. Note that the options <code>:id</code> and <code>:magnetic_to</code> can be configured.</p>
+<p>The default semantic is <code>:provider_invalid</code>. Note that the following options <code>:id</code> and <code>:magnetic_to</code> can be passed to <code>#terminus</code>:</p>
+
+<ul>
+  <li><code>:id</code></li>
+  <li><code>:magnetic_to</code></li>
+</ul>
 </div>
 
 <p><span class="divider"></span></p>
