@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1216fc0b-4635-40d4-8168-aa76e7a1fabd/deploy-status)](https://app.netlify.com/sites/ornate-heliotrope-1c15e2/deploys)
+
 ## System dependencies
 
 - ruby (~> 3.0)
