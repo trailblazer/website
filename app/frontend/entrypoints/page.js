@@ -12,7 +12,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "~/css/material.css";
 import "~/css/font-awesome.css";
-import "~/css/documentation-hljs.css";
 import "~/css/main.css";
 
 // import "~/js/docSearch.js";
