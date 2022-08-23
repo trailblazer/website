@@ -545,7 +545,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Aug 22</span>
+                      <span>Last updated 23 Aug 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1176,6 +1176,53 @@ end
 
 <div class="bd-callout bd-callout-info">
 <p>Use [Path()] if you want to avoid <code>Track()</code> and <code>:magnetic_to</code> - this helper does nothing but providing those values to your convenience.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-terminus">Terminus</h3>
+<p><!-- {activity-wiring-api-terminus-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.0.0</a></p>
+
+<p>In addition to the strategy’s termini, you can add your own end events using <code>#terminus</code>. This is an important design tool helping you to communicate outcomes other than “success” or “failure” to the outer world (in a <code>Railway</code> activity).</p>
+
+<pre><code>module Payment::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    step :find_provider
+
+    terminus :provider_invalid # , id: "End.provider_invalid", magnetic_to: :provider_invalid
+    # ...
+  end
+end
+</code></pre>
+
+<p>The above code adds a new terminus named <code>End.provider_invalid</code> to the activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wiring-terminus-dashed.png" /></p>
+
+<p>As visible, this terminus is not connected to anything as its <code>magnetic_to</code> property is set to <code>:provider_invalid</code>.</p>
+
+<p>You could now connect <code>find_provider</code>’s failure output to the new terminus by using the <code>Track()</code> helper.</p>
+
+<pre><code>module Payment::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    step :find_provider,
+      # connect {failure} to the next element that is magnetic_to {:provider_invalid}.
+      Output(:failure) =&gt; Track(:provider_invalid)
+
+    terminus :provider_invalid
+    # ...
+  end
+end
+</code></pre>
+
+<p>The failure output will be connected to the next following element that is magnetic_to <code>:provider_invalid</code>, which is the new terminus we created.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wiring-terminus-track.png" /></p>
+
+<div class="bd-callout bd-callout-info">
+<p>The default semantic is <code>:provider_invalid</code>. Note that the options <code>:id</code> and <code>:magnetic_to</code> can be configured.</p>
 </div>
 
 <p><span class="divider"></span></p>
@@ -3779,6 +3826,14 @@ Create.([ctx])
         <a href="#activity-wiring-api-track-">
           <i class="fas fa-arrow-right"></i>
           Track()
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-terminus">
+          <i class="fas fa-arrow-right"></i>
+          Terminus
         </a>
       </li>
       
