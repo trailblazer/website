@@ -10,7 +10,7 @@ Imagine a complex application where policies are protecting your operation code 
 
 <%= code "no-in", collapse: :meths %>
 
-The `Policy::Create` is a simple callable class following the [step interface]().
+The `Policy::Create` implementaition is a simple callable class following the [step interface](#activity-internals-step-interface).
 
 <%= code "policy", collapse: :decision %>
 
@@ -75,7 +75,7 @@ This configuration will lead to the exact same new ctx for `Policy::Create` as i
 
 <%= h4 "Callable" %>
 
-As always, you may implement your own input filter with any callable object [adhering to the step interface])().
+As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).
 
 <%= code "in-callable", collapse: :meths %>
 
@@ -143,7 +143,7 @@ Here, steps following `Policy::Create` will see a variable `:message_from_policy
 
 <%= h4 "Callable" %>
 
-An `Out()` filter can be any callable object following the [step interface]().
+An `Out()` filter can be any callable object following the [step interface](#activity-internals-step-interface).
 
 <%= code "out-callable", collapse: :meths %>
 

@@ -115,18 +115,27 @@ end
 
 <!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
 
-<%= h3 "Task Interface" %>
+<a name="activity-internals-task-interface"><!-- old name/link -->
+<%= h3 "Step Interface" %>
+
+_a.k.a. **Task interface**_
 
 The convenient high-level interface for a task implementation is - surprisingly - called _task interface_. It's the one you will be working with 95% of your time when writing task logic.
 
-This interface comprises of two elements.
+This interface comprises of two parts.
 
 * The **signature** receives a mutable `ctx` object, and an optional list of keywords, often seen as `(ctx, **)`.
 * The **return value** can be `true`, `false`, or a subclass of `Activity::Signal` to dictate the control flow.
 
-The return value does not control what is the next task, though. A task does inform the circuit about its outcome, it's the circuit's job to wire that specific result to the following task.
+The return value does not control what is the next task. Instead, it informs the circuit runner about its outcome, and the circuit runner will find the task executed next.
 
 <%= code "task-implementation" %>
+
+Components (such as methods or callable objects) exposing the step interface always receive the `ctx` as the first (and only) positional argument. Keyword arguments may be used to extract variables from the `ctx`.
+
+Depending on the step's logic, you can write variables to the `ctx` object.
+
+The return value can be either a subclass of `Trailblazer::Activity::Signal` or it will be evaluated to `true` or `false`.
 
 <%= h4 "Keyword Arguments" %>
 
@@ -140,11 +149,11 @@ You may use as many keyword arguments as you need - it will save you reading fro
 
 <%= h4 "Return Value" %>
 
-Using the DSL, your task will usually be wrapped using the `TaskBuilder::Binary` strategy, which translates a `nil` and `false` return value to an `Activity::Left` signal, and all other return values to `Activity::Right`.
+Using the DSL, your task will usually be wrapped in a `TaskBuilder::Binary` object, which translates a `nil` and `false` return value to an `Activity::Left` signal, and all other return values to `Activity::Right`.
 
 <%= code "task-implementation-kws", collapse: "method" %>
 
-In a Railway activity, a true value will usually result in the flow staying on the "success" path, where a falsey return value deviates to the "failure" track. However, eventually it's the developer's decision how to [wire signals to connections](#activity-wiring).
+In a Railway activity, a true value will usually result in the flow staying on the "success" path, where a falsey return value deviates to the "failure" track. However, eventually it's the developer's decision how to [wire signals to connections](#activity-wiring-api).
 
 <%= h4 "Return Signal" %>
 
@@ -154,13 +163,16 @@ You are not limited to true and falsey return values. Any subclass of `Activity:
 
 The exemplary `DatabaseError` is being passed through to the routing and interpreted. It's your job to make sure this signal is wired to a following task, track, or end (line 16).
 
-<%= vite_image_tag "images/activity-signal.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/activity-signal.png", class: "mx-auto d-block" %>
 
 Note that you don't have to use the default binary signals at all (`Left` and `Right`).
-<a href="#" class="pink">
+<!-- <a href="#" class="pink">
    <i class="far fa-arrow-alt-circle-right"></i>
    <span class="medium">wiring</span>
 </a>
+ -->
+<%= api "#wiring-api" %>
+
 
 <%= h4 "Instance Method" %>
 
@@ -170,7 +182,9 @@ The most convenient way is to use instance methods. Those may be declared after 
 
 Use `:method_name` to refer to instance methods.
 
+<%= info do %>
 Do *not use instance variables* (`@ivar`) ever as they're not guaranteed to work as expected. Always transport state via `ctx`.
+<% end %>
 
 <%= h4 "Class Method" %>
 
