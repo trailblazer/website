@@ -103,3 +103,31 @@ Using `Track()` with a new track semantic only makes sense when using the [`:mag
 <%= info do %>
 Use [Path()] if you want to avoid `Track()` and `:magnetic_to` - this helper does nothing but providing those values to your convenience.
 <% end %>
+
+<%= h3 "Terminus" %>
+
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.0.0</a>
+
+In addition to the strategy's termini, you can add your own end events using `#terminus`. This is an important design tool helping you to communicate outcomes other than "success" or "failure" to the outer world (in a `Railway` activity).
+
+<%= code "terminus", collapse: "meths", file: "wiring_api_test.rb" %>
+
+The above code adds a new terminus named `End.provider_invalid` to the activity.
+
+<%= vite_image_tag "images/wiring-terminus-dashed.png", class: "mx-auto d-block" %>
+
+As visible, this terminus is not connected to anything as its `magnetic_to` property is set to `:provider_invalid`.
+
+You could now connect `find_provider`'s failure output to the new terminus by using the `Track()` helper.
+
+<%= code "terminus-track", collapse: "meths", file: "wiring_api_test.rb" %>
+
+The failure output will be connected to the next following element that is magnetic_to `:provider_invalid`, which is the new terminus we created.
+
+
+<%= vite_image_tag "images/wiring-terminus-track.png", class: "mx-auto d-block" %>
+
+<%= info do %>
+The default semantic is `:provider_invalid`. Note that the options `:id` and `:magnetic_to` can be configured.
+<% end %>
+
