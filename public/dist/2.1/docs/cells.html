@@ -1,0 +1,3491 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Cells</title>
+
+    
+    <script src="/vite/assets/documentation.49aee2dd.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.9990d77f.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.84ab08f7.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.9fbfbb9d.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-69514939-1");
+    </script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="true"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="cells-collapse"
+      class="collapse show"
+      aria-labelledby="cells"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#cells-overview">
+              Overview
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-getting-started">
+              Getting Started
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-api">
+              API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-trailblazer">
+              Trailblazer
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-testing">
+              Testing
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-rendering">
+              Rendering
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-rails">
+              Rails
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-template-engines">
+              Template Engines
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#cells-troubleshooting">
+              Troubleshooting
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Cells</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 31 Jul 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p>Out of the frustration with Rails’ view layer, its lack of encapsulation and the convoluted code resulting from partials and helpers both accessing global state, the <a href="https://github.com/apotonick/cells">Cells</a> gem emerged.</p>
+
+<p>The cells gem is completely stand-alone and can be used without Trailblazer.</p>
+
+<p>A cell is an object that represent a fragment of your UI. The scope of that fragment is up to you: it can embrace an entire page, a single comment container in a thread or just an avatar image link.</p>
+
+<p>In other words: <strong>A cell is an object that can render a template.</strong></p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-overview">Overview</h2>
+<p><!-- {cells-overview-toc} --></p>
+
+<p>Cells are faster than ActionView. While exposing a better performance, you step-wise encapsulate fragments into cell widgets and enforce interfaces.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-view-model">View Model</h3>
+<p><!-- {cells-overview-view-model-toc} --></p>
+
+<p>Think of cells, or <em>view models</em>, as small Rails controllers, but without any HTTP coupling. Cells embrace all presentation and rendering logic to present a fragment of the UI.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-rendering-a-cell">Rendering a Cell</h3>
+<p><!-- {cells-overview-rendering-a-cell-toc} --></p>
+
+<p>Cells can be rendered anywhere in your application. Mostly, you want to use them in controller views or actions to replace a complex helper/partial mess.</p>
+
+<pre><code>  - # app/views/comments/index.html.haml
+  %h1 Comments
+  @comments.each do |comment|
+    = concept("comment/cell", comment) #=&gt; Comment::Cell.new(comment).show
+</code></pre>
+
+<p>This will instantiate and invoke the <code>Comment::Cell</code> for each comment. It is completely up to the cell how to return the necessary markup.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-cell-class">Cell Class</h3>
+<p><!-- {cells-overview-cell-class-toc} --></p>
+
+<p>Following the Trailblazer convention, the <code>Comment::Cell</code> sits in <code>app/concepts/comment/cell.rb</code>.</p>
+
+<pre><code>  class Comment::Cell &lt; Cell::ViewModel
+    def show
+      "This: #{model.inspect}"
+    end
+  end
+</code></pre>
+
+<p>Per default, the <code>#show</code> method of a cell is called when it is invoked from a view. This method is responsible to compile the HTML (or whatever else you want to present) that is returned and displayed.</p>
+
+<p>Whatever you pass into the cell via the <code>concept</code> helper will be available as the cell’s <code>#model</code>.
+Whatever you return from the <code>show</code> method will be displayed in the page invoking the cell.</p>
+
+<pre><code>  = concept("comment/cell", comment) #=&gt; "This: &lt;Comment body=\"MVC!\"&gt;"
+</code></pre>
+
+<p>Note that you can pass anything into a cell. This can be an ActiveRecord model, a PORO or an array of attachments. The cell provides access to it via <code>model</code> and it’s your job do use it correctly.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-cell-views">Cell Views</h3>
+<p><!-- {cells-overview-cell-views-toc} --></p>
+
+<p>While we already have a cleaner interface as compared to helpers accessing to global state, the real power of Cells comes when rendering views. This, again, is similar to controllers.</p>
+
+<pre><code>  class Comment::Cell &lt; Cell::ViewModel
+    def show
+      render # renders app/concepts/comment/views/show.haml
+    end
+  end
+</code></pre>
+
+<p>Using <code>#render</code> without any arguments will parse and interpolate the <code>app/concepts/comment/views/show.haml</code> template. Note that you’re free to use <a href="https://github.com/trailblazer/cells-erb">ERB</a>, <a href="https://github.com/trailblazer/cells-haml">Haml</a>, or <a href="https://github.com/trailblazer/cells-slim">Slim</a>.</p>
+
+<pre><code>  - # app/concepts/comment/views/show.haml
+  %li
+    = model.body
+    By
+    = link_to model.author.email, author_path(model.author)
+</code></pre>
+
+<p>That’s right, you can use Rails helpers in cell views.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-no-helpers">No Helpers</h3>
+<p><!-- {cells-overview-no-helpers-toc} --></p>
+
+<p>While you could reference <code>model</code> throughout your view and strongly couple view and model, Cells makes it extremely simple to have logicless views and move presentation code to the cell instance itself.</p>
+
+<pre><code>  - # app/concepts/comment/views/show.haml
+  %li
+    = body
+    By #{author_link}
+</code></pre>
+
+<p>Every method invoked in the view is called on the cell instance. This means we have to implement <code>#body</code> and <code>#author_link</code> in the cell class. Note that how that completely replaces helpers with clean object-oriented methods.</p>
+
+<pre><code>  class Comment::Cell &lt; Cell::ViewModel
+    def show
+      render
+    end
+
+  private
+    def body
+      model.body
+    end
+
+    def author_link
+      link_to model.author.email, author_path(model.author)
+    end
+  end
+</code></pre>
+
+<p>What were global helper functions are now instance methods. All Rails helpers like <code>link_to</code> are available on the cell instance.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-properties">Properties</h3>
+<p><!-- {cells-overview-properties-toc} --></p>
+
+<p>Delegating attributes to the model is so common it is built into Cells.</p>
+
+<pre><code>  class Comment::Cell &lt; Cell::ViewModel
+    property :body
+    property :author
+
+    def show
+      render
+    end
+
+  private
+    def author_link
+      link_to author.email, author_path(author)
+    end
+  end
+</code></pre>
+
+<p>The <code>::property</code> declaration will create a delegating method for you.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-testing">Testing</h3>
+<p><!-- {cells-overview-testing-toc} --></p>
+
+<p>The best part about Cells is: you can test them in isolation. If they work in a test, they will work just anywhere.</p>
+
+<pre><code>  describe Comment::Cell do
+    it do
+      html = concept("comment/cell", Comment.find(1)).()
+      expect(html).to have_css("h1")
+    end
+  end
+</code></pre>
+
+<p>The <code>concept</code> helper will behave exactly like in a controller or view and allows you to write rock-solid test for view components with a very simple API.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-overview-more">More</h3>
+<p><!-- {cells-overview-more-toc} --></p>
+
+<p>Cells comes with a bunch of helpful features like nesting, caching, view inheritance, and more.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-getting-started">Getting Started</h2>
+<p><!-- {cells-getting-started-toc} --></p>
+
+<p>The <a href="https://github.com/apotonick/cells">Cells</a> gem provides view models for Ruby web applications. View models are plain objects that represent a part of the web page, such as a dashboard widget. View models can also render views, and be nested.</p>
+
+<p>Cells is a replacement for ActionView and used in many Rails projects. However, Cells can be used in any web framework such as Sinatra or Hanami.</p>
+
+<p>This guide discusses how to get started with <code>Trailblazer::Cell</code>, the canonical view model implementation following the Trailblazer file and naming structure. Don’t worry, <code>Trailblazer::Cell</code> can be used without Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-refactoring-legacy-views">Refactoring Legacy Views</h3>
+<p><!-- {cells-getting-started-refactoring-legacy-views-toc} --></p>
+
+<p>When refactoring legacy views into a solid cell architecture, it is often advisable to start with small fragments and extract markup and logic into an object-oriented cell. After that is done, you can move up and replace a bigger fragment of the view, and so on.</p>
+
+<p>Given you were running an arbitrary Ruby web application, let’s assume you had a menu bar sitting in your global layout. The menu shows navigation links to pages and - dependent on the login status of the current user - either a miniature avatar of the latter or a link to sign in.</p>
+
+<p>Since this is quite a bit of logic, it’s a good idea to encapsulate that into an object.</p>
+
+<p>Here’s what the old legacy <code>layout.html.haml</code> looks like.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-19" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-ERB"> ERB </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-HAML" class="tab-pane fade show active"> 
+<pre><code>  %html
+    %head
+
+    %body
+      %nav.top-bar
+        %ul
+          %li SUPPORT CHAT
+          %li GUIDES
+          %li
+            - if signed_in?
+              %img{src: avatar_url}
+            - else
+              "SIGN IN"
+</code></pre>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-ERB" class="tab-pane fade show "> 
+<pre><code>&lt;html&gt;
+  &lt;head&gt;&lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;nav class="top-bar"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;SUPPORT CHAT&lt;/li&gt;
+        &lt;li&gt;GUIDES&lt;/li&gt;
+        &lt;li&gt;
+          &lt;% if signed_in? %&gt;
+            &lt;img src="&lt;%= avatar_url %&gt;"&gt;
+          &lt;% else %&gt;
+            SIGN IN
+          &lt;% end %&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+ </div> </div>
+
+<p>Of course, this navigation bar doesn’t really make sense without any links added. I’ve left that out so we can focus on the structure. We will discuss how helpers work in the per-framework sections below.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-extraction">Extraction</h3>
+<p><!-- {cells-getting-started-extraction-toc} --></p>
+
+<p>In order to convert all markup below the <code>&lt;nav&gt;</code> node into a cell, we first need to add the respective gems to our <code>Gemfile</code>.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-65" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Ruby" class="tab-pane fade show active"> 
+<p>For now, all you need is the <code>trailblazer-cells</code> gem and the Cells template engine.</p>
+
+<pre><code>gem "trailblazer-cells"
+gem "cells-hamlit"
+</code></pre>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Rails" class="tab-pane fade show "> 
+<p>In Rails, you need the <code>trailblazer-cells</code> gem and the Cells template engine.</p>
+
+<pre><code>gem "trailblazer-cells"
+gem "cells-hamlit"
+gem "cells-rails"
+</code></pre>
+
+<p>The <code>cells-rails</code> gem will add cell invocation helpers to controllers and views, and supply the URL helpers in cells.</p>
+
+ </div> </div>
+
+<p>Please note that <code>trailblazer-cells</code> simply loads the <code>cells</code> gem and then adds some simple semantics on top of it. Also, <a href="#cells-api-template-formats">Cells supports Haml, Hamlit, ERB, and Slim</a>.</p>
+
+<p>Cut the <code>%nav</code> fragment from the original <code>layout.html.haml</code> and replace it with the cell invocation.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-88" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Ruby" class="tab-pane fade show active"> 
+<pre><code>%html
+  %head
+
+  %body
+    = Pro::Cell::Navigation.(nil, current_user: current_user).()
+</code></pre>
+
+<p>Cells can be invoked using the call style.</p>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Rails" class="tab-pane fade show active"> 
+<pre><code>%html
+  %head
+
+  %body
+    = cell(Pro::Cell::Navigation, nil, current_user: current_user)
+</code></pre>
+
+<p>In Rails, you can use the handy <code>cell</code> helper to invoke the view model.</p>
+
+ </div> </div>
+
+<p>Instead of keeping navigation view code in the layout, or rendering a partial, the <code>Pro::Cell::Navigation</code> cell is now responsible to provide the HTML fragment representing the menu bar.</p>
+
+<p>The cell is invoked without a <em>model</em>, but we pass in the <code>current_user</code> as an <em>option</em>. This code assumes that the <code>current_user</code> object is available in the layout view. As the current user is passed from your web framework to the cell, this is called an <em>dependency injection</em>.</p>
+
+<p>We will learn what models and options are soon.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-navigation-cell">Navigation Cell</h3>
+<p><!-- {cells-getting-started-navigation-cell-toc} --></p>
+
+<p>Having extracted the “partial” from the layout, paste it into a new file <code>app/concepts/pro/view/navigation.haml</code>.</p>
+
+<pre><code>%nav.top-bar
+  %ul
+    %li SUPPORT CHAT
+    %li GUIDES
+    %li
+      - if signed_in?
+        %img{src: avatar_url}
+      - else
+        "SIGN IN"
+</code></pre>
+
+<p>Creating a view for the cell in the correct directory is one thing. A cell is more than just a partial, it also needs a class file where the logic sits. This class goes to <code>app/concepts/pro/cell/navigation.rb</code>.</p>
+
+<pre><code>module Pro
+  module Cell
+    class Navigation &lt; Trailblazer::Cell
+      include ::Cell::Hamlit
+
+      def signed_in?
+        options[:current_user]
+      end
+
+      def email
+        options[:current_user].email
+      end
+
+      def avatar_url
+         hexed = Digest::MD5.hexdigest(email)
+        "https://www.gravatar.com/avatar/#{hexed}?s=36"
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>The reason the cell class lives in the <code>Pro</code> namespace is because that’s the example app’s name and its top-level namespace. Since the navigation cell is an app-wide concept, it is best put into the <code>Pro</code> namespace.</p>
+
+<p>Adding the class is enough to re-render your application, and you will see, the navigation menu now comes from a cell, presenting you with a hip gravatar icon when logged in, or a string to do so otherwise. Congratulations.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/cells-nav-bar.4b157243.webp" /></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-discussion-navigation">Discussion: Navigation</h3>
+<p><!-- {cells-getting-started-discussion-navigation-toc} --></p>
+
+<p>Let’s quickly discuss what happens here in what order. After this section, you will understand how cells work and probably already plan where else to use them. They’re really simple!</p>
+
+<ol>
+  <li>Invoking the cell in the layout via <code>Pro::Cell::Navigation.(nil, current_user: current_user).()</code> will instantiate the cell object and internally invoke the cell’s default rendering method, named <code>show</code>. This method is automatically provided and simply renders the corresponding view.</li>
+  <li>Since the cell class name is <code>Pro::Cell::Navigation</code>, this cell will render the view <code>concepts/pro/view/navigation.haml</code>. This is following the Trailblazer naming style.</li>
+  <li>In the cell’s view, two “helpers” are called: <code>signed_in?</code> and <code>avatar_url</code>. Whatsoever, the concept of a “helper” in Cells doesn’t exist anymore. Any method or variable called in the view must be an <em>instance method</em> on the cell itself. This is why the cell class defines those two methods, and not some arbitrary helper module.</li>
+  <li>Dependencies like the <code>current_user</code> have to get injected from the outer world when invoking the cell. Later, in the cell, those arguments can be accessed using the <code>options</code> cell method.</li>
+</ol>
+
+<p>It is important to understand that the cell has no access to global state. You as the cell author have to define the interface and the dependencies necessary to render the cell.</p>
+
+<p>It is a good idea to write tests for you cell now, to document and assert this very interface you’ve just created.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-test-navigation">Test: Navigation</h3>
+<p><!-- {cells-getting-started-test-navigation-toc} --></p>
+
+<p>Testing cells can either happen via full-stack integration tests, or with module cell unit tests. This example illustrates the latter.</p>
+
+<p>A very basic test for a cell with signed in user could looks as follows.</p>
+
+<pre><code>class NavigationCellTest &lt; Minitest::Spec
+  it "renders avatar when user provided" do
+    html = Pro::Cell::Navigation.(nil, current_user: User.find(1)).()
+
+    html.must_match "Signed in: nick@trb.to"
+  end
+end
+</code></pre>
+
+<p>Likewise, you can easily test the anonymous user case, where no one’s logged in. The unit-test style makes it very easy to simulate that.</p>
+
+<pre><code>it "renders SIGN IN otherwise" do
+  html = Pro::Cell::Navigation.(nil, current_user: nil).()
+
+  html.must_match "SIGN IN"
+end
+</code></pre>
+
+<p>Make sure to read the <a href="#cells-testing">full documentation on testing cells</a> for all kinds of environments, including Capybara matchers, Rails and test frameworks such as Minitest and Rspec.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-url-helpers">URL helpers</h3>
+<p><!-- {cells-getting-started-url-helpers-toc} --></p>
+
+<p>Besides indicating the logged-in status of the use, the <code>Navigation</code> cell should also display real links. This happens with URL helpers in web frameworks.</p>
+
+<p>In <code>app/concepts/pro/view/navigation.haml</code>, add actual links to the view.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-202" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Ruby" class="tab-pane fade show active"> 
+<pre><code>  %nav
+    %ul
+      %li SUPPORT CHAT
+        %a{href: "/support"}
+      %li GUIDES
+        %a{href: "/guides"}
+      %li
+        - if signed_in?
+          %img{src: avatar_url}
+        - else
+          "SIGN IN"
+</code></pre>
+
+<p>Without any URL system, you can create links using Haml, or delegate to your own URL objects.</p>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Rails" class="tab-pane fade show "> 
+<pre><code>  %nav
+    %ul
+      %li
+        = link_to "SUPPORT CHAT", chat_path
+      %li
+        = link_to "GUIDES", guides_path
+      %li
+        - if signed_in?
+          %img{src: avatar_url}
+        - else
+          "SIGN IN"
+</code></pre>
+
+<p>The <code>cells-rails</code> gem conveniently allows to use URL helpers in cell views.</p>
+
+ </div> </div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-content-cell">Content Cell</h3>
+<p><!-- {cells-getting-started-content-cell-toc} --></p>
+
+<p>View models are not only great to encapsulate small fragments, but also the entire content - which is everything but the wrapping layout. For example, when browsing to <code>/comments/1</code>, the content view usually provided by a controller will now come from the <code>Comment::Cell::Show</code> cell. We call this a <em>content cell</em> in Trailblazer-speak.</p>
+
+<p>In the controller, invoke this new cell instead of letting the framework render the content.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-242" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Ruby" class="tab-pane fade show active"> 
+<pre><code>  def show
+    comment = Comment.find(1)
+    html = Comment::Cell::Show.(comment).()
+  end
+</code></pre>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Rails" class="tab-pane fade show "> 
+<pre><code>  class CommentsController &lt; ApplicationController
+    def show
+      comment = Comment.find(1)
+      render html: cell(Comment::Cell::Show, comment)
+    end
+  end
+</code></pre>
+
+<p>This instructs the controller to render the <code>Comment::Cell::Show</code> cell, pass the <code>comment</code> into it, and let Rails wrap it in the application layout.</p>
+
+ </div> </div>
+
+<p>Note that we now pass the <code>comment</code> as the cell’s <em>model</em> without passing any additional <em>options</em>.</p>
+
+<p>The new class lives in <code>app/concepts/comment/cell/show.rb</code>.</p>
+
+<pre><code>module Comment::Cell
+  class Show &lt; Trailblazer::Cell
+    property :body
+  end
+end
+</code></pre>
+
+<p>The <code>property</code> method creates a shortcut to <code>model.body</code>.</p>
+
+<p>The view for this cell goes into <code>app/concepts/comment/view/show.haml</code>.</p>
+
+<pre><code>%h1 Comment #{model.id}
+%p
+  = body
+</code></pre>
+
+<p>In views, you can access the model via the <code>model</code> method. In this example, this is the <code>comment</code> instance we passed into the cell when invoking.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-layout-cell">Layout Cell</h3>
+<p><!-- {cells-getting-started-layout-cell-toc} --></p>
+
+<p>To render the entire page with Cells, the last missing piece is the layout. This is still being rendered by the underlying framework.</p>
+
+<p>Again, the layout is represented by a cell. Its code goes to <code>app/concepts/pro/cell/layout.rb</code>.</p>
+
+<pre><code>module Pro::Cell
+  class Layout &lt; Trailblazer::Cell
+  end
+end
+</code></pre>
+
+<p>Since this cell’s sole purpose is to render a view to wrap dynamic content, no logic is needed.</p>
+
+<p>The view sits at <code>app/concepts/pro/view/layout.haml</code>.</p>
+
+<pre><code>%html
+  %head
+
+  %body
+    = cell(Pro::Cell::Navigation)
+    = yield
+</code></pre>
+
+<p>The content cell’s HTML markup will be passed to the layout cell and can be <code>yield</code>ed (which basically replaces <code>yield</code> with the HTML string).</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-putting-things-together">Putting Things Together</h3>
+<p><!-- {cells-getting-started-putting-things-together-toc} --></p>
+
+<p>In the controller, the content cell needs to get instructed it will be wrapped by a layout cell.</p>
+
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-310" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Ruby" class="tab-pane fade show active"> 
+<pre><code>  def show
+    comment = Comment.find(1)
+
+    html = Comment::Cell::Show.(comment,
+      context: { current_user: current_user },
+      layout:  Pro::Cell::Layout).()
+  end
+</code></pre>
+
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Rails" class="tab-pane fade show "> 
+<pre><code>  class CommentsController &lt; ApplicationController
+    def show
+      comment = Comment.find(params[:id])
+
+      render html: cell(Comment::Cell::Show, comment,
+        context: { current_user: current_user },
+        layout:  Pro::Cell::Layout
+        )
+    end
+  end
+</code></pre>
+
+ </div> </div>
+
+<p>The following happens now.</p>
+
+<ol>
+  <li>First, <code>Comment::Cell::Show</code> cell is rendered.</li>
+  <li>Then, <code>Pro::Cell::Layout</code> is invoked and it will yield the content from the show cell.</li>
+  <li>In the <code>layout.haml</code> view, the navigation cell is also rendered. This cell needs a <code>current_user</code> option which is provided by the <em>context object</em>.</li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-context-object">Context Object</h3>
+<p><!-- {cells-getting-started-context-object-toc} --></p>
+
+<p>When rendering a hierarchy of cells, it’s often necessary to share generic data across all involved cells. This always happens via dependency injection, no global state is allowed in Trailblazer.</p>
+
+<p>The <code>:context</code> option will create such an object and is automatically being passed to all cells in that render workflow.</p>
+
+<p>In order to access the <code>current_user</code> from the context object, the navigation cell has to be changed slightly.</p>
+
+<pre><code>module Pro
+  module Cell
+    class Navigation &lt; Trailblazer::Cell
+      include ::Cell::Hamlit
+
+      def signed_in?
+        context[:current_user]
+      end
+
+      def email
+        context[:current_user].email
+      end
+
+      def avatar_url
+         hexed = Digest::MD5.hexdigest(email)
+        "https://www.gravatar.com/avatar/#{hexed}?s=36"
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Note that <code>:current_user</code> is not an option anymore, but comes from the <code>context</code> object.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-getting-started-success">Success</h3>
+<p><!-- {cells-getting-started-success-toc} --></p>
+
+<p>As demonstrated in this guide, it’s not really hard to replace the existing rendering stack, whether that’s <code>ActionView</code> or <code>Hanami::View</code> or Sinatra templates, with Cells.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-api">API</h2>
+<p><!-- {cells-api-toc} --></p>
+
+<p>A cell is an object that can render views. It represents a fragment of the page, or the entire page.</p>
+
+<p>Sometimes they’re also called <em>object-oriented partials</em>.</p>
+
+<p>The object has to define at least one method which in turn has to return the fragment. Per convention, this is <code>#show</code>. In this public method, you may compile arbitrary strings or <code>render</code> a cell view.</p>
+
+<p>The return value of this public method (also called <em>state</em>) is what will be the rendered in the view using the cell.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-anatomy">Anatomy</h3>
+<p><!-- {cells-api-anatomy-toc} --></p>
+
+<p>Cells usually inherit from <code>Cell::ViewModel</code>.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  def show
+    render # renders app/cells/comment/show.haml
+  end
+end
+</code></pre>
+
+<p>When the <code>CommentCell</code> cell is invoked, its <code>show</code> method is called, the view is rendered, and returned as a HTML string.</p>
+
+<p>This snippet illustrates a <em>suffix cell</em>, because it follows the outdated Rails-style naming and file structure. We encourage you to use <a href="#cells-trailblazer">Trailblazer cells</a>. However, this document mostly describes the generic API.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-show">Show</h3>
+<p><!-- {cells-api-show-toc} --></p>
+
+<p>As per convention, <code>#show</code> is the only public method of a cell class.</p>
+
+<p>The return value of this method is what gets rendered as the cell.</p>
+
+<pre><code>def show
+  "I don't like templates!"
+end
+</code></pre>
+
+<p>You’re free to return whatever string you desire, use your own rendering engine, or use cells’ <code>render</code> for templates.</p>
+
+<h2 id="manual-invocation">Manual Invocation</h2>
+
+<p>In its purest form, a cell can be rendered as follows.</p>
+
+<pre><code>Comment::Cell.new(comment).() #=&gt; "I don't like templates!"
+</code></pre>
+
+<p>This can be split up into two steps: initialization and invocation.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-initialize">Initialize</h3>
+<p><!-- {cells-api-initialize-toc} --></p>
+
+<p>You may instantiate cells manually, wherever you want.</p>
+
+<pre><code>cell = Comment::Cell.new(comment)
+</code></pre>
+
+<p>This is helpful in environments where the helpers are not available, e.g. a Rails mailer or a <code>Lotus::Action</code>.</p>
+
+<p>Note that usually you pass in an arbitrary object into the cell, the <em>“model”</em>. Here, this is the <code>comment</code> instance.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-model">Model</h3>
+<p><!-- {cells-api-model-toc} --></p>
+
+<p>The model you pass into the cell’s constructor is completely up to you! It could be an ActiveRecord instance, a <code>Struct</code>, or an array of items.</p>
+
+<p>The model is available via the <code>model</code> reader.</p>
+
+<pre><code>def show
+  model.rude? ? "Offensive content." : render
+end
+</code></pre>
+
+<p>The term <em>model</em> is really not to be confused with the way Rails uses it - it can be just anything.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-property">Property</h3>
+<p><!-- {cells-api-property-toc} --></p>
+
+<p>Cells allow a short form to access model’s attributes using the <code>property</code> class method.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  property :email #=&gt; model.email
+
+  def show
+    model.email #=&gt; "s@trb.to"
+    email #=&gt; "s@trb.to"
+  end
+end
+</code></pre>
+
+<p>Using <code>::property</code> will create a convenient reader method for you to the model.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-options">Options</h3>
+<p><!-- {cells-api-options-toc} --></p>
+
+<p>Along with the model, you may also pass arbitrary options into the cell, for example the current user.</p>
+
+<pre><code>cell = Comment::Cell.new(comment, current_user: current_user)
+</code></pre>
+
+<p>In the cell, you can access any options using  the <code>options</code> reader.</p>
+
+<pre><code>def show
+  options[:current_user] ? render : "Not logged in!"
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-invocation">Invocation</h3>
+<p><!-- {cells-api-invocation-toc} --></p>
+
+<p>Once you’ve got the cell instance, you may call the rendering state. This happens via <code>ViewModel#call</code>.</p>
+
+<pre><code>cell.call(:show)
+</code></pre>
+
+<p>It’s a common idiom in Ruby to skip the explicit <code>call</code> method name. The next snippet does the same as the above.</p>
+
+<pre><code>cell.(:show)
+</code></pre>
+
+<p>Since <code>show</code> is the default state, you may simple <em>call</em> the cell without arguments.</p>
+
+<pre><code>cell.() #=&gt; cell.(:show)
+</code></pre>
+
+<p>Note that in Rails controller views, this will be called automatically via cell’s <code>ViewModel#to_s</code> method.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-call">Call</h3>
+<p><!-- {cells-api-call-toc} --></p>
+
+<p>Always invoke cell methods via <code>call</code>. This will ensure that caching - if configured - is performed properly.</p>
+
+<pre><code>CommentCell.new(comment).(:show)
+</code></pre>
+
+<p>As discussed, this will call the cell’s <code>show</code> method and return the rendered fragment.</p>
+
+<p>Note that you can invoke more than one state on a cell, if desired.</p>
+
+<pre><code>- cell = CommentCell.new(Comment.last)      # instantiate.
+= cell.call(:show)                          # render main fragment.
+= content_for :footer, cell.(:footer)       # render footer.
+</code></pre>
+
+<p>See how you can combine cells with global helpers like <code>content_for</code>?</p>
+
+<p>You can also provide additional arguments to <code>call</code>.</p>
+
+<pre><code>cell.(:show, Time.now)
+</code></pre>
+
+<p>All arguments after the method name are passed to the invoked method.</p>
+
+<pre><code>def show(time)
+  time #=&gt; Now!
+end
+</code></pre>
+
+<p>Even blocks are allowed.</p>
+
+<pre><code>cell.(:show) { "Yay!" }
+</code></pre>
+
+<p>Again, the block is passed through to the invoked method.</p>
+
+<pre><code>def show(&amp;block)
+  yield #=&gt; "Yay!"
+end
+</code></pre>
+
+<p>This is particularly interesting when passing the block to <code>render</code> and using <code>yield</code> in the view. See <a href="#cells-api-render">render</a>’s docs for that.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-default-show">Default Show</h3>
+<p><!-- {cells-api-default-show-toc} --></p>
+
+<p>Per default, every cell derived from <code>Cell::ViewModel</code> has a built-in <code>show</code> method.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  # #show is inherited.
+end
+</code></pre>
+
+<p>The implementation looks as follows.</p>
+
+<pre><code>def show(&amp;block)
+  render &amp;block
+end
+</code></pre>
+
+<p>An optional block is always passed to the <code>render</code> method.</p>
+
+<p>Of course, you’re free to override <code>show</code> to do whatever it needs to do.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-instantiation-helper">Instantiation Helper</h3>
+<p><!-- {cells-api-instantiation-helper-toc} --></p>
+
+<p>In most environments you will instantiate cells with the <code>concept</code> or <code>cell</code> helper which internally does exactly the same as the manual invocation.</p>
+
+<pre><code>cell = cell(:comment, comment)
+</code></pre>
+
+<p>This is identical to</p>
+
+<pre><code>cell = CommentCell.new(comment)
+</code></pre>
+
+<p>Depending on your environment, the <code>cell</code> helper might inject dependencies into the created cell. For example, in Rails, the controller is passed on into the cell behind the scenes. When manually instantiating cells, you must not forget to do so, too.</p>
+
+<p>The <code>cell</code> helper also allows passing in the cell constant. This means, it won’t try to infer the class constant name.</p>
+
+<pre><code>cell = cell(CommentCell, comment)
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-file-structure">File Structure</h3>
+<p><!-- {cells-api-file-structure-toc} --></p>
+
+<p>Having a cell to represent a fragment of your page is one thing. The real power, whatsoever, comes when rendering templates in cells. The <code>render</code> method does just that.</p>
+
+<p>In a suffix environment, Cells expects the following file layout.</p>
+
+<pre><code>├── app
+│   ├── cells
+│   │   └── comment_cell.rb
+│   │   └── comment
+│   │       └── show.haml
+</code></pre>
+
+<p>Every cell - unless configured otherwise - has its own view  directory named after the cell’s name (<code>comment</code>). Views do only have one extension to identify the template’s format (<code>show.haml</code>). Again, you’re free to provide arbitrary additional extensions.</p>
+
+<p>Note that the <em>suffix</em> style shown above is deprecated, and will be superseded in Cells 5 by the <a href="#cells-trailblazer">Trailblazer</a>-style naming and file structure.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-render">Render</h3>
+<p><!-- {cells-api-render-toc} --></p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  def show
+    render # renders show.haml.
+  end
+end
+</code></pre>
+
+<p>A simple <code>render</code> will implicitly figure out the method (or state) name and attempt to render that view. Here, the file will be resolved to <code>app/cells/comment/show.haml</code>.</p>
+
+<p>Note that <code>render</code> literally renders the template and returns the HTML string. This allows you to call render multiple times, concatenate, and so on.</p>
+
+<pre><code>def show
+  render + render(:footer) + "&lt;hr/&gt;"
+end
+</code></pre>
+
+<p>You can provide an explicit view name as the first argument.</p>
+
+<pre><code>def show
+  render :item # renders item.haml
+end
+</code></pre>
+
+<p>When providing more than one argument to <code>render</code>, you have to use the <code>:view</code> option.</p>
+
+<pre><code>def show
+  render view: :item # renders item.haml
+end
+</code></pre>
+
+<p>If you like the clunky Rails-style file naming, you’re free to add a format to the view.</p>
+
+<pre><code>render "shot.html" # renders show.html.haml
+</code></pre>
+
+<p>You can pass locals to the view using <code>:locals</code>.</p>
+
+<pre><code>render locals: { logged_in: options[:current_user] }
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-instance-methods">Instance Methods</h3>
+<p><!-- {cells-api-instance-methods-toc} --></p>
+
+<p>While it is fine to use locals or instance variables in the view to access data, the preferred way is invoking instance methods in the view.</p>
+
+<pre><code>%h1 Show comment
+
+= body
+= author_link
+</code></pre>
+
+<p>Every method call in the view is dispatched to the cell instance. You have to define your “helpers” there.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  property :body # creates #body reader.
+
+  def author_link
+    url_for model.author.name, model.author
+  end
+end
+</code></pre>
+
+<p>This allows slim, logic-less views.</p>
+
+<p>Note that you can use Rails in the instance level, too, if you’re in a Rails environment.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-yield">Yield</h3>
+<p><!-- {cells-api-yield-toc} --></p>
+
+<p>A block passed to the cell constructor is passed on to the state method.</p>
+
+<pre><code>CommentCell.new(comment) { "Yay!" }
+cell(:comment, comment)  { "Yay!" }
+</code></pre>
+
+<p>It’s up to you if you want to use this block, or provide your own.</p>
+
+<pre><code>def show(&amp;block)
+  render(&amp;block)
+end
+</code></pre>
+
+<p>Passing the block <code>render</code> allows yielding it in the view.</p>
+
+<pre><code>%h1 Comment
+
+= yield
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-collection">Collection</h3>
+<p><!-- {cells-api-collection-toc} --></p>
+
+<p>Instead of manually iterating an array of models and concatenating the output of the item cell, you can use the <code>:collection</code> feature.</p>
+
+<pre><code>cell(:comment, collection: Comment.all).()
+</code></pre>
+
+<p>This will instantiate a cell per iterated model, invoke <code>call</code> and join the output into one fragment.</p>
+
+<p>Pass the method name to <code>call</code> when you want to invoke a state different to <code>show</code>.</p>
+
+<pre><code>cell(:comment, collection: Comment.all).(:item)
+</code></pre>
+
+<p>You’re free to pass additional options to the call.</p>
+
+<pre><code>cell(:comment, collection: comments, size: comments.size).()
+</code></pre>
+
+<p>This instantiates each collection cell as follows.</p>
+
+<pre><code>CommentCell.new(comment, size: 9)
+</code></pre>
+
+<p>You can use the <code>join</code> method to customize how each item in the collection is invoked. The return value of the block is automatically inserted in between each rendered item in the collection0</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  def odd
+    "odd comment\n"
+  end
+
+  def even
+    "even comment\n"
+  end
+end
+
+cell(:comment, collection: Comment.all).join do |cell, i|
+  i.odd? ? cell.(:odd) : cell(:even)
+end
+# =&gt; "odd comment\neven comment\nodd comment\neven comment"
+</code></pre>
+
+<p>An optional separator string can be passed to <code>join</code> when it concatenates the item fragments.</p>
+
+<pre><code>cell(:comment, collection: Comment.all).join("&lt;hr/&gt;") do |cell, i|
+  i.odd? ? cell.(:odd) : cell(:even)
+end
+# =&gt; "odd comment\n&lt;hr/&gt;even comment\n&lt;hr/&gt;odd comment\n&lt;hr/&gt;even comment"
+</code></pre>
+
+<p>Alternatively, if you just want to add some extra content in between each rendered item and don’t need to customize how each item is invokved, you can call <code>join</code> with a separator and no block:</p>
+
+<pre><code>class PostCell
+  def show
+    'My post'
+  end
+end
+
+cell(:post, collection: Post.all).join("&lt;hr/&gt;")
+# =&gt; "My post&lt;hr/&gt;My post&lt;hr/&gt;My post"
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-external-layout">External Layout</h3>
+<p><!-- {cells-api-external-layout-toc} --></p>
+
+<p>Since Cells 4.1, you can instruct your cell to use a second cell as a wrapper. This will first render your actual content cell, then pass the content via a block to the layout cell.</p>
+
+<p>Cells desiring to be wrapped in a layout have to include <code>Layout::External</code>.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  include Layout::External
+end
+</code></pre>
+
+<p>The layout cell usually can be an empty subclass.</p>
+
+<pre><code>class LayoutCell &lt; Cell::ViewModel
+end
+</code></pre>
+
+<p>Its <code>show</code> view must contain a <code>yield</code> to insert the content.</p>
+
+<pre><code>!!!
+%html
+  %head
+    %title= "Gemgem"
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body
+    = yield
+</code></pre>
+
+<p>The layout cell class is then injected into the actual invocation using <code>:layout</code>.</p>
+
+<pre><code>cell(:comment, comment, layout: LayoutCell)
+</code></pre>
+
+<p>The context object will automatically be passed to the layout cell.</p>
+
+<p>Note that <code>:layout</code> also works in combination with <code>:collection</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-view-paths">View Paths</h3>
+<p><!-- {cells-api-view-paths-toc} --></p>
+
+<p>Per default, the cell’s view path is set to <code>app/cells</code>. You can set any number of view paths for the template file lookup.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  self.view_paths = ["app/views"]
+</code></pre>
+
+<p>Note that the default view paths are different if you’re using the <a href="#cells-trailblazer">Trailblazer-style file structure</a>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-template-formats">Template Formats</h3>
+<p><!-- {cells-api-template-formats-toc} --></p>
+
+<p>Cells provides support for a handful of popular template formats like ERB, Haml, etc.</p>
+
+<p>You need to add the specific template engine to your Gemfile:</p>
+
+<ul>
+  <li><a href="https://github.com/trailblazer/cells-erb">cells-erb</a></li>
+  <li><a href="https://github.com/trailblazer/cells-hamlit">cells-hamlit</a> We strongly recommend using <a href="https://github.com/k0kubun/hamlit">Hamlit</a> as a Haml replacement.</li>
+  <li><a href="https://github.com/trailblazer/cells-slim">cells-slim</a></li>
+  <li><a href="https://github.com/trailblazer/cells-haml">cells-haml</a> Make sure to bundle Haml 4.1.</li>
+</ul>
+
+<pre><code class="language-ruby">gem "haml", github: "haml/haml", ref: "7c7c169".
+# Use `cells-hamlit` instead.
+</code></pre>
+
+<p>In Rails, this is all you need to do. In other environments, you need to include the respective module into your cells.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  include ::Cell::Erb # or Cell::Hamlit, or Cell::Haml, or Cell::Slim
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-html-escaping">HTML Escaping</h3>
+<p><!-- {cells-api-html-escaping-toc} --></p>
+
+<p>Cells per default does no HTML escaping, anywhere. This is one of the reasons why Cells is much faster than Rails’ ActionView.</p>
+
+<p>Include <code>Escaped</code> to make property readers return escaped strings.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  include Escaped
+  property :title
+end
+
+song.title                 #=&gt; "&lt;script&gt;Dangerous&lt;/script&gt;"
+Comment::Cell.(song).title #=&gt; &amp;lt;script&amp;gt;Dangerous&amp;lt;/script&amp;gt;
+</code></pre>
+
+<p>Only strings will be escaped via the property reader.</p>
+
+<p>You can suppress escaping manually.</p>
+
+<pre><code>def raw_title
+  "#{title(escape: false)} on the edge!"
+end
+</code></pre>
+
+<p>Of course this works in views too:</p>
+
+<pre><code>&lt;%= title(escape: false) %&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-context-object">Context Object</h3>
+<p><!-- {cells-api-context-object-toc} --></p>
+
+<p>By default, every cell contains a context object. When <a href="#cells-api-nesting">nesting cells</a>, this object gets passed in automatically. To add objects to the context, use the <code>:context</code> option.</p>
+
+<pre><code>cell("comment", comment, context: { user: current_user })
+</code></pre>
+
+<p>You can read from the context object via the <code>context</code> method.</p>
+
+<pre><code>def show
+  context[:user] #=&gt; &lt;User ..&gt;
+  # ..
+end
+</code></pre>
+
+<p>The context object is handy when dependencies need to be passed down (or up, when using layouts) a cell hierarchy.</p>
+
+<p>Note that the context object gets <code>dup</code>ed when adding to it into nested cells. This is to prevent leaking nested state back into parent objects.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-nesting">Nesting</h3>
+<p><!-- {cells-api-nesting-toc} --></p>
+
+<p>You can invoke cells in cells. This happens with the <code>cell</code> helper.</p>
+
+<pre><code>def show
+  html = cell(:comment_detail, model)
+  # ..
+end
+</code></pre>
+
+<p>The <code>cell</code> helper will automatically pass the context object to the nested cell.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-view-inheritance">View Inheritance</h3>
+<p><!-- {cells-api-view-inheritance-toc} --></p>
+
+<p>Cells can inherit code from each other through Ruby’s regular inheritance mechanisms.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+end
+
+class PostCell &lt; CommentCell
+end
+</code></pre>
+
+<p>Even cooler, <code>PostCell</code> will now inherit views from <code>CommentCell</code>.</p>
+
+<pre><code>PostCell.prefixes #=&gt; ["app/cells/post", "app/cells/comment"]
+</code></pre>
+
+<p>When views can’t be found in the local <code>post</code> directory, they will be looked up in <code>comment</code>. This starts to become helpful when using <a href="#cells-api-nesting">composed cells</a>.</p>
+
+<p>If you only want to inherit views, not the entire class, use <code>::inherit_views</code>.</p>
+
+<pre><code>class PostCell &lt; Cell::ViewModel
+  inherit_views Comment::Cell
+end
+
+PostCell.prefixes #=&gt; ["app/cells/post", "app/cells/comment"]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-builder">Builder</h3>
+<p><!-- {cells-api-builder-toc} --></p>
+
+<p>Often, it’s good practice to replace decider code from views or classes by extracting it out into separate sub-cells. Or in case you want to render a polymorphic collection, builders come in handy.</p>
+
+<p>Builders allow instantiating different cell classes for different models and options.</p>
+
+<pre><code>class CommentCell &lt; Cell::ViewModel
+  include ::Cell::Builder
+
+  builds do |model, options|
+    if model.is_a?(Post)
+      PostCell
+    elsif model.is_a?(Comment)
+      CommentCell
+    end
+  end
+end
+</code></pre>
+
+<p>The <code>#cell</code> helper takes care of instantiating the right cell class for you.</p>
+
+<pre><code>cell(:comment, Post.find(1)) #=&gt; creates a PostCell. This also works with collections.
+
+cell(:comment, collection: [@post, @comment]) #=&gt; renders PostCell, then CommentCell.
+</code></pre>
+
+<p>Multiple calls to <code>::builds</code> will be ORed. If no block returns a class, the original class will be used (<code>CommentCell</code>). Builders are inherited.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-caching">Caching</h3>
+<p><!-- {cells-api-caching-toc} --></p>
+
+<p>Cells allow you to cache per state. It’s simple: the rendered result of a state method is cached and expired as you configure it.</p>
+
+<p>To cache forever, don’t configure anything</p>
+
+<pre><code>class CartCell &lt; Cell::Rails
+  cache :show
+
+  def show
+    render
+  end
+</code></pre>
+
+<p>This will run <code>#show</code> only once, after that the rendered view comes from the cache.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-cache-options">Cache Options</h3>
+<p><!-- {cells-api-cache-options-toc} --></p>
+
+<p>Note that you can pass arbitrary options through to your cache store. Symbols are evaluated as instance methods, callable objects (e.g. lambdas) are evaluated in the cell instance context allowing you to call instance methods and access instance variables. All arguments passed to your state (e.g. via <code>render_cell</code>) are propagated to the block.</p>
+
+<pre><code>cache :show, :expires_in =&gt; 10.minutes
+</code></pre>
+
+<p>If you need dynamic options evaluated at render-time, use a lambda.</p>
+
+<pre><code>cache :show, :tags =&gt; lambda { |*args| tags }
+</code></pre>
+
+<p>If you don’t like blocks, use instance methods instead.</p>
+
+<pre><code>class CartCell &lt; Cell::Rails
+  cache :show, :tags =&gt; :cache_tags
+
+  def cache_tags(*args)
+    # do your magic..
+  end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-conditional-caching">Conditional Caching</h3>
+<p><!-- {cells-api-conditional-caching-toc} --></p>
+
+<p>The <code>:if</code> option lets you define a condition. If it doesn’t return a true value, caching for that state is skipped.</p>
+
+<pre><code>cache :show, :if =&gt; lambda { |*| has_changed? }
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-cache-keys">Cache Keys</h3>
+<p><!-- {cells-api-cache-keys-toc} --></p>
+
+<p>You can expand the state’s cache key by appending a versioner block to the <code>::cache</code> call. This way you can expire state caches yourself.</p>
+
+<pre><code>class CartCell &lt; Cell::Rails
+  cache :show do
+    order.id
+  end
+</code></pre>
+
+<p>The versioner block is executed in the cell instance context, allowing you to access all stakeholder objects you need to compute a cache key. The return value is appended to the state key: <code>"cells/cart/show/1"</code>.</p>
+
+<p>As everywhere in Rails, you can also return an array.</p>
+
+<pre><code>class CartCell &lt; Cell::Rails
+  cache :show do
+    [id, options[:items].md5]
+  end
+</code></pre>
+
+<p>Resulting in: <code>"cells/cart/show/1/0ecb1360644ce665a4ef"</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-debugging-cache">Debugging Cache</h3>
+<p><!-- {cells-api-debugging-cache-toc} --></p>
+
+<p>When caching is turned on, you might wanna see notifications. Just like a controller, Cells gives you the following notifications.</p>
+
+<ul>
+  <li><code>write_fragment.action_controller</code> for cache miss.</li>
+  <li><code>read_fragment.action_controller</code> for cache hits.</li>
+</ul>
+
+<p>To activate notifications, include the <code>Notifications</code> module in your cell.</p>
+
+<pre><code>class Comment::Cell &lt; Cell::Rails
+  include Cell::Caching::Notifications
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-cache-inheritance">Cache Inheritance</h3>
+<p><!-- {cells-api-cache-inheritance-toc} --></p>
+
+<p>Cache configuration is inherited to derived cells.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-api-testing-caching">Testing Caching</h3>
+<p><!-- {cells-api-testing-caching-toc} --></p>
+
+<p>If you want to test it in <code>development</code>, you need to update <code>development.rb</code> to see the effect.</p>
+
+<pre><code class="language-ruby">config.action_controller.perform_caching = true
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-trailblazer">Trailblazer</h2>
+<p><!-- {cells-trailblazer-toc} --></p>
+
+<p>This documents the Trailblazer-style cells semantics, brought to you by the <a href="https://github.com/trailblazer/trailblazer-cells">trailblazer-cells</a> gem.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>This gem can be used <strong>stand-alone</strong> without Trailblazer, its only dependency is the <code>cells</code> gem.</p>
+</div>
+
+<p>A <code>Trailblazer::Cell</code> is a normal cell with Trailblazer semantics added. Naming, file structure, and the way views are resolved follow the TRB style. Note that this will be the standard for Cells 5, which will drop all old “dialects”.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-installation">Installation</h3>
+<p><!-- {cells-trailblazer-installation-toc} --></p>
+
+<pre><code>gem "trailblazer-cells"
+gem "cells-slim"
+</code></pre>
+
+<p>Make sure you also add the view engine. We recommend <a href="https://github.com/trailblazer/cells-slim"><code>cells-slim</code></a>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-file-structure">File Structure</h3>
+<p><!-- {cells-trailblazer-file-structure-toc} --></p>
+
+<p>In Trailblazer, cell classes sit in their concept’s <code>cell</code> directory, the corresponding views sit in the <code>view</code> directory.</p>
+
+<pre><code>├── app
+│   ├── concepts
+│   │   └── comment            # namespace/class
+│   │       ├── cell           # namespace/module
+│   │       │   ├── index.rb   # class
+│   │       │   ├── new.rb     # class
+│   │       │   └── show.rb    # class
+│   │       └── view
+│   │           ├── index.slim
+│   │           ├── item.slim
+│   │           ├── new.slim
+│   │           ├── show.slim
+│   │           └── user.scss
+</code></pre>
+
+<p>Note that one cell class can have multiple views, as well as other assets like <code>.scss</code> stylesheets.</p>
+
+<p>Also, the view names with <code>Trailblazer::Cell</code> are <em>not</em> called <code>show.slim</code>, but named after its corresponding cell class. For instance, <code>Comment::Cell::Index</code> will render <code>comment/view/index.slim</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-naming">Naming</h3>
+<p><!-- {cells-trailblazer-naming-toc} --></p>
+
+<p>As always, the Trailblazer naming applies.</p>
+
+<pre><code>Comment[::SubConcepts]::Cell::[Name]
+</code></pre>
+
+<p>This results in classes such as follows.</p>
+
+<pre><code>module Comment::Cell            # namespace
+  class New &lt; Trailblazer::Cell # class
+    def show
+      render # renders app/concepts/comment/view/new.slim.
+    end
+  end
+end
+</code></pre>
+
+<p>This is different to old suffix-cells. While the <code>show</code> method still is the public method, calling <code>render</code> will use the <code>new.slim</code> view, as inferred from the cell’s last class constant segment (<code>New</code>).</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-default-show">Default Show</h3>
+<p><!-- {cells-trailblazer-default-show-toc} --></p>
+
+<p>Note that you don’t have to provide a <code>show</code> method, it is created automatically.</p>
+
+<pre><code>module Comment::Cell
+  class New &lt; Trailblazer::Cell
+  end
+end
+</code></pre>
+
+<p>This is the <strong>recommended way</strong> since no setup code should be necessary.</p>
+
+<p>You’re free to override <code>show</code>, though.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-view-names">View Names</h3>
+<p><!-- {cells-trailblazer-view-names-toc} --></p>
+
+<p>Per default, the view name is computed from the cell’s class name.</p>
+
+<pre><code>Comment::Cell::New         #=&gt; "comment/view/new.slim"
+Comment::Cell::Themed::New #=&gt; "comment/view/themed/new.slim"
+</code></pre>
+
+<p>Note that the entire path after <code>Cell::</code> is considered, resulting in a hierarchical view name.</p>
+
+<p>Use <code>ViewName::Flat</code> if you prefer a flat view name.</p>
+
+<pre><code>module Comment
+  module Cell
+    module Themed
+      class New &lt; Trailblazer::Cell
+        extend ViewName::Flat
+      end
+    end
+  end
+end
+
+Comment::Cell::Themed::New #=&gt; "comment/view/new.slim"
+</code></pre>
+
+<p>This will always result in a flat name where the view name is inferred from the last segment of the cell constant.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-invocation">Invocation</h3>
+<p><!-- {cells-trailblazer-invocation-toc} --></p>
+
+<p>To render a cell in controllers, views, or other cells, use <code>cell</code>. You need to provide the constant directly. Ruby’s constant lookup rules apply.</p>
+
+<pre><code>html = cell(Comment::Cell::New, result["model"]).()
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-trailblazer-layouts">Layouts</h3>
+<p><!-- {cells-trailblazer-layouts-toc} --></p>
+
+<p>It’s a common pattern to maintain a cell representing the application’s layout(s). Usually, it resides in a concept named after the application.</p>
+
+<pre><code>├── app
+│   ├── concepts
+│   │   └── gemgem
+│   │       ├── cell
+│   │       │   ├── layout.rb
+│   │       └── view
+│   │           ├── layout.slim
+</code></pre>
+
+<p>Most times, the layout cell can be an empty subclass.</p>
+
+<pre><code>module Gemgem::Cell
+  class Layout &lt; Trailblazer::Cell
+  end
+end
+</code></pre>
+
+<p>The view <code>gemgem/view/layout.slim</code> contains a <code>yield</code> where the actual content goes.</p>
+
+<pre><code>!!!
+%html
+  %head
+    %title= "Gemgem"
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body
+    = yield
+</code></pre>
+
+<p>Wrapping the content cell (<code>Comment::Cell::New</code>) with the layout cell (<code>Gemgem::Cell::Layout</code>) happens via the public <code>:layout</code> option.</p>
+
+<pre><code>concept("comment/cell/new", result["model"], layout: Gemgem::Cell::Layout)
+</code></pre>
+
+<p>This will render the <code>Comment::Cell::New</code>, instantiate <code>Gemgem::Cell::Layout</code> and pass through the context object, then render the layout around it.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-testing">Testing</h2>
+<p><!-- {cells-testing-toc} --></p>
+
+<p>Only a few methods are needed to integrate cells testing into your test suite. This is implemented in <code>Cell::Testing</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-api">API</h3>
+<p><!-- {cells-testing-api-toc} --></p>
+
+<p>Regardless of your test environment (Rspec, MiniTest, etc.) the following methods are available.</p>
+
+<pre><code>module Testing
+  concept(name, *args) # instantiates Cell::Concept subclass.
+  cell(name, *args) # instantiates Cell::ViewModel subclass.
+end
+</code></pre>
+
+<p>Calling the two helpers does exactly the same it does in a controller or a view.</p>
+
+<p>Usually, this will give you the cell instance. It’s your job to invoke a state using <code>#call</code>.</p>
+
+<pre><code>it "renders cell" do
+  cell(:song, @song).() #=&gt; HTML / Capybara::Node::Simple
+end
+</code></pre>
+
+<p>However, when invoked with <code>:collection</code>, it will render the cell collection for you. In that case, <code>#cell</code>/<code>#concept</code> will return a string of markup.</p>
+
+<pre><code>it "renders collection" do
+  cell(:song, collection: [@song, @song]) #=&gt; HTML
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-minitest-test-unit">MiniTest, Test::Unit</h3>
+<p><!-- {cells-testing-minitest-test-unit-toc} --></p>
+
+<p>In case you’re <em>not</em> using Rspec, derive your tests from <code>Cell::TestCase</code>.</p>
+
+<pre><code>class SongCellTest &lt; Cell::TestCase
+  it "renders" do
+    cell(:song, @song).().must_have_selector "b"
+  end
+end
+</code></pre>
+
+<p>You can also include <code>Cell::Testing</code> into an arbitrary test class if you’re not happy with <code>Cell::TestCase</code>.</p>
+
+<h4 id="optional-controller">Optional Controller</h4>
+
+<p>If your cells have a controller dependency, you can set it using <code>::controller</code>.</p>
+
+<pre><code>class SongCellTest &lt; Cell::TestCase
+  controller SongsController
+</code></pre>
+
+<p>This will provide a testable controller via <code>#controller</code>, which is automatically used in <code>Testing#concept</code> and <code>Testing#cell</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-rspec">Rspec</h3>
+<p><!-- {cells-testing-rspec-toc} --></p>
+
+<p>Rspec works with the <a href="https://github.com/apotonick/rspec-cells"><code>rspec-cells</code> gem</a>.</p>
+
+<p>Make sure to install it.</p>
+
+<pre><code>gem "rspec-cells"
+</code></pre>
+
+<p>You can use the <code>#cell</code> and <code>#concept</code> builders in your specs.</p>
+
+<pre><code>describe SongCell, type: :cell do
+  subject { cell(:song, Song.new).(:show) }
+
+  it { expect(subject).to have_content "Song#show" }
+end
+</code></pre>
+
+<h4 id="optional-controller-1">Optional Controller</h4>
+
+<p>If your cells have a controller dependency, you can set it using <code>::controller</code>.</p>
+
+<pre><code>describe SongCell do
+  controller SongsController
+</code></pre>
+
+<p>This will provide a testable controller via <code>#controller</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-capybara-support">Capybara Support</h3>
+<p><!-- {cells-testing-capybara-support-toc} --></p>
+
+<p>Per default, Capybara support is enabled in <code>Cell::TestCase</code> when the Capybara gem is loaded. This works for both Minitest and Rspec.</p>
+
+<p>The only changed behavior will be that the result of <code>Cell#call</code> is wrapped into a <code>Capybara::Node::Simple</code> instance, which allows to call matchers on the result.</p>
+
+<pre><code>cell(:song, @song).().must_have_selector "b" # example for MiniTest::Spec.
+</code></pre>
+
+<p>In case you need access to the actual markup string, use <code>#to_s</code>. Note that this is a Cells-specific extension.</p>
+
+<pre><code>cell(:song, @song).().to_s.must_match "by SNFU" # example for MiniTest::Spec.
+</code></pre>
+
+<p>You can disable Capybara for Cells even when the gem is loaded.</p>
+
+<pre><code>Cell::Testing.capybara = false
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-capybara-with-minitest-rails-">Capybara with Minitest (Rails)</h3>
+<p><!-- {cells-testing-capybara-with-minitest-rails--toc} --></p>
+
+<p>With Minitest, the recommended approach is to use the <code>minitest-rails-capybara</code> gem.</p>
+
+<pre><code>group :test do
+  gem "minitest-rails-capybara"
+end
+</code></pre>
+
+<p>You also have to include certain Capybara modules into your test case. It’s a good idea to do this in your app-wide <code>test_helper.rb</code>.</p>
+
+<pre><code>Cell::TestCase.class_eval do
+  include ::Capybara::DSL
+  include ::Capybara::Assertions
+end
+</code></pre>
+
+<p>If you miss to do so, you will get an exception similar to the following.</p>
+
+<pre><code>NoMethodError: undefined method `must_have_css' for #&lt;User::Cell::Index:0xb5a6c&gt;
+</code></pre>
+
+<p>Here’s an example <a href="https://github.com/apotonick/gemgem-trbrb/blob/7cc8c7a0de78ba00092957a32d8cd234f102c73f/test/test_helper.rb#L19">how we do it</a> in Gemgem.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-testing-capybara-with-minitest-spec">Capybara with Minitest::Spec</h3>
+<p><!-- {cells-testing-capybara-with-minitest-spec-toc} --></p>
+
+<p>In a non-Rails environment, the <a href="https://github.com/ordinaryzelig/capybara_minitest_spec">capybara_minitest_spec</a> gem is what we use.</p>
+
+<pre><code>group :test do
+  gem "capybara_minitest_spec"
+end
+</code></pre>
+
+<p>Add the following to your <code>test_helper.rb</code>.</p>
+
+<pre><code>require "capybara_minitest_spec"
+Cell::Testing.capybara = true
+</code></pre>
+
+<p>After including the <code>Testing</code> module, you’re ready to run specs against cells.</p>
+
+<pre><code>class NavigationCellTest &lt; Minitest::Spec
+  include Cell::Testing
+
+  it "renders avatar when user provided" do
+    html = cell(Pro::Cell::Navigation, user).()
+
+    html.must_have_css "#avatar-signed-in"
+    html.to_s.must_match "Signed in: nick@trb.to"
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-rendering">Rendering</h2>
+<p><!-- {cells-rendering-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rendering-view-paths">View Paths</h3>
+<p><!-- {cells-rendering-view-paths-toc} --></p>
+
+<p>Every cell class can have multiple view paths. However, I advise you not to have more than two, better one, unless you’re implementing a cell in an engine. This is simply to prevent unexpected behavior.</p>
+
+<p>View paths are set via the <code>::view_paths</code> method.</p>
+
+<pre><code>class Cell::ViewModel
+  self.view_paths = ["app/cells"]
+</code></pre>
+
+<p>Use the setter to override the view paths entirely, or append as follows.</p>
+
+<pre><code>class Shopify::CartCell
+  self.view_paths &lt;&lt; "/var/shopify/app/cells"
+</code></pre>
+
+<p>The <code>view_paths</code> variable is an inheritable array.</p>
+
+<p>A trick to quickly find out about the directory lookup list is to inspect the <code>::prefixes</code> class method of your particular cell.</p>
+
+<pre><code>puts Shopify::CartCell.prefixes
+#=&gt; ["app/cells/shopify/cart", "/var/shopify/app/cells/shopify/cart"]
+</code></pre>
+
+<p>This is the authorative list when finding templates. It will include inherited cell’s directories as well when you used inheritance. The list is traversed from left to right.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rendering-partials">Partials</h3>
+<p><!-- {cells-rendering-partials-toc} --></p>
+
+<p>Even considered a taboo, you may render global partials from Cells.</p>
+
+<pre><code>SongCell &lt; Cell::ViewModel
+  include Partial
+
+  def show
+    render partial: "../views/shared/sidebar.html"
+  end
+</code></pre>
+
+<p>Make sure to use the <code>:partial</code> option and specify a path relative to the cell’s view path. Cells will automatically add the format and the terrible underscore, resulting in <code>"../views/shared/_sidebar.html.erb"</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-rails">Rails</h2>
+<p><!-- {cells-rails-toc} --></p>
+
+<p>When using cells in a Rails app there’s several nice features to benefit from.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-asset-pipeline">Asset Pipeline</h3>
+<p><!-- {cells-rails-asset-pipeline-toc} --></p>
+
+<p>Cells can bundle their own assets in the cell’s view directory. This is a very popular way of writing highly reusable components.</p>
+
+<p>It works with both engine cells and application cells.</p>
+
+<pre><code>├── cells
+│   ├── comment_cell.rb
+│   ├── comment
+│   │   ├── show.haml
+│   │   ├── comment.css
+│   │   ├── comment.coffee
+</code></pre>
+
+<p>You need to register the cells with bundled assets. Preferably, this happens in <code>config/application.rb</code> of the main application.</p>
+
+<pre><code>class Application &lt; Rails::Application
+  # ..
+  config.cells.with_assets = ["comment_cell"]
+</code></pre>
+
+<p>The names added to <code>with_assets</code> have to be the fully qualified, underscored cell name. They will get <code>constantize</code>d to find the cell name at runtime.</p>
+
+<p>If using namespaces, this might be something along <code>config.cells.with_assets = ["my_engine/song/cell"]</code>.</p>
+
+<p>In <code>app/assets/application.js</code>, you need to add the cell JavaScript assets manually.</p>
+
+<pre><code>//=# require comments
+</code></pre>
+
+<p>Likewise, you have to reference the cell’s CSS files in <code>app/assets/application.css</code>.</p>
+
+<pre><code>/*
+ *= require comment
+ */
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-asset-pipeline-with-trailblazer">Asset Pipeline With Trailblazer</h3>
+<p><!-- {cells-rails-asset-pipeline-with-trailblazer-toc} --></p>
+
+<p>With Trailblazer, cells follow a different naming structure.</p>
+
+<pre><code>├── concepts
+│   │   └── comment
+│   │       ├── cell
+│   │       │   ├── index.rb
+│   │       │   └── show.rb
+│   │       └── view
+│   │           ├── index.haml
+│   │           ├── show.haml
+│   │           └── comment.scss
+</code></pre>
+
+<p>The <code>comment</code> concept here will provide <code>Comment::Cell::Index</code> and <code>Comment::Cell::Show</code>. Both bundle their assets in the <code>comment/view</code> directory.</p>
+
+<p>To add this to Rails’ asset pipeline, you need to reference one of the cell classes in <code>config/application.rb</code>.</p>
+
+<pre><code>class Application &lt; Rails::Application
+  # ..
+  config.cells.with_assets = ["comment/cell/index"] # one of the two is ok.
+</code></pre>
+
+<p>You still need to <code>require</code> the JS and CSS files. Here’s an example for <code>app/assets/application.css</code>.</p>
+
+<pre><code>/*
+ *= require comment # refers to concepts/comment/view/comment.scss
+ */
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-assets-troubleshooting">Assets Troubleshooting</h3>
+<p><!-- {cells-rails-assets-troubleshooting-toc} --></p>
+
+<p>The Asset Pipeline is a complex system. If your assets are not compiled, start debugging in <a href="https://github.com/trailblazer/cells-rails/blob/master/lib/cell/railtie.rb">Cells’ railtie</a> and uncomment the <code>puts</code> in the <code>cells.update_asset_paths</code> initializer to see what directories get added.</p>
+
+<p>Cell classes need to be loaded when precompiling assets! Make sure your <code>application.rb</code> contains the following setting (per default, this is turned <em>on</em>).</p>
+
+<pre><code>config.assets.initialize_on_precompile = true
+</code></pre>
+
+<p>You need to compile assets using this command, which is <a href="http://stackoverflow.com/a/12167790/465070">explained here</a>.</p>
+
+<pre><code>rake assets:precompile:all RAILS_ENV=development RAILS_GROUPS=assets
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-global-partials">Global Partials</h3>
+<p><!-- {cells-rails-global-partials-toc} --></p>
+
+<p>Although not recommended, you can also render global partials from a cell. Be warned, though, that they will be rendered using our stack, and you might have to include helpers into your view model.</p>
+
+<p>This works by including <code>Partial</code> and the corresponding <code>:partial</code> option.</p>
+
+<pre><code class="language-ruby">class Cell &lt; Cell::ViewModel
+  include Partial
+
+  def show
+    render partial: "../views/shared/map.html" # app/views/shared/map.html.haml
+  end
+</code></pre>
+
+<p>The provided path is relative to your cell’s <code>::view_paths</code> directory. The format has to be added to the file name, the template engine suffix will be used from the cell.</p>
+
+<p>You can provide the format in the <code>render</code> call, too.</p>
+
+<pre><code class="language-ruby">render partial: "../views/shared/map", formats: [:html]
+</code></pre>
+
+<p>This was mainly added to provide compatibility with 3rd-party gems like <a href="https://github.com/apotonick/kaminari-cells">Kaminari and Cells</a> that rely on rendering partials within a cell.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-generators">Generators</h3>
+<p><!-- {cells-rails-generators-toc} --></p>
+
+<p>In Rails, you can generate cells and concept cells.</p>
+
+<pre><code class="language-ruby">rails generate cell comment
+</code></pre>
+
+<p>Or, TRB-style concept cells.</p>
+
+<pre><code class="language-ruby">rails generate concept comment
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-engine-cells">Engine Cells</h3>
+<p><!-- {cells-rails-engine-cells-toc} --></p>
+
+<p>You can bundle cells into Rails engines and maximize a clean, component architecture by making your view models easily distributable and overridable.</p>
+
+<p>This pretty much works out-of-the-box, you write cells and push them into an engine. The only thing differing is that engine cells have to set their <code>view_paths</code> manually to point to the gem directory.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-engine-view-paths">Engine View Paths</h3>
+<p><!-- {cells-rails-engine-view-paths-toc} --></p>
+
+<p>Each engine cell has to set its <code>view_paths</code>.</p>
+
+<p>The easiest way is to do this in a base cell in your engine.</p>
+
+<pre><code>module MyEngine
+  class Cell &lt; Cell::Concept
+    view_paths = ["#{MyEngine::Engine.root}/app/concepts"]
+  end
+end
+</code></pre>
+
+<p>The <code>view_paths</code> is inherited, you only have to define it once when using inheritance within your engine.</p>
+
+<pre><code>module MyEngine
+  class Song::Cell &lt; Cell # inherits from MyEngine::Cell
+</code></pre>
+
+<p>This will <em>not</em> allow overriding views of this engine cell in <code>app/cells</code> as it is not part of the engine cell’s <code>view_paths</code>. When rendering <code>MyEngine::User::Cell</code> or a subclass, it will <em>not</em> look in <code>app/cells</code>.</p>
+
+<p>To achieve just that, you may append the engine’s view path instead of overwriting it.</p>
+
+<pre><code>class MyEngine::User::Cell &lt; Cell::Concept
+  view_paths &lt;&lt; "#{MyEngine::Engine.root}/app/concepts"
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-engine-render-problems">Engine Render problems</h3>
+<p><!-- {cells-rails-engine-render-problems-toc} --></p>
+
+<p>You might have to include cells’ template gem into your <strong>application’s</strong> <code>Gemfile</code>. This will properly require the extension.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-engine-namespace-helpers">Engine Namespace Helpers</h3>
+<p><!-- {cells-rails-engine-namespace-helpers-toc} --></p>
+
+<p>If you need namespaced helpers, include the respective helper in your engine cell.</p>
+
+<pre><code class="language-ruby">module MyEngine
+  class CommentCell &lt; Cell::ViewModel
+    include Engine.routes.url_helpers
+
+    def comment_url
+      link_to model.title, engine_specific_path_without_any_namespaces_needed
+    end
+  end
+end
+
+
+# application Gemfile
+gem "cells-erb"
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-translation-and-i18n-helper">Translation and I18N Helper</h3>
+<p><!-- {cells-rails-translation-and-i18n-helper-toc} --></p>
+
+<p>You can use the <code>#t</code> helper.</p>
+
+<pre><code>require "cell/translation"
+
+class Admin::Comment::Cell &lt; Cell::Concept
+  include ActionView::Helpers::TranslationHelper
+  include ::Cell::Translation
+
+  def show
+    t(".greeting")
+  end
+end
+</code></pre>
+
+<p>This will lookup the I18N path <code>admin.comment.greeting</code>.</p>
+
+<p>Setting a differing translation path works with <code>::translation_path</code>.</p>
+
+<pre><code>class Admin::Comment::Cell &lt; Cell::Concept
+  include Cell::Translation
+  self.translation_path = "cell.admin"
+</code></pre>
+
+<p>The lookup will now be <code>cell.admin.greeting</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-rails-asset-helper">Asset Helper</h3>
+<p><!-- {cells-rails-asset-helper-toc} --></p>
+
+<p>When using asset path helpers like <code>image_tag</code> that render different paths in production, please simply delegate to the controller.</p>
+
+<pre><code>class Comment::Cell &lt; Cell::Concept
+  delegates :parent_controller, :image_tag
+</code></pre>
+
+<p>The delegation fixes the <a href="https://github.com/apotonick/cells/issues/214">well-known problem</a> of the cell rendering the “wrong” path when using Sprockets. Please note that this fix is necessary due to the way Rails includes helpers and accesses global data.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-template-engines">Template Engines</h2>
+<p><!-- {cells-template-engines-toc} --></p>
+
+<p>Cells supports various template engines.</p>
+
+<p>We provide support for Haml, Erb, and Slim. You can also write <a href="#cells-template-engines-your-own">your own</a> template engine.</p>
+
+<p>In a non-Rails environment, you need to include the respective module into your cells, so it knows what template to find.</p>
+
+<pre><code>class SongCell &lt; Cell::ViewModel
+  include Cell::Erb
+  # include Cell::Haml
+  # include Cell::Slim
+</code></pre>
+
+<p>Note that you can only include <em>one engine per class</em>. This is due to problems with helpers in Rails and the way they have to be fixed in combination with Cells.</p>
+
+<h3 id="multiple-template-engines-in-rails">Multiple Template Engines in Rails</h3>
+
+<p>When including more than one engine in your Gemfile in Rails, the last one wins. Since each gem includes itself into <code>Cell::ViewModel</code>, unfortunately there can only be one global engine.</p>
+
+<p>Currently, there’s no clean way but to disable automatic inclusion from each gem (not yet implemented) and then include template modules into your application cells manually.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-template-engines-erb">ERB</h3>
+<p><!-- {cells-template-engines-erb-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-template-engines-haml">Haml</h3>
+<p><!-- {cells-template-engines-haml-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-template-engines-slim">Slim</h3>
+<p><!-- {cells-template-engines-slim-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-template-engines-your-own">Your Own</h3>
+<p><!-- {cells-template-engines-your-own-toc} --></p>
+
+<p>Theoretically, you can use any template engine supported by Tilt.</p>
+
+<p>To activate it in a cell, you only need to override <code>#template_options_for</code>.</p>
+
+<pre><code>class SongCell &lt; Cell::ViewModel
+  def template_options_for(options)
+    {
+      template_class: Tilt, # or Your::Template.
+      suffix:         "your"
+  }
+  end
+</code></pre>
+
+<p>This will use <code>Tilt</code> to instantiate a template to be evaluated. The <code>:suffix</code> is needed for Cells when finding the view.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="cells-troubleshooting">Troubleshooting</h2>
+<p><!-- {cells-troubleshooting-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-troubleshooting-helper-inclusion-order">Helper Inclusion Order</h3>
+<p><!-- {cells-troubleshooting-helper-inclusion-order-toc} --></p>
+
+<p>One of the many problems with Rails helper implementation is that the inclusion order matters. This can lead to problems with the following exception.</p>
+
+<pre><code>undefined method `output_buffer=' for #&lt;Comment::Cell:0xb518d8cc&gt;
+</code></pre>
+
+<p>Usually, the problem arises when you have initializers to setup your application cell. When including helpers here, they might be included before the <code>cells</code> gem has a chance to include its fixes.</p>
+
+<p>Please include your template engine module explicitly then, <em>after</em> your standard helper inclusions.</p>
+
+<pre><code># config/initializers/trailblazer.rb
+
+Cell::Concept.class_eval do
+  include ActionView::Helpers::TranslationHelpers # include your helpers here.
+  include Cell::Erb # or Cell::Slim, or Cell::Haml after that
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="cells-troubleshooting-form-helpers">Form helpers</h3>
+<p><!-- {cells-troubleshooting-form-helpers-toc} --></p>
+
+<p>Sometimes you have to manually include Rails helpers into your cell classes. For instance, the following exception originating from <code>lib/action_view/helpers/form_options_helper.rb</code> might disturb your sunny day.</p>
+
+<pre><code>undefined method `collection_select' for #&lt;...::Cell::
+</code></pre>
+
+<p>While we still don’t understand the root of the problem, it can be fixed by including <code>FormOptionsHelper</code>.</p>
+
+<pre><code>module Comment::Cell
+  class New &lt; Trailblazer::Cell
+    include ActionView::Helpers::FormOptionsHelper
+    # ...
+  end
+end
+</code></pre>
+
+<p>Likewise, when using <code>simple_form</code> you need to manually include its helper or you will encounter the following exception.</p>
+
+<pre><code>undefined method `simple_form_for' for #&lt;...::Cell::
+</code></pre>
+
+<p>It is easily fixed with an <code>include</code>.</p>
+
+<pre><code>module Transaction::Cell
+  class New &lt; Trailblazer::Cell
+    include SimpleForm::ActionViewExtensions::FormHelper
+    # you can include more than one helper:
+    # include ActionView::Helpers::FormOptionsHelper
+</code></pre>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="cells-overview-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Overview</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-overview-view-model">
+          <i class="fas fa-arrow-right"></i>
+          View Model
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-rendering-a-cell">
+          <i class="fas fa-arrow-right"></i>
+          Rendering a Cell
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-cell-class">
+          <i class="fas fa-arrow-right"></i>
+          Cell Class
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-cell-views">
+          <i class="fas fa-arrow-right"></i>
+          Cell Views
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-no-helpers">
+          <i class="fas fa-arrow-right"></i>
+          No Helpers
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-properties">
+          <i class="fas fa-arrow-right"></i>
+          Properties
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-testing">
+          <i class="fas fa-arrow-right"></i>
+          Testing
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-overview-more">
+          <i class="fas fa-arrow-right"></i>
+          More
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-getting-started-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Getting Started</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-getting-started-refactoring-legacy-views">
+          <i class="fas fa-arrow-right"></i>
+          Refactoring Legacy Views
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-extraction">
+          <i class="fas fa-arrow-right"></i>
+          Extraction
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-navigation-cell">
+          <i class="fas fa-arrow-right"></i>
+          Navigation Cell
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-discussion-navigation">
+          <i class="fas fa-arrow-right"></i>
+          Discussion: Navigation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-test-navigation">
+          <i class="fas fa-arrow-right"></i>
+          Test: Navigation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-url-helpers">
+          <i class="fas fa-arrow-right"></i>
+          URL helpers
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-content-cell">
+          <i class="fas fa-arrow-right"></i>
+          Content Cell
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-layout-cell">
+          <i class="fas fa-arrow-right"></i>
+          Layout Cell
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-putting-things-together">
+          <i class="fas fa-arrow-right"></i>
+          Putting Things Together
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-context-object">
+          <i class="fas fa-arrow-right"></i>
+          Context Object
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-getting-started-success">
+          <i class="fas fa-arrow-right"></i>
+          Success
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-api-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-api-anatomy">
+          <i class="fas fa-arrow-right"></i>
+          Anatomy
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-show">
+          <i class="fas fa-arrow-right"></i>
+          Show
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-initialize">
+          <i class="fas fa-arrow-right"></i>
+          Initialize
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-model">
+          <i class="fas fa-arrow-right"></i>
+          Model
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-property">
+          <i class="fas fa-arrow-right"></i>
+          Property
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-options">
+          <i class="fas fa-arrow-right"></i>
+          Options
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-invocation">
+          <i class="fas fa-arrow-right"></i>
+          Invocation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-call">
+          <i class="fas fa-arrow-right"></i>
+          Call
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-default-show">
+          <i class="fas fa-arrow-right"></i>
+          Default Show
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-instantiation-helper">
+          <i class="fas fa-arrow-right"></i>
+          Instantiation Helper
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-file-structure">
+          <i class="fas fa-arrow-right"></i>
+          File Structure
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-render">
+          <i class="fas fa-arrow-right"></i>
+          Render
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-instance-methods">
+          <i class="fas fa-arrow-right"></i>
+          Instance Methods
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-yield">
+          <i class="fas fa-arrow-right"></i>
+          Yield
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-collection">
+          <i class="fas fa-arrow-right"></i>
+          Collection
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-external-layout">
+          <i class="fas fa-arrow-right"></i>
+          External Layout
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-view-paths">
+          <i class="fas fa-arrow-right"></i>
+          View Paths
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-template-formats">
+          <i class="fas fa-arrow-right"></i>
+          Template Formats
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-html-escaping">
+          <i class="fas fa-arrow-right"></i>
+          HTML Escaping
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-context-object">
+          <i class="fas fa-arrow-right"></i>
+          Context Object
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-nesting">
+          <i class="fas fa-arrow-right"></i>
+          Nesting
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-view-inheritance">
+          <i class="fas fa-arrow-right"></i>
+          View Inheritance
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-builder">
+          <i class="fas fa-arrow-right"></i>
+          Builder
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-caching">
+          <i class="fas fa-arrow-right"></i>
+          Caching
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-cache-options">
+          <i class="fas fa-arrow-right"></i>
+          Cache Options
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-conditional-caching">
+          <i class="fas fa-arrow-right"></i>
+          Conditional Caching
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-cache-keys">
+          <i class="fas fa-arrow-right"></i>
+          Cache Keys
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-debugging-cache">
+          <i class="fas fa-arrow-right"></i>
+          Debugging Cache
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-cache-inheritance">
+          <i class="fas fa-arrow-right"></i>
+          Cache Inheritance
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-api-testing-caching">
+          <i class="fas fa-arrow-right"></i>
+          Testing Caching
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-trailblazer-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Trailblazer</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-trailblazer-installation">
+          <i class="fas fa-arrow-right"></i>
+          Installation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-file-structure">
+          <i class="fas fa-arrow-right"></i>
+          File Structure
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-naming">
+          <i class="fas fa-arrow-right"></i>
+          Naming
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-default-show">
+          <i class="fas fa-arrow-right"></i>
+          Default Show
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-view-names">
+          <i class="fas fa-arrow-right"></i>
+          View Names
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-invocation">
+          <i class="fas fa-arrow-right"></i>
+          Invocation
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-trailblazer-layouts">
+          <i class="fas fa-arrow-right"></i>
+          Layouts
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-testing-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Testing</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-testing-api">
+          <i class="fas fa-arrow-right"></i>
+          API
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-testing-minitest-test-unit">
+          <i class="fas fa-arrow-right"></i>
+          MiniTest, Test::Unit
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-testing-rspec">
+          <i class="fas fa-arrow-right"></i>
+          Rspec
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-testing-capybara-support">
+          <i class="fas fa-arrow-right"></i>
+          Capybara Support
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-testing-capybara-with-minitest-rails-">
+          <i class="fas fa-arrow-right"></i>
+          Capybara with Minitest (Rails)
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-testing-capybara-with-minitest-spec">
+          <i class="fas fa-arrow-right"></i>
+          Capybara with Minitest::Spec
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-rendering-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Rendering</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-rendering-view-paths">
+          <i class="fas fa-arrow-right"></i>
+          View Paths
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rendering-partials">
+          <i class="fas fa-arrow-right"></i>
+          Partials
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-rails-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Rails</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-rails-asset-pipeline">
+          <i class="fas fa-arrow-right"></i>
+          Asset Pipeline
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-asset-pipeline-with-trailblazer">
+          <i class="fas fa-arrow-right"></i>
+          Asset Pipeline With Trailblazer
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-assets-troubleshooting">
+          <i class="fas fa-arrow-right"></i>
+          Assets Troubleshooting
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-global-partials">
+          <i class="fas fa-arrow-right"></i>
+          Global Partials
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-generators">
+          <i class="fas fa-arrow-right"></i>
+          Generators
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-engine-cells">
+          <i class="fas fa-arrow-right"></i>
+          Engine Cells
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-engine-view-paths">
+          <i class="fas fa-arrow-right"></i>
+          Engine View Paths
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-engine-render-problems">
+          <i class="fas fa-arrow-right"></i>
+          Engine Render problems
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-engine-namespace-helpers">
+          <i class="fas fa-arrow-right"></i>
+          Engine Namespace Helpers
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-translation-and-i18n-helper">
+          <i class="fas fa-arrow-right"></i>
+          Translation and I18N Helper
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-rails-asset-helper">
+          <i class="fas fa-arrow-right"></i>
+          Asset Helper
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-template-engines-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Template Engines</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-template-engines-erb">
+          <i class="fas fa-arrow-right"></i>
+          ERB
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-template-engines-haml">
+          <i class="fas fa-arrow-right"></i>
+          Haml
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-template-engines-slim">
+          <i class="fas fa-arrow-right"></i>
+          Slim
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-template-engines-your-own">
+          <i class="fas fa-arrow-right"></i>
+          Your Own
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="cells-troubleshooting-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Troubleshooting</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#cells-troubleshooting-helper-inclusion-order">
+          <i class="fas fa-arrow-right"></i>
+          Helper Inclusion Order
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#cells-troubleshooting-form-helpers">
+          <i class="fas fa-arrow-right"></i>
+          Form helpers
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
