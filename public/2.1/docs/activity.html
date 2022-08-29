@@ -545,7 +545,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 23 Aug 22</span>
+                      <span>Last updated 29 Aug 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1233,6 +1233,7 @@ puts signal.to_h[:semantic] #=&gt; :provider_invalid
 <ul>
   <li><code>:id</code></li>
   <li><code>:magnetic_to</code></li>
+  <li><code>:task</code> which has to be a subclass of <code>Trailblazer::Activity::End</code>.</li>
 </ul>
 </div>
 
@@ -1758,7 +1759,9 @@ end
 
 <p>The <code>In()</code> filter will result in <code>:current_user</code> being renamed to <code>:user</code>. Since the policy step also needs <code>:model</code> we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to <code>Policy::Create</code>!</p>
 
-<p>When replacing the original policy step with a <code>#show_ctx</code> method you instantly see what new ctx is passed into the configured step.</p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/ctx-in.png" /></p>
+
+<p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
 
 <pre><code>class Create &lt; Trailblazer::Activity::Railway
   step :create_model
@@ -3303,7 +3306,7 @@ end
     step :create_model,
       Output(DatabaseError, :handle_error) =&gt; Id(:handle_db_error)
     step :handle_db_error,
-      id: :handle_db_error, magnetic_to: nil, Output(:success) =&gt; Track(:failure)
+      magnetic_to: nil, Output(:success) =&gt; Track(:failure)
   end
 end
 </code></pre>
