@@ -1761,7 +1761,7 @@ end
 
 <p>The <code>In()</code> filter will result in <code>:current_user</code> being renamed to <code>:user</code>. Since the policy step also needs <code>:model</code> we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to <code>Policy::Create</code>!</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ctx-in.1c346bf9.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-in.7bc24cc8.png" /></p>
 
 <p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
 
@@ -1897,7 +1897,7 @@ end
 
 <p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx. Anything the step writes to <code>ctx</code> is passed along to the following step.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ctx-out-all.330d3944.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-out-all.d11786e1.png" /></p>
 
 <p>Here, both <code>:status</code> and <code>:message</code> variables that were written in <code>Policy::Create</code> are passed into the outer ctx. The behavior is identical to the way before you were using i/o.</p>
 
@@ -1948,7 +1948,7 @@ end
 
 <p>This single <code>Out()</code> usage will result in only the <code>:message</code> variable being written to the outer ctx that is passed on. The <code>:status</code> variable is discarded.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/ctx-out.e27ee535.png" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-out.2de6a326.png" /></p>
 
 <p>You may pass any number of variables in the limiting array.</p>
 
