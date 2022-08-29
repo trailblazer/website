@@ -43,7 +43,7 @@ Not only are those input and output pipelines easy to [debug](#activity-variable
 As you might have guessed, `In()` helps creating input filters. It allows to configure or dynamically compute variables going _into_ the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).
 
 
-Be wary that once you use `In()` only the variables defined in your filters will be passed into the step, remaining variables from ctx are invisible in the step.
+Be wary that once you use `In()`, only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.
 
 <%= h4 "Mapping hash" %>
 
@@ -112,9 +112,14 @@ Both callables and filter methods for `In()` can receive ctx variables as keywor
 Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.
 
 <%= h3 "Out()" %>
-!!!!!!You can only configure what outgoing variables are
 
-Without any output configuration on the exemplary policy step, any variable written to `ctx` will be automatically set on the outer ctx. In other words, anything a step writes to `ctx` is passed to the following step. The behavior is identical to the way before you were using i/o.
+Without any output configuration on the exemplary policy step, any variable written to `ctx` will be automatically set on the outer ctx. Anything the step writes to `ctx` is passed along to the following step.
+
+<%= vite_image_tag "images/ctx-out-all.png", class: "mx-auto d-block" %>
+
+Here, both `:status` and `:message` variables that were written in `Policy::Create` are passed into the outer ctx. The behavior is identical to the way before you were using i/o.
+
+
 
 However, it is often necessary to rename or limit the outgoing variables of a particular step. Especially when using nested operations you probably don't want the entire nested ctx to be copied into the outer context. This is where output filters enter the stage.
 
@@ -133,6 +138,8 @@ In order to limit variables added to the outer ctx, `Out()` accepts an array sim
 <%= code "out-array", collapse: :meths %>
 
 This single `Out()` usage will result in only the `:message` variable being written to the outer ctx that is passed on. The `:status` variable is discarded.
+
+<%= vite_image_tag "images/ctx-out.png", class: "mx-auto d-block" %>
 
 You may pass any number of variables in the limiting array.
 

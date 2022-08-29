@@ -1735,7 +1735,7 @@ end
 
 <p>As you might have guessed, <code>In()</code> helps creating input filters. It allows to configure or dynamically compute variables going <em>into</em> the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).</p>
 
-<p>Be wary that once you use <code>In()</code> only the variables defined in your filters will be passed into the step, remaining variables from ctx are invisible in the step.</p>
+<p>Be wary that once you use <code>In()</code>, only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1891,10 +1891,13 @@ end
 <p><span class="divider"></span></p>
 
 <h3 id="activity-variable-mapping-out-">Out()</h3>
-<p><!-- {activity-variable-mapping-out--toc} -->
-!!!!!!You can only configure what outgoing variables are</p>
+<p><!-- {activity-variable-mapping-out--toc} --></p>
 
-<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx. In other words, anything a step writes to <code>ctx</code> is passed to the following step. The behavior is identical to the way before you were using i/o.</p>
+<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx. Anything the step writes to <code>ctx</code> is passed along to the following step.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/ctx-out-all.png" /></p>
+
+<p>Here, both <code>:status</code> and <code>:message</code> variables that were written in <code>Policy::Create</code> are passed into the outer ctx. The behavior is identical to the way before you were using i/o.</p>
 
 <p>However, it is often necessary to rename or limit the outgoing variables of a particular step. Especially when using nested operations you probably don’t want the entire nested ctx to be copied into the outer context. This is where output filters enter the stage.</p>
 
@@ -1942,6 +1945,8 @@ end
 </code></pre>
 
 <p>This single <code>Out()</code> usage will result in only the <code>:message</code> variable being written to the outer ctx that is passed on. The <code>:status</code> variable is discarded.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/ctx-out.png" /></p>
 
 <p>You may pass any number of variables in the limiting array.</p>
 
