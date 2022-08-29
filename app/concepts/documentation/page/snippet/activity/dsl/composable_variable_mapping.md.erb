@@ -42,6 +42,7 @@ Not only are those input and output pipelines easy to [debug](#activity-variable
 
 As you might have guessed, `In()` helps creating input filters. It allows to configure or dynamically compute variables going _into_ the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).
 
+
 Be wary that once you use `In()` only the variables defined in your filters will be passed into the step, remaining variables from ctx are invisible in the step.
 
 <%= h4 "Mapping hash" %>
@@ -52,7 +53,9 @@ Picking up the example from above, here's how a mapping hash "translates" the se
 
 The `In()` filter will result in `:current_user` being renamed to `:user`. Since the policy step also needs `:model` we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to `Policy::Create`!
 
-When replacing the original policy step with a `#show_ctx` method you instantly see what new ctx is passed into the configured step.
+<%= vite_image_tag "images/ctx-in.png", class: "mx-auto d-block" %>
+
+To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a `#show_ctx` method.
 
 <%= code "in-mapping-keys", collapse: :meths %>
 
