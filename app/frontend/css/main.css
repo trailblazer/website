@@ -1585,6 +1585,7 @@ ul.navigation > li:last-child {
   font-size: 18px;
   font-weight: 700;
   color: #3D3580;
+  margin-bottom: unset;
 }
 .sidebar-scroll h3 i {
   color: #FA413B;
@@ -1657,7 +1658,7 @@ ul.navigation > li:last-child {
   font-size: 14px;
   color: #000000;
   font-weight: 400;
-  padding: 5px 0;
+  padding: 0.25rem 0;
   text-transform: uppercase;
   display: block;
 }
