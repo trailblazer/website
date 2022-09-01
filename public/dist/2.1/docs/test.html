@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Test</title>
+
+    
+    <script src="/vite/assets/documentation.49aee2dd.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.9990d77f.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.84ab08f7.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.a6472465.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-69514939-1");
+      </script>
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="true"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="test-collapse"
+      class="collapse show"
+      aria-labelledby="test"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#test-installation">
+              Installation
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#test-operation-unit-tests">
+              Operation unit tests
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#test-rspec">
+              Rspec
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#test-system-test">
+              System Test
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Test</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 27 Jun 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<div class="bd-callout bd-callout-info">
+<p>Looking for the old <strong>trailblazer-test-0.1.1</strong> docs? <a href="old/trailblazer-test-0.1.html">They’re here</a>, but don’t forget to upgrade to 1.0 - it’s worth it!</p>
+</div>
+
+<p>Testing a Trailblazer project is very simple. Your test suite usually consists of two separate layers.</p>
+
+<ul>
+  <li><strong>Integration tests</strong> or <strong>system tests</strong> covering the full stack, and using Capybara to “click through” the happy path and possible edge-cases such as an erroring form.
+Smoke tests make sure of the integrity of your application, and assert that controllers, views and operations play well together. We will provide more documentation about system tests shortly.</li>
+  <li><strong>Operation unit tests</strong> guarantee that your operations, data processing and validations do what they’re supposed to. As they’re much faster and easier to write than full stack “smoke tests” they can cover any possible input to your operation and help quickly asserting the created side-effects. The <code>trailblazer-test</code> gem is here to help with that.</li>
+</ul>
+
+<p>There’s no need to test controllers, models, service objects, etc. in isolation - unless you want to do so for a better documentation of your internal APIs. As operations are the single entry-point for your functions, your entire stack is covered with the two test types.</p>
+
+<p>The <code>trailblazer-test</code> gem allows simple, streamlined operation unit tests.
+<span class="divider"></span></p>
+
+<h2 id="test-installation">Installation</h2>
+<p><!-- {test-installation-toc} --></p>
+
+<p>Add this line to your application’s Gemfile:</p>
+
+<pre><code class="language-ruby">gem 'trailblazer-test', "&gt;= 1.0.0"
+</code></pre>
+
+<p>The provided assertions and helpers work with Minitest. For RSpec support use <a href="#test-rspec"><code>rspec-trailblazer</code></a> which provides matchers such as <code>pass_with</code> and <code>fail_with</code> around our assertions.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>We’re working on RSpec matchers. The current implementation is <a href="#test-rspec">documented here</a>. Please <a href="https://trailblazer.zulipchat.com">chat with us</a> if you want to help.</p>
+</div>
+
+<!--
+
+However, the idea of operation tests is: Run the complete unit with a certain input set, and test the side-effects. This differs to the Rails Way™ testing style, where smaller units of code, such as a specific validation or a callback, are tested in complete isolation. While that might look tempting and clean, it will create a test environment that is not identical to what happens in production.
+
+In production, you will never trigger one specific callback or a particular validation, only. Your application will run all code required to create a `Song` object, for instance. In Trailblazer, this means running the `Song::Create` operation, and testing that very operation with all its side-effects.
+ -->
+
+<p><span class="divider"></span></p>
+
+<h2 id="test-operation-unit-tests">Operation unit tests</h2>
+<p><!-- {test-operation-unit-tests-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-test" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-test</a></p>
+
+<p>Whenever you introduce a new operation class to your application, you have four choices for testing.</p>
+
+<ol>
+  <li>You could skip testing and program the next feature - then, you shouldn’t be reading this.</li>
+  <li>If the operation is simple enough, cover its behavior in a smoke test and test both the successful invocation and its invalid state in a UI test. Nevertheless, this can be cumbersome and slow.</li>
+  <li>Write your own operation unit tests.</li>
+  <li>Use <code>assert_pass</code> and <code>assert_fail</code> to quickly test all possible inputs and outcomes in a unit test.</li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-overview">Overview</h3>
+<p><!-- {test-operation-unit-tests-overview-toc} --></p>
+
+<p>The goal of <code>trailblazer-test</code> is to provide simple, strong, non-verbose testing of operations and edge cases.</p>
+
+<pre><code class="language-ruby">it "converts {duration} to seconds" do
+  assert_pass( {duration: "2.24"}, {duration: 144} )
+end
+</code></pre>
+
+<p>The assertion helpers focus on minimizing test code and the associated pain with it.</p>
+
+<p>A typical operation test case might look as follows.</p>
+
+<pre><code># test/operation/song_operation_test.rb
+class SongOperationTest &lt; OperationSpec
+
+  # The default ctx passed into the tested operation.
+  let(:default_ctx) do
+    {
+      params: {
+        song: { # Note the {song} key here!
+          band:  "Rancid",
+          title: "Timebomb",
+          # duration not present
+        }
+      }
+    }
+  end
+
+  # What will the model look like after running the operation?
+  let(:expected_attributes) do
+    {
+      band:   "Rancid",
+      title:  "Timebomb",
+    }
+  end
+
+  let(:operation)     { Song::Operation::Create }
+  let(:key_in_params) { :song }
+
+  it "passes with valid input, {duration} is optional" do
+    assert_pass( {}, {} )
+  end
+
+  it "converts {duration} to seconds" do
+    assert_pass( {duration: "2.24"}, {duration: 144} )
+  end
+
+  it "converts {duration} to seconds" do
+    assert_pass( {duration: "2.24"}, {duration: 144} ) do |result|
+      assert_equal true, result[:model].persisted?
+    end
+  end
+
+  it "converts {duration} to seconds" do
+    result = assert_pass( {duration: "2.24"}, {duration: 144} ) # with our without a block
+
+    assert_equal true, result[:model].persisted?
+  end
+
+  describe "we have {:song}, not {:model}" do
+    let(:operation) {
+      Class.new(Song::Operation::Create) do
+        step :set_song
+
+        def set_song(ctx, **)
+          ctx[:song]  = ctx[:model]
+          ctx[:model] = "i don't exist"
+        end
+      end
+    }
+    it "what" do
+      assert_pass( {duration: "2.24"}, {duration: 144}, model_at: :song )
+    end
+  end
+
+  it "fails with missing {title} and invalid {duration}" do
+    assert_fail( {duration: 1222, title: ""}, [:title, :duration] )
+  end
+  # ...
+end
+</code></pre>
+
+<p>As - hopefully - visible in this example <code>trailblazer-test</code> focuses on minimalistic, less verbose testing of operations. This in turn makes testing literally a no-brainer where <strong>testing all edge cases</strong> actually is fun.</p>
+
+<p>Note that only <code>#assert_pass</code> and <code>#assert_fail</code> are specific to Trailblazer. Structural helpers such as <code>it</code> and <code>describe</code> are provided by Minitest, and the test style is completely up to you. See below for conventions of how we test operations.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-base-class">Base class</h3>
+<p><!-- {test-operation-unit-tests-base-class-toc} --></p>
+
+<p>It is a good idea to maintain a slim <code>OperationTest</code> or <code>OperationSpec</code> base class in your <code>test_helper.rb</code>.</p>
+
+<pre><code># test/test_helper.rb
+# ...
+
+class OperationSpec &lt; Minitest::Spec
+  include Trailblazer::Test::Assertions
+  include Trailblazer::Test::Operation::Assertions
+end
+</code></pre>
+
+<p>By including the assertion modules your tests can use our assertions such as <code>assert_pass</code> and <code>assert_exposes</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-configuration">Configuration</h3>
+<p><!-- {test-operation-unit-tests-configuration-toc} --></p>
+
+<p>The <code>trailblazer-test</code> gem allows to configure common options on the test level.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="test-operation-unit-tests-configuration-default-ctx">default ctx</li>
+</ul>
+
+<p>You can define a <code>default_ctx</code> using <code>let()</code> (and maintain different versions in <code>describe</code> blocks). <code>default_ctx</code> defines what to pass <em>into</em> the operation per default.</p>
+
+<pre><code>let(:default_ctx) do
+  {
+    params: {
+      song: { # Note the {song} key here!
+        band:  "Rancid",
+        title: "Timebomb",
+        # duration not present
+      }
+    }
+  }
+end
+</code></pre>
+
+<p>Note that <code>default_ctx</code> is always the full context that you’d normally pass into <code>Operation.call()</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="test-operation-unit-tests-configuration-expected-attributes">Expected attributes</li>
+</ul>
+
+<p>The counterpart of <code>default_ctx</code> defines what the attributes of the operation’s <code>model</code> will look like when the operation was run successfully.</p>
+
+<pre><code># What will the model look like after running the operation?
+let(:expected_attributes) do
+  {
+    band:   "Rancid",
+    title:  "Timebomb",
+  }
+end
+</code></pre>
+
+<p>As in 99% of operation usage a model is created or altered, this hash represents the attributes of the <em>model</em> that were modified by the operation.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="test-operation-unit-tests-configuration-operation">operation</li>
+</ul>
+
+<p>Instead of having to pass what operation gets tested to each assertion you can conveniently define it using <code>let()</code>.</p>
+
+<pre><code>let(:operation)     { Song::Operation::Create }
+</code></pre>
+
+<p>Again, you may use any level of <code>describe</code> to fine-tune your tests.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-assert_pass">assert_pass</h3>
+<p><!-- {test-operation-unit-tests-assert_pass-toc} --></p>
+
+<p>The assertion helpers are bringing together <code>operation</code>, <code>default_ctx</code> and <code>expected_attributes</code>.</p>
+
+<p>Use <code>assert_pass</code> to run an operation and assert it was successful, while checking if the attributes of the operation’s <code>:model</code> are what you’re expecting.</p>
+
+<pre><code>it "passes with valid input, {duration} is optional" do
+  assert_pass( {}, {} )
+end
+</code></pre>
+
+<p><code>assert_pass</code> with empty hashes will invoke the operation configured via <code>let(:operation)</code> by passing the hash from <code>let(:default_ctx)</code> into <code>call</code>. After that, it grabs the operation’s <code>result[:model]</code> and tests all attributes from <code>expected_attributes</code> on it.</p>
+
+<p>If you were to hand-write this code, something along this would happen.</p>
+
+<pre><code class="language-ruby">it "passes with valid input, {duration} is optional" do
+  result = Song::Operation::Create.(default_ctx)
+  assert result.success?
+  assert_equal "Rancid",   result[:model].band
+  assert_equal "Timebomb", result[:model].title
+end
+</code></pre>
+
+<p>That’s quite a lot of code, right?</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_pass</li>
+    <li id="test-operation-unit-tests-assert_pass-manual-options">Manual options</li>
+</ul>
+
+<p><code>assert_pass</code> makes it really simple to override ingoing <em>form</em> attributes. This is perfect for testing validations of your contracts by simulating differing user input.</p>
+
+<pre><code>it "converts {duration} to seconds" do
+  assert_pass( {duration: "2.24"}, {duration: 144} )
+end
+</code></pre>
+
+<p>Per default, the assertion accepts two arguments.</p>
+
+<ol>
+  <li>The first hash to <code>assert_pass</code> is merged into the <code>default_ctx</code>.</li>
+  <li>The second argument is merged with <code>expected_attributes</code> and allows to assert a different outcome.</li>
+</ol>
+
+<p>However, and now listen up, <code>default_ctx</code> and the <em>first</em> hash are not merged on the top-level! If <code>let(:key_in_params)</code> is set the merging behavior is changed.</p>
+
+<pre><code>let(:key_in_params) { :song }
+</code></pre>
+
+<p>With this configuration in place, the first argument given to <code>assert_pass</code> is merged with the hash found at <code>default_ctx[:params][:song]</code>. This allows for quickly changing the input that usually represents a form or API document - things to test that you will spend a lot of time on.</p>
+
+<p>Again, if you’re hand-coding, here’s what is going on.</p>
+
+<pre><code class="language-ruby">assert_pass( {duration: "2.24"}, {duration: 144} )
+# identical to
+
+input  = default_ctx[:params][:song].merge!(duration: "2.24")
+
+result = Song::Operation::Create.(input)
+# ... assertions
+</code></pre>
+
+<p>Changing the form input part in order to test validations and processing is a pretty common task. The <code>assert_pass</code> assertion is built to minimize test code and helps you with just that.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_pass</li>
+    <li id="test-operation-unit-tests-assert_pass-omit-key">Omit key</li>
+</ul>
+
+<p>In case you don’t use a key in your form input you can set <code>:key_in_params</code> to <code>false</code>.</p>
+
+<pre><code>let(:key_in_params) { false }
+
+let(:default_ctx) do
+  {
+    params: {
+      band:  "Rancid",
+      title: "Timebomb",
+    }
+  }
+end
+</code></pre>
+
+<p>Note that this decision is also reflected in your <code>default_ctx</code>, which now doesn’t have the <code>:song</code> key anymore.</p>
+
+<p>When using <code>assert_pass</code> and <code>assert_fail</code> you can still worryless pass form input. The assertion now merges it directly with <code>:params</code>.</p>
+
+<pre><code>it "sets {title}" do
+  assert_pass( {title: "Ruby Soho"}, {title: "Ruby Soho"} )
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_pass</li>
+    <li id="test-operation-unit-tests-assert_pass-model-name">Model name</li>
+</ul>
+
+<p><code>assert_pass</code> usually tests the expected attributes on <code>result[:model]</code>. Use <code>:model_at</code> to change the key where to find the asserted object.</p>
+
+<p>In this example, the asserting code will now grab the model from <code>result[:song]</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_pass</li>
+    <li id="test-operation-unit-tests-assert_pass-block">Block</li>
+</ul>
+
+<p>If you need more specific assertions, use a block with <code>assert_pass</code>.</p>
+
+<pre><code>it "converts {duration} to seconds" do
+  assert_pass( {duration: "2.24"}, {duration: 144} ) do |result|
+    assert_equal true, result[:model].persisted?
+  end
+end
+</code></pre>
+
+<p>This will run all assertions built into <code>assert_pass</code>. By yielding the operation’s result in case of success, additional assertions can be made manually.</p>
+
+<p>Note that the block is not run when an earlier assertion in <code>assert_pass</code> has failed.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_pass</li>
+    <li id="test-operation-unit-tests-assert_pass-result">Result</li>
+</ul>
+
+<p>Both versions of <code>assert_pass</code> (with or without a block) return the result object of the operation call.</p>
+
+<pre><code>it "converts {duration} to seconds" do
+  result = assert_pass( {duration: "2.24"}, {duration: 144} ) # with our without a block
+
+  assert_equal true, result[:model].persisted?
+end
+</code></pre>
+
+<p>Use this for adding assertions outside the block.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-assert_fail">assert_fail</h3>
+<p><!-- {test-operation-unit-tests-assert_fail-toc} --></p>
+
+<p>To test an unsuccessful outcome of an operation, use <code>assert_fail</code>. This is helpful for testing all kinds of validations. By invoking the operation with insufficient or wrong data it will fail and add errors onto the errors object. Those can be matched against a list of expected errors.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration}" do
+  assert_fail( {duration: 1222, title: ""}, [:title, :duration] )
+end
+</code></pre>
+
+<p>The merging of the form input works exactly as in <a href="#trailblazer-test-operation-unit-tests-assert_pass"><code>assert_pass</code></a>, respecting <code>keys_in_params</code> and <code>default_ctx</code>.</p>
+
+<ol>
+  <li>First, the operation is run, returning the result object. The first assertion is whether <code>result.failure?</code> is true.</li>
+  <li>After that, the operation’s error object is extracted and its keys are compared to the list that was provided to <code>assert_fail</code> as the second argument. If the keys in the actual errors object and your array match, this assertions passes, and proves that particular validations do work.</li>
+</ol>
+
+<p>This translates to the following manual test case.</p>
+
+<pre><code class="language-ruby">it "fails with missing {title} and invalid {duration}" do
+  assert_fail( {duration: 1222, title: ""}, [:title, :duration] )
+  # is almost identical to:
+
+  input  = {params: {song: {title: "", band: "Rancid", duration: 1222}
+  result = Song::Operation::Create(input)
+
+  assert result.failure?
+  assert_equal [:title, :duration], result["contract.default"].errors.messages.keys
+end
+</code></pre>
+
+<p>Per default, no assumptions are made on the model. Use <code>assert_fail</code> with a block to do so.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>In 2.0 and 2.1, the errors object defaults to <code>result["contract.default"].errors</code>. In TRB 2.2, there will be an operation-wide errors object decoupled from the contracts.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_fail</li>
+    <li id="test-operation-unit-tests-assert_fail-error-messages">Error messages</li>
+</ul>
+
+<p>If testing the presence of validation errors is not enough you can pass a hash to <code>assert_fail</code> to check that a particular error message (or multiple) is set.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration} with given error messages" do
+  assert_fail( {duration: 1222, title: ""},
+    {title: ["must be filled"], duration: ["must be String"]} # hash instead of array!
+  )
+end
+</code></pre>
+
+<p>When there is only one error message per field, you may omit the array for your convenience.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration} with given error messages" do
+  assert_fail( {title: "", duration: "1222"}, {title: "must be filled"} )
+end
+</code></pre>
+
+<p><code>assert_fail</code> automatically wraps error messages in an array.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_fail</li>
+    <li id="test-operation-unit-tests-assert_fail-block">Block</li>
+</ul>
+
+<p>You can use a block with <code>assert_fail</code> for more specific assertions.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration}" do
+  assert_fail( {duration: 1222, title: ""}, [:title, :duration] ) do |result|
+    assert_equal false, result[:model].persisted?
+    assert_equal 2,     result[:"contract.default"].errors.size
+  end
+end
+</code></pre>
+
+<p>The block is run in addition to <code>assert_fail</code>’s built-in assertions. Just as in <code>assert_pass</code> it receives the operation’s <code>result</code> object and allows you to add assertions as you desire.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_fail</li>
+    <li id="test-operation-unit-tests-assert_fail-result">Result</li>
+</ul>
+
+<p>Both versions of <code>assert_fail</code> (with or without a block) return the result object of the operation call.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration}" do
+  result = assert_fail( {duration: 1222, title: ""}, [:title, :duration] )
+
+  assert_equal false, result[:model].persisted?
+end
+</code></pre>
+
+<p>Use this for adding assertions outside the block.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-debugging">Debugging</h3>
+<p><!-- {test-operation-unit-tests-debugging-toc} --></p>
+
+<p>Both <code>assert_pass</code> and <code>assert_fail</code> allow to run the operation <a href="trailblazer.html#trailblazer-developer-wtf-">using <code>wtf?</code></a>. When you’re unsure about what is going on inside the tested operation, the <code>:wtf?</code> option comes to rescue.</p>
+
+<pre><code>it "fails with missing {title} and invalid {duration}" do
+  assert_fail( {duration: 1222, title: ""}, [:title, :duration], :wtf? )
+  #=&gt;
+  # -- Song::Operation::Create
+  # |-- Start.default
+  # |-- model.build
+  # |-- contract.build
+  # |-- contract.default.validate
+  # |   |-- Start.default
+  # |   |-- contract.default.params_extract
+  # |   |-- contract.default.call
+  # |   `-- End.failure
+  # `-- End.failure
+end
+</code></pre>
+
+<p>In the trace on the console, it’s obvious that the contract validation failed. Again, note that this works for both <code>assert_pass</code> and <code>assert_fail</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-options">Options</h3>
+<p><!-- {test-operation-unit-tests-options-toc} --></p>
+
+<p><a href="#test-operation-unit-tests-configuration">All <code>let()</code> options</a> can also be passed directly to the assertion, allowing you to override the <code>let()</code> option or not having to define it on the test level at all.</p>
+
+<pre><code>it "Update allows integer {duration}" do
+  assert_pass( {duration: 2224}, {duration: 2224}, operation: Song::Operation::Update )
+end
+</code></pre>
+
+<p>Accepted options are <code>:operation</code>, <code>:default_ctx</code>, <code>:expected_attributes</code> and <code>:key_in_params</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-ctx-helper">Ctx Helper</h3>
+<p><!-- {test-operation-unit-tests-ctx-helper-toc} --></p>
+
+<p>If you need a customized <code>ctx</code> to pass into the tested operation, use <code>Ctx()</code>. It’s mostly used as the first argument to <code>assert_pass</code> and <code>assert_fail</code>.</p>
+
+<pre><code>it "converts {duration} to seconds" do
+  assert_pass( Ctx({current_user: yogi}), {title: "Timebomb"} )
+end
+</code></pre>
+
+<p>The helper brings some nice API especially for testing edge cases and failures.</p>
+
+<pre><code>it "fails with missing key {:title}" do
+  assert_fail( Ctx(exclude: [:title]), [:title] ) do |result|
+    assert_equal ["must be filled"], result[:"contract.default"].errors[:title]
+  end
+end
+</code></pre>
+
+<p>Whenever you use <code>Ctx()</code> the computed hash is passed through directly into the operation, so you have full control over what’s going in. Both <code>assert_pass</code> and <code>assert_fail</code> are not altering your ctx anymore.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Ctx Helper</li>
+    <li id="test-operation-unit-tests-ctx-helper-merge">Merge</li>
+</ul>
+
+<p>The standard behavior of <code>Ctx()</code> is to merge the passed hash with <code>default_ctx</code>.</p>
+
+<pre><code>it "provides {Ctx()}" do
+  ctx = Ctx({current_user: yogi}  )
+  #=&gt; {:params=&gt;{:song=&gt;{:band=&gt;"Rancid", :title=&gt;"Timebomb"}},
+  #    :current_user=&gt;#&lt;User name="Yogi"&gt;}
+  # ...
+end
+</code></pre>
+
+<p>This allows to quickly add injections such as the <code>:current_user</code> to the ctx.</p>
+
+<p>Anything under the <code>:params</code> key is deep-merged with your <code>default_ctx</code>, which is super handy when you need to add non-form variables.</p>
+
+<pre><code>it "provides {Ctx()}" do
+  ctx = Ctx(
+    {
+      current_user: yogi,
+      params: {song: {duration: 999}} # this is deep-merged!
+    }
+  )
+  #=&gt; {:params=&gt;{:song=&gt;{:band=&gt;"Rancid", :title=&gt;"Timebomb", duration: 999}},
+  #    :current_user=&gt;#&lt;User name="Yogi"&gt;}
+  # ...
+end
+</code></pre>
+
+<p>Note how <code>:duration</code> is added to the existing <code>:song</code> hash.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Ctx Helper</li>
+    <li id="test-operation-unit-tests-ctx-helper-exclude">Exclude</li>
+</ul>
+
+<p>If you want to delete a certain form field from the input, you can use <code>:exclude</code>. This is great for testing presence or required validations.</p>
+
+<pre><code>it "provides {Ctx()}" do
+  ctx = Ctx(exclude: [:title])
+  #=&gt; {:params=&gt;{:song=&gt;{:band=&gt;"Rancid"}}}
+  # ...
+end
+</code></pre>
+
+<p>The <code>:title</code> field under <code>:song</code> is now removed from the input.</p>
+
+<p>You may also use <code>:exclude</code> in combination with the deep-merge.</p>
+
+<pre><code>it "provides {Ctx()}" do
+  ctx = Ctx({current_user: yogi}, exclude: [:title])
+  #=&gt; {:params=&gt;{:song=&gt;{:band=&gt;"Rancid"}},
+  #    :current_user=&gt;#&lt;User name="Yogi"&gt;}
+  # ...
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-assert_exposes">assert_exposes</h3>
+<p><!-- {test-operation-unit-tests-assert_exposes-toc} --></p>
+
+<p>Test attributes of an arbitrary object.</p>
+
+<p>Pass a hash of key/value tuples to <code>assert_exposes</code> to test that all attributes of the asserted object match the provided values.</p>
+
+<pre><code>it do
+  assert_exposes model, title: "Timebomb", band: "Rancid"
+end
+</code></pre>
+
+<p>Per default, this will read the values via <code>model.{key}</code> from the asserted object (<code>model</code>) and compare it to the expected values.</p>
+
+<p>This is a short-cut for tests such as the following.</p>
+
+<pre><code class="language-ruby">assert_equal "Timebomb", model.title
+assert_equal "Rancid",   model.band
+</code></pre>
+
+<p>Note that <code>assert_exposes</code> accepts any object with a reader interface.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_exposes</li>
+    <li id="test-operation-unit-tests-assert_exposes-reader">Reader</li>
+</ul>
+
+<p>If the asserted object exposes a hash reader interface, use the <code>:reader</code> option.</p>
+
+<pre><code>it do
+  assert_exposes model, {title: "Timebomb", band: "Rancid"}, reader: :[]
+end
+</code></pre>
+
+<p>This will read values with via <code>#[]</code>, e.g. <code>model[:title]</code>.</p>
+
+<p>If the object has a generic reader, you can pass the name via <code>:reader</code>.</p>
+
+<pre><code>it do
+  assert_exposes model, {title: "Timebomb", band: "Rancid"}, reader: :get
+end
+</code></pre>
+
+<p>Now the value is read via <code>model.get(:title)</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>assert_exposes</li>
+    <li id="test-operation-unit-tests-assert_exposes-lambda">Lambda</li>
+</ul>
+
+<p>You can also pass a lambda to <code>assert_expose</code> in order to compute a dynamic value for the test, or for more complex comparisons.</p>
+
+<pre><code>it do
+  assert_exposes model, title: "Timebomb", band: -&gt;(actual:, **) { actual.size &gt; 3 }
+end
+</code></pre>
+
+<p>The lambda will receive a hash with the <code>:actual</code> value read from the asserted object. It must return a boolean.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="test-operation-unit-tests-factory">factory</h3>
+<p><!-- {test-operation-unit-tests-factory-toc} --></p>
+
+<p>You should always use operations as factories in tests. The <code>factory</code> method calls the operation and raises an error should the operation have failed. If successful, it will do the exact same thing <a href="#call"><code>call</code></a> does.</p>
+
+<pre><code>it "calls the operation and raises an error and prints trace when fails" do
+  exp = assert_raises do
+    factory Create, params: {title: "Shipwreck", band: "The Chats"}
+  end
+
+  exp.inspect.include? %(Operation trace)
+  exp.inspect.include? "OperationFailedError: factory(Create) has failed due to validation "\
+                       "errors: {:band=&gt;['must be Rancid']}"
+end
+</code></pre>
+
+<p>If the factory operation fails, for example due to invalid form input, it raises a <code>OperationFailedError</code> exception.</p>
+
+<pre><code class="language-ruby">factory( Song::Create, { title: "" } )["model"]
+#=&gt; Trailblazer::Test::OperationFailedError: factory( Song::Create ) failed.
+</code></pre>
+
+<p>It is absolutely advisable to use <code>factory</code> in combination with <code>let</code>.</p>
+
+<pre><code class="language-ruby">let(:song) { factory( Song::Create, { title: "Timebomb", band: "Rancid" } ) }
+</code></pre>
+
+<p>Also, you can safely use FactoryGirl’s <code>attributes_for</code> to generate input.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>factory</li>
+    <li id="test-operation-unit-tests-factory-mock_step">mock_step</li>
+</ul>
+
+<p>This helper allows you to mock any step within a given or deeply nested activities. For example,</p>
+
+<pre><code>class Show &lt; Trailblazer::Activity::FastTrack
+  class Complexity &lt; Trailblazer::Activity::FastTrack
+    class ExternalApi &lt; Trailblazer::Activity::FastTrack
+      step :make_call
+      # ...
+    end
+
+    step :some_complex_task
+    step Subprocess(ExternalApi)
+    # ...
+  end
+
+  step :load_user
+  step Subprocess(Complexity)
+  # ...
+end
+</code></pre>
+
+<p>To skip processing inside <code>:load_user</code> and use a mock instead, use <code>mock_step</code>.</p>
+
+<pre><code>it "mocks loading user" do
+  new_activity = mock_step(Show, id: :load_user) do |ctx|
+    ctx[:user] = Struct.new(:name).new('Mocky')
+  end
+
+  assert_pass new_activity, default_params, {} do |(signal, (ctx, flow_options))|
+    assert_equal ctx[:user].name, 'Mocky'
+
+    assert_equal ctx[:seq], [:some_complex_task, :make_call]
+  end
+end
+</code></pre>
+
+<p>Internally, it creates and returns a fresh, <em>subclassed</em> activity (via <a href="/2.1/docs/activity.html#activity-dsl-options-patching">patching</a>) whilst replacing the step for given <code>:id</code>. Be advised that this does <em>not change</em> the original activity class.</p>
+
+<p>You can also mock any nested activity (aka <code>Subprocess</code>) which does any heavy computations or I/O calls.</p>
+
+<pre><code>new_activity = mock_step(Show, id: Show::Complexity) do
+  true # no-op to avoid any Complexity
+end
+</code></pre>
+
+<p>In case you want to mock only single step from the nested activity, you can do so by passing it as a <code>subprocess</code>.</p>
+
+<pre><code>new_activity = mock_step(Show, id: :some_complex_task, subprocess: Show::Complexity) do
+  # Mock only single step from nested activity to do nothing
+  true
+end
+</code></pre>
+
+<p>It’ll search the <code>:id</code> to be mocked within nested activity instead of top-level activity.</p>
+
+<p>In addition, if you want to mock any deeply nested step in <code>subprocess's</code> activity, it can be done via passing <code>subprocess_path</code>.</p>
+
+<pre><code>new_activity = mock_step(Show, id: :make_call, subprocess: Show::Complexity, subprocess_path: [Show::Complexity::ExternalApi]) do
+  # Some JSON response
+end
+</code></pre>
+
+<p><code>subprocess_path</code> should list n-level of nested activities in the order they are nested. Internally, it uses <a href="https://2019.trailblazer.to/2.1/docs/activity.html#activity-dsl-options-patching">patching</a> API supported by <code>Subprocess</code> helper.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="test-rspec">Rspec</h2>
+<p><!-- {test-rspec-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/rspec-trailblazer" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> rspec-trailblazer</a></p>
+
+<div class="bd-callout bd-callout-info">
+<p>We’re still working on RSpec matchers. Please <a href="https://trailblazer.zulipchat.com">chat with us</a> if you want to help.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h2 id="test-system-test">System Test</h2>
+<p><!-- {test-system-test-toc} --></p>
+
+<p>This document will describe how we test the full stack using Capybara and system tests.</p>
+
+<p>Also described in part II of <a href="https://leanpub.com/buildalib">the new book</a>.</p>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="test-installation-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Installation</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="test-operation-unit-tests-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Operation unit tests</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#test-operation-unit-tests-overview">
+          <i class="fas fa-arrow-right"></i>
+          Overview
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-base-class">
+          <i class="fas fa-arrow-right"></i>
+          Base class
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-configuration">
+          <i class="fas fa-arrow-right"></i>
+          Configuration
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-configuration-default-ctx">default ctx</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-configuration-expected-attributes">Expected attributes</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-configuration-operation">operation</a>
+        </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-assert_pass">
+          <i class="fas fa-arrow-right"></i>
+          assert_pass
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_pass-manual-options">Manual options</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_pass-omit-key">Omit key</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_pass-model-name">Model name</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_pass-block">Block</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_pass-result">Result</a>
+        </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-assert_fail">
+          <i class="fas fa-arrow-right"></i>
+          assert_fail
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_fail-error-messages">Error messages</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_fail-block">Block</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_fail-result">Result</a>
+        </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-debugging">
+          <i class="fas fa-arrow-right"></i>
+          Debugging
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-options">
+          <i class="fas fa-arrow-right"></i>
+          Options
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-ctx-helper">
+          <i class="fas fa-arrow-right"></i>
+          Ctx Helper
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-ctx-helper-merge">Merge</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-ctx-helper-exclude">Exclude</a>
+        </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-assert_exposes">
+          <i class="fas fa-arrow-right"></i>
+          assert_exposes
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_exposes-reader">Reader</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-assert_exposes-lambda">Lambda</a>
+        </li>
+      
+    
+      <li>
+        <a href="#test-operation-unit-tests-factory">
+          <i class="fas fa-arrow-right"></i>
+          factory
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#test-operation-unit-tests-factory-mock_step">mock_step</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="test-rspec-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Rspec</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="test-system-test-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>System Test</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

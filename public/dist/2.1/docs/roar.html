@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Roar</title>
+
+    
+    <script src="/vite/assets/documentation.49aee2dd.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.9990d77f.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.84ab08f7.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.a6472465.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-69514939-1");
+      </script>
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="true"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="roar-collapse"
+      class="collapse show"
+      aria-labelledby="roar"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#roar-basic-usage">
+              Basic Usage
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-resource-objects">
+              Resource Objects
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-attributes">
+              Attributes
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-relationships">
+              Relationships
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-member-names">
+              Member Names
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-meta-information">
+              Meta information
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-compound-document">
+              Compound Document
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#roar-sparse-fieldsets">
+              Sparse Fieldsets
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Roar</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 27 Jun 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p>Roar JSON API supports rendering and parsing documents using the <a href="http://jsonapi.org/format/">JSON API 1.0</a> specification.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>N.B. Roar’s JSON API support is now provided <a href="https://github.com/trailblazer/roar-jsonapi">as a separate gem</a>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-basic-usage">Basic Usage</h2>
+<p><!-- {roar-basic-usage-toc} --></p>
+
+<p>By including <code>Roar::JSON::JSONAPI.resource</code> into your representer a handful of additional DSL methods get imported.</p>
+
+<p>Here’s a basic example of a JSON API representer.</p>
+
+<pre><code>class ArticleDecorator &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :articles
+
+  # top-level link.
+  link :self, toplevel: true do
+    "//articles"
+  end
+
+  attributes do
+    property :title
+  end
+
+  # resource object links
+  link(:self) { "http://#{represented.class}/#{represented.id}" }
+
+  # relationships
+  has_one :author, class: Author, populator: ::Representable::FindOrInstantiate do # populator is for parsing, only.
+    type :authors
+
+    attributes do
+      property :email
+    end
+
+    link(:self) { "http://authors/#{represented.id}" }
+  end
+
+  has_many :comments, class: Comment, decorator: CommentDecorator
+end
+</code></pre>
+
+<p>As JSON API per definition can represent singular models and collections you have two entry points.</p>
+
+<pre><code class="language-ruby">SongsRepresenter.new(Song.find(1)).to_json
+SongsRepresenter.new(Song.new).from_json("..")
+</code></pre>
+
+<pre><code class="language-ruby">SongsRepresenter.for_collection.new([Song.find(1), Song.find(2)]).to_json
+SongsRepresenter.for_collection.new([Song.new, Song.new]).from_json("..")
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-resource-objects">Resource Objects</h2>
+<p><!-- {roar-resource-objects-toc} --></p>
+
+<p><a href="http://jsonapi.org/format/#document-resource-objects">→ specification</a></p>
+
+<p>JSON API Resource Objects must contain an <code>id</code> and <code>type</code> member. You specify
+the <code>type</code> when you include <code>Roar::JSON::JSONAPI.resource(type)</code>:</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  # ...
+end
+</code></pre>
+
+<p>You do not need to specify an <code>id</code>. An <code>id</code> property will be created for you
+automatically. However, if your represented object uses a method other than <code>id</code>
+to represent its <code>id</code>, you must specify this with the <code>id_key:</code> option on
+inclusion:</p>
+
+<pre><code>class Song
+  attr_accessor :song_id
+end
+
+class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs, id_key: :song_id
+
+  # ...
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-attributes">Attributes</h2>
+<p><!-- {roar-attributes-toc} --></p>
+
+<p><a href="http://jsonapi.org/format/#document-resource-object-attributes">→ specification</a></p>
+
+<p>Attributes should be defined with <code>::property</code> in an <code>::attributes</code> block.</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  attributes do
+    property :title
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-relationships">Relationships</h2>
+<p><!-- {roar-relationships-toc} --></p>
+
+<p><a href="http://jsonapi.org/format/#document-resource-object-relationships">→ specification</a></p>
+
+<p>To define relationships, use <code>::has_one</code> or <code>::has_many</code> with either an <a href="#inline-representer">inline representer</a> or an <a href="#explicit-representer">explicit, standalone representer</a> (specified with the <code>decorates:</code> or <code>extend:</code> option).</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  has_one :album, class: Album do
+    property :title
+  end
+
+  has_many :musicians, class: Musician, decorator: MusiciansRepresenter
+end
+</code></pre>
+
+<p>You are able to define links and meta information for a given relationship in a
+<code>::relationship</code> block:</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  has_many :musicians, class: Musician, decorator: MusiciansRepresenter do
+    relationship do
+      link(:self)     { "/songs/#{represented.id}/relationships/musicians" }
+      link(:related)  { "/songs/#{represented.id}/musicians" }
+    end
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-member-names">Member Names</h2>
+<p><!-- {roar-member-names-toc} --></p>
+
+<p><a href="http://jsonapi.org/format/#document-member-names">→ specification</a></p>
+
+<p>By default, member names will be rendered according to JSON API <strong>recommendations</strong>:
+only non-reserved, URL safe characters specified in RFC 3986 will be used.
+Following JSON API conventions, underscores will also be replaced by hyphens.</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  attributes do
+    property :song_title        # rendered as song-title
+    property :lyric_writer, as: :lyricist
+  end
+
+  has_one :album, class: Album do
+    property :release_date    # rendered as release-date
+  end
+end
+</code></pre>
+
+<p>If you want less-strict behaviour (such as allowing non-ASCII Unicode
+characters), you can override this default:</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  defaults do |name, _|
+    { as: JSONAPI::MemberName.(name, strict: false) }
+  end
+
+  attributes do
+    property :titel_des_Liedes    # rendered as titel_des_Liedes
+    property :Klavierstück        # rendered as Klavierstück
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-meta-information">Meta information</h2>
+<p><!-- {roar-meta-information-toc} --></p>
+
+<p><a href="http://jsonapi.org/format/#document-meta">→ specification</a></p>
+
+<p>Meta information can be included into rendered singular and collection documents in two ways.</p>
+
+<p>You can define meta information on your collection object and then let Roar compile it.</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  meta toplevel: true do
+    property :page
+    property :total
+  end
+end
+</code></pre>
+
+<p>Your collection object must expose the respective methods.</p>
+
+<pre><code class="language-ruby">collection.page  #=&gt; 1
+collection.total #=&gt; 12
+</code></pre>
+
+<p>This will render the <code>{"meta": {"page": 1, "total": 12}}</code> hash into the JSON API document.</p>
+
+<p>Alternatively, you can provide meta information as a hash when rendering.  Any values also defined on your object will be overriden.</p>
+
+<pre><code class="language-ruby">collection.to_json(meta: {page: params["page"], total: collection.size})
+</code></pre>
+
+<p>Both methods work for singular documents too.</p>
+
+<pre><code>class SongsRepresenter &lt; Roar::Decorator
+  include Roar::JSON::JSONAPI.resource :songs
+
+  meta do
+    property :label
+    property :format
+  end
+end
+</code></pre>
+
+<pre><code class="language-ruby">song.to_json(meta: { label: 'EMI' })
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-compound-document">Compound Document</h2>
+<p><!-- {roar-compound-document-toc} --></p>
+
+<p>You can suppress rendering of the compound document using the <code>:included</code> option.</p>
+
+<pre><code>decorator.to_json(included: false)
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="roar-sparse-fieldsets">Sparse Fieldsets</h2>
+<p><!-- {roar-sparse-fieldsets-toc} --></p>
+
+<p>As per specification, JSON API allows the rendering of arbitrary fields to be suppressed. This feature is called <a href="http://jsonapi.org/format/#fetching-sparse-fieldsets">sparse fieldsets</a>.</p>
+
+<p>With Roar, you can do that with all kinds of resource objects: Filtering attributes works for the top “primary data” and for the compound object.</p>
+
+<p>For the primary data, you simply provide what to include via the <code>:fields</code> option.</p>
+
+<pre><code>decorator.to_hash(
+  fields: { articles: [:title] }
+)
+</code></pre>
+
+<p>This will only render the two mandatory <code>:id</code>, <code>:type</code> members and the  <code>:title</code> attribute.</p>
+
+<pre><code>"data": {
+  "type": "articles",
+  "id": "1",
+  "attributes": {"title": "My Article"}
+}
+</code></pre>
+
+<p>To include particular fields, only, in the compound document, use <code>:fields</code>.</p>
+
+<pre><code>decorator.to_hash(
+  include: [:author],
+  fields: { articles: [:title], author: [:email] }
+)
+</code></pre>
+
+<p>You can control what types should be included in the compound document by adding them to <code>:include</code>.</p>
+
+<p>The <code>:fields</code> option allows to specify what attributes for what type to include.</p>
+
+<pre><code>"data": {
+  "type": "articles",
+  "id": "1",
+  "attributes": {"title": "My Article"}
+},
+"included": [
+  {
+    "type": "author",
+    "id":   "a:1",
+    "attributes": {
+      "email": "celsito@trb.to"
+    }
+  }
+]
+</code></pre>
+
+<p>Note that the <code>author</code> fragment only contains the <code>email</code> in its attributes.</p>
+
+<p>The <code>to_json</code> API is designed to be able to process <code>params</code> directly, where JSON API parameters like <code>fields</code> from the request URL are parsed into hashes and arrays.</p>
+
+<pre><code>uri = Addressable::URI.parse('/articles?include=author&amp;fields%5Barticles%5D=title,body&amp;fields%5Bpeople%5D=name')
+=&gt; {"include"=&gt;"author", "fields[articles]"=&gt;"title,body", "fields[people]"=&gt;"name"}
+
+query = Rack::Utils.parse_nested_query(uri.query)
+=&gt; {"include"=&gt;"author", "fields"=&gt;{"articles"=&gt;"title,body", "people"=&gt;"name"}}
+
+representer.to_json(include: query['include'], fields: query['fields'])
+</code></pre>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="roar-basic-usage-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Basic Usage</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-resource-objects-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Resource Objects</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-attributes-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Attributes</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-relationships-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Relationships</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-member-names-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Member Names</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-meta-information-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Meta information</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-compound-document-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Compound Document</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+<div class="features" id="roar-sparse-fieldsets-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Sparse Fieldsets</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
