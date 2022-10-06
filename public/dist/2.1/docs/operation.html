@@ -7,9 +7,9 @@
     <title>Trailblazer - Operation</title>
 
     
-    <script src="/vite/assets/documentation.49aee2dd.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.9990d77f.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.84ab08f7.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.a6472465.css" media="screen" />
-<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.dca914e8.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -519,7 +519,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 31 Jul 22</span>
+                      <span>Last updated 06 Oct 22</span>
                     </li>
                   </ul>
                 </div>
@@ -646,7 +646,39 @@ result[:model]  #=&gt; #&lt;Memo ..&gt;
 <h2 id="operation-macros">Macros</h2>
 <p><!-- {operation-macros-toc} --></p>
 
-<p>Trailblazer ships with a handful of step functions called macros. Those are implemented in trailblazer-macro and trailblazer-macro-contract.</p>
+<p>Macros provide shorthand methods to create and configure a particular step in your operation. Trailblazer ships with a handful of macros. Those are implemented in trailblazer-macro and trailblazer-macro-contract.</p>
+
+<p>Writing you own macros is a very simple thing to do if you follow the macro API. <a href="/2.1/docs/activity.html#activity-macro-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="operation-macros-general-notes">General notes</h3>
+<p><!-- {operation-macros-general-notes-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>General notes</li>
+    <li id="operation-macros-general-notes-variable-mapping">Variable mapping</li>
+</ul>
+
+<p>Most macros internally use <a href="/2.1/docs/activity.html#activity-variable-mapping">variable mapping</a> to allow injection of configuration variables or to limit their own scope. Macros do so by leveraging the composable API using <code>In()</code>, <code>Inject()</code> and <code>Out()</code>.</p>
+
+<p>This allows you to <em>add your own</em> variable mapping to a macro, as illustrated in the example below.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model(Song, :find_by),
+    In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
+  # ...
+end
+</code></pre>
+
+<p>When running the above operation, the exemplary <code>Model()</code> macro will pick the ID from <code>:my_id</code>.</p>
+
+<pre><code>result = Create.(my_id: 1)
+</code></pre>
+
+<p>Please note that you shall <strong>not use <code>:input</code></strong> to configure your macro as it will override internal filters and breaks the macro’s configuration. Go with the new <a href="/2.1/docs/activity.html#activity-variable-mapping-composable-i-o">composable variable mapping</a> which is available from <code>trailblazer</code> 2.1.1 and onwards.</p>
 
 <p><span class="divider"></span></p>
 
@@ -655,7 +687,7 @@ result[:model]  #=&gt; #&lt;Memo ..&gt;
 
 <p>An operation can automatically find or create a model for you depending on the input, with the <code>Model</code> macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model(Song, :new)
   # ..
 end
@@ -678,7 +710,7 @@ result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 
 <p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
 
-<pre><code>class Update &lt; Trailblazer::Activity::Railway
+<pre><code>class Update &lt; Trailblazer::Operation
   step Model( Song, :find_by )
   # ..
 end
@@ -704,7 +736,7 @@ result.success? #=&gt; false
 
 <p>It is also possible to <code>find_by</code> with attribute other than <code>id</code>. For example,</p>
 
-<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Activity::Railway
+<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Operation
   step Model( Song, :find_by, :title )
   # ..
 end
@@ -721,7 +753,7 @@ end
 
 <p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
 
-<pre><code>class Show &lt; Trailblazer::Activity::Railway
+<pre><code>class Show &lt; Trailblazer::Operation
   step Model( Song, :[] )
   # ..
 end
@@ -752,7 +784,7 @@ As a result, you don’t need to conditionally check if <code>ctx[:model]</code>
 
 <p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
 
-<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Activity::Railway
+<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Operation
   step Model( Song, :find_by, not_found_terminus: true )
   # ..
 end
@@ -793,7 +825,7 @@ result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 
 <p>You can even leave <code>Model()</code> entirely unconfigured.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model()
   # ..
 end
@@ -810,7 +842,7 @@ end
 
 <p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model(Song, :new)
   # ..
 end
@@ -830,7 +862,7 @@ end
 
 <p>The <code>Nested</code> macro works identical to <code>Subprocess</code> when you pass an activity.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(Validate)
   step :save
@@ -842,7 +874,7 @@ end
 
 <p>Anyhow, <code>Nested</code> allows for dynamically deciding the nested activity at run-time using an <code>:instance_method</code>, or any callable object.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(:compute_nested)
   step :save
@@ -865,7 +897,7 @@ end
 
 <p>In order to connect all the ends of dynamically selected activity, you need to provide the list of all possible activities using <code>:auto_wire</code> option. You may use the wiring DSL with <code>Output</code> and friends to connect outputs from the nested activity.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(:compute_nested, auto_wire: [Validate, JsonValidate]),
     Output(:invalid_json) =&gt; End(:jsoned)
@@ -881,7 +913,7 @@ end
 
 <p>Steps can be wrapped by an embracing step. This is necessary when defining a set of steps to be contained in a database transaction or a database lock.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Memo::Create &lt; Trailblazer::Operation
   step :find_model
   step Wrap( MyTransaction ) {
     step :update
@@ -899,9 +931,9 @@ end
   def self.call((_ctx, _flow_options), *, &amp;block)
     signal, (ctx, flow_options) = yield
     evaluated_signal = if signal.to_h[:semantic] == :success
-                        Trailblazer::Activity::FastTrack::PassFast 
+                        Trailblazer::Operation::Railway.pass_fast!
                       else
-                        Trailblazer::Activity::Left
+                        Trailblazer::Operation::Railway.fail!
                       end
     [ evaluated_signal, [ctx, flow_options] ]
   end
@@ -927,7 +959,7 @@ end
   def self.call((ctx, flow_options), *, &amp;block)
     Sequel.transaction { yield } # calls the wrapped steps
   rescue
-    [ Trailblazer::Activity::Left, [ctx, flow_options] ]
+    [ Trailblazer::Operation::Railway.fail!, [ctx, flow_options] ]
   end
 end
 </code></pre>
@@ -959,7 +991,7 @@ end
 
 <p>While you can write your own <code>begin/rescue/end</code> mechanics using <a href="#wrap"><code>Wrap</code></a>, Trailblazer offers you the <code>Rescue</code> macro to catch and handle exceptions that might occur while running the pipe.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Memo::Create &lt; Trailblazer::Operation
   step :find_model
   step Rescue( RuntimeError, handler: MyHandler ) {
     step :update
@@ -1030,7 +1062,7 @@ end
 
 <p>You can plug this policy into your pipe at any point. However, this must be inserted after the <code>"model"</code> skill is available.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create? )
   # ...
@@ -1055,7 +1087,7 @@ end
 
 <p>Add your polices using the <code>Policy::Pundit</code> macro. It accepts the policy class name, and the rule method to call.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create? )
   # ...
@@ -1084,7 +1116,7 @@ result[:"result.policy.default"][:policy] #=&gt; #&lt;MyPolicy ...&gt;
 
 <p>You can add any number of Pundit policies to your pipe. Make sure to use <code>name:</code> to name them, though.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create?, name: "after_model" )
   # ...
@@ -1108,7 +1140,7 @@ result[:"result.policy.after_model"].success? #=&gt; true
 
 <pre><code>Create.(params: {},
   current_user:            Module,
-  :"policy.default.eval" =&gt; Trailblazer::Macro::Policy::Pundit.build(AnotherPolicy, :create?)
+  :"policy.default.eval" =&gt; Trailblazer::Operation::Policy::Pundit.build(AnotherPolicy, :create?)
 )
 </code></pre>
 
@@ -1988,6 +2020,19 @@ Note that those signals <strong>must have outputs that are connected to the next
   </h3>
 
   <ul class="vertical menu">
+    
+      <li>
+        <a href="#operation-macros-general-notes">
+          <i class="fas fa-arrow-right"></i>
+          General notes
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#operation-macros-general-notes-variable-mapping">Variable mapping</a>
+        </li>
+      
     
       <li>
         <a href="#operation-macros-model">
