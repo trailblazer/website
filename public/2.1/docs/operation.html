@@ -26,7 +26,7 @@
       href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
     >
 
-
+    
 
     <link rel="icon" type="image/png" sizes="32x32" href="/vite-dev/images/favicon.ico">
   </head>
@@ -502,7 +502,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 06 Oct 22</span>
+                      <span>Last updated 09 Oct 22</span>
                     </li>
                   </ul>
                 </div>
@@ -670,7 +670,7 @@ end
 
 <p>An operation can automatically find or create a model for you depending on the input, with the <code>Model</code> macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model(Song, :new)
   # ..
 end
@@ -693,7 +693,7 @@ result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 
 <p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
 
-<pre><code>class Update &lt; Trailblazer::Activity::Railway
+<pre><code>class Update &lt; Trailblazer::Operation
   step Model( Song, :find_by )
   # ..
 end
@@ -719,7 +719,7 @@ result.success? #=&gt; false
 
 <p>It is also possible to <code>find_by</code> with attribute other than <code>id</code>. For example,</p>
 
-<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Activity::Railway
+<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Operation
   step Model( Song, :find_by, :title )
   # ..
 end
@@ -736,7 +736,7 @@ end
 
 <p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
 
-<pre><code>class Show &lt; Trailblazer::Activity::Railway
+<pre><code>class Show &lt; Trailblazer::Operation
   step Model( Song, :[] )
   # ..
 end
@@ -767,7 +767,7 @@ As a result, you don’t need to conditionally check if <code>ctx[:model]</code>
 
 <p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
 
-<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Activity::Railway
+<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Operation
   step Model( Song, :find_by, not_found_terminus: true )
   # ..
 end
@@ -808,7 +808,7 @@ result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 
 <p>You can even leave <code>Model()</code> entirely unconfigured.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model()
   # ..
 end
@@ -825,7 +825,7 @@ end
 
 <p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model(Song, :new)
   # ..
 end
@@ -845,7 +845,7 @@ end
 
 <p>The <code>Nested</code> macro works identical to <code>Subprocess</code> when you pass an activity.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(Validate)
   step :save
@@ -857,7 +857,7 @@ end
 
 <p>Anyhow, <code>Nested</code> allows for dynamically deciding the nested activity at run-time using an <code>:instance_method</code>, or any callable object.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(:compute_nested)
   step :save
@@ -880,7 +880,7 @@ end
 
 <p>In order to connect all the ends of dynamically selected activity, you need to provide the list of all possible activities using <code>:auto_wire</code> option. You may use the wiring DSL with <code>Output</code> and friends to connect outputs from the nested activity.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step :create
   step Nested(:compute_nested, auto_wire: [Validate, JsonValidate]),
     Output(:invalid_json) =&gt; End(:jsoned)
@@ -896,7 +896,7 @@ end
 
 <p>Steps can be wrapped by an embracing step. This is necessary when defining a set of steps to be contained in a database transaction or a database lock.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Memo::Create &lt; Trailblazer::Operation
   step :find_model
   step Wrap( MyTransaction ) {
     step :update
@@ -914,9 +914,9 @@ end
   def self.call((_ctx, _flow_options), *, &amp;block)
     signal, (ctx, flow_options) = yield
     evaluated_signal = if signal.to_h[:semantic] == :success
-                        Trailblazer::Activity::FastTrack::PassFast
+                        Trailblazer::Operation::Railway.pass_fast!
                       else
-                        Trailblazer::Activity::Left
+                        Trailblazer::Operation::Railway.fail!
                       end
     [ evaluated_signal, [ctx, flow_options] ]
   end
@@ -942,7 +942,7 @@ end
   def self.call((ctx, flow_options), *, &amp;block)
     Sequel.transaction { yield } # calls the wrapped steps
   rescue
-    [ Trailblazer::Activity::Left, [ctx, flow_options] ]
+    [ Trailblazer::Operation::Railway.fail!, [ctx, flow_options] ]
   end
 end
 </code></pre>
@@ -974,7 +974,7 @@ end
 
 <p>While you can write your own <code>begin/rescue/end</code> mechanics using <a href="#wrap"><code>Wrap</code></a>, Trailblazer offers you the <code>Rescue</code> macro to catch and handle exceptions that might occur while running the pipe.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Memo::Create &lt; Trailblazer::Operation
   step :find_model
   step Rescue( RuntimeError, handler: MyHandler ) {
     step :update
@@ -1045,7 +1045,7 @@ end
 
 <p>You can plug this policy into your pipe at any point. However, this must be inserted after the <code>"model"</code> skill is available.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create? )
   # ...
@@ -1070,7 +1070,7 @@ end
 
 <p>Add your polices using the <code>Policy::Pundit</code> macro. It accepts the policy class name, and the rule method to call.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create? )
   # ...
@@ -1099,7 +1099,7 @@ result[:"result.policy.default"][:policy] #=&gt; #&lt;MyPolicy ...&gt;
 
 <p>You can add any number of Pundit policies to your pipe. Make sure to use <code>name:</code> to name them, though.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
+<pre><code>class Create &lt; Trailblazer::Operation
   step Model( Song, :new )
   step Policy::Pundit( MyPolicy, :create?, name: "after_model" )
   # ...
@@ -1123,7 +1123,7 @@ result[:"result.policy.after_model"].success? #=&gt; true
 
 <pre><code>Create.(params: {},
   current_user:            Module,
-  :"policy.default.eval" =&gt; Trailblazer::Macro::Policy::Pundit.build(AnotherPolicy, :create?)
+  :"policy.default.eval" =&gt; Trailblazer::Operation::Policy::Pundit.build(AnotherPolicy, :create?)
 )
 </code></pre>
 
@@ -2010,13 +2010,13 @@ Note that those signals <strong>must have outputs that are connected to the next
           General notes
         </a>
       </li>
-
-
+      
+        
         <li class="sub-item">
           <a href="#operation-macros-general-notes-variable-mapping">Variable mapping</a>
         </li>
-
-
+      
+    
       <li>
         <a href="#operation-macros-model">
           <i class="fas fa-arrow-right"></i>
