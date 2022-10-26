@@ -4,11 +4,11 @@ An operation can automatically find or create a model for you depending on the i
 
 <%= code "op" %>
 
-After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and accessed in the returned `result` variable, via the `[]` context accessor.
+After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and the returned `result` object.
 
 <%= code "create" %>
 
-Internally, `Model` macro will simply invoke `Song.new` to populate `:model`.
+Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
 <%= h4 "Find_by" %>
 
