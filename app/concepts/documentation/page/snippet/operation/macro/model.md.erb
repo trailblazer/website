@@ -4,11 +4,11 @@ An operation can automatically find or create a model for you depending on the i
 
 <%= code "op" %>
 
-After this step, there is a fresh model instance under `options[:model]` that can be used in all following steps.
+After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and the returned `result` object.
 
 <%= code "create" %>
 
-Internally, `Model` macro will simply invoke `Song.new` to populate `:model`.
+Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
 <%= h4 "Find_by" %>
 
@@ -19,7 +19,7 @@ You can also find models using `:find_by`. This is helpful for `Update` or `Dele
 The `Model` macro will invoke the following code for you.
 
 <%= code :ruby do %>
-options[:model] = Song.find_by( id: params[:id] )
+ctx[:model] = Song.find_by( id: params[:id] )
 <% end %>
 
 This will assign `[:model]` for you by invoking `find_by`.
