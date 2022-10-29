@@ -57,7 +57,11 @@ However, tracing can be used with low-level `Activity` classes, too.
 
 <%= code "memo-railway", collapse: :methods %>
 
-You have to use the clumsier `Developer.wtf?` method for tracing. As always with `Activity` subclasses, it operates with the [circuit interface](activity.html#activity-internals-circuit-interface).
+You have to use the clumsier `Developer.wtf?` method for tracing.
+
+<%= code "wtf-activity" %>
+
+As always with `Activity` subclasses, it operates with the [circuit interface](activity.html#activity-internals-circuit-interface).
 
 
 <%= h4 "focus_on" %>
