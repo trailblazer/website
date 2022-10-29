@@ -2284,7 +2284,11 @@ end
 
 <p>Grouping validations enables you to run them conditionally, or in a specific order. You can use <code>:if</code> to specify what group had to be successful for it to be validated.</p>
 
-<pre><code>validation name: :artist, if: :default do
+<pre><code>validation name: :default do
+  params { required(:name).filled }
+end
+
+validation name: :artist, if: :default do
   params { required(:artist).filled }
 end
 

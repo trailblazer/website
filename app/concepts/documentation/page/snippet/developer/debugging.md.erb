@@ -1,5 +1,7 @@
 <%= h2 "Developer" %>
 
+<a href="https://github.com/trailblazer/trailblazer-developer" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-developer 0.1.0</a>
+
 Trailblazer provides a rich set of developer tools to ease debugging and make modelling processes a pleasant experience.
 
 The [`developer` gem](https://github.com/trailblazer/trailblazer-developer) contains tools to help you visualize and debug Trailblazer code. Its development features such as tracing or exception handling are advanced tools and will become your best friends very quickly.
@@ -12,25 +14,51 @@ We advise you to alias the `Developer` constant to something handy, such as `::D
 
 <%= h3 "Wtf?" %>
 
-Use `wtf?` if you want to
+The iconic `wtf?` method is one way to invoke an operation with tracing turned on. During the execution, invoked steps are traced and printed in the console as a tree-view, helping you to understand the code path the operation took. It is one of Trailblazer's most-loved features and was introduced in Trailblazer 2.1.
+
+When working with a `Trailblazer::Operation` simply invoke its `#wtf?` method.
+
+<%= code "wtf-op" %>
+
+On the console, you can see the printed trace in all its beauty.
+
+<%= vite_image_tag "images/wtf-trace.png", class: "mx-auto d-block" %>
+
+This method is especially helpful if you want to
 
 * Debug an exception happening somewhere deep in your code.
 * Find out which step changed the track to failure.
 * Focus on specific step(s) to find out what `ctx` mutations are happening inside them.
 
-<%= vite_image_tag "images/wtf.webp", class: "mx-auto d-block" %>
+<%= h4 "Exception" %>
 
-This will run your activity with tracing enabled, and in case of an exception, print the trace path to the closest point where the exception was thrown.
+In case of an exception somewhere in the operation or its nested activities, `wtf?` will print the trace path to the closest point where the exception was thrown.
 
-<%= vite_image_tag "images/wtf-exception.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/wtf-exception.png", class: "mx-auto d-block" %>
 
-Your activity will be called using the `TaskWrap` invoker, a possible exception will be caught and the closest task found. It then prints the "stack trace", however, on a much higher level based on tasks, not methods.
+The original exception will be visible on the console, too.
 
 <%= info do %>
 Please note that this is a higher-level debugging tool that does not confront you with a 200-lines stack trace the way Ruby does it, but pinpoints the exceptional code and locates the problem on a task level.
 
 This is possible due to you structuring code into higher abstractions, tasks and activities.
 <% end %>
+
+<%= h4 "Activity" %>
+
+The `#wtf?` class method is only available for `Trailblazer::Operation` subclasses. You will get an exception if you try to use it with `Trailblazer::Activity::Railway` and other activities.
+
+<%= code do %>
+NoMethodError: undefined method `wtf?' for Memo::Operation::Create:Class
+<% end %>
+
+
+However, tracing can be used with low-level `Activity` classes, too.
+
+<%= code "memo-railway", collapse: :methods %>
+
+You have to use the clumsier `Developer.wtf?` method for tracing. As always with `Activity` subclasses, it operates with the [circuit interface](activity.html#activity-internals-circuit-interface).
+
 
 <%= h4 "focus_on" %>
 
