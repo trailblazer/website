@@ -7,9 +7,9 @@
     <title>Trailblazer - Trailblazer</title>
 
     
-    <script src="/vite/assets/documentation.cf6dc4c3.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.34ffa703.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.41728d3b.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.a6472465.css" media="screen" />
-<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.dca914e8.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -519,7 +519,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 01 Aug 22</span>
+                      <span>Last updated 22 Aug 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1313,6 +1313,8 @@ end
 <h2 id="trailblazer-developer">Developer</h2>
 <p><!-- {trailblazer-developer-toc} --></p>
 
+<p><a href="https://github.com/trailblazer/trailblazer-developer" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-developer 0.1.0</a></p>
+
 <p>Trailblazer provides a rich set of developer tools to ease debugging and make modelling processes a pleasant experience.</p>
 
 <p>The <a href="https://github.com/trailblazer/trailblazer-developer"><code>developer</code> gem</a> contains tools to help you visualize and debug Trailblazer code. Its development features such as tracing or exception handling are advanced tools and will become your best friends very quickly.</p>
@@ -1334,7 +1336,18 @@ Dev = Trailblazer::Developer
 <h3 id="trailblazer-developer-wtf-">Wtf?</h3>
 <p><!-- {trailblazer-developer-wtf--toc} --></p>
 
-<p>Use <code>wtf?</code> if you want to</p>
+<p>The iconic <code>wtf?</code> method is one way to invoke an operation with tracing turned on. During the execution, invoked steps are traced and printed in the console as a tree-view, helping you to understand the code path the operation took. It is one of Trailblazer’s most-loved features and was introduced in Trailblazer 2.1.</p>
+
+<p>When working with a <code>Trailblazer::Operation</code> simply invoke its <code>#wtf?</code> method.</p>
+
+<pre><code>result = Memo::Operation::Create.wtf?(params: {title: "Remember me..."})
+</code></pre>
+
+<p>On the console, you can see the printed trace in all its beauty.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wtf-trace.8cea3d2f.png" /></p>
+
+<p>This method is especially helpful if you want to</p>
 
 <ul>
   <li>Debug an exception happening somewhere deep in your code.</li>
@@ -1342,19 +1355,49 @@ Dev = Trailblazer::Developer
   <li>Focus on specific step(s) to find out what <code>ctx</code> mutations are happening inside them.</li>
 </ul>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wtf.2420b9ca.webp" /></p>
+<p><span class="divider"></span></p>
 
-<p>This will run your activity with tracing enabled, and in case of an exception, print the trace path to the closest point where the exception was thrown.</p>
+<ul class="navigation">
+    <li>Wtf?</li>
+    <li id="trailblazer-developer-wtf-exception">Exception</li>
+</ul>
 
-<p><img class="mx-auto d-block" src="/vite/assets/wtf-exception.0a0d9c3c.webp" /></p>
+<p>In case of an exception somewhere in the operation or its nested activities, <code>wtf?</code> will print the trace path to the closest point where the exception was thrown.</p>
 
-<p>Your activity will be called using the <code>TaskWrap</code> invoker, a possible exception will be caught and the closest task found. It then prints the “stack trace”, however, on a much higher level based on tasks, not methods.</p>
+<p><img class="mx-auto d-block" src="/vite/assets/wtf-exception.a2977c8d.png" /></p>
+
+<p>The original exception will be visible on the console, too.</p>
 
 <div class="bd-callout bd-callout-info">
 <p>Please note that this is a higher-level debugging tool that does not confront you with a 200-lines stack trace the way Ruby does it, but pinpoints the exceptional code and locates the problem on a task level.</p>
 
 <p>This is possible due to you structuring code into higher abstractions, tasks and activities.</p>
 </div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Wtf?</li>
+    <li id="trailblazer-developer-wtf-activity">Activity</li>
+</ul>
+
+<p>The <code>#wtf?</code> class method is only available for <code>Trailblazer::Operation</code> subclasses. You will get an exception if you try to use it with <code>Trailblazer::Activity::Railway</code> and other activities.</p>
+
+<pre><code>NoMethodError: undefined method `wtf?' for Memo::Operation::Create:Class
+</code></pre>
+
+<p>However, tracing can be used with low-level <code>Activity</code> classes, too.</p>
+
+<pre><code>module Memo::Operation
+  class Create &lt; Trailblazer::Activity::Railway # Note that this is not an {Operation}!
+    step :extract_markdown
+    step :model
+    # ...
+  end
+end
+</code></pre>
+
+<p>You have to use the clumsier <code>Developer.wtf?</code> method for tracing. As always with <code>Activity</code> subclasses, it operates with the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1760,6 +1803,16 @@ option.(exec_context: Object.new) # =&gt; 1234567
           Wtf?
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#trailblazer-developer-wtf-exception">Exception</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#trailblazer-developer-wtf-activity">Activity</a>
+        </li>
       
         
         <li class="sub-item">

@@ -7,9 +7,9 @@
     <title>Trailblazer - Operation</title>
 
     
-    <script src="/vite/assets/documentation.cf6dc4c3.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.34ffa703.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.41728d3b.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.a6472465.css" media="screen" />
-<link rel="stylesheet" href="/vite/assets/initAnchor.b31c4ff7.css" media="screen" />
+    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.dca914e8.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
@@ -519,7 +519,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 09 Oct 22</span>
+                      <span>Last updated 29 Oct 22</span>
                     </li>
                   </ul>
                 </div>
@@ -693,13 +693,13 @@ end
 end
 </code></pre>
 
-<p>After this step, there is a fresh model instance under <code>options[:model]</code> that can be used in all following steps.</p>
+<p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned <code>result</code> object.</p>
 
 <pre><code>result = Create.(params: {})
 result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 </code></pre>
 
-<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>:model</code>.</p>
+<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -718,7 +718,7 @@ end
 
 <p>The <code>Model</code> macro will invoke the following code for you.</p>
 
-<pre><code>options[:model] = Song.find_by( id: params[:id] )
+<pre><code>ctx[:model] = Song.find_by( id: params[:id] )
 </code></pre>
 
 <p>This will assign <code>[:model]</code> for you by invoking <code>find_by</code>.</p>
