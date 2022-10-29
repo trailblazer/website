@@ -1397,7 +1397,14 @@ Dev = Trailblazer::Developer
 end
 </code></pre>
 
-<p>You have to use the clumsier <code>Developer.wtf?</code> method for tracing. As always with <code>Activity</code> subclasses, it operates with the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
+<p>You have to use the clumsier <code>Developer.wtf?</code> method for tracing.</p>
+
+<pre><code>signal, (ctx, _) = Trailblazer::Developer.wtf?(
+  Memo::Operation::Create, [{params: {title: "Remember me.."}}, {}]
+)
+</code></pre>
+
+<p>As always with <code>Activity</code> subclasses, it operates with the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
 
 <p><span class="divider"></span></p>
 
