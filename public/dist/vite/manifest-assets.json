@@ -300,7 +300,7 @@
     "src": "images/wtf-color-map.webp"
   },
   "images/wtf-exception.png": {
-    "file": "assets/wtf-exception.a2977c8d.png",
+    "file": "assets/wtf-exception.062ef0c4.png",
     "src": "images/wtf-exception.png"
   },
   "images/wtf-exception.webp": {
@@ -310,6 +310,10 @@
   "images/wtf-focus.webp": {
     "file": "assets/wtf-focus.6cb409bc.webp",
     "src": "images/wtf-focus.webp"
+  },
+  "images/wtf-trace-nice.png": {
+    "file": "assets/wtf-trace-nice.1fe5b543.png",
+    "src": "images/wtf-trace-nice.png"
   },
   "images/wtf-trace.png": {
     "file": "assets/wtf-trace.8cea3d2f.png",
