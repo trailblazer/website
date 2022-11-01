@@ -14,6 +14,10 @@ The `:auto_wire` option expects an array of nested activities. While this might 
 
 You can use any type of decider step. In this example, it's a instance method `#decide_file_type` on the `Nested()`-hosting class.
 
+<%= vite_image_tag "images/nested-static-create.png", class: "mx-auto d-block" %>
+
+Internally, the "auto-wire" `Nested()` macro simply returns a small activity as illustrated above in gray. It has a `decide` step to figure out which nested activity to run, then runs the actual nested activity. All well-known termini (success, failure, pass_fast, fail_fast) of the nested activities are automatically connected to the `Nested()`'s activity's termini.
+
 <%= h4 "Output Wiring" %>
 
 Given we had a nested activity `VorbisComment` implemented like so.
