@@ -258,6 +258,28 @@
 </div>
 
 <div class="sidebar-accordion-wrapper">
+  <div id="macro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/macro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#macro-collapse"
+          aria-expanded="false"
+          aria-controls="macro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Macro</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
   <div id="operation">
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/operation.html">
@@ -1328,7 +1350,7 @@ Dev = Trailblazer::Developer
 
 <p>On the console, you can see the printed trace in all its beauty.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/wtf-trace.png" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/wtf-trace-nice.png" /></p>
 
 <p>This method is especially helpful if you want to</p>
 
@@ -1380,7 +1402,14 @@ Dev = Trailblazer::Developer
 end
 </code></pre>
 
-<p>You have to use the clumsier <code>Developer.wtf?</code> method for tracing. As always with <code>Activity</code> subclasses, it operates with the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
+<p>You have to use the clumsier <code>Developer.wtf?</code> method for tracing.</p>
+
+<pre><code>signal, (ctx, _) = Trailblazer::Developer.wtf?(
+  Memo::Operation::Create, [{params: {title: "Remember me.."}}, {}]
+)
+</code></pre>
+
+<p>As always with <code>Activity</code> subclasses, it operates with the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
 
 <p><span class="divider"></span></p>
 

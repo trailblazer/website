@@ -526,10 +526,40 @@
 
 <p><span class="divider"></span></p>
 
+<h3 id="macro-nested-dynamic">Dynamic</h3>
+<p><!-- {macro-nested-dynamic-toc} --></p>
+
+<p>compiled at runtime</p>
+
+<p><span class="divider"></span></p>
+
 <h3 id="macro-nested-auto_wire">Auto_wire</h3>
 <p><!-- {macro-nested-auto_wire-toc} --></p>
 
-<p>The recommended way of maintaining dynamically nested operations (or activities) is to use <code>Nested()</code> with the <code>:auto_wire</code> option.</p>
+<p>The recommended way of maintaining dynamically nested operations (or activities) is to use <code>Nested()</code> with the <code>:auto_wire</code> option. It works exactly like its <a href="#macro-nested-dynamic">purely dynamic</a> counterpart but requires you to specify all possible nested activities <strong>at compile-time</strong>.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(:decide_file_type,
+      auto_wire: [Id3Tag, VorbisComment]) # explicitely define possible nested activities.
+    step :save
+    # ...
+
+    def decide_file_type(ctx, params:, **)
+      params[:type] == "mp3" ? Id3Tag : VorbisComment
+    end
+  end
+end
+</code></pre>
+
+<p>The <code>:auto_wire</code> option expects an array of nested activities. While this might seem a bit clumsy, this brings several benefits. First of all, execution is much faster since the entire activity graph is created at compile-time. Second, you can use the Debugging API to <a href="#macro-nested-auto_wire-debugging">introspect things</a>.</p>
+
+<p>You can use any type of decider step. In this example, it’s a instance method <code>#decide_file_type</code> on the <code>Nested()</code>-hosting class.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-create.png" /></p>
+
+<p>Internally, the “auto-wire” <code>Nested()</code> macro simply returns a small activity as illustrated above in gray. It has a <code>decide</code> step to figure out which nested activity to run, then runs the actual nested activity. All well-known termini (success, failure, pass_fast, fail_fast) of the nested activities are automatically connected to the <code>Nested()</code>’s activity’s termini.</p>
 
 <p><span class="divider"></span></p>
 
@@ -537,6 +567,46 @@
     <li>Auto_wire</li>
     <li id="macro-nested-auto_wire-output-wiring">Output Wiring</li>
 </ul>
+
+<p>Given we had a nested activity <code>VorbisComment</code> implemented like so.</p>
+
+<pre><code>module Song::Activity
+  class VorbisComment &lt; Trailblazer::Activity::Railway
+    step :prepare_metadata
+    step :encode_cover, Output(:failure) =&gt; End(:unsupported_file_format)
+    # ...
+  end
+end
+</code></pre>
+
+<p>If the <code>#encode_cover</code> step fails, the activity will stop in the <code>End.unsupported_file_format</code> terminus - an end event very specific to the <code>VorbisComment</code> activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-vorbiscomment.png" /></p>
+
+<p>This new terminus has to be wired explicitely in the nesting activity.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(
+        :decide_file_type,
+        auto_wire: [Id3Tag, VorbisComment]
+      ),
+      # Output and friends are used *after* Nested().
+      # Connect VorbisComment's {unsupported_file_format} to our {failure} track:
+      Output(:unsupported_file_format) =&gt; Track(:failure)
+
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+<p>Using <code>Output(:unsupported_file_type)</code> from the Wiring API you can connect this specific terminus to wherever you need it, here it’s routed to the failure track in <code>Create</code>. Note that Wiring API options are used after <code>Nested(...)</code>, not within its parenthesis.</p>
+
+<p>The complete activity graph would look a bit like the following diagram.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-complete.png" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -577,7 +647,7 @@
 )
 </code></pre>
 
-<p>Note that the ID of the nested activities are the constants itself.</p>
+<p>Note that the ID of the nested activities are the class constants.</p>
 
 </div>
 
@@ -606,6 +676,14 @@
   </h3>
 
   <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-nested-dynamic">
+          <i class="fas fa-arrow-right"></i>
+          Dynamic
+        </a>
+      </li>
+      
     
       <li>
         <a href="#macro-nested-auto_wire">

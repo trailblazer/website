@@ -217,6 +217,28 @@
 </div>
 
 <div class="sidebar-accordion-wrapper">
+  <div id="macro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/macro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#macro-collapse"
+          aria-expanded="false"
+          aria-controls="macro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Macro</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
   <div id="operation">
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/operation.html">
@@ -253,6 +275,12 @@
           <li class="nav-item">
             <a class="nav-link " href="#operation-macros">
               Macros
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#operation-nested">
+              Nested
             </a>
           </li>
         
@@ -502,7 +530,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 09 Oct 22</span>
+                      <span>Last updated 01 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -676,13 +704,13 @@ end
 end
 </code></pre>
 
-<p>After this step, there is a fresh model instance under <code>options[:model]</code> that can be used in all following steps.</p>
+<p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned <code>result</code> object.</p>
 
 <pre><code>result = Create.(params: {})
 result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 </code></pre>
 
-<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>:model</code>.</p>
+<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -701,7 +729,7 @@ end
 
 <p>The <code>Model</code> macro will invoke the following code for you.</p>
 
-<pre><code>options[:model] = Song.find_by( id: params[:id] )
+<pre><code>ctx[:model] = Song.find_by( id: params[:id] )
 </code></pre>
 
 <p>This will assign <code>[:model]</code> for you by invoking <code>find_by</code>.</p>
@@ -867,6 +895,9 @@ end
   end
   # ...
 end
+  end
+
+  it "Nested(:method)" do
 </code></pre>
 
 <p>The dynamic nested decider method or callable has a task interface and must return the activity to nest. <code>Nested</code> will automatically connect the <code>failure</code> and the <code>success</code> end only.</p>
@@ -891,8 +922,138 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="operation-macros-wrap">Wrap</h3>
-<p><!-- {operation-macros-wrap-toc} --></p>
+<h2 id="operation-nested">Nested</h2>
+<p><!-- {operation-nested-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="operation-nested-dynamic">Dynamic</h3>
+<p><!-- {operation-nested-dynamic-toc} --></p>
+
+<p>compiled at runtime</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="operation-nested-auto_wire">Auto_wire</h3>
+<p><!-- {operation-nested-auto_wire-toc} --></p>
+
+<p>The recommended way of maintaining dynamically nested operations (or activities) is to use <code>Nested()</code> with the <code>:auto_wire</code> option. It works exactly like its <a href="#macro-nested-dynamic">purely dynamic</a> counterpart but requires you to specify all possible nested activities <strong>at compile-time</strong>.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(:decide_file_type,
+      auto_wire: [Id3Tag, VorbisComment]) # explicitely define possible nested activities.
+    step :save
+    # ...
+
+    def decide_file_type(ctx, params:, **)
+      params[:type] == "mp3" ? Id3Tag : VorbisComment
+    end
+  end
+end
+</code></pre>
+
+<p>The <code>:auto_wire</code> option expects an array of nested activities. While this might seem a bit clumsy, this brings several benefits. First of all, execution is much faster since the entire activity graph is created at compile-time. Second, you can use the Debugging API to <a href="#macro-nested-auto_wire-debugging">introspect things</a>.</p>
+
+<p>You can use any type of decider step. In this example, it’s a instance method <code>#decide_file_type</code> on the <code>Nested()</code>-hosting class.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-create.png" /></p>
+
+<p>Internally, the “auto-wire” <code>Nested()</code> macro simply returns a small activity as illustrated above in gray. It has a <code>decide</code> step to figure out which nested activity to run, then runs the actual nested activity. All well-known termini (success, failure, pass_fast, fail_fast) of the nested activities are automatically connected to the <code>Nested()</code>’s activity’s termini.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Auto_wire</li>
+    <li id="operation-nested-auto_wire-output-wiring">Output Wiring</li>
+</ul>
+
+<p>Given we had a nested activity <code>VorbisComment</code> implemented like so.</p>
+
+<pre><code>module Song::Activity
+  class VorbisComment &lt; Trailblazer::Activity::Railway
+    step :prepare_metadata
+    step :encode_cover, Output(:failure) =&gt; End(:unsupported_file_format)
+    # ...
+  end
+end
+</code></pre>
+
+<p>If the <code>#encode_cover</code> step fails, the activity will stop in the <code>End.unsupported_file_format</code> terminus - an end event very specific to the <code>VorbisComment</code> activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-vorbiscomment.png" /></p>
+
+<p>This new terminus has to be wired explicitely in the nesting activity.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(
+        :decide_file_type,
+        auto_wire: [Id3Tag, VorbisComment]
+      ),
+      # Output and friends are used *after* Nested().
+      # Connect VorbisComment's {unsupported_file_format} to our {failure} track:
+      Output(:unsupported_file_format) =&gt; Track(:failure)
+
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+<p>Using <code>Output(:unsupported_file_type)</code> from the Wiring API you can connect this specific terminus to wherever you need it, here it’s routed to the failure track in <code>Create</code>. Note that Wiring API options are used after <code>Nested(...)</code>, not within its parenthesis.</p>
+
+<p>The complete activity graph would look a bit like the following diagram.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/nested-static-complete.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Auto_wire</li>
+    <li id="operation-nested-auto_wire-debugging">Debugging</li>
+</ul>
+
+<p>Static <code>Nested</code> setups are traceable using <code>#wtf?</code>. The above examples result in a flow as follows.</p>
+
+<pre><code>Song::Activity::Create
+|-- Start.default
+|-- model
+|-- Nested(decide_file_type)
+|   |-- Start.default
+|   |-- decide
+|   |   |-- Start.default
+|   |   |-- #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=decide_file_type&gt;
+|   |   |-- dispatch_to_terminus
+|   |   `-- End.decision:DocsNestedStaticTest::A::Song::Activity::VorbisComment
+|   |-- DocsNestedStaticTest::A::Song::Activity::VorbisComment
+|   |   |-- Start.default
+|   |   |-- prepare_metadata
+|   |   |-- encode_cover
+|   |   `-- End.success
+|   `-- End.success
+|-- save
+`-- End.success
+</code></pre>
+
+<p>The trace is fully compatible with the Debugging API and allows compile-time introspection. For example, you can specify the path to a nested activity <code>Id3Tag</code> and inspect it.</p>
+
+<pre><code>Trailblazer::Developer.render(Song::Activity::Create,
+  path: [
+    "Nested(decide_file_type)", # ID of Nested()
+    Song::Activity::Id3Tag      # ID of the nested {Id3Tag} activity.
+  ]
+)
+</code></pre>
+
+<p>Note that the ID of the nested activities are the class constants.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="operation-nested-wrap">Wrap</h3>
+<p><!-- {operation-nested-wrap-toc} --></p>
 
 <p>Steps can be wrapped by an embracing step. This is necessary when defining a set of steps to be contained in a database transaction or a database lock.</p>
 
@@ -933,7 +1094,7 @@ end
 
 <ul class="navigation">
     <li>Wrap</li>
-    <li id="operation-macros-wrap-callable">Callable</li>
+    <li id="operation-nested-wrap-callable">Callable</li>
 </ul>
 
 <p>For reusable wrappers, you can also use a <code>Callable</code> object.</p>
@@ -953,7 +1114,7 @@ end
 
 <ul class="navigation">
     <li>Wrap</li>
-    <li id="operation-macros-wrap-return-value">Return Value</li>
+    <li id="operation-nested-wrap-return-value">Return Value</li>
 </ul>
 
 <p>All nested steps will simply be executed as if they were on the “top-level” track, but within the wrapper code. Steps may deviate to the left track, and so on.</p>
@@ -969,8 +1130,8 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="operation-macros-rescue">Rescue</h3>
-<p><!-- {operation-macros-rescue-toc} --></p>
+<h3 id="operation-nested-rescue">Rescue</h3>
+<p><!-- {operation-nested-rescue-toc} --></p>
 
 <p>While you can write your own <code>begin/rescue/end</code> mechanics using <a href="#wrap"><code>Wrap</code></a>, Trailblazer offers you the <code>Rescue</code> macro to catch and handle exceptions that might occur while running the pipe.</p>
 
@@ -1003,7 +1164,7 @@ end
 
 <ul class="navigation">
     <li>Rescue</li>
-    <li id="operation-macros-rescue-full-example">Full example</li>
+    <li id="operation-nested-rescue-full-example">Full example</li>
 </ul>
 
 <p>The  <code>Nested</code>, <code>Wrap</code> and <code>Rescue</code> macros can also be nested, allowing an easily extendable business workflow with error handling along the way.</p>
@@ -2063,8 +2224,45 @@ Note that those signals <strong>must have outputs that are connected to the next
         </li>
       
     
+  </ul>
+</div>
+
+<div class="features" id="operation-nested-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Nested</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
       <li>
-        <a href="#operation-macros-wrap">
+        <a href="#operation-nested-dynamic">
+          <i class="fas fa-arrow-right"></i>
+          Dynamic
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#operation-nested-auto_wire">
+          <i class="fas fa-arrow-right"></i>
+          Auto_wire
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#operation-nested-auto_wire-output-wiring">Output Wiring</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#operation-nested-auto_wire-debugging">Debugging</a>
+        </li>
+      
+    
+      <li>
+        <a href="#operation-nested-wrap">
           <i class="fas fa-arrow-right"></i>
           Wrap
         </a>
@@ -2072,17 +2270,17 @@ Note that those signals <strong>must have outputs that are connected to the next
       
         
         <li class="sub-item">
-          <a href="#operation-macros-wrap-callable">Callable</a>
+          <a href="#operation-nested-wrap-callable">Callable</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#operation-macros-wrap-return-value">Return Value</a>
+          <a href="#operation-nested-wrap-return-value">Return Value</a>
         </li>
       
     
       <li>
-        <a href="#operation-macros-rescue">
+        <a href="#operation-nested-rescue">
           <i class="fas fa-arrow-right"></i>
           Rescue
         </a>
@@ -2090,7 +2288,7 @@ Note that those signals <strong>must have outputs that are connected to the next
       
         
         <li class="sub-item">
-          <a href="#operation-macros-rescue-full-example">Full example</a>
+          <a href="#operation-nested-rescue-full-example">Full example</a>
         </li>
       
     
