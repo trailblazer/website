@@ -1,10 +1,39 @@
 <%= h2 "Nested" %>
 
+<%= h3 "Dynamic" %>
+
+compiled at runtime
+
 <%= h3 "Auto_wire" %>
 
-The recommended way of maintaining dynamically nested operations (or activities) is to use `Nested()` with the `:auto_wire` option.
+The recommended way of maintaining dynamically nested operations (or activities) is to use `Nested()` with the `:auto_wire` option. It works exactly like its [purely dynamic](#macro-nested-dynamic) counterpart but requires you to specify all possible nested activities **at compile-time**.
+
+<%= code "create", collapse: :meths %>
+
+The `:auto_wire` option expects an array of nested activities. While this might seem a bit clumsy, this brings several benefits. First of all, execution is much faster since the entire activity graph is created at compile-time. Second, you can use the Debugging API to [introspect things](#macro-nested-auto_wire-debugging).
+
+You can use any type of decider step. In this example, it's a instance method `#decide_file_type` on the `Nested()`-hosting class.
 
 <%= h4 "Output Wiring" %>
+
+Given we had a nested activity `VorbisComment` implemented like so.
+
+<%= code "unsupported-terminus", collapse: :meths %>
+
+If the `#encode_cover` step fails, the activity will stop in the `End.unsupported_file_format` terminus - an end event very specific to the `VorbisComment` activity.
+
+<%= vite_image_tag "images/nested-static-vorbiscomment.png", class: "mx-auto d-block" %>
+
+This new terminus has to be wired explicitely in the nesting activity.
+
+<%= code "create-output", collapse: :meths %>
+
+Using `Output(:unsupported_file_type)` from the Wiring API you can connect this specific terminus to wherever you need it, here it's routed to the failure track in `Create`. Note that Wiring API options are used after `Nested(...)`, not within its parenthesis.
+
+The complete activity graph would look a bit like the following diagram.
+
+
+<%= vite_image_tag "images/nested-static-complete.png", class: "mx-auto d-block" %>
 
 <%= h4 "Debugging" %>
 
