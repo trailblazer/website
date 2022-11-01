@@ -524,12 +524,65 @@
 <h2 id="macro-nested">Nested</h2>
 <p><!-- {macro-nested-toc} --></p>
 
+<p>Only use the <code>Nested()</code> macro if you’re planning to nest an activity that can only be chosen at runtime.</p>
+
+<ul>
+  <li>If you know the nested activity upfront, use <a href="">Subprocess()</a>.</li>
+  <li>If you know the activities upfront, and need only need to choose at run-time, use the <a href="#macro-nested-auto_wire"><code>:auto_wire</code> option</a>.</li>
+</ul>
+
 <p><span class="divider"></span></p>
 
 <h3 id="macro-nested-dynamic">Dynamic</h3>
 <p><!-- {macro-nested-dynamic-toc} --></p>
 
-<p>compiled at runtime</p>
+<p>Use <code>Nested()</code> to dynamically decide which nested activity to invoke, but when you don’t know all activities to pick from. This is sometimes the case in polymorphic setups, when a part of an operation needs to be “decided” at runtime, with no way to know what this will look like when writing the operation class.</p>
+
+<p>Consider the following activity to create a song. Depending on the input in <code>params</code>, you either want to run a nested <code>Id3Tag</code> processor activity for an MP3 song, or <code>VorbisComment</code> at a specific point during the song creation.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(:decide_file_type) # no options, only decider step: that's "dynamic".
+    step :save
+    # ...
+    def decide_file_type(ctx, params:, **)
+      params[:type] == "mp3" ? Id3Tag : VorbisComment
+    end
+  end
+end
+</code></pre>
+
+<p>When using <code>Nested()</code> with only one argument, the <em>decider</em>, we call this the “dynamic style”. Since we don’t know the possible nested activities upfront, the macro needs to compile several internals at runtime, which will be slower than its static equivalent.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Dynamic</li>
+    <li id="macro-nested-dynamic-decider">Decider</li>
+</ul>
+
+<p>The decider can be any “option style” callable: an instance method in the hosting <code>Create</code> activity, any lambda or proc, or a callable object or class. In our example, it’s an instance method.</p>
+
+<p>The decider receives <code>ctx</code> and keyword arguments just like any other step. It is run directly before the nested activity is run, it’s <strong>return value decides about</strong> which one that will be: <code>Id3Tag</code> or <code>VorbisComment</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Dynamic</li>
+    <li id="macro-nested-dynamic-nested-activity">Nested activity</li>
+</ul>
+
+<p>The nested activity (or operation) will, per default, receive the same <code>ctx</code> that a <code>step</code> in place of <code>Nested()</code> would receive.</p>
+
+<pre><code>module Song::Activity
+  class Id3Tag &lt; Trailblazer::Activity::Railway
+    step :parse
+    step :encode_id3
+    # ...
+  end
+end
+</code></pre>
 
 <p><span class="divider"></span></p>
 
@@ -683,6 +736,16 @@ end
           Dynamic
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-dynamic-decider">Decider</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-dynamic-nested-activity">Nested activity</a>
+        </li>
       
     
       <li>

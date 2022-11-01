@@ -1,0 +1,28 @@
+<%= h2 "Nested" %>
+
+Only use the `Nested()` macro if you're planning to nest an activity that can only be chosen at runtime.
+
+* If you know the nested activity upfront, use [Subprocess()]().
+* If you know the activities upfront, and need only need to choose at run-time, use the [`:auto_wire` option](#macro-nested-auto_wire).
+
+<%= h3 "Dynamic" %>
+
+Use `Nested()` to dynamically decide which nested activity to invoke, but when you don't know all activities to pick from. This is sometimes the case in polymorphic setups, when a part of an operation needs to be "decided" at runtime, with no way to know what this will look like when writing the operation class.
+
+Consider the following activity to create a song. Depending on the input in `params`, you either want to run a nested `Id3Tag` processor activity for an MP3 song, or `VorbisComment` at a specific point during the song creation.
+
+<%= code "dynamic", collapse: :meths %>
+
+When using `Nested()` with only one argument, the _decider_, we call this the "dynamic style". Since we don't know the possible nested activities upfront, the macro needs to compile several internals at runtime, which will be slower than its static equivalent.
+
+<%= h4 "Decider" %>
+
+The decider can be any "option style" callable: an instance method in the hosting `Create` activity, any lambda or proc, or a callable object or class. In our example, it's an instance method.
+
+The decider receives `ctx` and keyword arguments just like any other step. It is run directly before the nested activity is run, it's **return value decides about** which one that will be: `Id3Tag` or `VorbisComment`.
+
+<%= h4 "Nested activity" %>
+
+The nested activity (or operation) will, per default, receive the same `ctx` that a `step` in place of `Nested()` would receive.
+
+<%= code "id3", collapse: :meths %>

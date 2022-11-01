@@ -1,11 +1,3 @@
-<%= h2 "Nested" %>
-
-<%= h3 "Dynamic" %>
-
-Only use the `Nested()` macro if you're planning to nest an activity that can only be chosen at runtime.
-
-compiled at runtime
-
 <%= h3 "Auto_wire" %>
 
 The recommended way of maintaining dynamically nested operations (or activities) is to use `Nested()` with the `:auto_wire` option. It works exactly like its [purely dynamic](#macro-nested-dynamic) counterpart but requires you to specify all possible nested activities **at compile-time**.
