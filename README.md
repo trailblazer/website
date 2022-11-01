@@ -52,6 +52,18 @@ Run `rails publish` to publish any current changes. This will
 
 If changes are pushed on `main` branch, [netlify](https://netlify.com/) will automatically deploy and update the website.
 
+## Deploy preview
+
+Always branch when working on new parts of the docs. You need to activate the branch for "deploy preview" here:
+
+[https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches](https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches)
+
+You can then view the preview by replacing `macro-chapter` with the branch you want to preview.
+
+```
+https://macro-chapter--ornate-heliotrope-1c15e2.netlify.app/2.1/docs/macro#macro-nested
+```
+
 ## Code Snippets
 
 Per default, code snippets using the `<%= code ... %>` helper tag are extracted from the respective repository when compiling the site. This repository must be sitting in the same directory that `website`'s in. You need to clone all needed repositories.
