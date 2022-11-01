@@ -187,6 +187,18 @@
     "file": "assets/middle.1101baff.webp",
     "src": "images/middle.webp"
   },
+  "images/nested-static-complete.png": {
+    "file": "assets/nested-static-complete.0c841265.png",
+    "src": "images/nested-static-complete.png"
+  },
+  "images/nested-static-create.png": {
+    "file": "assets/nested-static-create.1305287e.png",
+    "src": "images/nested-static-create.png"
+  },
+  "images/nested-static-vorbiscomment.png": {
+    "file": "assets/nested-static-vorbiscomment.f9f19b24.png",
+    "src": "images/nested-static-vorbiscomment.png"
+  },
   "images/nesting-end.webp": {
     "file": "assets/nesting-end.b3cc30b3.webp",
     "src": "images/nesting-end.webp"

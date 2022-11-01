@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Trailblazer - Pro</title>
+    <title>Trailblazer - Macro</title>
 
     
     <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
@@ -238,10 +238,10 @@
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/macro.html">
         <button
-          class="collapsed"
+          class=""
           data-toggle="collapse"
           data-target="#macro-collapse"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="macro-collapse"
         >
           <i class="fas fa-chevron-right"></i>
@@ -252,6 +252,29 @@
     </h2>
   </div>
 
+  
+    <div
+      id="macro-collapse"
+      class="collapse show"
+      aria-labelledby="macro"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#macro-overview">
+              Overview
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-nested">
+              Nested
+            </a>
+          </li>
+        
+      </ul>
+    </div>
   
 </div>
 
@@ -468,10 +491,10 @@
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/pro.html">
         <button
-          class=""
+          class="collapsed"
           data-toggle="collapse"
           data-target="#pro-collapse"
-          aria-expanded="true"
+          aria-expanded="false"
           aria-controls="pro-collapse"
         >
           <i class="fas fa-chevron-right"></i>
@@ -482,29 +505,6 @@
     </h2>
   </div>
 
-  
-    <div
-      id="pro-collapse"
-      class="collapse show"
-      aria-labelledby="pro"
-      data-parent="#accordion"
-    >
-      <ul class="nav vertical menu navbar-light">
-        
-          <li class="nav-item">
-            <a class="nav-link active" href="#pro-license">
-              License
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a class="nav-link " href="#pro-editor">
-              Editor
-            </a>
-          </li>
-        
-      </ul>
-    </div>
   
 </div>
 
@@ -519,124 +519,152 @@
                 role="main"
               >
                 <div class="doc-block section-name session-show">
-                  <h1 class="w-100">PRO</h1>
+                  <h1 class="w-100">Macro</h1>
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Aug 22</span>
+                      <span>Last updated 01 Nov 22</span>
                     </li>
                   </ul>
                 </div>
 
                 <div class="doc-block">
-<p><img class="mx-auto d-block" src="/vite/assets/pro.495599e4.webp" /></p>
+<p><span class="divider"></span></p>
 
-<p>TRB PRO is a subscription-based service that offers you a commercial license, additional gems, and access to our visual editor and to our private PRO Slack workspace for casual support.</p>
+<h2 id="macro-overview">Overview</h2>
+<p><!-- {macro-overview-toc} --></p>
 
-<p>It will be launched in February 2020.</p>
-
-<ul>
-  <li>Paid gems: <code>trailblazer-workflow</code> and <code>trailblazer-activity-implementation</code> that both help implementing long-running processes using the editor.</li>
-  <li>The commercial license can <a href="https://github.com/trailblazer/trailblazer/blob/master/COMM-LICENSE">be found here</a>.</li>
-</ul>
+<p><a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro &gt;= 2.1.11</a></p>
 
 <p><span class="divider"></span></p>
 
-<h2 id="pro-license">License</h2>
-<p><!-- {pro-license-toc} --></p>
-
-<p>All Trailblazer core gems are licensed under the LGPLv3. Additional gems are MIT.</p>
+<h2 id="macro-nested">Nested</h2>
+<p><!-- {macro-nested-toc} --></p>
 
 <p><span class="divider"></span></p>
 
-<h3 id="pro-license-faq">FAQ</h3>
-<p><!-- {pro-license-faq-toc} --></p>
+<h3 id="macro-nested-dynamic">Dynamic</h3>
+<p><!-- {macro-nested-dynamic-toc} --></p>
 
-<p>There is a lot of confusion around the LGPLv3 license. It is actually not as restrictive as you might’ve thought! Here are the most commonly asked questions that we answered with the help of a lawyer specialized in licensing.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>FAQ</li>
-    <li id="pro-license-faq-why-is-trb-licensed-under-lgpl-not-mit-">Why is TRB licensed under LGPL, not MIT?</li>
-</ul>
-
-<p>Trailblazer (TRB) is an Open-Source project. Since we want to keep it that way, we decided to raise awareness for the “cost” of our work - providing new versions and features is incredibly time-consuming for us, but we love what we do. The GNU Lesser General Public License (LGPL) has no implications for 75% of our users. Nevertheless, the license change has lead to an increasing number of inquiries for a commercial license. This creates a win-win situation, you as the user have your peace of mind, and we can continue working with your funds.</p>
+<p>compiled at runtime</p>
 
 <p><span class="divider"></span></p>
 
-<ul class="navigation">
-    <li>FAQ</li>
-    <li id="pro-license-faq-what-are-the-implications-of-lgpl-and-how-can-i-avoid-those-">What are the implications of LGPL and how can I avoid those?</li>
-</ul>
+<h3 id="macro-nested-auto_wire">Auto_wire</h3>
+<p><!-- {macro-nested-auto_wire-toc} --></p>
 
-<p>The LGPL allows users to use and integrate LGPL software components into their own software without being required to release the source code of their own software components. However, if users modify LGPL software components (“derivative work”), they are required to make the modified software component available under the same LGPL license.</p>
+<p>The recommended way of maintaining dynamically nested operations (or activities) is to use <code>Nested()</code> with the <code>:auto_wire</code> option. It works exactly like its <a href="#macro-nested-dynamic">purely dynamic</a> counterpart but requires you to specify all possible nested activities <strong>at compile-time</strong>.</p>
 
-<p>To avoid the latter with TRB, users have to comply with para. 5 LGPLv2.1:</p>
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(:decide_file_type,
+      auto_wire: [Id3Tag, VorbisComment]) # explicitely define possible nested activities.
+    step :save
+    # ...
 
-<blockquote>
-  <p>A program that contains no derivative of any portion of the Library, but is designed to work with the Library by being compiled or linked with it, is called a “work that uses the Library”. Such a work, in isolation, is not a derivative work of the Library, and therefore falls outside the scope of this License.</p>
-</blockquote>
+    def decide_file_type(ctx, params:, **)
+      params[:type] == "mp3" ? Id3Tag : VorbisComment
+    end
+  end
+end
+</code></pre>
 
-<p>In other words: if you use the TRB libraries in your commercial applications or Open-Source projects, you’re not creating a derivative work of Trailblazer. Your software can be distributed under any terms.</p>
+<p>The <code>:auto_wire</code> option expects an array of nested activities. While this might seem a bit clumsy, this brings several benefits. First of all, execution is much faster since the entire activity graph is created at compile-time. Second, you can use the Debugging API to <a href="#macro-nested-auto_wire-debugging">introspect things</a>.</p>
 
-<p><span class="divider"></span></p>
+<p>You can use any type of decider step. In this example, it’s a instance method <code>#decide_file_type</code> on the <code>Nested()</code>-hosting class.</p>
 
-<ul class="navigation">
-    <li>FAQ</li>
-    <li id="pro-license-faq-i-use-trb-in-my-mit-oss-project-does-that-mean-i-have-to-relicense-mine-to-lpgl-">I use TRB in my MIT-OSS project. Does that mean I have to relicense mine to LPGL?</li>
-</ul>
+<p><img class="mx-auto d-block" src="/vite/assets/nested-static-create.1305287e.png" /></p>
 
-<p>No, just make sure you that you don’t use a derivative of any portion of the Library (see above). Again, using Trailblazer in your projects, overriding its methods, “monkey-patching”, etc is not considered a derivate. You’re free to pick your own license.</p>
+<p>Internally, the “auto-wire” <code>Nested()</code> macro simply returns a small activity as illustrated above in gray. It has a <code>decide</code> step to figure out which nested activity to run, then runs the actual nested activity. All well-known termini (success, failure, pass_fast, fail_fast) of the nested activities are automatically connected to the <code>Nested()</code>’s activity’s termini.</p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>FAQ</li>
-    <li id="pro-license-faq-we-use-trb-in-a-commercial-closed-source-application-do-we-have-to-publish-our-source-code-now-">We use TRB in a commercial, closed-source application. Do we have to publish our source code now?</li>
+    <li>Auto_wire</li>
+    <li id="macro-nested-auto_wire-output-wiring">Output Wiring</li>
 </ul>
 
-<p>No, you don’t have to license your project under LGPL and you don’t have to provide your source code publicly.</p>
+<p>Given we had a nested activity <code>VorbisComment</code> implemented like so.</p>
 
-<p>However, if you use TRB modules licensed under LGPLv3 please</p>
+<pre><code>module Song::Activity
+  class VorbisComment &lt; Trailblazer::Activity::Railway
+    step :prepare_metadata
+    step :encode_cover, Output(:failure) =&gt; End(:unsupported_file_format)
+    # ...
+  end
+end
+</code></pre>
 
-<ul>
-  <li>provide a relinking mechanism for TRB libraries</li>
-  <li>provide a license copy &amp; explicitly acknowledge TRB usage</li>
-  <li>make a TRB source code copy available for customers or link to our repositories</li>
-  <li>note that TRB source code modifications are not proprietary</li>
-</ul>
+<p>If the <code>#encode_cover</code> step fails, the activity will stop in the <code>End.unsupported_file_format</code> terminus - an end event very specific to the <code>VorbisComment</code> activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nested-static-vorbiscomment.f9f19b24.png" /></p>
+
+<p>This new terminus has to be wired explicitely in the nesting activity.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :model
+    step Nested(
+        :decide_file_type,
+        auto_wire: [Id3Tag, VorbisComment]
+      ),
+      # Output and friends are used *after* Nested().
+      # Connect VorbisComment's {unsupported_file_format} to our {failure} track:
+      Output(:unsupported_file_format) =&gt; Track(:failure)
+
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+<p>Using <code>Output(:unsupported_file_type)</code> from the Wiring API you can connect this specific terminus to wherever you need it, here it’s routed to the failure track in <code>Create</code>. Note that Wiring API options are used after <code>Nested(...)</code>, not within its parenthesis.</p>
+
+<p>The complete activity graph would look a bit like the following diagram.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nested-static-complete.0c841265.png" /></p>
 
 <p><span class="divider"></span></p>
 
-<h2 id="pro-editor">Editor</h2>
-<p><!-- {pro-editor-toc} --></p>
-
-<p>Whether you want to visualize a complex operation or model a long-running business process with dozens of steps, resume/suspend points and different branches, the editor will be your best friend.</p>
-
-<p>You can import diagrams from the command line into your project using the <code>trailblazer-developer</code> gem, transform them into Ruby and implement the steps with your own business logic.</p>
-
-<p><img class="mx-auto d-block" src="/vite/assets/editor-september.0f0b7692.webp" /></p>
-
-<p>We use a subset of BPMN for the visual language in the editor, but added our own set of restrictions and semantics to it. It is possible to organize huge applications and their workflows in our editor backend, model and debug visually, and import them into your real Ruby applications.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="pro-editor-known-bugs">Known Bugs</h3>
-<p><!-- {pro-editor-known-bugs-toc} --></p>
-
-<p>The current editor is first-generation and was about 2 years of work. It is sufficient to work with and allows creating complex workflows and collaborations. We use it in several commercial projects.</p>
-
-<p>There are a bunch of known issues with the first-generation editor. <strong>Always save your diagram after you added or rearranged a new element</strong>. You can then reload should you encounter a bug.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>We decided to invest into refactoring and are working on <code>gen2</code>. The new version simplifies many tasks, has much better handling of arrows, etc.</p>
-</div>
-
-<ul>
-  <li>Arrows or connections are a PITA in more complex diagrams. When dragging arrows, they might suddenly snap to some random point or even add another joint. It is very hard to rearrange arrows laying behind other objects. This is one main reason we’re working hard on gen2.</li>
-  <li>You can’t label arrows. This is annoying when a task or event has several outgoing arrows - you’re not able to assign a semantic via the editor. In the meantime, you can do this by #TODO</li>
+<ul class="navigation">
+    <li>Auto_wire</li>
+    <li id="macro-nested-auto_wire-debugging">Debugging</li>
 </ul>
+
+<p>Static <code>Nested</code> setups are traceable using <code>#wtf?</code>. The above examples result in a flow as follows.</p>
+
+<pre><code>Song::Activity::Create
+|-- Start.default
+|-- model
+|-- Nested(decide_file_type)
+|   |-- Start.default
+|   |-- decide
+|   |   |-- Start.default
+|   |   |-- #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=decide_file_type&gt;
+|   |   |-- dispatch_to_terminus
+|   |   `-- End.decision:DocsNestedStaticTest::A::Song::Activity::VorbisComment
+|   |-- DocsNestedStaticTest::A::Song::Activity::VorbisComment
+|   |   |-- Start.default
+|   |   |-- prepare_metadata
+|   |   |-- encode_cover
+|   |   `-- End.success
+|   `-- End.success
+|-- save
+`-- End.success
+</code></pre>
+
+<p>The trace is fully compatible with the Debugging API and allows compile-time introspection. For example, you can specify the path to a nested activity <code>Id3Tag</code> and inspect it.</p>
+
+<pre><code>Trailblazer::Developer.render(Song::Activity::Create,
+  path: [
+    "Nested(decide_file_type)", # ID of Nested()
+    Song::Activity::Id3Tag      # ID of the nested {Id3Tag} activity.
+  ]
+)
+</code></pre>
+
+<p>Note that the ID of the nested activities are the class constants.</p>
 
 </div>
 
@@ -647,59 +675,49 @@
 
               <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
-                <div class="features" id="pro-license-features">
+                <div class="features" id="macro-overview-features">
   <h3>
     <i class="fas fa-times"></i>
-    <span>License</span>
+    <span>Overview</span>
   </h3>
 
   <ul class="vertical menu">
-    
-      <li>
-        <a href="#pro-license-faq">
-          <i class="fas fa-arrow-right"></i>
-          FAQ
-        </a>
-      </li>
-      
-        
-        <li class="sub-item">
-          <a href="#pro-license-faq-why-is-trb-licensed-under-lgpl-not-mit-">Why is TRB licensed under LGPL, not MIT?</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#pro-license-faq-what-are-the-implications-of-lgpl-and-how-can-i-avoid-those-">What are the implications of LGPL and how can I avoid those?</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#pro-license-faq-i-use-trb-in-my-mit-oss-project-does-that-mean-i-have-to-relicense-mine-to-lpgl-">I use TRB in my MIT-OSS project. Does that mean I have to relicense mine to LPGL?</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#pro-license-faq-we-use-trb-in-a-commercial-closed-source-application-do-we-have-to-publish-our-source-code-now-">We use TRB in a commercial, closed-source application. Do we have to publish our source code now?</a>
-        </li>
-      
     
   </ul>
 </div>
 
-<div class="features" id="pro-editor-features">
+<div class="features" id="macro-nested-features">
   <h3>
     <i class="fas fa-times"></i>
-    <span>Editor</span>
+    <span>Nested</span>
   </h3>
 
   <ul class="vertical menu">
     
       <li>
-        <a href="#pro-editor-known-bugs">
+        <a href="#macro-nested-dynamic">
           <i class="fas fa-arrow-right"></i>
-          Known Bugs
+          Dynamic
         </a>
       </li>
+      
+    
+      <li>
+        <a href="#macro-nested-auto_wire">
+          <i class="fas fa-arrow-right"></i>
+          Auto_wire
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-auto_wire-output-wiring">Output Wiring</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-auto_wire-debugging">Debugging</a>
+        </li>
       
     
   </ul>
