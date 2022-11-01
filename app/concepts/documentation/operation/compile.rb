@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Documentation::Operation::Compile < Trailblazer::Operation
   PAGES_PATH = "app/concepts/documentation/page"
   TOC_ORDER = {
@@ -11,6 +9,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
 
     activity:          %w[
       activity
+      macro
       operation
       workflow
       endpoint
@@ -36,6 +35,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "activity"           => { header: "Activity", url: "/2.1/docs/activity.html" },
     "tutorials/activity" => { header: "Tutorials", url: "/2.1/docs/tutorials/activity.html" },
     "test"               => { header: "Test", url: "/2.1/docs/test.html" },
+    "macro"              => { header: "Macro", url: "/2.1/docs/macro.html" },
     "operation"          => { header: "Operation", url: "/2.1/docs/operation.html" },
     "workflow"           => { header: "Workflow", url: "/2.1/docs/workflow.html" },
     "endpoint"           => { header: "Endpoint", url: "/2.1/docs/endpoint.html" },

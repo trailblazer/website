@@ -1,0 +1,19 @@
+<%= h2 "Nested" %>
+
+<%= h3 "Auto_wire" %>
+
+The recommended way of maintaining dynamically nested operations (or activities) is to use `Nested()` with the `:auto_wire` option.
+
+<%= h4 "Output Wiring" %>
+
+<%= h4 "Debugging" %>
+
+Static `Nested` setups are traceable using `#wtf?`. The above examples result in a flow as follows.
+
+<%= code "create-trace" %>
+
+The trace is fully compatible with the Debugging API and allows compile-time introspection. For example, you can specify the path to a nested activity `Id3Tag` and inspect it.
+
+<%= code "create-introspect" %>
+
+Note that the ID of the nested activities are the class constants.
