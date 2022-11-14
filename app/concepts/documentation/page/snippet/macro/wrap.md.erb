@@ -16,12 +16,34 @@ Your transaction handler can be any type of [callable] exposing the [circuit int
 
 In the most simple transaction ever written, we simply run the wrapped steps by calling `yield`. This will return a circuit-interface return set. The interesting parts are the returned `ctx`, which is the ctx that left the wrapped steps, and the `signal`, which indicates the outcome of running the wrapped steps.
 
+Here, we simply return the original signal of the wrapped activity.
+
 Note that internally `#update` and `#transfer` are put into a separate activity. The terminus reached in that activity is the signal.
 
 <%= vite_image_tag "images/wrap.png", class: "mx-auto d-block" %>
 
 Given that both `#update` and `#transfer` are railway steps, the wrapped code can terminate in a `success` terminus, or a `failure`.
-It's now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity's terminal signal, making the `Upload` activity either continue from `success` or from `failure`.
+Now, it's your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity's terminal signal, making the `Upload` activity either continue from `success` or from `failure`.
+
+<%= h4 "Routing" %>
+
+Let's assume the `#transfer` step had a custom output that goes to a super-special terminus `End.timeout`.
+
+<%= code "out-wrap" %>
+
+The resulting wrapped activity now has three termini.
+
+<%= vite_image_tag "images/wrap-timeout.png", class: "mx-auto d-block" %>
+
+
+
+With our handler, which simply returns the wrapped activity's signal, it's possible to route the `:timeout` signal in `Upload`. For instance, if a `:timeout` should be resulting in `Upload` jumping to the `fail_fast` track after `#transfer` terminated in `timeout`, you can do so.
+
+<%= code "out" %>
+
+Here's what the circuit would look like.
+
+<%= vite_image_tag "images/wrap-route.png", class: "mx-auto d-block" %>
 
 <%= h3 "Transaction" %>
 

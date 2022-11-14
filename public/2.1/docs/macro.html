@@ -783,12 +783,48 @@ end
 
 <p>In the most simple transaction ever written, we simply run the wrapped steps by calling <code>yield</code>. This will return a circuit-interface return set. The interesting parts are the returned <code>ctx</code>, which is the ctx that left the wrapped steps, and the <code>signal</code>, which indicates the outcome of running the wrapped steps.</p>
 
+<p>Here, we simply return the original signal of the wrapped activity.</p>
+
 <p>Note that internally <code>#update</code> and <code>#transfer</code> are put into a separate activity. The terminus reached in that activity is the signal.</p>
 
 <p><img class="mx-auto d-block" src="/vite-dev/images/wrap.png" /></p>
 
 <p>Given that both <code>#update</code> and <code>#transfer</code> are railway steps, the wrapped code can terminate in a <code>success</code> terminus, or a <code>failure</code>.
-It’s now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity’s terminal signal, making the <code>Upload</code> activity either continue from <code>success</code> or from <code>failure</code>.</p>
+Now, it’s your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity’s terminal signal, making the <code>Upload</code> activity either continue from <code>success</code> or from <code>failure</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Wrap handler</li>
+    <li id="macro-wrap-wrap-handler-routing">Routing</li>
+</ul>
+
+<p>Let’s assume the <code>#transfer</code> step had a custom output that goes to a super-special terminus <code>End.timeout</code>.</p>
+
+<pre><code>step Wrap(MyTransaction) {
+  step :update   # this changes the database.
+  step :transfer,
+    Output(:failure) =&gt; End(:timeout) # creates a third terminus.
+},
+</code></pre>
+
+<p>The resulting wrapped activity now has three termini.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wrap-timeout.png" /></p>
+
+<p>With our handler, which simply returns the wrapped activity’s signal, it’s possible to route the <code>:timeout</code> signal in <code>Upload</code>. For instance, if a <code>:timeout</code> should be resulting in <code>Upload</code> jumping to the <code>fail_fast</code> track after <code>#transfer</code> terminated in <code>timeout</code>, you can do so.</p>
+
+<pre><code>step Wrap(MyTransaction) {
+  step :update   # this changes the database.
+  step :transfer,
+    Output(:failure) =&gt; End(:timeout) # creates a third terminus.
+},
+  Output(:timeout) =&gt; Track(:fail_fast) # any wiring is possible here.
+</code></pre>
+
+<p>Here’s what the circuit would look like.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wrap-route.png" /></p>
 
 <p><span class="divider"></span></p>
 
@@ -924,6 +960,11 @@ end
           Wrap handler
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-wrap-handler-routing">Routing</a>
+        </li>
       
     
       <li>
