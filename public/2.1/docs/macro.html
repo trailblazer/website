@@ -768,7 +768,7 @@ end
 <h3 id="macro-wrap-wrap-handler">Wrap handler</h3>
 <p><!-- {macro-wrap-wrap-handler-toc} --></p>
 
-<p>The most simple “transaction” (we calll it <em>wrap handler</em>) could look as follows.</p>
+<p>The most simple “transaction” (we call it <em>wrap handler</em>) could look as follows.</p>
 
 <pre><code>class MyTransaction
   def self.call((ctx, flow_options), **, &amp;block)
@@ -783,12 +783,52 @@ end
 
 <p>In the most simple transaction ever written, we simply run the wrapped steps by calling <code>yield</code>. This will return a circuit-interface return set. The interesting parts are the returned <code>ctx</code>, which is the ctx that left the wrapped steps, and the <code>signal</code>, which indicates the outcome of running the wrapped steps.</p>
 
-<p>Note that internally <code>#update</code> and <code>#transfer</code> are put into a separate activity. The terminus reached from that activity is the signal.</p>
+<p>Note that internally <code>#update</code> and <code>#transfer</code> are put into a separate activity. The terminus reached in that activity is the signal.</p>
 
 <p><img class="mx-auto d-block" src="/vite-dev/images/wrap.png" /></p>
 
 <p>Given that both <code>#update</code> and <code>#transfer</code> are railway steps, the wrapped code can terminate in a <code>success</code> terminus, or a <code>failure</code>.
 It’s now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity’s terminal signal, making the <code>Upload</code> activity either continue from <code>success</code> or from <code>failure</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-wrap-transaction">Transaction</h3>
+<p><!-- {macro-wrap-transaction-toc} --></p>
+
+<p>Wrapping steps into a real database transaction, and rolling back in case of a failure outcome in one of the steps, could look like so.</p>
+
+<pre><code>class MyTransaction
+  def self.call((ctx, flow_options), **)
+    handler_signal = nil # this is the signal we decide to return from Wrap().
+
+    ActiveRecord::Base.transaction do
+      signal, (ctx, flow_options) = yield # call the Wrap block
+
+      # It's now up to us to interpret the wrapped activity's outcome.
+      terminus_semantic = signal.to_h[:semantic]
+
+      if [:success, :pass_fast].include?(terminus_semantic)
+        handler_signal = Trailblazer::Activity::Right
+      else # something in the wrapped steps went wrong:
+        handler_signal = Trailblazer::Activity::Left
+
+        raise ActiveRecord::Rollback # This is the only way to tell ActiveRecord to rollback!
+      end
+    end # transaction
+
+    return handler_signal, [ctx, flow_options]
+  end
+end
+</code></pre>
+
+<p>This might look a bit clumsy, but most of the code is very straight-forward.</p>
+
+<ol>
+  <li>Your main intent, wrapping a sequence of steps into an <code>ActiveRecord::Base.transaction</code> block, contains the <code>yield</code> invocation that runs the wrapped steps.</li>
+  <li>Having the <code>signal</code> of the wrapped activity returned, you can decide how you’d like to interpret that. Usually, looking at the signals <code>:semantic</code> field indicates the outcome.</li>
+  <li>In case you’re not happy, a <code>raise ActiveRecord::Rollback</code> will make ActiveRecord undo whatever database commits happened in the block.</li>
+  <li>Instead of returning the nested activity’s <code>signal</code>, which is completely legit, <code>Wrap()</code> also allows you to return a <code>Right</code> or <code>Left</code> signal to communicate the outcome of the entire <code>Wrap()</code> component.</li>
+</ol>
 
 </div>
 
@@ -882,6 +922,14 @@ It’s now your handler that is responsible to interpret that. In the example ab
         <a href="#macro-wrap-wrap-handler">
           <i class="fas fa-arrow-right"></i>
           Wrap handler
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-wrap-transaction">
+          <i class="fas fa-arrow-right"></i>
+          Transaction
         </a>
       </li>
       

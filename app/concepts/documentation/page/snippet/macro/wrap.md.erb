@@ -8,7 +8,7 @@ In an imaginary song `Upload` operation that transfers a music file to some stre
 
 <%= h3 "Wrap handler" %>
 
-The most simple "transaction" (we calll it _wrap handler_) could look as follows.
+The most simple "transaction" (we call it _wrap handler_) could look as follows.
 
 <%= code "my_transaction" %>
 
@@ -22,3 +22,16 @@ Note that internally `#update` and `#transfer` are put into a separate activity.
 
 Given that both `#update` and `#transfer` are railway steps, the wrapped code can terminate in a `success` terminus, or a `failure`.
 It's now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity's terminal signal, making the `Upload` activity either continue from `success` or from `failure`.
+
+<%= h3 "Transaction" %>
+
+Wrapping steps into a real database transaction, and rolling back in case of a failure outcome in one of the steps, could look like so.
+
+<%= code "my_transaction", root: ".", file: "../trailblazer-rails/test/dummy/app/concepts/song/operation/upload.rb" %>
+
+This might look a bit clumsy, but most of the code is very straight-forward.
+
+1. Your main intent, wrapping a sequence of steps into an `ActiveRecord::Base.transaction` block, contains the `yield` invocation that runs the wrapped steps.
+2. Having the `signal` of the wrapped activity returned, you can decide how you'd like to interpret that. Usually, looking at the signals `:semantic` field indicates the outcome.
+3. In case you're not happy, a `raise ActiveRecord::Rollback` will make ActiveRecord undo whatever database commits happened in the block.
+4. Instead of returning the nested activity's `signal`, which is completely legit, `Wrap()` also allows you to return a `Right` or `Left` signal to communicate the outcome of the entire `Wrap()` component.
