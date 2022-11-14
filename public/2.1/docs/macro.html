@@ -897,12 +897,126 @@ end
 
 <p><span class="divider"></span></p>
 
+<h3 id="macro-wrap-debugging">Debugging</h3>
+<p><!-- {macro-wrap-debugging-toc} --></p>
+
+<p><span class="divider"></span></p>
+
 <h2 id="macro-each">Each</h2>
 <p><!-- {macro-each-toc} --></p>
 
 <p><a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro &gt;= 2.1.12</a></p>
 
 <p>The <code>Each()</code> macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.</p>
+
+<pre><code>module Song::Activity
+  class Cover &lt; Trailblazer::Activity::Railway
+    step :model
+    step Each(dataset_from: :composers_for_each) {
+      step :notify_composers
+    }
+    step :rearrange
+
+    # "decider interface"
+    def composers_for_each(ctx, model:, **)
+      model.composers
+    end
+
+    def notify_composers(ctx, index:, item:, **)
+      ctx[:value] = [index, item.full_name]
+    end
+    # ...
+  end
+end
+</code></pre>
+
+<p>You can either pass a block with steps to iterate, or an entire operation/activity. In this example, a block is used. Note that you need to use the <code>{}</code> curly braces due to Ruby’s precedence, just as it’s done in <code>Wrap()</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-dataset_from">dataset_from</h3>
+<p><!-- {macro-each-dataset_from-toc} --></p>
+
+<p>While you could simply assign a ctx variable <code>:dataset</code> in a step preceding the <code>Each()</code> macro, the recommended way is using <code>:dataset_from</code> and implementing a dedicated dataset provider.</p>
+
+<pre><code>step Each(dataset_from: :composers_for_each) {
+  step :notify_composers
+}
+</code></pre>
+
+<p>This can be an instance method or any kind of callable, following the “decider interface”.</p>
+
+<pre><code>def composers_for_each(ctx, model:, **)
+  model.composers
+end
+</code></pre>
+
+<p>Note that our dataset provider is an instance method <code>#composers_for_each</code> defined on the operation class hosting <code>Each()</code>. It exposes a step signature with ctx and handy keyword arguments and simply returns the dataset. It explicitely does not write to <code>ctx</code>!</p>
+
+<p>The only requirement to the dataset provider’s return value is that it returns an enumerable object - usually, that’s an array.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-iterated-block">Iterated Block</h3>
+<p><!-- {macro-each-iterated-block-toc} --></p>
+
+<p>Note that the iterated block’s <code>:instance_method</code>s are defined in the <code>Each()</code>-hosting activity, too.</p>
+
+<pre><code>def notify_composers(ctx, index:, item:, **)
+  ctx[:value] = [index, item.full_name]
+end
+</code></pre>
+
+<p>Per default, <code>Each()</code> will loop over the dataset using <code>#each</code> and pass the iterated item and its index into each step of the block, named <code>:item</code> and <code>:index</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Iterated Block</li>
+    <li id="macro-each-iterated-block-item-key">item key</li>
+</ul>
+
+<p>If you don’t like the <code>:item</code> keyword argument in your steps, you can configure it using the <code>:item_key</code> option for <code>Each()</code>.</p>
+
+<pre><code>step Each(dataset_from: :composers_for_each, item_key: :composer) {
+  step :notify_composers
+}
+</code></pre>
+
+<p>The iterated steps now receive a <code>:composer</code> ctx variable instead of <code>:item</code>.</p>
+
+<pre><code>module Song::Activity
+  class Cover &lt; Trailblazer::Activity::Railway
+    # ...
+    def notify_composers(ctx, composer:, **)
+      ctx[:value] = composer.full_name
+    end
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Iterated Block</li>
+    <li id="macro-each-iterated-block-collecting-value">Collecting value</li>
+</ul>
+
+<p>Optionally, if one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected. All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
+
+<pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
+signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(B::Song::Activity::Cover, [ctx, {}])
+puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Iterated Block</li>
+    <li id="macro-each-iterated-block-operation">operation</li>
+</ul>
+
+<p>If you would like the iterated steps to be within the “block”, use a dedicted activity or operation.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1026,6 +1140,14 @@ end
       </li>
       
     
+      <li>
+        <a href="#macro-wrap-debugging">
+          <i class="fas fa-arrow-right"></i>
+          Debugging
+        </a>
+      </li>
+      
+    
   </ul>
 </div>
 
@@ -1036,6 +1158,37 @@ end
   </h3>
 
   <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-each-dataset_from">
+          <i class="fas fa-arrow-right"></i>
+          dataset_from
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-each-iterated-block">
+          <i class="fas fa-arrow-right"></i>
+          Iterated Block
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-iterated-block-item-key">item key</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-iterated-block-collecting-value">Collecting value</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-iterated-block-operation">operation</a>
+        </li>
+      
     
       <li>
         <a href="#macro-each-debugging">

@@ -4,6 +4,50 @@
 
 The `Each()` macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.
 
+<%= code :each, collapse: :meths %>
 
+You can either pass a block with steps to iterate, or an entire operation/activity. In this example, a block is used. Note that you need to use the `{}` curly braces due to Ruby's precedence, just as it's done in `Wrap()`.
+
+<%= h3 "dataset_from" %>
+
+While you could simply assign a ctx variable `:dataset` in a step preceding the `Each()` macro, the recommended way is using `:dataset_from` and implementing a dedicated dataset provider.
+
+<%= code "each-dataset" %>
+
+This can be an instance method or any kind of callable, following the "decider interface".
+
+<%= code :dataset_from %>
+
+Note that our dataset provider is an instance method `#composers_for_each` defined on the operation class hosting `Each()`. It exposes a step signature with ctx and handy keyword arguments and simply returns the dataset. It explicitely does not write to `ctx`!
+
+The only requirement to the dataset provider's return value is that it returns an enumerable object - usually, that's an array.
+
+<%= h3 "Iterated Block" %>
+
+Note that the iterated block's `:instance_method`s are defined in the `Each()`-hosting activity, too.
+
+<%= code "iterated" %>
+
+Per default, `Each()` will loop over the dataset using `#each` and pass the iterated item and its index into each step of the block, named `:item` and `:index`.
+
+<%= h4 "item key" %>
+
+If you don't like the `:item` keyword argument in your steps, you can configure it using the `:item_key` option for `Each()`.
+
+<%= code "item_key" %>
+
+The iterated steps now receive a `:composer` ctx variable instead of `:item`.
+
+<%= code "composer", collapse: :meths %>
+
+<%= h4 "Collecting value" %>
+
+Optionally, if one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected. All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
+
+<%= code :collected_from_each %>
+
+<%= h4 "operation" %>
+
+If you would like the iterated steps to be within the "block", use a dedicted activity or operation.
 
 <%= h3 "Debugging" %>
