@@ -307,8 +307,16 @@
     "file": "assets/wiring-terminus-track.799e44d6.png",
     "src": "images/wiring-terminus-track.png"
   },
+  "images/wrap-route.png": {
+    "file": "assets/wrap-route.1d58d419.png",
+    "src": "images/wrap-route.png"
+  },
+  "images/wrap-timeout.png": {
+    "file": "assets/wrap-timeout.578be5ab.png",
+    "src": "images/wrap-timeout.png"
+  },
   "images/wrap.png": {
-    "file": "assets/wrap.ce6d6849.png",
+    "file": "assets/wrap.654e0f7e.png",
     "src": "images/wrap.png"
   },
   "images/wtf-color-map.webp": {
