@@ -54,7 +54,11 @@ If changes are pushed on `main` branch, [netlify](https://netlify.com/) will aut
 
 ## Deploy preview
 
-Always branch when working on new parts of the docs. You need to activate the branch for "deploy preview" here:
+Always branch when working on new parts of the docs.
+
+When pushing, use `rails publish`.
+
+You need to activate the branch for "deploy preview" here:
 
 [https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches](https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches)
 

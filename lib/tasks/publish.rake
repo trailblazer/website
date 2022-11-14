@@ -9,7 +9,8 @@ task :publish do
     commit_message = "Publishing public/dist"
     system("git add public/dist && git commit -m '#{commit_message}'")
 
-    puts "== Pushing changes =="
-    system("git push origin")
+    current_branch = `git rev-parse --abbrev-ref HEAD`
+    puts "== Pushing changes to #{current_branch} =="
+    system("git push origin #{current_branch}")
   end
 end
