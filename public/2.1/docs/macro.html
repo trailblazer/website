@@ -1002,10 +1002,18 @@ end
     <li id="macro-each-iterated-block-collecting-value">Collecting value</li>
 </ul>
 
-<p>Optionally, if one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected. All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
+<p>Optionally, if one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected.</p>
+
+<pre><code>def notify_composers(ctx, index:, item:, **)
+  ctx[:value] = [index, item.full_name]
+end
+</code></pre>
+
+<p>All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
 
 <pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
 signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(B::Song::Activity::Cover, [ctx, {}])
+
 puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 </code></pre>
 
@@ -1018,10 +1026,48 @@ puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 
 <p>If you would like the iterated steps to be within the “block”, use a dedicted activity or operation.</p>
 
+<pre><code>module Song::Activity
+  class Cover &lt; Trailblazer::Activity::Railway
+    step :model
+    step Each(Notify, dataset_from: :composers_for_each)
+    step :rearrange
+    # ...
+  end
+end
+</code></pre>
+
+<p>The iterated operation is composed of steps that have an identical interface with the block version.</p>
+
+<pre><code>module Song::Activity
+  class Notify &lt; Trailblazer::Activity::Railway
+    step :send_email
+
+    def send_email(ctx, index:, item:, **)
+      ctx[:value] = [index, item.full_name]
+    end
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-failure">Failure</h3>
+<p><!-- {macro-each-failure-toc} --></p>
+
+<p>If not configured, a failing iterated step leads the entire iteration to be stopped. The <code>Each()</code> activity will terminate on its <code>failure</code> terminus.</p>
+
+<p>You can still access <code>ctx[:collected_from_each]</code> for each iterated block. Note that you can even see which iteration failed in the trace!</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/each-failure-trace.png" /></p>
+
+<p>In combination with TRB’s debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using <code>pry</code> or other tools.</p>
+
 <p><span class="divider"></span></p>
 
 <h3 id="macro-each-debugging">Debugging</h3>
 <p><!-- {macro-each-debugging-toc} --></p>
+
+<p>TODO: show how runtime data can be accessed for each iterated block.</p>
 
 </div>
 
@@ -1188,6 +1234,14 @@ puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
         <li class="sub-item">
           <a href="#macro-each-iterated-block-operation">operation</a>
         </li>
+      
+    
+      <li>
+        <a href="#macro-each-failure">
+          <i class="fas fa-arrow-right"></i>
+          Failure
+        </a>
+      </li>
       
     
       <li>

@@ -42,7 +42,11 @@ The iterated steps now receive a `:composer` ctx variable instead of `:item`.
 
 <%= h4 "Collecting value" %>
 
-Optionally, if one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected. All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
+Optionally, if one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected.
+
+<%= code "iterated" %>
+
+All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
 
 <%= code :collected_from_each %>
 
@@ -50,4 +54,22 @@ Optionally, if one of your iterated steps sets `ctx[:value]` within `Each()`, th
 
 If you would like the iterated steps to be within the "block", use a dedicted activity or operation.
 
+<%= code "operation", collapse: :meths %>
+
+The iterated operation is composed of steps that have an identical interface with the block version.
+
+<%= code "operation-class", collapse: :meths %>
+
+<%= h3 "Failure" %>
+
+If not configured, a failing iterated step leads the entire iteration to be stopped. The `Each()` activity will terminate on its `failure` terminus.
+
+You can still access `ctx[:collected_from_each]` for each iterated block. Note that you can even see which iteration failed in the trace!
+
+<%= vite_image_tag "images/each-failure-trace.png", class: "mx-auto d-block" %>
+
+In combination with TRB's debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using `pry` or other tools.
+
 <%= h3 "Debugging" %>
+
+TODO: show how runtime data can be accessed for each iterated block.
