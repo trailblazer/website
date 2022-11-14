@@ -262,6 +262,12 @@
             </a>
           </li>
         
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-each">
+              Each
+            </a>
+          </li>
+        
       </ul>
     </div>
   
@@ -889,6 +895,20 @@ end
 
 <p>The code below <code>rescue</code> is only run when an exception was thrown. Here, we write a new variable <code>:exception </code> to the <code>ctx</code> and return <code>Left</code>, indicating an error.</p>
 
+<p><span class="divider"></span></p>
+
+<h2 id="macro-each">Each</h2>
+<p><!-- {macro-each-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro &gt;= 2.1.12</a></p>
+
+<p>The <code>Each()</code> macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-debugging">Debugging</h3>
+<p><!-- {macro-each-debugging-toc} --></p>
+
 </div>
 
                 <aside>
@@ -1002,6 +1022,25 @@ end
         <a href="#macro-wrap-exception-handling">
           <i class="fas fa-arrow-right"></i>
           Exception handling
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="macro-each-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Each</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-each-debugging">
+          <i class="fas fa-arrow-right"></i>
+          Debugging
         </a>
       </li>
       
