@@ -57,3 +57,13 @@ This might look a bit clumsy, but most of the code is very straight-forward.
 2. Having the `signal` of the wrapped activity returned, you can decide how you'd like to interpret that. Usually, looking at the signals `:semantic` field indicates the outcome.
 3. In case you're not happy, a `raise ActiveRecord::Rollback` will make ActiveRecord undo whatever database commits happened in the block.
 4. Instead of returning the nested activity's `signal`, which is completely legit, `Wrap()` also allows you to return a `Right` or `Left` signal to communicate the outcome of the entire `Wrap()` component.
+
+<%= h3 "Exception handling" %>
+
+Catching and intercepting exceptions in `Wrap()` works identical to transactions. In case you don't want to use our canonical [Rescue() macro](#---FIXME) here is a sample wrap handler that uses `rescue` for intercepting exceptions thrown in `#update` or `#transfer`.
+
+<%= code "my_rescue", collapse: :meths %>
+
+With any exception being thrown, the original signal from the wrapped activity is returned, as if the steps were part of the `Upload` operation flow.
+
+The code below `rescue` is only run when an exception was thrown. Here, we write a new variable `:exception ` to the `ctx` and return `Left`, indicating an error.

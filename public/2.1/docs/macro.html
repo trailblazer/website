@@ -866,6 +866,29 @@ end
   <li>Instead of returning the nested activity’s <code>signal</code>, which is completely legit, <code>Wrap()</code> also allows you to return a <code>Right</code> or <code>Left</code> signal to communicate the outcome of the entire <code>Wrap()</code> component.</li>
 </ol>
 
+<p><span class="divider"></span></p>
+
+<h3 id="macro-wrap-exception-handling">Exception handling</h3>
+<p><!-- {macro-wrap-exception-handling-toc} --></p>
+
+<p>Catching and intercepting exceptions in <code>Wrap()</code> works identical to transactions. In case you don’t want to use our canonical <a href="#---FIXME">Rescue() macro</a> here is a sample wrap handler that uses <code>rescue</code> for intercepting exceptions thrown in <code>#update</code> or <code>#transfer</code>.</p>
+
+<pre><code>class MyRescue
+  def self.call((ctx, flow_options), **, &amp;block)
+    signal, (ctx, flow_options) = yield # calls the wrapped steps
+
+    return signal, [ctx, flow_options]
+  rescue
+    ctx[:exception] = $!.message
+    return Trailblazer::Activity::Left, [ctx, flow_options]
+  end
+end
+</code></pre>
+
+<p>With any exception being thrown, the original signal from the wrapped activity is returned, as if the steps were part of the <code>Upload</code> operation flow.</p>
+
+<p>The code below <code>rescue</code> is only run when an exception was thrown. Here, we write a new variable <code>:exception </code> to the <code>ctx</code> and return <code>Left</code>, indicating an error.</p>
+
 </div>
 
                 <aside>
@@ -971,6 +994,14 @@ end
         <a href="#macro-wrap-transaction">
           <i class="fas fa-arrow-right"></i>
           Transaction
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-wrap-exception-handling">
+          <i class="fas fa-arrow-right"></i>
+          Exception handling
         </a>
       </li>
       
