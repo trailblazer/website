@@ -256,6 +256,12 @@
             </a>
           </li>
         
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-wrap">
+              Wrap
+            </a>
+          </li>
+        
       </ul>
     </div>
   
@@ -506,7 +512,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 01 Nov 22</span>
+                      <span>Last updated 14 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -518,6 +524,40 @@
 <p><!-- {macro-overview-toc} --></p>
 
 <p><a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro &gt;= 2.1.11</a></p>
+
+<p>Macros provide shorthand methods to create and configure a particular step in your operation. Trailblazer ships with a handful of macros. Those are implemented in trailblazer-macro and trailblazer-macro-contract.</p>
+
+<p>Writing you own macros is a very simple thing to do if you follow the macro API. <a href="/2.1/docs/activity.html#activity-macro-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-overview-general-notes">General notes</h3>
+<p><!-- {macro-overview-general-notes-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>General notes</li>
+    <li id="macro-overview-general-notes-variable-mapping">Variable mapping</li>
+</ul>
+
+<p>Most macros internally use <a href="/2.1/docs/activity.html#activity-variable-mapping">variable mapping</a> to allow injection of configuration variables or to limit their own scope. Macros do so by leveraging the composable API using <code>In()</code>, <code>Inject()</code> and <code>Out()</code>.</p>
+
+<p>This allows you to <em>add your own</em> variable mapping to a macro, as illustrated in the example below.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model(Song, :find_by),
+    In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
+  # ...
+end
+</code></pre>
+
+<p>When running the above operation, the exemplary <code>Model()</code> macro will pick the ID from <code>:my_id</code>.</p>
+
+<pre><code>result = Create.(my_id: 1)
+</code></pre>
+
+<p>Please note that you shall <strong>not use <code>:input</code></strong> to configure your macro as it will override internal filters and breaks the macro’s configuration. Go with the new <a href="/2.1/docs/activity.html#activity-variable-mapping-composable-i-o">composable variable mapping</a> which is available from <code>trailblazer</code> 2.1.1 and onwards.</p>
 
 <p><span class="divider"></span></p>
 
@@ -543,7 +583,7 @@
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :model
-    step Nested(:decide_file_type) # no options, only decider step: that's "dynamic".
+    step Nested(:decide_file_type) # Run either {Id3Tag} or {VorbisComment}
     step :save
     # ...
     def decide_file_type(ctx, params:, **)
@@ -583,6 +623,8 @@ end
   end
 end
 </code></pre>
+
+<h1 id="dynamic-output">:dynamic-output</h1>
 
 <p><span class="divider"></span></p>
 
@@ -675,11 +717,7 @@ end
 |-- model
 |-- Nested(decide_file_type)
 |   |-- Start.default
-|   |-- decide
-|   |   |-- Start.default
-|   |   |-- #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=decide_file_type&gt;
-|   |   |-- dispatch_to_terminus
-|   |   `-- End.decision:DocsNestedStaticTest::A::Song::Activity::VorbisComment
+|   |-- route_to_nested_activity
 |   |-- DocsNestedStaticTest::A::Song::Activity::VorbisComment
 |   |   |-- Start.default
 |   |   |-- prepare_metadata
@@ -702,6 +740,56 @@ end
 
 <p>Note that the ID of the nested activities are the class constants.</p>
 
+<p><span class="divider"></span></p>
+
+<h2 id="macro-wrap">Wrap</h2>
+<p><!-- {macro-wrap-toc} --></p>
+
+<p>Sometimes you need to run a sequence of steps within some block you provide. Often, this is required when certain steps must be wrapped in a database transaction. The <code>Wrap()</code> macro does just that.</p>
+
+<pre><code>module Song::Activity
+  class Upload &lt; Trailblazer::Activity::FastTrack
+    step :model
+    step Wrap(MyTransaction) {
+      step :update   # this changes the database.
+      step :transfer # this might even break!
+    }
+    step :notify
+    fail :log_error
+    # ...
+  end
+end
+</code></pre>
+
+<p>In an imaginary song <code>Upload</code> operation that transfers a music file to some streaming service platform while updating fields on the database, needs the steps <code>#update</code> and <code>#transfer</code> being run inside a transaction. The code running and interpreting this block is provided via the custom transaction <code>MyTransaction</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-wrap-wrap-handler">Wrap handler</h3>
+<p><!-- {macro-wrap-wrap-handler-toc} --></p>
+
+<p>The most simple “transaction” (we calll it <em>wrap handler</em>) could look as follows.</p>
+
+<pre><code>class MyTransaction
+  def self.call((ctx, flow_options), **, &amp;block)
+    signal, (ctx, flow_options) = yield # calls the wrapped steps
+
+    return signal, [ctx, flow_options]
+  end
+end
+</code></pre>
+
+<p>Your transaction handler can be any type of [callable] exposing the <a href="activity.html#activity-internals-circuit-interface">circuit interface</a>.</p>
+
+<p>In the most simple transaction ever written, we simply run the wrapped steps by calling <code>yield</code>. This will return a circuit-interface return set. The interesting parts are the returned <code>ctx</code>, which is the ctx that left the wrapped steps, and the <code>signal</code>, which indicates the outcome of running the wrapped steps.</p>
+
+<p>Note that internally <code>#update</code> and <code>#transfer</code> are put into a separate activity. The terminus reached from that activity is the signal.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wrap.png" /></p>
+
+<p>Given that both <code>#update</code> and <code>#transfer</code> are railway steps, the wrapped code can terminate in a <code>success</code> terminus, or a <code>failure</code>.
+It’s now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity’s terminal signal, making the <code>Upload</code> activity either continue from <code>success</code> or from <code>failure</code>.</p>
+
 </div>
 
                 <aside>
@@ -718,6 +806,19 @@ end
   </h3>
 
   <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-overview-general-notes">
+          <i class="fas fa-arrow-right"></i>
+          General notes
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-overview-general-notes-variable-mapping">Variable mapping</a>
+        </li>
+      
     
   </ul>
 </div>
@@ -764,6 +865,25 @@ end
         <li class="sub-item">
           <a href="#macro-nested-auto_wire-debugging">Debugging</a>
         </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="macro-wrap-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Wrap</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-wrap-wrap-handler">
+          <i class="fas fa-arrow-right"></i>
+          Wrap handler
+        </a>
+      </li>
       
     
   </ul>

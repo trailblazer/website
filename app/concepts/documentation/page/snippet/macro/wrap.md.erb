@@ -1,0 +1,24 @@
+<%= h2 "Wrap" %>
+
+Sometimes you need to run a sequence of steps within some block you provide. Often, this is required when certain steps must be wrapped in a database transaction. The `Wrap()` macro does just that.
+
+<%= code "upload", collapse: :meths %>
+
+In an imaginary song `Upload` operation that transfers a music file to some streaming service platform while updating fields on the database, needs the steps `#update` and `#transfer` being run inside a transaction. The code running and interpreting this block is provided via the custom transaction `MyTransaction`.
+
+<%= h3 "Wrap handler" %>
+
+The most simple "transaction" (we calll it _wrap handler_) could look as follows.
+
+<%= code "my_transaction" %>
+
+Your transaction handler can be any type of [callable] exposing the [circuit interface](activity.html#activity-internals-circuit-interface).
+
+In the most simple transaction ever written, we simply run the wrapped steps by calling `yield`. This will return a circuit-interface return set. The interesting parts are the returned `ctx`, which is the ctx that left the wrapped steps, and the `signal`, which indicates the outcome of running the wrapped steps.
+
+Note that internally `#update` and `#transfer` are put into a separate activity. The terminus reached in that activity is the signal.
+
+<%= vite_image_tag "images/wrap.png", class: "mx-auto d-block" %>
+
+Given that both `#update` and `#transfer` are railway steps, the wrapped code can terminate in a `success` terminus, or a `failure`.
+It's now your handler that is responsible to interpret that. In the example above, we simply pass on the wrapped activity's terminal signal, making the `Upload` activity either continue from `success` or from `failure`.

@@ -2,11 +2,9 @@
 
 Steps can be wrapped by an embracing step. This is necessary when defining a set of steps to be contained in a database transaction or a database lock.
 
-<%= code "transaction", collapse: "methods" %>
 
 The `Wrap` macro helps you to define the wrapping code (such as a `Sequel.transaction` call) and allows you to define the wrapped steps. (Because of the precedence works in Ruby, you need to use `{...}` instead of `do...end`.)
 
-<%= code "handler-with-signature-evaluator" %>
 
 As always, you can have steps before and after `Wrap` in the pipe.
 
@@ -17,8 +15,7 @@ You may have any amount of `Wrap` nesting.
 <%= h4 "Callable" %>
 
 For reusable wrappers, you can also use a `Callable` object.
-
-<%= code "transaction-handler"%>
+ "transaction-handler"%>
 
 This can then be passed to `Wrap`, making the flow extremely readable.
 
@@ -28,9 +25,6 @@ All nested steps will simply be executed as if they were on the "top-level" trac
 
 However, the last signal of the wrapped pipe is not simply passed on to the "outer" pipe. The return value of the actual `Wrap` block is crucial: If it returns falsey, the pipe will deviate to left after `Wrap`.
 
-<%= code :ruby do %>
-step Wrap ->(*, &block) { Sequel.transaction do block.call end; false } {
-<% end %>
 
 In the above example, regardless of `Sequel.transaction`'s return value, the outer pipe will deviate to the left track as the `Wrap`'s return value is always `false`.
 
