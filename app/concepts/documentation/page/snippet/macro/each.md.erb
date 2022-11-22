@@ -52,7 +52,7 @@ The iterated operation is composed of steps that have an identical interface wit
 
 <%= h3 "Collect option" %>
 
-Ctx variables set within an iteration [are discarded per default](#macro-each-scoping). While you could configure [collecting values yourself](#macro-each-scoping-filtering), you can use the `:collect` option.
+Ctx variables set within an iteration [are discarded per default](#macro-each-variable-mapping). While you could configure [collecting values yourself](#macro-each-variable-mapping-filtering), you can use the `:collect` option.
 
 <%= code "each-dataset" %>
 
@@ -64,15 +64,18 @@ All collected values are available at `ctx[:collected_from_each]` when `Each()` 
 
 <%= code :collected_from_each %>
 
-<%= h3 "Scoping" %>
+<%= h3 "Variable mapping" %>
 
-Without configuration, the ctx **going into** the `Each()` step will be passed to each iterated activity.
+The `Each()` macro allows to configure what goes in and out of each iteration. However, it provides a default setting.
 
 <%= code "write_to_ctx" %>
 
-The outgoing context of the iterated activity is discarded unless you configure which variables to collect.
+* Per default, the iterated steps can see the entire outer `ctx`, plus `:index` and `:item`.
+* Any variable written to `ctx` is discarded after the iteration.
 
 <%= code "write", collapse: :meths %>
+
+This default setting assures that no data from the iteration bleeds into the outer ctx.
 
 <%= h4 "Filtering" %>
 
@@ -101,14 +104,6 @@ You can still access `ctx[:collected_from_each]` for each iterated block. Note t
 <%= vite_image_tag "images/each-failure-trace.png", class: "mx-auto d-block" %>
 
 In combination with TRB's debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using `pry` or other tools.
-
-<%= h3 "Variable mapping" %>
-
-The `Each()` macro allows to configure what goes in and out of each iteration. However, it provides a default setting.
-
-* Per default, the iterated steps can see the entire outer `ctx`, plus `:index` and `:item`.
-* Any variable other than `:value` written to `ctx` is discarded after the iteration.
-
 
 
 <%= h3 "Debugging" %>
