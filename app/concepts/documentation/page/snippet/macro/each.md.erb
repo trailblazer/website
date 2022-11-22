@@ -4,7 +4,7 @@
 
 The `Each()` macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.
 
-<%= code :each, collapse: :meths %>
+<%= code "each-pure", collapse: :meths %>
 
 You can either pass a block with steps to iterate, or an entire operation/activity. In this example, a block is used. Note that you need to use the `{}` curly braces due to Ruby's precedence, just as it's done in `Wrap()`.
 
@@ -12,7 +12,7 @@ You can either pass a block with steps to iterate, or an entire operation/activi
 
 While you could simply assign a ctx variable `:dataset` in a step preceding the `Each()` macro, the recommended way is using `:dataset_from` and implementing a dedicated dataset provider.
 
-<%= code "each-dataset" %>
+<%= code "each-pure-macro" %>
 
 This can be an instance method or any kind of callable, following the "decider interface".
 
