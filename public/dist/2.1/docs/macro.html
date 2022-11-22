@@ -929,7 +929,7 @@ end
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
-    step Each(dataset_from: :composers_for_each, collect: true) {
+    step Each(dataset_from: :composers_for_each) {
       step :notify_composers
     }
     step :rearrange
@@ -940,7 +940,7 @@ end
     end
 
     def notify_composers(ctx, index:, item:, **)
-      ctx[:value] = [index, item.full_name]
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
     end
     # ...
   end
@@ -956,7 +956,7 @@ end
 
 <p>While you could simply assign a ctx variable <code>:dataset</code> in a step preceding the <code>Each()</code> macro, the recommended way is using <code>:dataset_from</code> and implementing a dedicated dataset provider.</p>
 
-<pre><code>step Each(dataset_from: :composers_for_each, collect: true) {
+<pre><code>step Each(dataset_from: :composers_for_each) {
   step :notify_composers
 }
 </code></pre>
@@ -980,7 +980,7 @@ end
 <p>Note that the iterated block’s <code>:instance_method</code>s are defined in the <code>Each()</code>-hosting activity, too.</p>
 
 <pre><code>def notify_composers(ctx, index:, item:, **)
-  ctx[:value] = [index, item.full_name]
+  Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
 end
 </code></pre>
 
@@ -995,7 +995,7 @@ end
 
 <p>If you don’t like the <code>:item</code> keyword argument in your steps, you can configure it using the <code>:item_key</code> option for <code>Each()</code>.</p>
 
-<pre><code>step Each(dataset_from: :composers_for_each, item_key: :composer, collect: true) {
+<pre><code>step Each(dataset_from: :composers_for_each, item_key: :composer) {
   step :notify_composers
 }
 </code></pre>
@@ -1005,8 +1005,8 @@ end
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     # ...
-    def notify_composers(ctx, composer:, **)
-      ctx[:value] = composer.full_name
+    def notify_composers(ctx, index:, composer:, **)
+      Mailer.send(to: composer.email, message: "#{index}) You, #{composer.full_name}, have been warned about your song being copied.")
     end
   end
 end
@@ -1024,7 +1024,7 @@ end
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
-    step Each(Notify, dataset_from: :composers_for_each, collect: true)
+    step Each(Notify, dataset_from: :composers_for_each)
     step :rearrange
     # ...
   end
@@ -1038,7 +1038,7 @@ end
     step :send_email
 
     def send_email(ctx, index:, item:, **)
-      ctx[:value] = [index, item.full_name]
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
     end
   end
 end
@@ -1059,7 +1059,7 @@ end
 <p>If one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected.</p>
 
 <pre><code>def notify_composers(ctx, index:, item:, **)
-  ctx[:value] = [index, item.full_name]
+  Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
 end
 </code></pre>
 
