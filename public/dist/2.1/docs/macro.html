@@ -1049,7 +1049,7 @@ end
 <h3 id="macro-each-collect-option">Collect option</h3>
 <p><!-- {macro-each-collect-option-toc} --></p>
 
-<p>Ctx variables set within an iteration <a href="#macro-each-scoping">are discarded per default</a>. While you could configure <a href="#macro-each-scoping-filtering">collecting values yourself</a>, you can use the <code>:collect</code> option.</p>
+<p>Ctx variables set within an iteration <a href="#macro-each-variable-mapping">are discarded per default</a>. While you could configure <a href="#macro-each-variable-mapping-filtering">collecting values yourself</a>, you can use the <code>:collect</code> option.</p>
 
 <pre><code>step Each(dataset_from: :composers_for_each, collect: true) {
   step :notify_composers
@@ -1073,10 +1073,10 @@ puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-each-scoping">Scoping</h3>
-<p><!-- {macro-each-scoping-toc} --></p>
+<h3 id="macro-each-variable-mapping">Variable mapping</h3>
+<p><!-- {macro-each-variable-mapping-toc} --></p>
 
-<p>Without configuration, the ctx <strong>going into</strong> the <code>Each()</code> step will be passed to each iterated activity.</p>
+<p>The <code>Each()</code> macro allows to configure what goes in and out of each iteration. However, it provides a default setting.</p>
 
 <pre><code>step Each(dataset_from: :composers_for_each) {
   step :notify_composers
@@ -1084,7 +1084,10 @@ puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 }
 </code></pre>
 
-<p>The outgoing context of the iterated activity is discarded unless you configure which variables to collect.</p>
+<ul>
+  <li>Per default, the iterated steps can see the entire outer <code>ctx</code>, plus <code>:index</code> and <code>:item</code>.</li>
+  <li>Any variable written to <code>ctx</code> is discarded after the iteration.</li>
+</ul>
 
 <pre><code>def write_to_ctx(ctx, index:, seq:, **)
   # ...
@@ -1092,11 +1095,13 @@ puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 end
 </code></pre>
 
+<p>This default setting assures that no data from the iteration bleeds into the outer ctx.</p>
+
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>Scoping</li>
-    <li id="macro-each-scoping-filtering">Filtering</li>
+    <li>Variable mapping</li>
+    <li id="macro-each-variable-mapping-filtering">Filtering</li>
 </ul>
 
 <p>You may configure what goes in and out of the iterated activity. Use the variable mapping API by passing arguments to <code>Each()</code>.</p>
@@ -1150,18 +1155,6 @@ end
 <p><img class="mx-auto d-block" src="/vite/assets/each-failure-trace.e74d6e40.png" /></p>
 
 <p>In combination with TRB’s debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using <code>pry</code> or other tools.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="macro-each-variable-mapping">Variable mapping</h3>
-<p><!-- {macro-each-variable-mapping-toc} --></p>
-
-<p>The <code>Each()</code> macro allows to configure what goes in and out of each iteration. However, it provides a default setting.</p>
-
-<ul>
-  <li>Per default, the iterated steps can see the entire outer <code>ctx</code>, plus <code>:index</code> and <code>:item</code>.</li>
-  <li>Any variable other than <code>:value</code> written to <code>ctx</code> is discarded after the iteration.</li>
-</ul>
 
 <p><span class="divider"></span></p>
 
@@ -1341,15 +1334,15 @@ end
       
     
       <li>
-        <a href="#macro-each-scoping">
+        <a href="#macro-each-variable-mapping">
           <i class="fas fa-arrow-right"></i>
-          Scoping
+          Variable mapping
         </a>
       </li>
       
         
         <li class="sub-item">
-          <a href="#macro-each-scoping-filtering">Filtering</a>
+          <a href="#macro-each-variable-mapping-filtering">Filtering</a>
         </li>
       
     
@@ -1357,14 +1350,6 @@ end
         <a href="#macro-each-failure">
           <i class="fas fa-arrow-right"></i>
           Failure
-        </a>
-      </li>
-      
-    
-      <li>
-        <a href="#macro-each-variable-mapping">
-          <i class="fas fa-arrow-right"></i>
-          Variable mapping
         </a>
       </li>
       
