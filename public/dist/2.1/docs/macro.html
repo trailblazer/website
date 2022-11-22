@@ -1113,7 +1113,7 @@ end
     step :model
     step Each(dataset_from: :composers_for_each,
       # Inject(always: true) =&gt; {
-      In() =&gt; -&gt;(ctx, **) { ctx }, # FIXME: this will be removed soon
+      # In() =&gt; -&gt;(ctx, **) { ctx }, # FIXME: this will be removed soon
       Inject(:messages) =&gt; -&gt;(*) { {} },
 
       # all filters called before/after each iteration!
