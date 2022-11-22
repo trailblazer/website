@@ -40,16 +40,6 @@ The iterated steps now receive a `:composer` ctx variable instead of `:item`.
 
 <%= code "composer", collapse: :meths %>
 
-<%= h4 "Collecting value" %>
-
-Optionally, if one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected.
-
-<%= code "iterated" %>
-
-All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
-
-<%= code :collected_from_each %>
-
 <%= h4 "operation" %>
 
 If you would like the iterated steps to be within the "block", use a dedicted activity or operation.
@@ -60,6 +50,48 @@ The iterated operation is composed of steps that have an identical interface wit
 
 <%= code "operation-class", collapse: :meths %>
 
+<%= h3 "Collect option" %>
+
+Ctx variables set within an iteration [are discarded per default](#macro-each-scoping). While you could configure [collecting values yourself](#macro-each-scoping-filtering), you can use the `:collect` option.
+
+<%= code "each-dataset" %>
+
+If one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected.
+
+<%= code "iterated" %>
+
+All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
+
+<%= code :collected_from_each %>
+
+<%= h3 "Scoping" %>
+
+Without configuration, the ctx **going into** the `Each()` step will be passed to each iterated activity.
+
+<%= code "write_to_ctx" %>
+
+The outgoing context of the iterated activity is discarded unless you configure which variables to collect.
+
+<%= code "write", collapse: :meths %>
+
+<%= h4 "Filtering" %>
+
+You may configure what goes in and out of the iterated activity. Use the variable mapping API by passing arguments to `Each()`.
+
+For example, say you want to collect messages from each iteration.
+
+<%= code "inject", collapse: :meths %>
+
+1. When starting the iteration, the ctx variable `:messages` will be initialized to an empty hash (unless you provide it in the outside ctx).
+2. The `#write_to_ctx` step within `Each()` sees that `:messages` variable and can override it, adding its non-sense message to the hash.
+3. Since you configured `Out() => [:messages]`, the following iteration will see that very `:messages` variable from the last iteration.
+
+This allows to collect outgoing variables from the iterations, even in case of failures.
+
+<%= info do %>
+Note how the `Inject()` and `Out()` calls are within the parenthesis of `Each()`.
+<% end %>
+
 <%= h3 "Failure" %>
 
 If not configured, a failing iterated step leads the entire iteration to be stopped. The `Each()` activity will terminate on its `failure` terminus.
@@ -69,6 +101,15 @@ You can still access `ctx[:collected_from_each]` for each iterated block. Note t
 <%= vite_image_tag "images/each-failure-trace.png", class: "mx-auto d-block" %>
 
 In combination with TRB's debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using `pry` or other tools.
+
+<%= h3 "Variable mapping" %>
+
+The `Each()` macro allows to configure what goes in and out of each iteration. However, it provides a default setting.
+
+* Per default, the iterated steps can see the entire outer `ctx`, plus `:index` and `:item`.
+* Any variable other than `:value` written to `ctx` is discarded after the iteration.
+
+
 
 <%= h3 "Debugging" %>
 
