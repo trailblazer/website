@@ -518,7 +518,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 14 Nov 22</span>
+                      <span>Last updated 22 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -923,7 +923,7 @@ end
     end
 
     def notify_composers(ctx, index:, item:, **)
-      ctx[:value] = [index, item.full_name]
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
     end
     # ...
   end
@@ -963,7 +963,7 @@ end
 <p>Note that the iterated block’s <code>:instance_method</code>s are defined in the <code>Each()</code>-hosting activity, too.</p>
 
 <pre><code>def notify_composers(ctx, index:, item:, **)
-  ctx[:value] = [index, item.full_name]
+  Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
 end
 </code></pre>
 
@@ -988,33 +988,11 @@ end
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     # ...
-    def notify_composers(ctx, composer:, **)
-      ctx[:value] = composer.full_name
+    def notify_composers(ctx, index:, composer:, **)
+      Mailer.send(to: composer.email, message: "#{index}) You, #{composer.full_name}, have been warned about your song being copied.")
     end
   end
 end
-</code></pre>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Iterated Block</li>
-    <li id="macro-each-iterated-block-collecting-value">Collecting value</li>
-</ul>
-
-<p>Optionally, if one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected.</p>
-
-<pre><code>def notify_composers(ctx, index:, item:, **)
-  ctx[:value] = [index, item.full_name]
-end
-</code></pre>
-
-<p>All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
-
-<pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
-signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(B::Song::Activity::Cover, [ctx, {}])
-
-puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 </code></pre>
 
 <p><span class="divider"></span></p>
@@ -1043,11 +1021,110 @@ end
     step :send_email
 
     def send_email(ctx, index:, item:, **)
-      ctx[:value] = [index, item.full_name]
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
     end
   end
 end
 </code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-collect-option">Collect option</h3>
+<p><!-- {macro-each-collect-option-toc} --></p>
+
+<p>Ctx variables set within an iteration <a href="#macro-each-variable-mapping">are discarded per default</a>. While you could configure <a href="#macro-each-variable-mapping-filtering">collecting values yourself</a>, you can use the <code>:collect</code> option.</p>
+
+<pre><code>step Each(dataset_from: :composers_for_each, collect: true) {
+  step :notify_composers
+}
+</code></pre>
+
+<p>If one of your iterated steps sets <code>ctx[:value]</code> within <code>Each()</code>, this value will be collected.</p>
+
+<pre><code>def notify_composers(ctx, index:, item:, **)
+  Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
+end
+</code></pre>
+
+<p>All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
+
+<pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
+signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(B::Song::Activity::Cover, [ctx, {}])
+
+puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-each-variable-mapping">Variable mapping</h3>
+<p><!-- {macro-each-variable-mapping-toc} --></p>
+
+<p>The <code>Each()</code> macro allows to configure what goes in and out of each iteration. However, it provides a default setting.</p>
+
+<pre><code>step Each(dataset_from: :composers_for_each) {
+  step :notify_composers
+  step :write_to_ctx
+}
+</code></pre>
+
+<ul>
+  <li>Per default, the iterated steps can see the entire outer <code>ctx</code>, plus <code>:index</code> and <code>:item</code>.</li>
+  <li>Any variable written to <code>ctx</code> is discarded after the iteration.</li>
+</ul>
+
+<pre><code>def write_to_ctx(ctx, index:, seq:, **)
+  # ...
+  ctx[:variable] = index # this is discarded!
+end
+</code></pre>
+
+<p>This default setting assures that no data from the iteration bleeds into the outer ctx.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Variable mapping</li>
+    <li id="macro-each-variable-mapping-filtering">Filtering</li>
+</ul>
+
+<p>You may configure what goes in and out of the iterated activity. Use the variable mapping API by passing arguments to <code>Each()</code>.</p>
+
+<p>For example, say you want to collect messages from each iteration.</p>
+
+<pre><code>module Song::Activity
+  class Cover &lt; Trailblazer::Activity::Railway
+    step :model
+    step Each(dataset_from: :composers_for_each,
+      # Inject(always: true) =&gt; {
+      In() =&gt; -&gt;(ctx, **) { ctx }, # FIXME: this will be removed soon
+      Inject(:messages) =&gt; -&gt;(*) { {} },
+
+      # all filters called before/after each iteration!
+      Out() =&gt; [:messages]
+    ) {
+      step :write_to_ctx
+    }
+    step :rearrange
+
+    def write_to_ctx(ctx, item:, messages:, index:, **)
+      ctx[:messages] = messages.merge(index =&gt; item.full_name)
+    end
+    # ...
+  end
+end
+</code></pre>
+
+<ol>
+  <li>When starting the iteration, the ctx variable <code>:messages</code> will be initialized to an empty hash (unless you provide it in the outside ctx).</li>
+  <li>The <code>#write_to_ctx</code> step within <code>Each()</code> sees that <code>:messages</code> variable and can override it, adding its non-sense message to the hash.</li>
+  <li>Since you configured <code>Out() =&gt; [:messages]</code>, the following iteration will see that very <code>:messages</code> variable from the last iteration.</li>
+</ol>
+
+<p>This allows to collect outgoing variables from the iterations, even in case of failures.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Note how the <code>Inject()</code> and <code>Out()</code> calls are within the parenthesis of <code>Each()</code>.</p>
+</div>
 
 <p><span class="divider"></span></p>
 
@@ -1227,12 +1304,28 @@ end
       
         
         <li class="sub-item">
-          <a href="#macro-each-iterated-block-collecting-value">Collecting value</a>
+          <a href="#macro-each-iterated-block-operation">operation</a>
         </li>
+      
+    
+      <li>
+        <a href="#macro-each-collect-option">
+          <i class="fas fa-arrow-right"></i>
+          Collect option
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-each-variable-mapping">
+          <i class="fas fa-arrow-right"></i>
+          Variable mapping
+        </a>
+      </li>
       
         
         <li class="sub-item">
-          <a href="#macro-each-iterated-block-operation">operation</a>
+          <a href="#macro-each-variable-mapping-filtering">Filtering</a>
         </li>
       
     
