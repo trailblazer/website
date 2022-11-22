@@ -2161,9 +2161,7 @@ end
   step Policy::Check,
     In() =&gt; {:current_user =&gt; :user},
     In() =&gt; [:model],
-    Inject() =&gt; {
-      action: -&gt;(ctx, **) { :create }
-    }
+    Inject(:action) =&gt; -&gt;(ctx, **) { :create }
   # ...
 end
 </code></pre>
