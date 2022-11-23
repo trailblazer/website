@@ -181,7 +181,7 @@ You can access the outer, original ctx by passing the `:with_outer_ctx` option t
 
 <%= code "out-outer", collapse: :meths %>
 
-While the callable still needs to return a hash that is then merged with the original ctx, it's possible to access variables from the outer ctx before that merge. This allows for merging deeper data structures, such as error objects.
+While the callable still needs to return a hash that is then merged with the original ctx, it's possible to access variables from the outer ctx through the `:outer_ctx` keyword argument. This allows for merging deeper data structures, such as error objects.
 
 <%= h3 "Inject()" %>
 

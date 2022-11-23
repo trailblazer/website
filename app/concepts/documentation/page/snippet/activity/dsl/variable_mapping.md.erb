@@ -81,17 +81,15 @@ You may use keyword arguments in your filters for type safety and better readabl
 
 <%= h4 "With Outer Ctx" %>
 
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear >= 1.0.1</a>
+
 It is possible to access the outer context (in addition to the inner ctx) in an `:output` filter using the `:output_with_outer_ctx` DSL option.
 
-<%= code "io-output-positionals" %>
+<%= code "io-outer-kw" %>
 
-The `:output` filter then receives a second positional argument which is the original, outer context. This is helpful if you want to merge new values into existing datastructures, such as error objects.
+The `:output` filter then receives a special keyword argument `:outer_ctx` which is the original ("outer") context. This is helpful if you want to merge new values into existing datastructures, such as error objects.
 
 As usual, the returned hash is then merged into the outer context.
-
-<%= info do %>
-The `:output_with_outer_ctx` option is available since `trailblazer-activity-dsl-linear-0.4.0`.
-<% end %>
 
 <%= h4 "Notes" %>
 

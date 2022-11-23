@@ -554,7 +554,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 29 Aug 22</span>
+                      <span>Last updated 23 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -2058,7 +2058,7 @@ end
     In() =&gt; [:model],
     Out() =&gt; [:message],
 
-    Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx, **) do
+    Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
       {
         errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
       }
@@ -2067,7 +2067,7 @@ end
 end
 </code></pre>
 
-<p>While the callable still needs to return a hash that is then merged with the original ctx, it’s possible to access variables from the outer ctx before that merge. This allows for merging deeper data structures, such as error objects.</p>
+<p>While the callable still needs to return a hash that is then merged with the original ctx, it’s possible to access variables from the outer ctx through the <code>:outer_ctx</code> keyword argument. This allows for merging deeper data structures, such as error objects.</p>
 
 <p><span class="divider"></span></p>
 
@@ -2457,11 +2457,13 @@ end
     <li id="activity-variable-mapping-input-output-with-outer-ctx">With Outer Ctx</li>
 </ul>
 
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear &gt;= 1.0.1</a></p>
+
 <p>It is possible to access the outer context (in addition to the inner ctx) in an <code>:output</code> filter using the <code>:output_with_outer_ctx</code> DSL option.</p>
 
 <pre><code>step :authorize,
   output_with_outer_ctx: true, # tell TRB you want {outer_ctx} in the {:output} filter.
-  output: -&gt;(inner_ctx, outer_ctx, user:, **) do
+  output: -&gt;(inner_ctx, outer_ctx:, user:, **) do
     {
       current_user: user,
       params:       outer_ctx[:params].merge(errors: false)
@@ -2469,13 +2471,9 @@ end
   end
 </code></pre>
 
-<p>The <code>:output</code> filter then receives a second positional argument which is the original, outer context. This is helpful if you want to merge new values into existing datastructures, such as error objects.</p>
+<p>The <code>:output</code> filter then receives a special keyword argument <code>:outer_ctx</code> which is the original (“outer”) context. This is helpful if you want to merge new values into existing datastructures, such as error objects.</p>
 
 <p>As usual, the returned hash is then merged into the outer context.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>The <code>:output_with_outer_ctx</code> option is available since <code>trailblazer-activity-dsl-linear-0.4.0</code>.</p>
-</div>
 
 <p><span class="divider"></span></p>
 
