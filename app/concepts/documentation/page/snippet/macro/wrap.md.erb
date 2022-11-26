@@ -68,9 +68,27 @@ With any exception being thrown, the original signal from the wrapped activity i
 
 The code below `rescue` is only run when an exception was thrown. Here, we write a new variable `:exception ` to the `ctx` and return `Left`, indicating an error.
 
-<%= h3 "Debugging" %>
+<%= h3 "Compliance" %>
 
-<%= h3 "Patch" %>
+<%= h4 "Debugger" %>
+
+You can use tracing with `Wrap()`.
+
+<%= code :ruby do %>
+Trailblazer::Developer.wtf?(Song::Activity::Upload, params: {id: 1})
+<% end %>
+
+The trace per default shows Wrap's ID.
+
+<%= vite_image_tag "images/wrap-trace.png", class: "mx-auto d-block" %>
+
+<%= h4 "Introspect" %>
+
+You can use any `Introspect` mechanics on activities using `Wrap()`.
+
+<%= code "find_path" %>
+
+<%= h4 "Patch" %>
 
 `Wrap()` is compatible with the Patch API, as in, you may replace nested steps or entire activities within the wrapped part.
 
