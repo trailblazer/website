@@ -69,3 +69,16 @@ With any exception being thrown, the original signal from the wrapped activity i
 The code below `rescue` is only run when an exception was thrown. Here, we write a new variable `:exception ` to the `ctx` and return `Left`, indicating an error.
 
 <%= h3 "Debugging" %>
+
+<%= h3 "Patch" %>
+
+`Wrap()` is compatible with the Patch API, as in, you may replace nested steps or entire activities within the wrapped part.
+
+Consider the `Upload` activity used throughout this example.
+<%= code "upload", collapse: :meths %>
+
+Say you want to replace the `#update` step within the wrap with a new step `#upsert`, you can use `Patch` as so.
+
+<%= code "patch" %>
+
+The returned new activity `upload_with_upsert` is a copy of `Upload` with the respective step replace. Note that in this very example, the method `#upsert` has to be included in the nested activity.
