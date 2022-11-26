@@ -319,6 +319,10 @@
     "file": "assets/wrap-timeout.578be5ab.png",
     "src": "images/wrap-timeout.png"
   },
+  "images/wrap-trace.png": {
+    "file": "assets/wrap-trace.b9d35c83.png",
+    "src": "images/wrap-trace.png"
+  },
   "images/wrap.png": {
     "file": "assets/wrap.654e0f7e.png",
     "src": "images/wrap.png"

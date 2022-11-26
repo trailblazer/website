@@ -914,13 +914,46 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-wrap-debugging">Debugging</h3>
-<p><!-- {macro-wrap-debugging-toc} --></p>
+<h3 id="macro-wrap-compliance">Compliance</h3>
+<p><!-- {macro-wrap-compliance-toc} --></p>
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-wrap-patch">Patch</h3>
-<p><!-- {macro-wrap-patch-toc} --></p>
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-debugger">Debugger</li>
+</ul>
+
+<p>You can use tracing with <code>Wrap()</code>.</p>
+
+<pre><code>Trailblazer::Developer.wtf?(Song::Activity::Upload, params: {id: 1})
+</code></pre>
+
+<p>The trace per default shows Wrap’s ID.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wrap-trace.b9d35c83.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-introspect">Introspect</li>
+</ul>
+
+<p>You can use any <code>Introspect</code> mechanics on activities using <code>Wrap()</code>.</p>
+
+<pre><code>node, _ = Trailblazer::Developer::Introspect.find_path(
+  Song::Activity::Upload,
+  ["Wrap/MyTransaction", :transfer])
+#=&gt; #&lt;Node ...&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-patch">Patch</li>
+</ul>
 
 <p><code>Wrap()</code> is compatible with the Patch API, as in, you may replace nested steps or entire activities within the wrapped part.</p>
 
@@ -1312,19 +1345,26 @@ end
       
     
       <li>
-        <a href="#macro-wrap-debugging">
+        <a href="#macro-wrap-compliance">
           <i class="fas fa-arrow-right"></i>
-          Debugging
+          Compliance
         </a>
       </li>
       
-    
-      <li>
-        <a href="#macro-wrap-patch">
-          <i class="fas fa-arrow-right"></i>
-          Patch
-        </a>
-      </li>
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-debugger">Debugger</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-introspect">Introspect</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-patch">Patch</a>
+        </li>
       
     
   </ul>
