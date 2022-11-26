@@ -535,7 +535,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Nov 22</span>
+                      <span>Last updated 26 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -919,6 +919,39 @@ end
 
 <p><span class="divider"></span></p>
 
+<h3 id="macro-wrap-patch">Patch</h3>
+<p><!-- {macro-wrap-patch-toc} --></p>
+
+<p><code>Wrap()</code> is compatible with the Patch API, as in, you may replace nested steps or entire activities within the wrapped part.</p>
+
+<p>Consider the <code>Upload</code> activity used throughout this example.</p>
+
+<pre><code>module Song::Activity
+  class Upload &lt; Trailblazer::Activity::FastTrack
+    step :model
+    step Wrap(MyTransaction) {
+      step :update   # this changes the database.
+      step :transfer # this might even break!
+    }
+    step :notify
+    fail :log_error
+    # ...
+  end
+end
+</code></pre>
+
+<p>Say you want to replace the <code>#update</code> step within the wrap with a new step <code>#upsert</code>, you can use <code>Patch</code> as so.</p>
+
+<pre><code>upload_with_upsert = Trailblazer::Activity::DSL::Linear.Patch(
+  Song::Activity::Upload,
+  ["Wrap/MyTransaction"] =&gt; -&gt; { step :upsert, replace: :update }
+)
+</code></pre>
+
+<p>The returned new activity <code>upload_with_upsert</code> is a copy of <code>Upload</code> with the respective step replace. Note that in this very example, the method <code>#upsert</code> has to be included in the nested activity.</p>
+
+<p><span class="divider"></span></p>
+
 <h2 id="macro-each">Each</h2>
 <p><!-- {macro-each-toc} --></p>
 
@@ -1112,8 +1145,6 @@ end
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
     step Each(dataset_from: :composers_for_each,
-      # Inject(always: true) =&gt; {
-      # In() =&gt; -&gt;(ctx, **) { ctx }, # FIXME: this will be removed soon
       Inject(:messages) =&gt; -&gt;(*) { {} },
 
       # all filters called before/after each iteration!
@@ -1284,6 +1315,14 @@ end
         <a href="#macro-wrap-debugging">
           <i class="fas fa-arrow-right"></i>
           Debugging
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-wrap-patch">
+          <i class="fas fa-arrow-right"></i>
+          Patch
         </a>
       </li>
       
