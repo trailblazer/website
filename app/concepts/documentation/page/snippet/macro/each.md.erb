@@ -106,6 +106,30 @@ You can still access `ctx[:collected_from_each]` for each iterated block. Note t
 In combination with TRB's debugger, this gives you a powerful tool for finding bugs in your code or understanding the flow, without having to jump around through iterations using `pry` or other tools.
 
 
-<%= h3 "Debugging" %>
+<%= h3 "Compliance" %>
+
+<%= h4 "Debugger" %>
+
+You can use tracing with `Each()`.
+
+<%= code :wtf, collapse: :meths %>
+
+Note that a virtual step `invoke_block_activity` is displayed to group the iterations, suffixed with the number of the iteration.
+
+<%= vite_image_tag "images/each-trace.png", class: "mx-auto d-block" %>
 
 TODO: show how runtime data can be accessed for each iterated block.
+
+<%= h4 "Introspect" %>
+
+You can use any `Introspect` mechanics on the nested activity using `Each()`.
+
+<%= code "find_path" %>
+
+<%= h4 "Patch" %>
+
+You may patch the iterated activity.
+
+<%= code "patch" %>
+
+Here, the `Each.iterate.block` task represents the nested iterated activity.

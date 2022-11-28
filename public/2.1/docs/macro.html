@@ -518,7 +518,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 26 Nov 22</span>
+                      <span>Last updated 28 Nov 22</span>
                     </li>
                   </ul>
                 </div>
@@ -897,13 +897,46 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-wrap-debugging">Debugging</h3>
-<p><!-- {macro-wrap-debugging-toc} --></p>
+<h3 id="macro-wrap-compliance">Compliance</h3>
+<p><!-- {macro-wrap-compliance-toc} --></p>
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-wrap-patch">Patch</h3>
-<p><!-- {macro-wrap-patch-toc} --></p>
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-debugger">Debugger</li>
+</ul>
+
+<p>You can use tracing with <code>Wrap()</code>.</p>
+
+<pre><code>Trailblazer::Developer.wtf?(Song::Activity::Upload, params: {id: 1})
+</code></pre>
+
+<p>The trace per default shows Wrap’s ID.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/wrap-trace.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-introspect">Introspect</li>
+</ul>
+
+<p>You can use any <code>Introspect</code> mechanics on activities using <code>Wrap()</code>.</p>
+
+<pre><code>node, _ = Trailblazer::Developer::Introspect.find_path(
+  Song::Activity::Upload,
+  ["Wrap/MyTransaction", :transfer])
+#=&gt; #&lt;Node ...&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-wrap-compliance-patch">Patch</li>
+</ul>
 
 <p><code>Wrap()</code> is compatible with the Patch API, as in, you may replace nested steps or entire activities within the wrapped part.</p>
 
@@ -930,6 +963,8 @@ end
   ["Wrap/MyTransaction"] =&gt; -&gt; { step :upsert, replace: :update }
 )
 </code></pre>
+
+<p>The returned new activity <code>upload_with_upsert</code> is a copy of <code>Upload</code> with the respective step replace. Note that in this very example, the method <code>#upsert</code> has to be included in the nested activity.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1170,10 +1205,59 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-each-debugging">Debugging</h3>
-<p><!-- {macro-each-debugging-toc} --></p>
+<h3 id="macro-each-compliance">Compliance</h3>
+<p><!-- {macro-each-compliance-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-debugger">Debugger</li>
+</ul>
+
+<p>You can use tracing with <code>Each()</code>.</p>
+
+<pre><code>Trailblazer::Developer.wtf?(Song::Activity::Cover, [{
+  params: {id: 1},
+  # ...
+}])
+</code></pre>
+
+<p>Note that a virtual step <code>invoke_block_activity</code> is displayed to group the iterations, suffixed with the number of the iteration.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/each-trace.png" /></p>
 
 <p>TODO: show how runtime data can be accessed for each iterated block.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-introspect">Introspect</li>
+</ul>
+
+<p>You can use any <code>Introspect</code> mechanics on the nested activity using <code>Each()</code>.</p>
+
+<pre><code>node, _ = Trailblazer::Developer::Introspect.find_path(
+  Song::Activity::Cover,
+  ["Each/composers_for_each", "Each.iterate.block", :notify_composers])
+#=&gt; #&lt;Node ...&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-patch">Patch</li>
+</ul>
+
+<p>You may patch the iterated activity.</p>
+
+<pre><code>cover_patched = Trailblazer::Activity::DSL::Linear.Patch(
+  Song::Activity::Cover,
+  ["Each/composers_for_each", "Each.iterate.block"] =&gt; -&gt; { step :log_email }
+)
+</code></pre>
 
 </div>
 
@@ -1293,19 +1377,26 @@ end
       
     
       <li>
-        <a href="#macro-wrap-debugging">
+        <a href="#macro-wrap-compliance">
           <i class="fas fa-arrow-right"></i>
-          Debugging
+          Compliance
         </a>
       </li>
       
-    
-      <li>
-        <a href="#macro-wrap-patch">
-          <i class="fas fa-arrow-right"></i>
-          Patch
-        </a>
-      </li>
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-debugger">Debugger</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-introspect">Introspect</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-wrap-compliance-patch">Patch</a>
+        </li>
       
     
   </ul>
@@ -1375,11 +1466,26 @@ end
       
     
       <li>
-        <a href="#macro-each-debugging">
+        <a href="#macro-each-compliance">
           <i class="fas fa-arrow-right"></i>
-          Debugging
+          Compliance
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-debugger">Debugger</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-introspect">Introspect</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-patch">Patch</a>
+        </li>
       
     
   </ul>
