@@ -33,14 +33,26 @@ The complete activity graph would look a bit like the following diagram.
 
 <%= vite_image_tag "images/nested-static-complete.png", class: "mx-auto d-block" %>
 
-<%= h4 "Debugging" %>
+<%= h3 "Compliance" %>
 
-Static `Nested` setups are traceable using `#wtf?`. The above examples result in a flow as follows.
+<%= h4 "Debugger" %>
 
-<%= code "create-trace" %>
+`Nested` setups are traceable using `#wtf?`.
+
+<%= code :ruby do %>
+Trailblazer::Developer.wtf?(Song::Activity::Create, params: {type: "vorbis"})
+<% end %>
+
+The above examples result in a flow as follows.
+
+<%= vite_image_tag "images/nested-static-trace.png", class: "mx-auto d-block" %>
+
+<%= h4 "Introspect" %>
 
 The trace is fully compatible with the Debugging API and allows compile-time introspection. For example, you can specify the path to a nested activity `Id3Tag` and inspect it.
 
 <%= code "create-introspect" %>
 
 Note that the ID of the nested activities are the class constants.
+
+<%= h4 "Patch" %>

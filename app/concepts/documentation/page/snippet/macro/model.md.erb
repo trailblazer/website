@@ -1,4 +1,4 @@
-<%= h3 "Model" %>
+<%= h2 "Model" %>
 
 An operation can automatically find or create a model for you depending on the input, with the `Model` macro.
 
@@ -10,7 +10,7 @@ After this step, there is a fresh model instance under `ctx[:model]` that can be
 
 Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
-<%= h4 "Find_by" %>
+<%= h3 "Find_by" %>
 
 You can also find models using `:find_by`. This is helpful for `Update` or `Delete` operations.
 
@@ -36,7 +36,7 @@ It is also possible to `find_by` with attribute other than `id`. For example,
 
 Note that you may also use `:find`. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.
 
-<%= h4 "Arbitrary Finder" %>
+<%= h3 "Arbitrary Finder" %>
 
 It's possible to specify any finder method, which is helpful with ROMs such as Sequel.
 
@@ -52,7 +52,7 @@ Given your database gem provides that finder, it will result in a successful que
 
 <%= code "show-ok" %>
 
-<%= h4 "Not Found" %>
+<%= h3 "Not Found" %>
 
 With the help of [endpoint](/2.1/docs/endpoint.html), it is possible to connect failure of this step to render **404 response** directly.
 As a result, you don't need to conditionally check if `ctx[:model]` is present or not.
@@ -67,7 +67,7 @@ Internally, it is just telling [`Output(:failure)`](/2.1/docs/activity.html#acti
 
 <%= code "update-with-not-found-end-use" %>
 
-<%= h4 "Dependency Injection" %>
+<%= h3 "Dependency Injection" %>
 
 The following `Model()` options can be injected using variables when `call`ing the operation.
 
@@ -85,7 +85,7 @@ You can even leave `Model()` entirely unconfigured.
 
 This implies you inject all required variables at run-time.
 
-<%= h4 "Dependency Injection / Model class" %>
+<%= h4 "Model class" %>
 
 Usually, the specific model class for `Model()` is set directly in the macro.
 
