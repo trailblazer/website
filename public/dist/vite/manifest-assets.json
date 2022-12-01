@@ -107,6 +107,10 @@
     "file": "assets/each-failure-trace.e74d6e40.png",
     "src": "images/each-failure-trace.png"
   },
+  "images/each-trace.png": {
+    "file": "assets/each-trace.eb26e5fc.png",
+    "src": "images/each-trace.png"
+  },
   "images/editor-september.webp": {
     "file": "assets/editor-september.0f0b7692.webp",
     "src": "images/editor-september.webp"
@@ -198,6 +202,10 @@
   "images/nested-static-create.png": {
     "file": "assets/nested-static-create.1305287e.png",
     "src": "images/nested-static-create.png"
+  },
+  "images/nested-static-trace.png": {
+    "file": "assets/nested-static-trace.afc8a7f0.png",
+    "src": "images/nested-static-trace.png"
   },
   "images/nested-static-vorbiscomment.png": {
     "file": "assets/nested-static-vorbiscomment.f9f19b24.png",

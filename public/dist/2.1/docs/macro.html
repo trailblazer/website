@@ -285,6 +285,24 @@
             </a>
           </li>
         
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-model">
+              Model
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-rescue">
+              Rescue
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#macro-policy">
+              Policy
+            </a>
+          </li>
+        
       </ul>
     </div>
   
@@ -535,7 +553,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 26 Nov 22</span>
+                      <span>Last updated 01 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -728,40 +746,50 @@ end
 
 <p><span class="divider"></span></p>
 
+<h3 id="macro-nested-compliance">Compliance</h3>
+<p><!-- {macro-nested-compliance-toc} --></p>
+
+<p><span class="divider"></span></p>
+
 <ul class="navigation">
-    <li>Auto_wire</li>
-    <li id="macro-nested-auto_wire-debugging">Debugging</li>
+    <li>Compliance</li>
+    <li id="macro-nested-compliance-debugger">Debugger</li>
 </ul>
 
-<p>Static <code>Nested</code> setups are traceable using <code>#wtf?</code>. The above examples result in a flow as follows.</p>
+<p><code>Nested</code> setups are traceable using <code>#wtf?</code>.</p>
 
-<pre><code>Song::Activity::Create
-|-- Start.default
-|-- model
-|-- Nested(decide_file_type)
-|   |-- Start.default
-|   |-- route_to_nested_activity
-|   |-- DocsNestedStaticTest::A::Song::Activity::VorbisComment
-|   |   |-- Start.default
-|   |   |-- prepare_metadata
-|   |   |-- encode_cover
-|   |   `-- End.success
-|   `-- End.success
-|-- save
-`-- End.success
+<pre><code>Trailblazer::Developer.wtf?(Song::Activity::Create, params: {type: "vorbis"})
 </code></pre>
+
+<p>The above examples result in a flow as follows.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nested-static-trace.afc8a7f0.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-nested-compliance-introspect">Introspect</li>
+</ul>
 
 <p>The trace is fully compatible with the Debugging API and allows compile-time introspection. For example, you can specify the path to a nested activity <code>Id3Tag</code> and inspect it.</p>
 
 <pre><code>Trailblazer::Developer.render(Song::Activity::Create,
   path: [
-    "Nested(decide_file_type)", # ID of Nested()
+    "Nested/decide_file_type", # ID of Nested()
     Song::Activity::Id3Tag      # ID of the nested {Id3Tag} activity.
   ]
 )
 </code></pre>
 
 <p>Note that the ID of the nested activities are the class constants.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-nested-compliance-patch">Patch</li>
+</ul>
 
 <p><span class="divider"></span></p>
 
@@ -1222,10 +1250,550 @@ end
 
 <p><span class="divider"></span></p>
 
-<h3 id="macro-each-debugging">Debugging</h3>
-<p><!-- {macro-each-debugging-toc} --></p>
+<h3 id="macro-each-compliance">Compliance</h3>
+<p><!-- {macro-each-compliance-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-debugger">Debugger</li>
+</ul>
+
+<p>You can use tracing with <code>Each()</code>.</p>
+
+<pre><code>Trailblazer::Developer.wtf?(Song::Activity::Cover, [{
+  params: {id: 1},
+  # ...
+}])
+</code></pre>
+
+<p>Note that a virtual step <code>invoke_block_activity</code> is displayed to group the iterations, suffixed with the number of the iteration.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/each-trace.eb26e5fc.png" /></p>
 
 <p>TODO: show how runtime data can be accessed for each iterated block.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-introspect">Introspect</li>
+</ul>
+
+<p>You can use any <code>Introspect</code> mechanics on the nested activity using <code>Each()</code>.</p>
+
+<pre><code>node, _ = Trailblazer::Developer::Introspect.find_path(
+  Song::Activity::Cover,
+  ["Each/composers_for_each", "Each.iterate.block", :notify_composers])
+#=&gt; #&lt;Node ...&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Compliance</li>
+    <li id="macro-each-compliance-patch">Patch</li>
+</ul>
+
+<p>You may patch the iterated activity.</p>
+
+<pre><code>cover_patched = Trailblazer::Activity::DSL::Linear.Patch(
+  Song::Activity::Cover,
+  ["Each/composers_for_each", "Each.iterate.block"] =&gt; -&gt; { step :log_email }
+)
+</code></pre>
+
+<p>Here, the <code>Each.iterate.block</code> task represents the nested iterated activity.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="macro-model">Model</h2>
+<p><!-- {macro-model-toc} --></p>
+
+<p>An operation can automatically find or create a model for you depending on the input, with the <code>Model</code> macro.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model(Song, :new)
+  # ..
+end
+</code></pre>
+
+<p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned <code>result</code> object.</p>
+
+<pre><code>result = Create.(params: {})
+result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+</code></pre>
+
+<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-model-find_by">Find_by</h3>
+<p><!-- {macro-model-find_by-toc} --></p>
+
+<p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
+
+<pre><code>class Update &lt; Trailblazer::Operation
+  step Model( Song, :find_by )
+  # ..
+end
+</code></pre>
+
+<p>The <code>Model</code> macro will invoke the following code for you.</p>
+
+<pre><code>ctx[:model] = Song.find_by( id: params[:id] )
+</code></pre>
+
+<p>This will assign <code>[:model]</code> for you by invoking <code>find_by</code>.</p>
+
+<pre><code>result = Update.(params: { id: 1 })
+result[:model] #=&gt; #&lt;struct Song id=1, title="nil"&gt;
+</code></pre>
+
+<p>If <code>Song.find_by</code> returns <code>nil</code>, this will deviate to the left track, skipping the rest of the operation.</p>
+
+<pre><code>result = Update.(params: {})
+result[:model] #=&gt; nil
+result.success? #=&gt; false
+</code></pre>
+
+<p>It is also possible to <code>find_by</code> with attribute other than <code>id</code>. For example,</p>
+
+<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Operation
+  step Model( Song, :find_by, :title )
+  # ..
+end
+</code></pre>
+
+<p>Note that you may also use <code>:find</code>. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-model-arbitrary-finder">Arbitrary Finder</h3>
+<p><!-- {macro-model-arbitrary-finder-toc} --></p>
+
+<p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
+
+<pre><code>class Show &lt; Trailblazer::Operation
+  step Model( Song, :[] )
+  # ..
+end
+</code></pre>
+
+<p>The provided method will be invoked and Trailblazer passes it the <code>params[:id]</code> value.</p>
+
+<pre><code>Song[ params[:id] ]
+</code></pre>
+
+<p>Given your database gem provides that finder, it will result in a successful query.</p>
+
+<pre><code>result = Show.(params: { id: 1 })
+result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-model-not-found">Not Found</h3>
+<p><!-- {macro-model-not-found-toc} --></p>
+
+<p>With the help of <a href="/2.1/docs/endpoint.html">endpoint</a>, it is possible to connect failure of this step to render <strong>404 response</strong> directly.
+As a result, you don’t need to conditionally check if <code>ctx[:model]</code> is present or not.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/macro-ends.bedbd22e.webp" /></p>
+
+<p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
+
+<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Operation
+  step Model( Song, :find_by, not_found_terminus: true )
+  # ..
+end
+</code></pre>
+
+<p>Internally, it is just telling <a href="/2.1/docs/activity.html#activity-wiring-api-output-implicit-signal"><code>Output(:failure)</code></a> to emit <a href="/2.1/docs/activity.html#activity-wiring-api-end-"><code>End(:not_found)</code></a></p>
+
+<pre><code>result = UpdateFailureWithModelNotFound.(params: {title: nil})
+result[:model] #=&gt; nil
+result.success? #=&gt; false
+result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-model-dependency-injection">Dependency Injection</h3>
+<p><!-- {macro-model-dependency-injection-toc} --></p>
+
+<p>The following <code>Model()</code> options can be injected using variables when <code>call</code>ing the operation.</p>
+
+<ul>
+  <li><code>:"model.class"</code> which represents the first argument for <code>Model()</code>.</li>
+  <li><code>:"model.action"</code> representing the second argument.</li>
+  <li><code>:"model.find_by_key"</code> which represents the third argument.</li>
+</ul>
+
+<p>As per your design, you may inject one or more of those variables as follows.</p>
+
+<pre><code>result = Create.(
+  params:               {title: "Olympia"}, # some random variable.
+  "model.class":        Hit,
+  "model.action":       :find_by,
+  "model.find_by_key": :title
+)
+</code></pre>
+
+<p>You can even leave <code>Model()</code> entirely unconfigured.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model()
+  # ..
+end
+</code></pre>
+
+<p>This implies you inject all required variables at run-time.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Dependency Injection</li>
+    <li id="macro-model-dependency-injection-model-class">Model class</li>
+</ul>
+
+<p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model(Song, :new)
+  # ..
+end
+</code></pre>
+
+<p>Nevertheless, it’s possible to override it using the <code>:"model.class"</code> variable when invoking the operation/activity.</p>
+
+<pre><code>result = Create.(params: {}, :"model.class" =&gt; Hit)
+</code></pre>
+
+<p>Note that you <a href="">don’t have  to configure</a> any model class at all when injecting it.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="macro-rescue">Rescue</h2>
+<p><!-- {macro-rescue-toc} --></p>
+
+<p>While you can write your own <code>begin/rescue/end</code> mechanics using <a href="#wrap"><code>Wrap</code></a>, Trailblazer offers you the <code>Rescue</code> macro to catch and handle exceptions that might occur while running the pipe.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Operation
+  step :find_model
+  step Rescue( RuntimeError, handler: MyHandler ) {
+    step :update
+    step :rehash
+  }
+  step :notify
+  fail :log_error
+  # ...
+end
+</code></pre>
+
+<p>Any exception raised during a step in the <code>Rescue</code> block will stop the nested pipe from being executed, and continue after the block on the left track.</p>
+
+<p>You can specify what exceptions to catch and an optional handler that is called when an exception is encountered.</p>
+
+<pre><code>class MyHandler
+  def self.call(exception, (ctx), *)
+    ctx[:exception_class] = exception.class
+  end
+end
+</code></pre>
+
+<p>Alternatively, you can use a  <code>Callable</code> object for <code>:handler</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-rescue-full-example">Full example</h3>
+<p><!-- {macro-rescue-full-example-toc} --></p>
+
+<p>The  <code>Nested</code>, <code>Wrap</code> and <code>Rescue</code> macros can also be nested, allowing an easily extendable business workflow with error handling along the way.</p>
+
+<p>TODO: add example</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="macro-policy">Policy</h2>
+<p><!-- {macro-policy-toc} --></p>
+
+<p>The <code>Policy</code> macros <a href="#pundit"><code>Policy::Pundit</code></a>, and <a href="#guard"><code>Policy::Guard</code></a> help to implement permission decider steps.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-policy-pundit">Pundit</h3>
+<p><!-- {macro-policy-pundit-toc} --></p>
+
+<p>The <code>Policy::Pundit</code> module allows using <a href="https://github.com/elabs/pundit">Pundit</a>-compatible policy classes in an operation.</p>
+
+<p>A Pundit policy has various rule methods and a special constructor that receives the current user and the current model.</p>
+
+<pre><code>class MyPolicy
+  def initialize(user, model)
+    @user, @model = user, model
+  end
+
+  def create?
+    @user == Module &amp;&amp; @model.id.nil?
+  end
+
+  def new?
+    @user == Class
+  end
+end
+</code></pre>
+
+<p>In pundit policies, it is a convention to have access to those objects at runtime and build rules on top of those.</p>
+
+<p>You can plug this policy into your pipe at any point. However, this must be inserted after the <code>"model"</code> skill is available.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model( Song, :new )
+  step Policy::Pundit( MyPolicy, :create? )
+  # ...
+end
+</code></pre>
+
+<p>Note that you don’t have to create the model via the <code>Model</code> macro - you can use any logic you want. The <code>Pundit</code> macro will grab the model from <code>["model"]</code>, though.</p>
+
+<p>This policy will only pass when the operation is invoked as follows.</p>
+
+<pre><code>Create.(current_user: User.find(1))
+</code></pre>
+
+<p>Any other call will cause a policy breach and stop the pipe from executing after the <code>Policy::Pundit</code> step.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Pundit</li>
+    <li id="macro-policy-pundit-api">API</li>
+</ul>
+
+<p>Add your polices using the <code>Policy::Pundit</code> macro. It accepts the policy class name, and the rule method to call.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model( Song, :new )
+  step Policy::Pundit( MyPolicy, :create? )
+  # ...
+end
+</code></pre>
+
+<p>The step will create the policy instance automatically for you and passes the <code>"model"</code> and the <code>"current_user"</code> skill into the policies constructor. Just make sure those dependencies are available before the step is executed.</p>
+
+<p>If the policy returns <code>falsey</code>, it <a href="api.html#flow-control-step">deviates to the left track</a>.</p>
+
+<p>After running the <code>Pundit</code> step, its result is readable from the <code>Result</code> object.</p>
+
+<pre><code>result = Create.(params: {}, current_user: Module)
+result[:"result.policy.default"].success? #=&gt; true
+result[:"result.policy.default"][:policy] #=&gt; #&lt;MyPolicy ...&gt;
+</code></pre>
+
+<p>Note that the actual policy instance is available via <code>["result.policy.#{name}"]["policy"]</code> to be reinvoked with other rules (e.g. in the view layer).</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Pundit</li>
+    <li id="macro-policy-pundit-name">Name</li>
+</ul>
+
+<p>You can add any number of Pundit policies to your pipe. Make sure to use <code>name:</code> to name them, though.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Model( Song, :new )
+  step Policy::Pundit( MyPolicy, :create?, name: "after_model" )
+  # ...
+end
+</code></pre>
+
+<p>The result will be stored in <code>"result.policy.#{name}"</code></p>
+
+<pre><code>result = Create.(params: {}, current_user: Module)
+result[:"result.policy.after_model"].success? #=&gt; true
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Pundit</li>
+    <li id="macro-policy-pundit-dependency-injection">Dependency Injection</li>
+</ul>
+
+<p>Override a configured policy using dependency injection.</p>
+
+<pre><code>Create.(params: {},
+  current_user:            Module,
+  :"policy.default.eval" =&gt; Trailblazer::Operation::Policy::Pundit.build(AnotherPolicy, :create?)
+)
+</code></pre>
+
+<p>You can inject it using <code>"policy.#{name}.eval"</code>. It can be any object responding to <code>call</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="macro-policy-guard">Guard</h3>
+<p><!-- {macro-policy-guard-toc} --></p>
+
+<p>A guard is a step that helps you evaluating a condition and writing the result. If the condition was evaluated as <code>falsey</code>, the pipe won’t be further processed and a policy breach is reported in <code>Result["result.policy.default"]</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Policy::Guard(-&gt;(options, pass:, **) { pass })
+  step :process
+
+  def process(options, **)
+    options[:x] = true
+  end
+end
+</code></pre>
+
+<p>The only way to make the above operation invoke the second step <code>:process</code> is as follows.</p>
+
+<pre><code>result = Create.({ pass: true })
+result["x"] #=&gt; true
+</code></pre>
+
+<p>Any other input will result in an abortion of the pipe after the guard.</p>
+
+<pre><code>result = Create.()
+result["x"] #=&gt; nil
+result["result.policy.default"].success? #=&gt; false
+</code></pre>
+
+<p>Learn more about <a href="skill.md">→ dependency injection</a> to pass params and current user into the operation. TODO: fix link</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-api">API</li>
+</ul>
+
+<p>The <code>Policy::Guard</code> macro helps you inserting your guard logic. If not defined, it will be evaluated <a href="#guard-position">where you insert</a> it.</p>
+
+<pre><code>step :process
+
+def process(options, **)
+  options[:x] = true
+end
+</code></pre>
+
+<p>The <code>options</code> object is passed into the guard and allows you to read and inspect data like <code>params</code> or <code>current_user</code>. Please use kw args.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-callable">Callable</li>
+</ul>
+
+<p>As always, the guard can also be a <code>Callable</code>-marked object.</p>
+
+<pre><code>class MyGuard
+  def call(options, pass:, **)
+    pass
+  end
+end
+</code></pre>
+
+<p>Insert the object instance via the <code>Policy::Guard</code> macro.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Policy::Guard( MyGuard.new )
+  step :process
+
+  # ...
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-instance-method">Instance Method</li>
+</ul>
+
+<p>As always, you may also use an instance method to implement a guard.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Policy::Guard( :pass? )
+
+  def pass?(options, pass:, **)
+    pass
+  end
+  step :process
+  # ...
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-name">Name</li>
+</ul>
+
+<p>The guard name defaults to <code>default</code> and can be set via <code>name:</code>. This allows having multiple guards.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step Policy::Guard( -&gt;(options, current_user:, **) { current_user }, name: :user )
+  # ...
+end
+</code></pre>
+
+<p>The result will sit in <code>result.policy.#{name}</code>.</p>
+
+<pre><code>result = Create.(:current_user =&gt; true)
+result[:"result.policy.user"].success? #=&gt; true
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-dependency-injection">Dependency Injection</li>
+</ul>
+
+<p>Instead of using the configured guard, you can inject any callable object that returns a <code>Result</code> object. Do so by overriding the <code>policy.#{name}.eval</code> path when calling the operation.</p>
+
+<pre><code>Create.(
+  :current_user           =&gt; Module,
+  :"policy.default.eval"  =&gt; Trailblazer::Operation::Policy::Guard.build(-&gt;(options, **) { false })
+)
+</code></pre>
+
+<p>An easy way to let Trailblazer build a compatible object for you is using <code>Guard.build</code>.</p>
+
+<p>This is helpful to override a certain policy for testing, or to invoke it with special rights, e.g. for an admin.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Guard</li>
+    <li id="macro-policy-guard-position">Position</li>
+</ul>
+
+<p>You may specify a position.</p>
+
+<pre><code>class Create &lt; Trailblazer::Operation
+  step :model!
+  step Policy::Guard( :authorize! ),
+    before: :model!
+end
+</code></pre>
+
+<p>Resulting in the guard inserted before <code>model!</code>, even though it was added at a later point.</p>
+
+<pre><code>  Trailblazer::Developer.railway(Create, style: :rows) #=&gt;
+   # 0 ========================&gt;operation.new
+   # 1 ==================&gt;policy.default.eval
+   # 2 ===============================&gt;model!
+</code></pre>
+
+<p>This is helpful if you maintain modules for operations with generic steps.</p>
 
 </div>
 
@@ -1298,9 +1866,27 @@ end
           <a href="#macro-nested-auto_wire-output-wiring">Output Wiring</a>
         </li>
       
+    
+      <li>
+        <a href="#macro-nested-compliance">
+          <i class="fas fa-arrow-right"></i>
+          Compliance
+        </a>
+      </li>
+      
         
         <li class="sub-item">
-          <a href="#macro-nested-auto_wire-debugging">Debugging</a>
+          <a href="#macro-nested-compliance-debugger">Debugger</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-compliance-introspect">Introspect</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-nested-compliance-patch">Patch</a>
         </li>
       
     
@@ -1434,11 +2020,165 @@ end
       
     
       <li>
-        <a href="#macro-each-debugging">
+        <a href="#macro-each-compliance">
           <i class="fas fa-arrow-right"></i>
-          Debugging
+          Compliance
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-debugger">Debugger</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-introspect">Introspect</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-each-compliance-patch">Patch</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="macro-model-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Model</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-model-find_by">
+          <i class="fas fa-arrow-right"></i>
+          Find_by
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-model-arbitrary-finder">
+          <i class="fas fa-arrow-right"></i>
+          Arbitrary Finder
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-model-not-found">
+          <i class="fas fa-arrow-right"></i>
+          Not Found
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#macro-model-dependency-injection">
+          <i class="fas fa-arrow-right"></i>
+          Dependency Injection
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-model-dependency-injection-model-class">Model class</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="macro-rescue-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Rescue</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-rescue-full-example">
+          <i class="fas fa-arrow-right"></i>
+          Full example
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="macro-policy-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Policy</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#macro-policy-pundit">
+          <i class="fas fa-arrow-right"></i>
+          Pundit
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-pundit-api">API</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-pundit-name">Name</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-pundit-dependency-injection">Dependency Injection</a>
+        </li>
+      
+    
+      <li>
+        <a href="#macro-policy-guard">
+          <i class="fas fa-arrow-right"></i>
+          Guard
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-api">API</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-instance-method">Instance Method</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-name">Name</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-dependency-injection">Dependency Injection</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-policy-guard-position">Position</a>
+        </li>
       
     
   </ul>
