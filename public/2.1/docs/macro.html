@@ -536,7 +536,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 01 Dec 22</span>
+                      <span>Last updated 05 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1380,25 +1380,28 @@ result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 <h3 id="macro-model-not-found">Not Found</h3>
 <p><!-- {macro-model-not-found-toc} --></p>
 
-<p>With the help of <a href="/2.1/docs/endpoint.html">endpoint</a>, it is possible to connect failure of this step to render <strong>404 response</strong> directly.
-As a result, you don’t need to conditionally check if <code>ctx[:model]</code> is present or not.</p>
+<p>You can wire the <code>Model()</code> step to a dedicated terminus <code>:not_found</code> in case of a missing model, instead of connecting it to the default failure track. The new terminus represents an explicit outcome and could, for instance, be used in an <a href="/2.1/docs/endpoint.html">endpoint</a> to render a <strong>404 response</strong> without having to check if <code>ctx[:model]</code> is present or not.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/macro-ends.webp" /></p>
+<p><img class="mx-auto d-block" src="/vite-dev/images/model-not-found.png" /></p>
 
-<p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
+<p>To add the explicit <code>End.not_found</code>terminus, pass the <code>:not_found_terminus</code> option to the macro.</p>
 
-<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Operation
-  step Model( Song, :find_by, not_found_terminus: true )
-  # ..
+<pre><code>class Song
+  module Activity
+    class Update &lt; Trailblazer::Activity::Railway
+      step Model(Song, :find_by, not_found_terminus: true)
+      step :validate
+      step :save
+      # ...
+    end
+  end
 end
 </code></pre>
 
-<p>Internally, it is just telling <a href="/2.1/docs/activity.html#activity-wiring-api-output-implicit-signal"><code>Output(:failure)</code></a> to emit <a href="/2.1/docs/activity.html#activity-wiring-api-end-"><code>End(:not_found)</code></a></p>
+<p>When running the <code>Update</code> activity with an invalid ID, it terminates on <code>End.not_found</code>/</p>
 
-<pre><code>result = UpdateFailureWithModelNotFound.(params: {title: nil})
-result[:model] #=&gt; nil
-result.success? #=&gt; false
-result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
+<pre><code>signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(Song::Activity::Update, [{params: {id: nil}},{}])
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 </code></pre>
 
 <p><span class="divider"></span></p>
