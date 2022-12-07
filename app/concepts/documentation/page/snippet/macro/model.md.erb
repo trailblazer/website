@@ -1,12 +1,12 @@
 <%= h2 "Model" %>
 
-An operation can automatically find or create a model for you depending on the input, with the `Model` macro.
+An operation can automatically find or create a model for you using the `Model()` macro.
 
-<%= code "op" %>
+<%= code_tabs "op" %>
 
-After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and the returned `result` object.
+After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and the returned result object.
 
-<%= code "create" %>
+<%= code_tabs "create" %>
 
 Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # FIXME: Should this be part of torture-server ?
 
 Snippets.class_eval do
@@ -9,6 +7,22 @@ Snippets.class_eval do
 
   def img(_path)
     raise "Please replace `img` with `vite_image_tag`"
+  end
+
+  def code_tabs(name)
+    options = {collapse: :meths}
+
+    nav_tabs do |tab|
+      tab.(title: "Activity", active: true) do
+        code(name, **options)
+      end
+
+      tab.(title: "Operation") do
+        file = "operation/#{model[:file]}"
+
+        code(name, **options.merge(file: file))
+      end
+    end # nav_tabs
   end
 end
 

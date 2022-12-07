@@ -536,7 +536,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 05 Dec 22</span>
+                      <span>Last updated 07 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -569,10 +569,12 @@
 
 <p>This allows you to <em>add your own</em> variable mapping to a macro, as illustrated in the example below.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :find_by),
-    In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Operation
+    step Model(Song, :find_by),
+      In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
+    # ...
+  end
 end
 </code></pre>
 
@@ -1294,19 +1296,47 @@ end
 <h2 id="macro-model">Model</h2>
 <p><!-- {macro-model-toc} --></p>
 
-<p>An operation can automatically find or create a model for you depending on the input, with the <code>Model</code> macro.</p>
+<p>An operation can automatically find or create a model for you using the <code>Model()</code> macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :new)
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned <code>result</code> object.</p>
 
-<pre><code>result = Create.(params: {})
-result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {}, seq: [])
+puts ctx[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(params: {}, seq: [])
+puts result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+</code></pre>
+
+ </div> </div>
 
 <p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
 
@@ -1317,9 +1347,13 @@ result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 
 <p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
 
-<pre><code>class Update &lt; Trailblazer::Operation
-  step Model( Song, :find_by )
-  # ..
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by)
+    step :validate
+    step :save
+    include T.def_steps(:validate, :save)
+  end
 end
 </code></pre>
 
@@ -1330,22 +1364,27 @@ end
 
 <p>This will assign <code>[:model]</code> for you by invoking <code>find_by</code>.</p>
 
-<pre><code>result = Update.(params: { id: 1 })
-result[:model] #=&gt; #&lt;struct Song id=1, title="nil"&gt;
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
+ctx[:model] #=&gt; #&lt;Song id=1, ...&gt;
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:success&gt;
 </code></pre>
 
 <p>If <code>Song.find_by</code> returns <code>nil</code>, this will deviate to the left track, skipping the rest of the operation.</p>
 
-<pre><code>result = Update.(params: {})
-result[:model] #=&gt; nil
-result.success? #=&gt; false
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {})
+ctx[:model] #=&gt; nil
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:failure&gt;
 </code></pre>
 
 <p>It is also possible to <code>find_by</code> with attribute other than <code>id</code>. For example,</p>
 
-<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Operation
-  step Model( Song, :find_by, :title )
-  # ..
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by, :title) # third positional argument.
+    step :validate
+    step :save
+    include T.def_steps(:validate, :save)
+  end
 end
 </code></pre>
 
@@ -1358,9 +1397,13 @@ end
 
 <p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
 
-<pre><code>class Show &lt; Trailblazer::Operation
-  step Model( Song, :[] )
-  # ..
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :[])
+    step :validate
+    step :save
+    include T.def_steps(:validate, :save)
+  end
 end
 </code></pre>
 
@@ -1371,8 +1414,8 @@ end
 
 <p>Given your database gem provides that finder, it will result in a successful query.</p>
 
-<pre><code>result = Show.(params: { id: 1 })
-result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
+ctx[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 </code></pre>
 
 <p><span class="divider"></span></p>
@@ -1386,21 +1429,19 @@ result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 
 <p>To add the explicit <code>End.not_found</code>terminus, pass the <code>:not_found_terminus</code> option to the macro.</p>
 
-<pre><code>class Song
-  module Activity
-    class Update &lt; Trailblazer::Activity::Railway
-      step Model(Song, :find_by, not_found_terminus: true)
-      step :validate
-      step :save
-      # ...
-    end
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by, not_found_terminus: true)
+    step :validate
+    step :save
+    # ...
   end
 end
 </code></pre>
 
-<p>When running the <code>Update</code> activity with an invalid ID, it terminates on <code>End.not_found</code>/</p>
+<p>When running the <code>Update</code> activity with an invalid ID, it terminates on <code>End.not_found</code>.</p>
 
-<pre><code>signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(Song::Activity::Update, [{params: {id: nil}},{}])
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, {params: {id: nil}})
 puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 </code></pre>
 
@@ -1419,20 +1460,23 @@ puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 
 <p>As per your design, you may inject one or more of those variables as follows.</p>
 
-<pre><code>result = Create.(
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
   params:               {title: "Olympia"}, # some random variable.
   "model.class":        Hit,
   "model.action":       :find_by,
-  "model.find_by_key": :title
+  "model.find_by_key":  :title, seq: []
 )
 </code></pre>
 
 <p>You can even leave <code>Model()</code> entirely unconfigured.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model()
-  # ..
-end
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model()
+    step :validate
+    step :save
+    include T.def_steps(:validate, :save)
+  end
 </code></pre>
 
 <p>This implies you inject all required variables at run-time.</p>
@@ -1446,15 +1490,19 @@ end
 
 <p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :new)
-  # ..
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model(Song, :new)
+    step :validate
+    step :save
+    include T.def_steps(:validate, :save)
+  end
 end
 </code></pre>
 
 <p>Nevertheless, it’s possible to override it using the <code>:"model.class"</code> variable when invoking the operation/activity.</p>
 
-<pre><code>result = Create.(params: {}, :"model.class" =&gt; Hit)
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {}, :"model.class" =&gt; Hit, seq: [])
 </code></pre>
 
 <p>Note that you <a href="">don’t have  to configure</a> any model class at all when injecting it.</p>
