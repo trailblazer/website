@@ -6,7 +6,7 @@ An operation can automatically find or create a model for you using the `Model()
 
 After this step, there is a fresh model instance under `ctx[:model]` that can be used in all following steps and the returned result object.
 
-<%= code_tabs "create" %>
+<%= code_tabs "create", sub: ", seq: []" %>
 
 Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
