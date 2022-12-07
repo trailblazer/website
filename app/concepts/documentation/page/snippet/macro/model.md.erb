@@ -8,49 +8,53 @@ After this step, there is a fresh model instance under `ctx[:model]` that can be
 
 <%= code_tabs "create", sub: ", seq: []" %>
 
-Internally, `Model` macro will simply invoke `Song.new` to populate `ctx[:model]`.
+Internally, the `Model()` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
 <%= h3 "Find_by" %>
 
 You can also find models using `:find_by`. This is helpful for `Update` or `Delete` operations.
 
-<%= code "update" %>
+<%= code_tabs "update" %>
 
 The `Model` macro will invoke the following code for you.
 
 <%= code :ruby do %>
-ctx[:model] = Song.find_by( id: params[:id] )
+ctx[:model] = Song.find_by(id: params[:id])
 <% end %>
 
-This will assign `[:model]` for you by invoking `find_by`.
+This will assign `ctx[:model]` for you by invoking `find_by`.
 
-<%= code "update-ok" %>
+<%= code_tabs "update-ok" %>
 
-If `Song.find_by` returns `nil`, this will deviate to the left track, skipping the rest of the operation.
+If `Song.find_by` returns `nil`, this will deviate to the failure track, skipping the rest of the operation.
 
-<%= code "update-fail" %>
+<%= code_tabs "update-fail" %>
 
-It is also possible to `find_by` with attribute other than `id`. For example,
+<%= h4 "Key" %>
 
-<%= code "update-with-find-by-key" %>
+It is also possible to `find_by` using an attribute other than `:id`.
 
-Note that you may also use `:find`. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.
+<%= code_tabs "update-with-find-by-key" %>
+
+<%= h4 "find" %>
+
+Note that, instead of `find_by`, you may also use `:find`. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.
 
 <%= h3 "Arbitrary Finder" %>
 
 It's possible to specify any finder method, which is helpful with ROMs such as Sequel.
 
-<%= code "show" %>
+<%= code_tabs "show" %>
 
-The provided method will be invoked and Trailblazer passes it the `params[:id]` value.
+The provided method will be invoked and Trailblazer passes to it the value of`params[:id]`.
 
 <%= code :ruby do %>
-Song[ params[:id] ]
+Song[params[:id]]
 <% end %>
 
-Given your database gem provides that finder, it will result in a successful query.
+Given your database gem provides that finder, it will result in a query.
 
-<%= code "show-ok" %>
+<%= code_tabs "show-ok" %>
 
 <%= h3 "Not Found" %>
 
@@ -60,11 +64,11 @@ You can wire the `Model()` step to a dedicated terminus `:not_found` in case of 
 
 To add the explicit `End.not_found`terminus, pass the `:not_found_terminus` option to the macro.
 
-<%= code "update-with-not-found-end", collapse: :meths %>
+<%= code_tabs "update-with-not-found-end" %>
 
 When running the `Update` activity with an invalid ID, it terminates on `End.not_found`.
 
-<%= code "not_found" %>
+<%= code_tabs "not_found" %>
 
 <%= h3 "Dependency Injection" %>
 
@@ -76,11 +80,11 @@ The following `Model()` options can be injected using variables when `call`ing t
 
 As per your design, you may inject one or more of those variables as follows.
 
-<%= code "di-all" %>
+<%= code_tabs "di-all" %>
 
 You can even leave `Model()` entirely unconfigured.
 
-<%= code "op-model-empty" %>
+<%= code_tabs "op-model-empty" %>
 
 This implies you inject all required variables at run-time.
 
@@ -88,11 +92,11 @@ This implies you inject all required variables at run-time.
 
 Usually, the specific model class for `Model()` is set directly in the macro.
 
-<%= code "op" %>
+<%= code_tabs "op" %>
 
 Nevertheless, it's possible to override it using the `:"model.class"` variable when invoking the operation/activity.
 
-<%= code "di-model-class" %>
+<%= code_tabs "di-model-class", sub: ", seq: []" %>
 
 Note that you [don't have  to configure]() any model class at all when injecting it.
 
