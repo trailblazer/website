@@ -9,8 +9,8 @@ Snippets.class_eval do
     raise "Please replace `img` with `vite_image_tag`"
   end
 
-  def code_tabs(name)
-    options = {collapse: :meths}
+  def code_tabs(name, **options)
+    options = {collapse: :meths}.merge(options)
 
     nav_tabs do |tab|
       tab.(title: "Activity", active: true) do
