@@ -536,7 +536,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 07 Dec 22</span>
+                      <span>Last updated 08 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1005,6 +1005,8 @@ end
 
 <p>The <code>Each()</code> macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.</p>
 
+<ul id="0.27505303297016914" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-27505303297016914-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-27505303297016914-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-27505303297016914-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1025,6 +1027,30 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="0-27505303297016914-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(dataset_from: :composers_for_each) {
+      step :notify_composers
+    }
+    step :rearrange
+
+    # "decider interface"
+    def composers_for_each(ctx, model:, **)
+      model.composers
+    end
+
+    def notify_composers(ctx, index:, item:, **)
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>You can either pass a block with steps to iterate, or an entire operation/activity. In this example, a block is used. Note that you need to use the <code>{}</code> curly braces due to Ruby’s precedence, just as it’s done in <code>Wrap()</code>.</p>
 
@@ -1081,6 +1107,8 @@ end
 
 <p>The iterated steps now receive a <code>:composer</code> ctx variable instead of <code>:item</code>.</p>
 
+<ul id="0.12265226614993485" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-12265226614993485-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-12265226614993485-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-12265226614993485-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     # ...
@@ -1091,6 +1119,19 @@ end
 end
 </code></pre>
 
+ </div><div id="0-12265226614993485-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    # ...
+    def notify_composers(ctx, index:, composer:, **)
+      Mailer.send(to: composer.email, message: "#{index}) You, #{composer.full_name}, have been warned about your song being copied.")
+    end
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
@@ -1100,6 +1141,8 @@ end
 
 <p>If you would like the iterated steps to be within the “block”, use a dedicted activity or operation.</p>
 
+<ul id="0.7232263219671571" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7232263219671571-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7232263219671571-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7232263219671571-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1110,8 +1153,23 @@ end
 end
 </code></pre>
 
+ </div><div id="0-7232263219671571-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(Notify, dataset_from: :composers_for_each)
+    step :rearrange
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p>The iterated operation is composed of steps that have an identical interface with the block version.</p>
 
+<ul id="0.5794523502916833" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5794523502916833-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5794523502916833-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5794523502916833-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Notify &lt; Trailblazer::Activity::Railway
     step :send_email
@@ -1122,6 +1180,20 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="0-5794523502916833-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Notify &lt; Trailblazer::Operation
+    step :send_email
+
+    def send_email(ctx, index:, item:, **)
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
+    end
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
@@ -1187,6 +1259,8 @@ end
 
 <p>For example, say you want to collect messages from each iteration.</p>
 
+<ul id="0.1921171580840938" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1921171580840938-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1921171580840938-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-1921171580840938-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1207,6 +1281,30 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="0-1921171580840938-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(dataset_from: :composers_for_each,
+      Inject(:messages) =&gt; -&gt;(*) { {} },
+
+      # all filters called before/after each iteration!
+      Out() =&gt; [:messages]
+    ) {
+      step :write_to_ctx
+    }
+    step :rearrange
+
+    def write_to_ctx(ctx, item:, messages:, index:, **)
+      ctx[:messages] = messages.merge(index =&gt; item.full_name)
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <ol>
   <li>When starting the iteration, the ctx variable <code>:messages</code> will be initialized to an empty hash (unless you provide it in the outside ctx).</li>
@@ -1298,8 +1396,8 @@ end
 
 <p>An operation can automatically find or create a model for you using the <code>Model()</code> macro.</p>
 
-<ul id="0.8021823583857864" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8021823583857864-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8021823583857864-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8021823583857864-Activity" class="tab-pane fade show active"> 
+<ul id="0.7446102157067861" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7446102157067861-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7446102157067861-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7446102157067861-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step Model(Song, :new)
@@ -1310,7 +1408,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-8021823583857864-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7446102157067861-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step Model(Song, :new)
@@ -1325,13 +1423,13 @@ end
 
 <p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned result object.</p>
 
-<ul id="0.1884291904114339" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1884291904114339-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1884291904114339-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-1884291904114339-Activity" class="tab-pane fade show active"> 
+<ul id="0.18178793040024244" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-18178793040024244-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-18178793040024244-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-18178793040024244-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {})
 puts ctx[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 </code></pre>
 
- </div><div id="0-1884291904114339-Operation" class="tab-pane fade show "> 
+ </div><div id="0-18178793040024244-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(params: {})
 puts result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 </code></pre>
@@ -1347,8 +1445,8 @@ puts result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 
 <p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
 
-<ul id="0.055112976901408484" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-055112976901408484-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-055112976901408484-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-055112976901408484-Activity" class="tab-pane fade show active"> 
+<ul id="0.5615661426173645" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5615661426173645-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5615661426173645-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5615661426173645-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Update &lt; Trailblazer::Activity::Railway
     step Model(Song, :find_by)
@@ -1359,7 +1457,7 @@ puts result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 end
 </code></pre>
 
- </div><div id="0-055112976901408484-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5615661426173645-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Update &lt; Trailblazer::Operation
     step Model(Song, :find_by)
@@ -1379,14 +1477,14 @@ end
 
 <p>This will assign <code>ctx[:model]</code> for you by invoking <code>find_by</code>.</p>
 
-<ul id="0.22227864613506232" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-22227864613506232-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-22227864613506232-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-22227864613506232-Activity" class="tab-pane fade show active"> 
+<ul id="0.5525651297865862" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5525651297865862-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5525651297865862-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5525651297865862-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
 ctx[:model] #=&gt; #&lt;Song id=1, ...&gt;
 puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:success&gt;
 </code></pre>
 
- </div><div id="0-22227864613506232-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5525651297865862-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Update.(params: {id: 1}, seq: [])
 result[:model] #=&gt; #&lt;Song id=1, ...&gt;
 result.success? # =&gt; true
@@ -1396,14 +1494,14 @@ result.success? # =&gt; true
 
 <p>If <code>Song.find_by</code> returns <code>nil</code>, this will deviate to the failure track, skipping the rest of the operation.</p>
 
-<ul id="0.8773494779934158" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8773494779934158-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8773494779934158-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8773494779934158-Activity" class="tab-pane fade show active"> 
+<ul id="0.491560492287764" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-491560492287764-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-491560492287764-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-491560492287764-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {})
 ctx[:model] #=&gt; nil
 puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:failure&gt;
 </code></pre>
 
- </div><div id="0-8773494779934158-Operation" class="tab-pane fade show "> 
+ </div><div id="0-491560492287764-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Update.(params: {})
 result[:model] #=&gt; nil
 result.success? # =&gt; false
@@ -1420,8 +1518,8 @@ result.success? # =&gt; false
 
 <p>It is also possible to <code>find_by</code> using an attribute other than <code>:id</code>.</p>
 
-<ul id="0.418063608601835" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-418063608601835-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-418063608601835-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-418063608601835-Activity" class="tab-pane fade show active"> 
+<ul id="0.9896848216108479" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9896848216108479-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9896848216108479-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9896848216108479-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Update &lt; Trailblazer::Activity::Railway
     step Model(Song, :find_by, :title) # third positional argument.
@@ -1432,7 +1530,7 @@ result.success? # =&gt; false
 end
 </code></pre>
 
- </div><div id="0-418063608601835-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9896848216108479-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Update &lt; Trailblazer::Operation
     step Model(Song, :find_by, :title) # third positional argument.
@@ -1461,8 +1559,8 @@ end
 
 <p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
 
-<ul id="0.47673074485958267" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-47673074485958267-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-47673074485958267-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-47673074485958267-Activity" class="tab-pane fade show active"> 
+<ul id="0.9026238181562564" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9026238181562564-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9026238181562564-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9026238181562564-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Update &lt; Trailblazer::Activity::Railway
     step Model(Song, :[])
@@ -1473,7 +1571,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-47673074485958267-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9026238181562564-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Update &lt; Trailblazer::Operation
     step Model(Song, :[])
@@ -1493,13 +1591,13 @@ end
 
 <p>Given your database gem provides that finder, it will result in a query.</p>
 
-<ul id="0.7086011273066296" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7086011273066296-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7086011273066296-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-7086011273066296-Activity" class="tab-pane fade show active"> 
+<ul id="0.22358635104195967" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-22358635104195967-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-22358635104195967-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-22358635104195967-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
 ctx[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 </code></pre>
 
- </div><div id="0-7086011273066296-Operation" class="tab-pane fade show "> 
+ </div><div id="0-22358635104195967-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Update.(params: {id: 1}, seq: [])
 result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 </code></pre>
@@ -1517,8 +1615,8 @@ result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 
 <p>To add the explicit <code>End.not_found</code>terminus, pass the <code>:not_found_terminus</code> option to the macro.</p>
 
-<ul id="0.5834314520175008" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5834314520175008-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5834314520175008-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5834314520175008-Activity" class="tab-pane fade show active"> 
+<ul id="0.7890780922780971" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7890780922780971-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7890780922780971-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7890780922780971-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Update &lt; Trailblazer::Activity::Railway
     step Model(Song, :find_by, not_found_terminus: true)
@@ -1529,7 +1627,7 @@ result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 end
 </code></pre>
 
- </div><div id="0-5834314520175008-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7890780922780971-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Update &lt; Trailblazer::Operation
     step Model(Song, :find_by, not_found_terminus: true)
@@ -1544,13 +1642,13 @@ end
 
 <p>When running the <code>Update</code> activity with an invalid ID, it terminates on <code>End.not_found</code>.</p>
 
-<ul id="0.4921969323851737" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-4921969323851737-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-4921969323851737-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-4921969323851737-Activity" class="tab-pane fade show active"> 
+<ul id="0.7936414035193381" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7936414035193381-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7936414035193381-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7936414035193381-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: nil})
 puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 </code></pre>
 
- </div><div id="0-4921969323851737-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7936414035193381-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Update.(params: {id: nil})
 result.success? # =&gt; false
 </code></pre>
@@ -1572,8 +1670,8 @@ result.success? # =&gt; false
 
 <p>As per your design, you may inject one or more of those variables as follows.</p>
 
-<ul id="0.4430944970364291" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-4430944970364291-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-4430944970364291-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-4430944970364291-Activity" class="tab-pane fade show active"> 
+<ul id="0.8239946189251142" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8239946189251142-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8239946189251142-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8239946189251142-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
   params:               {title: "Olympia"}, # some random variable.
   "model.class":        Hit,
@@ -1582,7 +1680,7 @@ result.success? # =&gt; false
 )
 </code></pre>
 
- </div><div id="0-4430944970364291-Operation" class="tab-pane fade show "> 
+ </div><div id="0-8239946189251142-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(
   params:               {title: "Olympia"}, # some random variable.
   "model.class":        Hit,
@@ -1595,8 +1693,8 @@ result.success? # =&gt; false
 
 <p>You can even leave <code>Model()</code> entirely unconfigured.</p>
 
-<ul id="0.6968383582904756" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6968383582904756-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6968383582904756-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-6968383582904756-Activity" class="tab-pane fade show active"> 
+<ul id="0.9216397952206377" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9216397952206377-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9216397952206377-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9216397952206377-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step Model()
@@ -1606,7 +1704,7 @@ result.success? # =&gt; false
   end
 </code></pre>
 
- </div><div id="0-6968383582904756-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9216397952206377-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step Model()
@@ -1629,8 +1727,8 @@ result.success? # =&gt; false
 
 <p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
 
-<ul id="0.5055879439845081" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5055879439845081-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5055879439845081-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5055879439845081-Activity" class="tab-pane fade show active"> 
+<ul id="0.46065379380728866" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-46065379380728866-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-46065379380728866-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-46065379380728866-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step Model(Song, :new)
@@ -1641,7 +1739,7 @@ result.success? # =&gt; false
 end
 </code></pre>
 
- </div><div id="0-5055879439845081-Operation" class="tab-pane fade show "> 
+ </div><div id="0-46065379380728866-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step Model(Song, :new)
@@ -1656,12 +1754,12 @@ end
 
 <p>Nevertheless, it’s possible to override it using the <code>:"model.class"</code> variable when invoking the operation/activity.</p>
 
-<ul id="0.9986567047506258" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9986567047506258-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9986567047506258-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-9986567047506258-Activity" class="tab-pane fade show active"> 
+<ul id="0.20652843092011408" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-20652843092011408-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-20652843092011408-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-20652843092011408-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {}, :"model.class" =&gt; Hit)
 </code></pre>
 
- </div><div id="0-9986567047506258-Operation" class="tab-pane fade show "> 
+ </div><div id="0-20652843092011408-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(params: {}, :"model.class" =&gt; Hit)
 </code></pre>
 
