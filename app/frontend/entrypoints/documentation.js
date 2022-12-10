@@ -26,11 +26,28 @@ function updateRightSidebarScrollspy() {
   history.replaceState({}, "", href);
 }
 
-jquery(document).ready(function () {
-  jquery('a.nav-link[data-toggle="tab"]').click(function (e) {
-    const navContent = jquery(e.target.dataset.tag);
+async function activateAllTabsFor(navTagTitle) {
+  const navLinks = jquery(`a[data-tag$="${navTagTitle}"]`);
+
+  navLinks.each((_index, navLink) => {
+    jquery(navLink).tab("show");
+
+    const navContent = jquery(navLink.dataset.tag);
     navContent.siblings().removeClass("active");
     navContent.addClass("active");
+  });
+}
+
+jquery(document).ready(function () {
+  // listen for click on tab links
+  jquery('a.nav-link[data-toggle="tab"]').click(function (event) {
+    const navContent = jquery(event.target.dataset.tag);
+
+    navContent.siblings().removeClass("active");
+    navContent.addClass("active");
+
+    const navTagPath = event.target.dataset.tag.split("-");
+    activateAllTabsFor(navTagPath[navTagPath.length - 1]);
   });
 
   hljs.registerLanguage("ruby", ruby);

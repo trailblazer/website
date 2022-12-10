@@ -879,10 +879,6 @@ form .input-group-append span {
   background: 0 0;
 }
 
-.nav {
-  border-bottom: 8px solid #FF355D;
-  border-radius: 4px;
-}
 .nav .nav-item,
 .nav .nav-item a {
   font-size: 14px;
@@ -890,6 +886,7 @@ form .input-group-append span {
   box-shadow: none;
   outline: none;
   border: 0;
+  color: #3D3580;
 }
 .nav .nav-item .nav-icon,
 .nav .nav-item a .nav-icon {
@@ -900,11 +897,14 @@ form .input-group-append span {
   color: #3D3580;
   transition: none;
 }
+.nav.nav-tabs {
+  border-bottom: none;
+}
 .nav.nav-tabs .active {
   background-color: transparent;
-  border: none;
-  border-top: 4px solid #3D3580;
-  border-radius: 0;
+  border: 1px solid #4D4499;
+  border-bottom: none;
+  border-radius: 4px 4px 0px 0px;
 }
 
 .pagination .page-item .page-link {
@@ -1280,7 +1280,7 @@ a:hover,
 }
 
 .hljs {
-  border-radius: 3px;
+  border-radius: 0 3px 3px 3px;
   border: 1px solid #4D4499;
   border-bottom-width: 8px;
   display: inline-block;
@@ -2342,7 +2342,6 @@ i.blue {
 }
 .documentation-main .hljs {
   width: 100%;
-  margin-top: 15px;
   line-height: 150%;
 }
 .documentation-main.session-active {

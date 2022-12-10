@@ -20,15 +20,15 @@ Note that you are not limited to one validation engine. When switching from `Act
 
 <%= nav_tabs do |tab| %>
   <%= tab.(title: 'Rails', active: true) do %>
-  The configuration assumes you have `reform-rails` installed.
-
     config.reform.validations = :active_model
+
+  The configuration assumes you have `reform-rails` installed.
   <% end %>
 
   <%= tab.(title: 'Ruby') do %>
-  In a Ruby environment, you'd usually monkey-patch the `Form` class.
-
       Reform::Form.send(:include, Reform::Form::ActiveModel::Validations)
+
+  In a Ruby environment, you'd usually monkey-patch the `Form` class.
   <% end %>
 <% end %>
 
