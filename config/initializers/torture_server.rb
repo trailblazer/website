@@ -25,9 +25,3 @@ Snippets.class_eval do
     end # nav_tabs
   end
 end
-
-Torture::Page::HTML.class_eval do
-  def search_map
-    %(<%= search_map.to_json %>)
-  end
-end

@@ -64,18 +64,18 @@ In order to convert all markup below the `<nav>` node into a cell, we first need
 
 <%= nav_tabs do |tab| %>
   <%= tab.(title: 'Ruby', active: true) do %>
-  For now, all you need is the `trailblazer-cells` gem and the Cells template engine.
-
     gem "trailblazer-cells"
     gem "cells-hamlit"
+
+  For now, all you need is the `trailblazer-cells` gem and the Cells template engine.
   <% end %>
 
   <%= tab.(title: 'Rails') do %>
-  In Rails, you need the `trailblazer-cells` gem and the Cells template engine.
-
     gem "trailblazer-cells"
     gem "cells-hamlit"
     gem "cells-rails"
+
+  In Rails, you need the `trailblazer-cells` gem and the Cells template engine.
 
   The `cells-rails` gem will add cell invocation helpers to controllers and views, and supply the URL helpers in cells.
   <% end %>
