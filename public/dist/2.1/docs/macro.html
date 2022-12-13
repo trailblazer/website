@@ -7,8 +7,8 @@
     <title>Trailblazer - Macro</title>
 
     
-    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.dca914e8.css" media="screen" />
+    <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.cb2c1af2.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -553,7 +553,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 01 Dec 22</span>
+                      <span>Last updated 13 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -586,10 +586,12 @@
 
 <p>This allows you to <em>add your own</em> variable mapping to a macro, as illustrated in the example below.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :find_by),
-    In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Operation
+    step Model(Song, :find_by),
+      In() =&gt; -&gt;(ctx, my_id:, **) { ctx.merge(params: {id: my_id}) } # Model() needs {params[:id]}.
+    # ...
+  end
 end
 </code></pre>
 
@@ -664,8 +666,6 @@ end
   end
 end
 </code></pre>
-
-<h1 id="dynamic-output">:dynamic-output</h1>
 
 <p><span class="divider"></span></p>
 
@@ -1020,6 +1020,8 @@ end
 
 <p>The <code>Each()</code> macro allows to loop over a dataset while invoking a particular operation per iteration, as if multiple identical operations were serially connected, but receiving different input ctxs.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1040,6 +1042,30 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(dataset_from: :composers_for_each) {
+      step :notify_composers
+    }
+    step :rearrange
+
+    # "decider interface"
+    def composers_for_each(ctx, model:, **)
+      model.composers
+    end
+
+    def notify_composers(ctx, index:, item:, **)
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>You can either pass a block with steps to iterate, or an entire operation/activity. In this example, a block is used. Note that you need to use the <code>{}</code> curly braces due to Ruby’s precedence, just as it’s done in <code>Wrap()</code>.</p>
 
@@ -1096,6 +1122,8 @@ end
 
 <p>The iterated steps now receive a <code>:composer</code> ctx variable instead of <code>:item</code>.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     # ...
@@ -1106,6 +1134,19 @@ end
 end
 </code></pre>
 
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    # ...
+    def notify_composers(ctx, index:, composer:, **)
+      Mailer.send(to: composer.email, message: "#{index}) You, #{composer.full_name}, have been warned about your song being copied.")
+    end
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
@@ -1115,6 +1156,8 @@ end
 
 <p>If you would like the iterated steps to be within the “block”, use a dedicted activity or operation.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1125,8 +1168,23 @@ end
 end
 </code></pre>
 
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(Notify, dataset_from: :composers_for_each)
+    step :rearrange
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p>The iterated operation is composed of steps that have an identical interface with the block version.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Notify &lt; Trailblazer::Activity::Railway
     step :send_email
@@ -1137,6 +1195,20 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Notify &lt; Trailblazer::Operation
+    step :send_email
+
+    def send_email(ctx, index:, item:, **)
+      Mailer.send(to: item.email, message: "#{index}) You, #{item.full_name}, have been warned about your song being copied.")
+    end
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
@@ -1159,11 +1231,24 @@ end
 
 <p>All collected values are available at <code>ctx[:collected_from_each]</code> when <code>Each()</code> is finished.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
-signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(B::Song::Activity::Cover, [ctx, {}])
+
+signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Cover, ctx)
 
 puts ctx[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>ctx = {params: {id: 1}} # Song 1 has two composers.
+
+result = Song::Operation::Cover.(ctx)
+
+puts result[:collected_from_each] #=&gt; [[0, "Fat Mike"], [1, "El Hefe"]]
+</code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
@@ -1202,6 +1287,8 @@ end
 
 <p>For example, say you want to collect messages from each iteration.</p>
 
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Cover &lt; Trailblazer::Activity::Railway
     step :model
@@ -1222,6 +1309,30 @@ end
   end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Cover &lt; Trailblazer::Operation
+    step :model
+    step Each(dataset_from: :composers_for_each,
+      Inject(:messages) =&gt; -&gt;(*) { {} },
+
+      # all filters called before/after each iteration!
+      Out() =&gt; [:messages]
+    ) {
+      step :write_to_ctx
+    }
+    step :rearrange
+
+    def write_to_ctx(ctx, item:, messages:, index:, **)
+      ctx[:messages] = messages.merge(index =&gt; item.full_name)
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <ol>
   <li>When starting the iteration, the ctx variable <code>:messages</code> will be initialized to an empty hash (unless you provide it in the outside ctx).</li>
@@ -1311,21 +1422,49 @@ end
 <h2 id="macro-model">Model</h2>
 <p><!-- {macro-model-toc} --></p>
 
-<p>An operation can automatically find or create a model for you depending on the input, with the <code>Model</code> macro.</p>
+<p>An operation can automatically find or create a model for you using the <code>Model()</code> macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :new)
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
-<p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned <code>result</code> object.</p>
-
-<pre><code>result = Create.(params: {})
-result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
+end
 </code></pre>
 
-<p>Internally, <code>Model</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
+ </div> </div>
+
+<p>After this step, there is a fresh model instance under <code>ctx[:model]</code> that can be used in all following steps and the returned result object.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {}, seq: [])
+puts ctx[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(params: {}, seq: [])
+puts result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
+</code></pre>
+
+ </div> </div>
+
+<p>Internally, the <code>Model()</code> macro will simply invoke <code>Song.new</code> to populate <code>ctx[:model]</code>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1334,39 +1473,112 @@ result[:model] #=&gt; #&lt;struct Song id=nil, title=nil&gt;
 
 <p>You can also find models using <code>:find_by</code>. This is helpful for <code>Update</code> or <code>Delete</code> operations.</p>
 
-<pre><code>class Update &lt; Trailblazer::Operation
-  step Model( Song, :find_by )
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by)
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Update &lt; Trailblazer::Operation
+    step Model(Song, :find_by)
+    step :validate
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>The <code>Model</code> macro will invoke the following code for you.</p>
 
-<pre><code>ctx[:model] = Song.find_by( id: params[:id] )
+<pre><code>ctx[:model] = Song.find_by(id: params[:id])
 </code></pre>
 
-<p>This will assign <code>[:model]</code> for you by invoking <code>find_by</code>.</p>
+<p>This will assign <code>ctx[:model]</code> for you by invoking <code>find_by</code>.</p>
 
-<pre><code>result = Update.(params: { id: 1 })
-result[:model] #=&gt; #&lt;struct Song id=1, title="nil"&gt;
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
+ctx[:model] #=&gt; #&lt;Song id=1, ...&gt;
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:success&gt;
 </code></pre>
 
-<p>If <code>Song.find_by</code> returns <code>nil</code>, this will deviate to the left track, skipping the rest of the operation.</p>
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Update.(params: {id: 1}, seq: [])
+result[:model] #=&gt; #&lt;Song id=1, ...&gt;
+result.success? # =&gt; true
+</code></pre>
 
-<pre><code>result = Update.(params: {})
+ </div> </div>
+
+<p>If <code>Song.find_by</code> returns <code>nil</code>, this will deviate to the failure track, skipping the rest of the operation.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {})
+ctx[:model] #=&gt; nil
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:failure&gt;
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Update.(params: {})
 result[:model] #=&gt; nil
-result.success? #=&gt; false
+result.success? # =&gt; false
 </code></pre>
 
-<p>It is also possible to <code>find_by</code> with attribute other than <code>id</code>. For example,</p>
+ </div> </div>
 
-<pre><code>class UpdateWithFindByKey &lt; Trailblazer::Operation
-  step Model( Song, :find_by, :title )
-  # ..
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Find_by</li>
+    <li id="macro-model-find_by-key">Key</li>
+</ul>
+
+<p>It is also possible to <code>find_by</code> using an attribute other than <code>:id</code>.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by, :title) # third positional argument.
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
-<p>Note that you may also use <code>:find</code>. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.</p>
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Update &lt; Trailblazer::Operation
+    step Model(Song, :find_by, :title) # third positional argument.
+    step :validate
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Find_by</li>
+    <li id="macro-model-find_by-find">find</li>
+</ul>
+
+<p>Note that, instead of <code>find_by</code>, you may also use <code>:find</code>. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1375,48 +1587,101 @@ end
 
 <p>It’s possible to specify any finder method, which is helpful with ROMs such as Sequel.</p>
 
-<pre><code>class Show &lt; Trailblazer::Operation
-  step Model( Song, :[] )
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :[])
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
-<p>The provided method will be invoked and Trailblazer passes it the <code>params[:id]</code> value.</p>
-
-<pre><code>Song[ params[:id] ]
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Update &lt; Trailblazer::Operation
+    step Model(Song, :[])
+    step :validate
+    step :save
+    # ...
+  end
+end
 </code></pre>
 
-<p>Given your database gem provides that finder, it will result in a successful query.</p>
+ </div> </div>
 
-<pre><code>result = Show.(params: { id: 1 })
+<p>The provided method will be invoked and Trailblazer passes to it the value of<code>params[:id]</code>.</p>
+
+<pre><code>Song[params[:id]]
+</code></pre>
+
+<p>Given your database gem provides that finder, it will result in a query.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: 1}, seq: [])
+ctx[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Update.(params: {id: 1}, seq: [])
 result[:model] #=&gt; #&lt;struct Song id=1, title="Roxanne"&gt;
 </code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
 <h3 id="macro-model-not-found">Not Found</h3>
 <p><!-- {macro-model-not-found-toc} --></p>
 
-<p>With the help of <a href="/2.1/docs/endpoint.html">endpoint</a>, it is possible to connect failure of this step to render <strong>404 response</strong> directly.
-As a result, you don’t need to conditionally check if <code>ctx[:model]</code> is present or not.</p>
+<p>You can wire the <code>Model()</code> step to a dedicated terminus <code>:not_found</code> in case of a missing model, instead of connecting it to the default failure track. The new terminus represents an explicit outcome and could, for instance, be used in an <a href="/2.1/docs/endpoint.html">endpoint</a> to render a <strong>404 response</strong> without having to check if <code>ctx[:model]</code> is present or not.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/macro-ends.bedbd22e.webp" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/model-not-found.a42c117d.png" /></p>
 
-<p>To emit <code>End.not_found</code> signal, you need to pass <code>not_found_terminus</code> kwarg.</p>
+<p>To add the explicit <code>End.not_found</code>terminus, pass the <code>:not_found_terminus</code> option to the macro.</p>
 
-<pre><code>class UpdateFailureWithModelNotFound &lt; Trailblazer::Operation
-  step Model( Song, :find_by, not_found_terminus: true )
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Update &lt; Trailblazer::Activity::Railway
+    step Model(Song, :find_by, not_found_terminus: true)
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
-<p>Internally, it is just telling <a href="/2.1/docs/activity.html#activity-wiring-api-output-implicit-signal"><code>Output(:failure)</code></a> to emit <a href="/2.1/docs/activity.html#activity-wiring-api-end-"><code>End(:not_found)</code></a></p>
-
-<pre><code>result = UpdateFailureWithModelNotFound.(params: {title: nil})
-result[:model] #=&gt; nil
-result.success? #=&gt; false
-result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Update &lt; Trailblazer::Operation
+    step Model(Song, :find_by, not_found_terminus: true)
+    step :validate
+    step :save
+    # ...
+  end
+end
 </code></pre>
+
+ </div> </div>
+
+<p>When running the <code>Update</code> activity with an invalid ID, it terminates on <code>End.not_found</code>.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Update, params: {id: nil})
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Update.(params: {id: nil})
+result.success? # =&gt; false
+</code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
@@ -1433,21 +1698,51 @@ result.event #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
 
 <p>As per your design, you may inject one or more of those variables as follows.</p>
 
-<pre><code>result = Create.(
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
   params:               {title: "Olympia"}, # some random variable.
   "model.class":        Hit,
   "model.action":       :find_by,
-  "model.find_by_key": :title
+  "model.find_by_key":  :title, seq: []
 )
 </code></pre>
 
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(
+  params:               {title: "Olympia"}, # some random variable.
+  "model.class":        Hit,
+  "model.action":       :find_by,
+  "model.find_by_key":  :title, seq: []
+)
+</code></pre>
+
+ </div> </div>
+
 <p>You can even leave <code>Model()</code> entirely unconfigured.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model()
-  # ..
-end
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model()
+    step :validate
+    step :save
+    # ...
+  end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step Model()
+    step :validate
+    step :save
+    # ...
+  end
+</code></pre>
+
+ </div> </div>
 
 <p>This implies you inject all required variables at run-time.</p>
 
@@ -1460,16 +1755,43 @@ end
 
 <p>Usually, the specific model class for <code>Model()</code> is set directly in the macro.</p>
 
-<pre><code>class Create &lt; Trailblazer::Operation
-  step Model(Song, :new)
-  # ..
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
 end
 </code></pre>
 
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step Model(Song, :new)
+    step :validate
+    step :save
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
 <p>Nevertheless, it’s possible to override it using the <code>:"model.class"</code> variable when invoking the operation/activity.</p>
 
-<pre><code>result = Create.(params: {}, :"model.class" =&gt; Hit)
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create, params: {}, :"model.class" =&gt; Hit, seq: [])
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(params: {}, :"model.class" =&gt; Hit, seq: [])
+</code></pre>
+
+ </div> </div>
 
 <p>Note that you <a href="">don’t have  to configure</a> any model class at all when injecting it.</p>
 
@@ -2059,6 +2381,16 @@ end
           Find_by
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-model-find_by-key">Key</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#macro-model-find_by-find">find</a>
+        </li>
       
     
       <li>

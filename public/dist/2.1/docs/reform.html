@@ -7,8 +7,8 @@
     <title>Trailblazer - Reform</title>
 
     
-    <script src="/vite/assets/documentation.5622eff8.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.dca914e8.css" media="screen" />
+    <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.cb2c1af2.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -565,7 +565,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 06 Oct 22</span>
+                      <span>Last updated 13 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -2283,16 +2283,16 @@ end
 
 <ul id="app/concepts/documentation/page/snippet/reform/validation.md.erb-21" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-reform-validation-md-erb-21-Rails"> Rails </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-reform-validation-md-erb-21-Ruby"> Ruby </a> </li> </ul>
 <div class="tab-content"> <div id="app-concepts-documentation-page-snippet-reform-validation-md-erb-21-Rails" class="tab-pane fade show active"> 
-<p>The configuration assumes you have <code>reform-rails</code> installed.</p>
-
 <pre><code>config.reform.validations = :active_model
 </code></pre>
 
- </div><div id="app-concepts-documentation-page-snippet-reform-validation-md-erb-21-Ruby" class="tab-pane fade show "> 
-<p>In a Ruby environment, you’d usually monkey-patch the <code>Form</code> class.</p>
+<p>The configuration assumes you have <code>reform-rails</code> installed.</p>
 
+ </div><div id="app-concepts-documentation-page-snippet-reform-validation-md-erb-21-Ruby" class="tab-pane fade show "> 
 <pre><code>  Reform::Form.send(:include, Reform::Form::ActiveModel::Validations)
 </code></pre>
+
+<p>In a Ruby environment, you’d usually monkey-patch the <code>Form</code> class.</p>
 
  </div> </div>
 
