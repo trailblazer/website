@@ -6,8 +6,9 @@ With `trailblazer-2.1.1` and the bundled `trailblazer-activity-dsl-linear-1.0.0`
 
 Before the introduction of the composable `In()`, `Out()` and `Inject()` filters, variable mapping was done with the `:input` and `:output` option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.
 
-* Once used, the `:input`, `:output` and `:inject` option will overwrite any options set earlier via `In()`, `Out()` and `Inject()`. This will often lead to problems when using macros.
+* Once used, the `:input`, `:output` and `:inject` option will overwrite any options set earlier (or later) via `In()`, `Out()` and `Inject()`. This will often lead to problems when using macros.
 * The superseded options are basically impossible to debug, whereas the composable `In()` approach can [nicely display the computed set](#activity-variable-mapping-introspect) of variables going in or out of a step.
+* In future versions of Trailblazer we're planning automatic "contracts" for steps along with type checking. This is not possible with the monolithic `:input` option.
 
 <%= h4 ":input" %>
 
@@ -17,7 +18,7 @@ The `:input` option accepts any callable following the option interface.
 step :create_model,
   input: :input_for_create_model
   # becomes
-  Input() => :input_for_create_model
+  In() => :input_for_create_model
 <% end %>
 
 `:input` works identically to a single `In()` call. <%= api "#activity-variable-mapping-in-" %>
