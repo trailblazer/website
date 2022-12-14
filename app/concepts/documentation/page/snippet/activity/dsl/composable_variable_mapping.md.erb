@@ -8,9 +8,9 @@ It's one of the most frequently used features in Trailblazer.
 
 Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.
 
-<%= code "no-in", collapse: :meths %>
+<%= code_tabs "no-in" %>
 
-The `Policy::Create` implementaition is a simple callable class following the [step interface](#activity-internals-step-interface).
+The `Policy::Create` implementation is a simple callable class following the [step interface](#activity-internals-step-interface).
 
 <%= code "policy", collapse: :decision %>
 
@@ -22,7 +22,7 @@ Last, depending on the policy decision, the step code returns true or false.
 
 When executing the `Create` operation using the `:current_user` variable, an `ArgumentError` is raised.
 
-<%= code "no-in-invoke" %>
+<%= code_tabs "no-in-invoke" %>
 
 Since the "current user" is handed into the operation as the `:current_user` variable, and no other step preceding `Policy::Create` is setting this variable, the step expecting `:user` crashes.
 
@@ -34,16 +34,15 @@ Variable mapping (short: i/o) can be done manually, with ugly "helper" steps bef
 
 Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.
 
-<%= code "out-array", collapse: "meths" %>
+<%= code_tabs "out-array", collapse: "meths" %>
 
 Not only are those input and output pipelines easy to [debug](#activity-variable-mapping-introspect), they also allow to be altered in derived operations, when [using inheritance](#activity-variable-mapping-inheritance), and  work in [combination with macros](#activity-variable-mapping-macro).
 
 <%= h3 "In()" %>
 
-As you might have guessed, `In()` helps creating input filters. It allows to configure or dynamically compute variables going _into_ the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).
+`In()` allows to configure variables going _into_ the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda), to compute variables at runtime.
 
-
-Be wary that once you use `In()`, only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.
+Be wary that once you **use `In()` your are white-listing**: only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.
 
 <%= h4 "Mapping hash" %>
 
@@ -57,7 +56,7 @@ The `In()` filter will result in `:current_user` being renamed to `:user`. Since
 
 To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a `#show_ctx` method.
 
-<%= code "in-mapping-keys", collapse: :meths %>
+<%= code_tabs "in-mapping-keys" %>
 
 You should use the mapping hash when variables need to be renamed. If variables need to be added without renaming, a limiting array is your friend.
 
@@ -65,7 +64,7 @@ You should use the mapping hash when variables need to be renamed. If variables 
 
 `In()` accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).
 
-<%= code "in-limit", collapse: :meths %>
+<%= code_tabs "in-limit" %>
 
 This configuration will lead to the exact same new ctx for `Policy::Create` as in the [example above](#activity-variable-mapping-in-mapping-hash), producing a new ctx that will look as below.
 
@@ -80,7 +79,7 @@ This configuration will lead to the exact same new ctx for `Policy::Create` as i
 
 As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).
 
-<%= code "in-callable", collapse: :meths %>
+<%= code_tabs "in-callable" %>
 
 Callable `In()` filters **have to** return a hash. This hash will be merged with the other `In()` filters and comprise the new ctx.
 
@@ -99,7 +98,7 @@ However, if `:current_user` is `nil`, `Policy::Create` will raise an exception c
 
 Following the TRB option standard, an `In()` filter may even be implemented as an instance method. All you need to do is pass a symbol to `In()`.
 
-<%= code "in-method", collapse: :meths %>
+<%= code_tabs "in-method" %>
 
 The method needs to expose a step interface just like any other callable.
 
@@ -107,13 +106,13 @@ The method needs to expose a step interface just like any other callable.
 
 Both callables and filter methods for `In()` can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.
 
-<%= code "in-kwargs", collapse: :meths %>
+<%= code_tabs "in-kwargs" %>
 
 Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.
 
 <%= h3 "Out()" %>
 
-Without any output configuration on the exemplary policy step, any variable written to `ctx` will be automatically set on the outer ctx. Anything the step writes to `ctx` is passed along to the following step.
+Without any output configuration on the exemplary policy step, any variable written to `ctx` will be automatically set on the outer ctx, passing along internal variabes to the following step.
 
 <%= vite_image_tag "images/ctx-out-all.png", class: "mx-auto d-block" %>
 
@@ -135,7 +134,7 @@ As soon as you use `Out()`, only variables specified through the filters will be
 
 In order to limit variables added to the outer ctx, `Out()` accepts an array similar to `In()`. Consider this as a whitelisting to specify exposed variables.
 
-<%= code "out-array", collapse: :meths %>
+<%= code_tabs "out-array" %>
 
 This single `Out()` usage will result in only the `:message` variable being written to the outer ctx that is passed on. The `:status` variable is discarded.
 
@@ -147,7 +146,7 @@ You may pass any number of variables in the limiting array.
 
 Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the "old" inner name points to the outer name that you want to use in the operation hosting that step.
 
-<%= code "out-hash", collapse: :meths %>
+<%= code_tabs "out-hash" %>
 
 Here, steps following `Policy::Create` will see a variable `:message_from_policy` merged into the ctx - which is the original `:message`, renamed.
 
@@ -155,7 +154,7 @@ Here, steps following `Policy::Create` will see a variable `:message_from_policy
 
 An `Out()` filter can be any callable object following the [step interface](#activity-internals-step-interface).
 
-<%= code "out-callable", collapse: :meths %>
+<%= code_tabs "out-callable" %>
 
 The callable receives the inner ctx that just left the actual step, here `Policy::Create`. You may run any Ruby code in the callable, even `if`s.
 
@@ -171,7 +170,7 @@ You may also use an `:instance_method` to filter outgoing variables, similar to 
 
 Just as with `In()` callables can receive keyword arguments.
 
-<%= code "out-kw" %>
+<%= code_tabs "out-kw" %>
 
 Any variable readable on the inner `ctx` that just left `Policy::Create` is available as a keyword argument for a callable. Note that you need to default it if its presence is not guaranteed.
 
@@ -179,7 +178,7 @@ Any variable readable on the inner `ctx` that just left `Policy::Create` is avai
 
 You can access the outer, original ctx by passing the `:with_outer_ctx` option to `Out()`.
 
-<%= code "out-outer", collapse: :meths %>
+<%= code_tabs "out-outer" %>
 
 While the callable still needs to return a hash that is then merged with the original ctx, it's possible to access variables from the outer ctx through the `:outer_ctx` keyword argument. This allows for merging deeper data structures, such as error objects.
 
@@ -189,6 +188,9 @@ An `Inject()` filter, as opposed to `In()`, does an existance check on the ctx u
 
 * It allows defaulting a variable when it's absent in the ctx.
 * It can pass-through a variable when it is present in the ctx, and only then.
+* You can also statically set a variable, whether or not it is present using the `:override` option.
+
+Note that `Inject()` can be used without `In()`.
 
 Check the following exemplary policy code.
 
@@ -225,6 +227,20 @@ Defaulting the `:action` variable via `Inject()` will improve the policy compone
 <%= code "inject-default", collapse: :meths %>
 
 The lambda is executed at runtime, just before the actual step is invoked. It provides access to the ctx object and allows extracting keyword arguments.
+
+<%= h4 "Override" %>
+
+Use the `:override` option to always set a variable, even if it is already present in the incoming `ctx`.
+
+<%= code :inject_override_iso %>
+
+This is helpful to set configuration variables for an activity while still using the well-established keyword argument mechanics. The `Policy::Create` class defines `:action` as a kwarg. This doesn't necessarily mean the user can always inject and dictate the very value. Instead, we can override any injected value with the "hard-coded" `:create` value.
+
+<%= code_tabs "inject-override" %>
+
+The call as below will always use `action: :create`, even if something else is injected.
+
+<%= code_tabs "inject-override-call" %>
 
 <%= h3 "Macro" %>
 
