@@ -30,6 +30,6 @@ gem "trailblazer-operation"
 # Use Vite in Rails and bring joy to your JavaScript experience (https://github.com/ElMassimo/vite_ruby)
 gem "vite_rails"
 # Tool collection to write and layout programmer's manuals. (https://github.com/apotonick/torture)
-gem "torture"
+gem "torture", github: "apotonick/torture"
 # Write a short summary, because RubyGems requires one. (https://github.com/apotonick/torture)
 gem "torture-server", github: "apotonick/torture-server"

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/apotonick/torture-server.git
-  revision: 446aad333787f9bfa9d5bb05f9b90e20cd14f4d0
+  revision: b5461a84784b2b2716452d5e35cade929901f37f
   specs:
     torture-server (0.1.0)
       cells
@@ -9,8 +9,14 @@ GIT
       minitest-line
 
 GIT
+  remote: https://github.com/apotonick/torture.git
+  revision: da3aaa7810dcabc97d2676a0110d804f7a733fb8
+  specs:
+    torture (0.0.1)
+
+GIT
   remote: https://github.com/trailblazer/cells.git
-  revision: b7c4b1fae3850c2b7bc1748aaaeccf5690378a5c
+  revision: 93add13e4794838eef479d75dc7b985fd5e900a9
   specs:
     cells (4.5.0)
       declarative-builder (~> 0.2.0)
@@ -199,11 +205,10 @@ GEM
     ruby-progressbar (1.11.0)
     sqlite3 (1.4.2)
     strscan (3.0.1)
-    temple (0.8.2)
+    temple (0.9.1)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.2.0)
-    torture (0.0.1)
     trailblazer-activity (0.13.0)
       trailblazer-context (~> 0.5.0)
       trailblazer-option (~> 0.1.0)
@@ -251,7 +256,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   sqlite3 (~> 1.4)
-  torture
+  torture!
   torture-server!
   trailblazer-cells
   trailblazer-operation
