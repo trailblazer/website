@@ -2680,8 +2680,9 @@ TODO: decompose trick (input )
 <p>Before the introduction of the composable <code>In()</code>, <code>Out()</code> and <code>Inject()</code> filters, variable mapping was done with the <code>:input</code> and <code>:output</code> option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.</p>
 
 <ul>
-  <li>Once used, the <code>:input</code>, <code>:output</code> and <code>:inject</code> option will overwrite any options set earlier via <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. This will often lead to problems when using macros.</li>
+  <li>Once used, the <code>:input</code>, <code>:output</code> and <code>:inject</code> option will overwrite any options set earlier (or later) via <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. This will often lead to problems when using macros.</li>
   <li>The superseded options are basically impossible to debug, whereas the composable <code>In()</code> approach can <a href="#activity-variable-mapping-introspect">nicely display the computed set</a> of variables going in or out of a step.</li>
+  <li>In future versions of Trailblazer we’re planning automatic “contracts” for steps along with type checking. This is not possible with the monolithic <code>:input</code> option.</li>
 </ul>
 
 <p><span class="divider"></span></p>
@@ -2696,7 +2697,7 @@ TODO: decompose trick (input )
 <pre><code>step :create_model,
   input: :input_for_create_model
   # becomes
-  Input() =&gt; :input_for_create_model
+  In() =&gt; :input_for_create_model
 </code></pre>
 
 <p><code>:input</code> works identically to a single <code>In()</code> call. <a href="#activity-variable-mapping-in-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
