@@ -1,112 +1,65 @@
 <%= h3 "Input / Output" %>
 
-Before the introduction of the composable `In()`, `Out()` and `Inject()` filters, variable mapping was done with the `:input` and `:output` option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.
-
 <%= info do %>
 With `trailblazer-2.1.1` and the bundled `trailblazer-activity-dsl-linear-1.0.0` gems, the recommended way of I/O is using [composable variable mapping]() via `In()` and `Out()`.
 <% end %>
 
-<%= vite_image_tag "images/input.webp", class: "mx-auto d-block" %>
+Before the introduction of the composable `In()`, `Out()` and `Inject()` filters, variable mapping was done with the `:input` and `:output` option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.
 
-The `:input` filter is normally used to create a new context that limits what its task sees.
+* Once used, the `:input`, `:output` and `:inject` option will overwrite any options set earlier via `In()`, `Out()` and `Inject()`. This will often lead to problems when using macros.
+* The superseded options are basically impossible to debug, whereas the composable `In()` approach can [nicely display the computed set](#activity-variable-mapping-introspect) of variables going in or out of a step.
 
+<%= h4 ":input" %>
 
-<%= vite_image_tag "images/output.webp", class: "mx-auto d-block" %>
+The `:input` option accepts any callable following the option interface.
 
-With the `:output` filter, you can control what variables go from the inner scoped context to the outer.
+<%= code :ruby do %>
+step :create_model,
+  input: :input_for_create_model
+  # becomes
+  Input() => :input_for_create_model
+<% end %>
 
+`:input` works identically to a single `In()` call. <%= api "#activity-variable-mapping-in-" %>
 
+<%= h4 ":output" %>
 
-Without any I/O configuration, all values written in a task to `ctx` will be visible in the following tasks. This might - sometimes - lead to context pollution or, even worse, certain tasks "seeing" wrong values.
+The `:output` option, just like `:input`, accepts any callable following the option interface.
 
-When using the DSL, the filter options `:input` and `:output` are your interface for variable mapping.
+<%= code :ruby do %>
+step :create_model,
+  output: :output_for_create_model
+  # becomes
+  Out() => :output_for_create_model
+<% end %>
 
-Please note that I/O works for both "simple" tasks as well as nested activities.
+`:output` works identically to a single `Out()` call. <%= api "#activity-variable-mapping-out-" %>
 
-<%= h4 "Overview" %>
+The `:output_with_outer_ctx` option is [documented here](#activity-variable-mapping-out-outer-context).
 
-The variable mapping API provides some shortcuts to control the scope.
+<%= code :ruby do %>
+step :create_model,
+  output: :output_for_create_model,
+  output_with_outer_ctx: true
+  # becomes
+  Out(with_outer_ctx: true) => :output_for_create_model
+<% end %>
 
-<%= code "io-ary-hash", collapse: "io-steps" %>
+<%= h4 ":inject" %>
 
-An array value such as `[:params]` passed to `:input` will result in the configured task only "seeing" the provided list of variables. All other values are not available, mimicking a whitelist.
+`:inject` works identically to a single `Inject()` call. <%= api "#activity-variable-mapping-inject-" %>
 
-A hash value (e.g. `{user: :current_user}`) acts like a variable mapping directive. With `:output`, it will only expose the variables mentioned in the hash, but rename them to the specifed value.
-
-<%= code "io-auth", collapse: "io-steps" %>
-
-In the `#authorize` example, the following happens.
-
-1. The task receives a context with only one variable set, which is `:params` passed into the activity invocation.
-2. In the task, it may write (and pollute) the `ctx` object as much as it wants. It's a scoped, private ctx object that will be discarded after the task is finished. This leads to the `:result` variable being thrown away.
-3. Before the private `ctx` gets disposed of, its `:user` key gets copied into the original `ctx` under the name `:current_user`.
-4. The following task `create_model` will see the original ctx plus `:current_user` that was written in the previous step using `:output`.
-
-<%= code "io-call", collapse: "io-steps" %>
-
-An array passed to `:output` will exclusively copy the specified variables to the original ctx, only.
-
-A hash passed to `:input` results in the called task only "seeing" the specified variables, but renamed to the hash values.
-
-<%= h4 "Callable" %>
-
-As usual, you may provide your own code for dynamic filtering or renaming.
-
-<%= code "io-proc", collapse: "mod" %>
-
-From the `:input` callable, you can return a hash containing the values that `#authorize` may see. All other variables you don't include in that hash will be unavailable. This is called a _scope_ and resembles the arguments you pass into a normal Ruby method along with a method that doesn't have access to variables outside its scope.
-
-Trailblazer will automatically create a new `Context` object around your custom input hash. You can write to that without interferring with the original context.
-
-The `:output` callable receives the scoped, new context object that you wrote to in `#authorize`. In `:output`, you return the hash of variables that you want to be visible in the following steps. This hash will be automatically merged into the original context.
-
-In both filters, you're able to rename and coerce variables. This gives you a bit more control than the simpler DSL.
-
-<%= h4 "Filter Methods" %>
-
-For better readability, you may use instance methods for your filters.
-
-<%= code "io-method" %>
-
-They receive the identical set of arguments that other callables are called with.
-
-<%= h4 "Keyword Arguments" %>
-
-You may use keyword arguments in your filters for type safety and better readable code.
-
-<%= code "io-kws" %>
-
-* `:input` provides all variables from the original context as kw args.
-* `:output` will receive a list of all variables you added to the scoped, inner context.
-
-<%= h4 "With Outer Ctx" %>
-
-<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear >= 1.0.1</a>
-
-It is possible to access the outer context (in addition to the inner ctx) in an `:output` filter using the `:output_with_outer_ctx` DSL option.
-
-<%= code "io-outer-kw" %>
-
-The `:output` filter then receives a special keyword argument `:outer_ctx` which is the original ("outer") context. This is helpful if you want to merge new values into existing datastructures, such as error objects.
-
-As usual, the returned hash is then merged into the outer context.
-
-<%= h4 "Notes" %>
-
-&nbsp;
-
-* You can mix any `:input` style with any `:output` style.
-* **CTX MANAGEMENT** Using I/O filters always results in a new, scoped context being created in `:input` (containing your filtered variables), and disposing of that very context in `:output` (copying desired variables over to the original ctx).
-* **LOW-LEVEL API** Please note that the I/O DSL is only providing the most-used requirements. Feel free to use the low-level taskWrap API to build your own variable mapping with different scoping techniques.
-* **DEFAULTS** When omitting either `:input` or `:output`, defaults will be provided. Default `:input` will pass through all variables. Default `:output` copies all written variables from the scoped context to the original one.
-
-
+<%= code :ruby do %>
+step :create_model,
+  inject: :inject_for_create_model
+  # becomes
+  Inject() => :inject_for_create_model
+<% end %>
 
 <%= h2 "Dependency Injection" %>
 
 <%= info do %>
 WIP: This section is not final, yet.
-TODO: maybe use Operation API instead?
 <% end %>
 
 <%= h3 "Overview" %>
@@ -114,77 +67,6 @@ TODO: maybe use Operation API instead?
 Very often your activity or one of the steps contained require particular objects and values to get their job done. Instead of hard-wiring those _"dependencies"_ in the code it is good style to allow providing those objects by passing them into the activity at run-time. This is called dependency injection and is a [common technique](https://en.wikipedia.org/wiki/Dependency_injection) in software engineering.
 
 One way for using dependency injection is using keyword arguments for variables you need, and defaulting those in the step signature.
-
-<%= code "write-defaulted" %>
-
-The `#write` step requires a variable `:time`, which is a dependency. The variable's default is hard-wired and applied if no other value is provided. However, by injecting `:time` when invoking the activity, you can override this value at run-time.
-
-<%= code "inject-log-time" %>
-
-This is extremely helpful when you have to replace a "hard-wired" dependency, for example in a test where you want to know and define `:time`'s value upfront.
-
-<%= h3 "Inject" %>
-
-The `:inject` option allows to pass through injected variables without having to add them in the `:input` filter code. It also provides a way to default variables should they not have been passed from the outside.
-
-<%= info do %>
-The `:inject` was introduced in `trailblazer-activity-dsl-linear` 0.4.3 and is still considered experimental. Use it, but be reasonable and keep in mind that syntactical API might change.
-<% end %>
-
-When using `:inject` **without** `:input` there won't be any filtering happening. The original ctx with all its variables will be passed into the step.
-
-As usual, the option can be used with both nested operations/activities and callable steps.
-
-<%= h4 "Qualified Pass-through" %>
-
-The most commonly used style for `:inject` is the pass-through array. When used in combination with `:input` this allows to reduce the `:input` filter code.
-
-Check the following snippet. It's a common pattern in many TRB applications to use an `:input` filter to limit variables going into the subprocess. Anyways, when you have defaulted variables in the subprocess, you should only add those to your `:input` when they're actually defined by the invoker - or passed from the outside.
-
-<%= code "clumsy-merge" %>
-
-Quickly, the code gets messy as you constantly need to check whether or not the dependency is injected.
-
-<%= h4 "array style" %>
-
-Use the `:inject` option to automatically add injected variables when they're present in `ctx`.
-
-<%= code "inject-array" %>
-
-Depending on the variables passed into the activity, the `ctx` going into `Log` will look as follows.
-
-<%= code :ruby do  %>
-#                                 ctx for {Log}
-Create.({})                  #=> {model: XXX}
-Create.({time: "yesterday"}) #=> {model: XXX, time: "yesterday"}
-<% end %>
-
-Note that this (currently) only has effects when combined with `:input`.
-
-<%= h4 "defaulting" %>
-
-Instead of defaulting injected variables in the method signature, you can define a more convenient defaulting injection using `:inject`. Obviously, the affected steps should not use defaulted kwargs for variables that have defaulting happen via `:inject`.
-
-<%= code "write-required" %>
-
-In this example, we use Ruby's defaulting for the `:time` kwarg, and make `:date` a required kwarg without any defaulting.
-
-
-The `:inject` option with a hash allows for configuring defaulting for any number of injected variables.
-
-<%= code "inject-default" %>
-
-In the proc, you have access to the original `ctx` and its variables via keyword arguments.
-
-Depending on the variables passed into the activity, the `ctx` going into `Log` will look as follows.
-
-<%= code :ruby do  %>
-#                                         ctx for {Log}
-Create.({})                           #=> {model: XXX, date: <today>}
-Create.({time: "now", date: "today"}) #=> {model: XXX, time: "now", date: "today"}
-<% end %>
-
-Note that defaulted injects are always processed and either added to the original context when used without `:input` or to the new, filtered context when using it in combination with `:input`.
 
 <%= h3 "Mapping" %>
 TODO

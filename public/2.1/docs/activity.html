@@ -554,7 +554,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 13 Dec 22</span>
+                      <span>Last updated 14 Dec 22</span>
                     </li>
                   </ul>
                 </div>
@@ -1681,14 +1681,30 @@ end
 
 <p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create # an imaginary policy step.
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create # an imaginary policy step.
+    # ...
+  end
 end
 </code></pre>
 
-<p>The <code>Policy::Create</code> implementaition is a simple callable class following the <a href="#activity-internals-step-interface">step interface</a>.</p>
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create # an imaginary policy step.
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The <code>Policy::Create</code> implementation is a simple callable class following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
 <pre><code>module Policy
   # Explicit policy, not ideal as it results in a lot of code.
@@ -1707,10 +1723,20 @@ end
 
 <p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
 
-<pre><code>result = Trailblazer::Activity::TaskWrap.invoke(AA::Create, [{current_user: Module}])
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>result = Trailblazer::Activity.(Song::Activity::Create, current_user: Module)
 
 #=&gt; ArgumentError: missing keyword: :user
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(current_user: Module)
+
+#=&gt; ArgumentError: missing keyword: :user
+</code></pre>
+
+ </div> </div>
 
 <p>Since the “current user” is handed into the operation as the <code>:current_user</code> variable, and no other step preceding <code>Policy::Create</code> is setting this variable, the step expecting <code>:user</code> crashes.</p>
 
@@ -1725,15 +1751,34 @@ end
 
 <p>Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; [:message]
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>Not only are those input and output pipelines easy to <a href="#activity-variable-mapping-introspect">debug</a>, they also allow to be altered in derived operations, when <a href="#activity-variable-mapping-inheritance">using inheritance</a>, and  work in <a href="#activity-variable-mapping-macro">combination with macros</a>.</p>
 
@@ -1742,9 +1787,9 @@ end
 <h3 id="activity-variable-mapping-in-">In()</h3>
 <p><!-- {activity-variable-mapping-in--toc} --></p>
 
-<p>As you might have guessed, <code>In()</code> helps creating input filters. It allows to configure or dynamically compute variables going <em>into</em> the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda).</p>
+<p><code>In()</code> allows to configure variables going <em>into</em> the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda), to compute variables at runtime.</p>
 
-<p>Be wary that once you use <code>In()</code>, only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.</p>
+<p>Be wary that once you <strong>use <code>In()</code> your are white-listing</strong>: only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1772,21 +1817,46 @@ end
 
 <p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step :show_ctx,
-    In() =&gt; {
-      :current_user =&gt; :user, # rename {:current_user} to {:user}
-      :model        =&gt; :model # add {:model} to the inner ctx.
-    }
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :show_ctx,
+      In() =&gt; {
+        :current_user =&gt; :user, # rename {:current_user} to {:user}
+        :model        =&gt; :model # add {:model} to the inner ctx.
+      }
 
-  def show_ctx(ctx, **)
-    p ctx.to_h
-    #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+    def show_ctx(ctx, **)
+      p ctx.to_h
+      #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+    end
+    # ...
   end
-  # ...
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step :show_ctx,
+      In() =&gt; {
+        :current_user =&gt; :user, # rename {:current_user} to {:user}
+        :model        =&gt; :model # add {:model} to the inner ctx.
+      }
+
+    def show_ctx(ctx, **)
+      p ctx.to_h
+      #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>You should use the mapping hash when variables need to be renamed. If variables need to be added without renaming, a limiting array is your friend.</p>
 
@@ -1799,14 +1869,32 @@ end
 
 <p><code>In()</code> accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model]
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model]
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>This configuration will lead to the exact same new ctx for <code>Policy::Create</code> as in the <a href="#activity-variable-mapping-in-mapping-hash">example above</a>, producing a new ctx that will look as below.</p>
 
@@ -1825,17 +1913,38 @@ end
 
 <p>As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; -&gt;(ctx, **) do
-      # only rename {:current_user} if it's there.
-      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
-    end,
-    In() =&gt; [:model]
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; -&gt;(ctx, **) do
+        # only rename {:current_user} if it's there.
+        ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; -&gt;(ctx, **) do
+        # only rename {:current_user} if it's there.
+        ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>Callable <code>In()</code> filters <strong>have to</strong> return a hash. This hash will be merged with the other <code>In()</code> filters and comprise the new ctx.</p>
 
@@ -1858,19 +1967,42 @@ end
 
 <p>Following the TRB option standard, an <code>In()</code> filter may even be implemented as an instance method. All you need to do is pass a symbol to <code>In()</code>.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; :input_for_policy, # You can use an {:instance_method}!
-    In() =&gt; [:model]
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; :input_for_policy, # You can use an {:instance_method}!
+      In() =&gt; [:model]
 
-  def input_for_policy(ctx, **)
-    # only rename {:current_user} if it's there.
-    ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    def input_for_policy(ctx, **)
+      # only rename {:current_user} if it's there.
+      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    end
+    # ...
   end
-  # ...
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; :input_for_policy, # You can use an {:instance_method}!
+      In() =&gt; [:model]
+
+    def input_for_policy(ctx, **)
+      # only rename {:current_user} if it's there.
+      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>The method needs to expose a step interface just like any other callable.</p>
 
@@ -1883,17 +2015,38 @@ end
 
 <p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-                  # vvvvvvvvvvvv keyword arguments rock!
-    In() =&gt; -&gt;(ctx, current_user: nil, **) do
-      current_user.nil? ? {} : {user: current_user}
-    end,
-    In() =&gt; [:model]
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+                    # vvvvvvvvvvvv keyword arguments rock!
+      In() =&gt; -&gt;(ctx, current_user: nil, **) do
+        current_user.nil? ? {} : {user: current_user}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+                    # vvvvvvvvvvvv keyword arguments rock!
+      In() =&gt; -&gt;(ctx, current_user: nil, **) do
+        current_user.nil? ? {} : {user: current_user}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.</p>
 
@@ -1902,7 +2055,7 @@ end
 <h3 id="activity-variable-mapping-out-">Out()</h3>
 <p><!-- {activity-variable-mapping-out--toc} --></p>
 
-<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx. Anything the step writes to <code>ctx</code> is passed along to the following step.</p>
+<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx, passing along internal variabes to the following step.</p>
 
 <p><img class="mx-auto d-block" src="/vite-dev/images/ctx-out-all.png" /></p>
 
@@ -1943,15 +2096,34 @@ end
 
 <p>In order to limit variables added to the outer ctx, <code>Out()</code> accepts an array similar to <code>In()</code>. Consider this as a whitelisting to specify exposed variables.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; [:message]
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>This single <code>Out()</code> usage will result in only the <code>:message</code> variable being written to the outer ctx that is passed on. The <code>:status</code> variable is discarded.</p>
 
@@ -1968,15 +2140,34 @@ end
 
 <p>Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the “old” inner name points to the outer name that you want to use in the operation hosting that step.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; {:message =&gt; :message_from_policy}
-  # ...
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; {:message =&gt; :message_from_policy}
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; {:message =&gt; :message_from_policy}
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>Here, steps following <code>Policy::Create</code> will see a variable <code>:message_from_policy</code> merged into the ctx - which is the original <code>:message</code>, renamed.</p>
 
@@ -1989,21 +2180,46 @@ end
 
 <p>An <code>Out()</code> filter can be any callable object following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; -&gt;(ctx, **) do
-      return {} unless ctx[:message]
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, **) do
+        return {} unless ctx[:message]
 
-      { # you always have to return a hash from a callable!
-        :message_from_policy =&gt; ctx[:message]
-      }
-    end
-  # ...
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; ctx[:message]
+        }
+      end
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, **) do
+        return {} unless ctx[:message]
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; ctx[:message]
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>The callable receives the inner ctx that just left the actual step, here <code>Policy::Create</code>. You may run any Ruby code in the callable, even <code>if</code>s.</p>
 
@@ -2024,21 +2240,46 @@ end
 
 <p>Just as with <code>In()</code> callables can receive keyword arguments.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; -&gt;(ctx, message: nil, **) do
-      return {} if message.nil?
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, message: nil, **) do
+        return {} if message.nil?
 
-      { # you always have to return a hash from a callable!
-        :message_from_policy =&gt; message
-      }
-    end
-  include Steps
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; message
+        }
+      end
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, message: nil, **) do
+        return {} if message.nil?
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; message
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>Any variable readable on the inner <code>ctx</code> that just left <code>Policy::Create</code> is available as a keyword argument for a callable. Note that you need to default it if its presence is not guaranteed.</p>
 
@@ -2051,21 +2292,46 @@ end
 
 <p>You can access the outer, original ctx by passing the <code>:with_outer_ctx</code> option to <code>Out()</code>.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; [:message],
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
 
-    Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
-      {
-        errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
-      }
-    end
-  # ...
+      Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
+        {
+          errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
+        }
+      end
+    # ...
+  end
 end
 </code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
+
+      Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
+        {
+          errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
 
 <p>While the callable still needs to return a hash that is then merged with the original ctx, it’s possible to access variables from the outer ctx through the <code>:outer_ctx</code> keyword argument. This allows for merging deeper data structures, such as error objects.</p>
 
@@ -2079,7 +2345,10 @@ end
 <ul>
   <li>It allows defaulting a variable when it’s absent in the ctx.</li>
   <li>It can pass-through a variable when it is present in the ctx, and only then.</li>
+  <li>You can also statically set a variable, whether or not it is present using the <code>:override</code> option.</li>
 </ul>
+
+<p>Note that <code>Inject()</code> can be used without <code>In()</code>.</p>
 
 <p>Check the following exemplary policy code.</p>
 
@@ -2098,12 +2367,14 @@ end
 
 <p>You could now use <code>In()</code> filters to embed this policy step into your operation.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Check,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model, :action]
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model, :action]
+    # ...
+  end
 end
 </code></pre>
 
@@ -2120,13 +2391,15 @@ end
 
 <p>Use <code>Inject()</code> in combination with <code>In()</code> to add variables to the filtered ctx, but only when they’re present in the outer ctx.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Check,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Inject() =&gt; [:action]
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject() =&gt; [:action]
+    # ...
+  end
 end
 </code></pre>
 
@@ -2156,17 +2429,83 @@ end
 
 <p>Defaulting the <code>:action</code> variable via <code>Inject()</code> will improve the policy component’s reusability.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Check,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Inject(:action) =&gt; -&gt;(ctx, **) { :create }
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action) =&gt; -&gt;(ctx, **) { :create }
+    # ...
+  end
 end
 </code></pre>
 
 <p>The lambda is executed at runtime, just before the actual step is invoked. It provides access to the ctx object and allows extracting keyword arguments.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-override">Override</li>
+</ul>
+
+<p>Use the <code>:override</code> option to always set a variable, even if it is already present in the incoming <code>ctx</code>.</p>
+
+<pre><code>Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+</code></pre>
+
+<p>This is helpful to set configuration variables for an activity while still using the well-established keyword argument mechanics. The <code>Policy::Create</code> class defines <code>:action</code> as a kwarg. This doesn’t necessarily mean the user can always inject and dictate the very value. Instead, we can override any injected value with the “hard-coded” <code>:create</code> value.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The call as below will always use <code>action: :create</code>, even if something else is injected.</p>
+
+<ul id="/home/nick/projects/website-NEW/config/initializers/torture_server.rb-15" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
+  current_user: current_user,
+  action: :update # this is always overridden.
+)
+puts ctx[:model] #=&gt; #&lt;Song id: 1, ...&gt;
+</code></pre>
+
+ </div><div id="-home-nick-projects-website-NEW-config-initializers-torture_server-rb-15-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(
+  current_user: current_user,
+  action: :update # this is always overridden.
+)
+puts result[:model] #=&gt; #&lt;Song id: 1, ...&gt;
+</code></pre>
+
+ </div> </div>
 
 <p><span class="divider"></span></p>
 
@@ -2192,11 +2531,13 @@ end
 
 <p>They can be extended with options the macro user provides.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  step :create_model
-  step Policy::Create(),
-    Out() =&gt; {:message =&gt; :copied_message} # user options!
-  # ...
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create(),
+      Out() =&gt; {:message =&gt; :copied_message} # user options!
+    # ...
+  end
 end
 </code></pre>
 
@@ -2215,16 +2556,18 @@ end
 
 <p>Consider the following base operation.</p>
 
-<pre><code>class Create &lt; Trailblazer::Activity::Railway
-  extend Trailblazer::Activity::DSL::Linear::VariableMapping::Inherit # this has to be done on the root level!
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    extend Trailblazer::Activity::DSL::Linear::VariableMapping::Inherit # this has to be done on the root level!
 
-  step :create_model
-  step Policy::Create,
-    In() =&gt; {:current_user =&gt; :user},
-    In() =&gt; [:model],
-    Out() =&gt; [:message],
-    id: :policy
-  # ...
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
+      id: :policy
+    # ...
+  end
 end
 </code></pre>
 
@@ -2238,20 +2581,22 @@ end
 
 <p>Here’s a potential inheriting operation.</p>
 
-<pre><code>class Admin &lt; Create
-  step Policy::Create,
-    Out() =&gt; {:message =&gt; :raw_message_for_admin},
-    inherit: [:variable_mapping],
-    id: :policy,      # you need to reference the :id when your step
-    replace: :policy
+<pre><code>module Song::Activity
+  class Admin &lt; Create
+    step Policy::Create,
+      Out() =&gt; {:message =&gt; :raw_message_for_admin},
+      inherit: [:variable_mapping],
+      id: :policy,      # you need to reference the :id when your step
+      replace: :policy
+  end
 end
 </code></pre>
 
 <p>This configuration is adding another <code>Out()</code> filter, resulting in a total filter setup as follows in the introspection.</p>
 
-<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Admin, id: :policy)
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Activity::Admin, id: :policy)
 
-ComposableVariableMappingDocTest::EEE::Admin
+Song::Activity::Admin
 # `-- policy
 #     |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
 #     |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
@@ -2281,12 +2626,12 @@ TODO: decompose trick (input )
 
 <p>You can visualize the pipelines around each step by using the <code>trailblazer-developer</code> gem.</p>
 
-<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Operation::Create, id: :policy)
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Activity::Create, id: :policy)
 </code></pre>
 
 <p>This handy invocation will render the task wrap around <code>Song::Operation::Create</code>’s step <code>:policy</code>.</p>
 
-<pre><code>Song::Operation::Create
+<pre><code>Song::Activity::Create
 `-- policy
     |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
     |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
@@ -2311,185 +2656,74 @@ TODO: decompose trick (input )
 <h3 id="activity-variable-mapping-input-output">Input / Output</h3>
 <p><!-- {activity-variable-mapping-input-output-toc} --></p>
 
-<p>Before the introduction of the composable <code>In()</code>, <code>Out()</code> and <code>Inject()</code> filters, variable mapping was done with the <code>:input</code> and <code>:output</code> option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.</p>
-
 <div class="bd-callout bd-callout-info">
 <p>With <code>trailblazer-2.1.1</code> and the bundled <code>trailblazer-activity-dsl-linear-1.0.0</code> gems, the recommended way of I/O is using <a href="">composable variable mapping</a> via <code>In()</code> and <code>Out()</code>.</p>
 </div>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/input.webp" /></p>
-
-<p>The <code>:input</code> filter is normally used to create a new context that limits what its task sees.</p>
-
-<p><img class="mx-auto d-block" src="/vite-dev/images/output.webp" /></p>
-
-<p>With the <code>:output</code> filter, you can control what variables go from the inner scoped context to the outer.</p>
-
-<p>Without any I/O configuration, all values written in a task to <code>ctx</code> will be visible in the following tasks. This might - sometimes - lead to context pollution or, even worse, certain tasks “seeing” wrong values.</p>
-
-<p>When using the DSL, the filter options <code>:input</code> and <code>:output</code> are your interface for variable mapping.</p>
-
-<p>Please note that I/O works for both “simple” tasks as well as nested activities.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-overview">Overview</li>
-</ul>
-
-<p>The variable mapping API provides some shortcuts to control the scope.</p>
-
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Path
-  step :authorize, input: [:params], output: {user: :current_user}
-  step :create_model
-
-  # ...
-end
-</code></pre>
-
-<p>An array value such as <code>[:params]</code> passed to <code>:input</code> will result in the configured task only “seeing” the provided list of variables. All other values are not available, mimicking a whitelist.</p>
-
-<p>A hash value (e.g. <code>{user: :current_user}</code>) acts like a variable mapping directive. With <code>:output</code>, it will only expose the variables mentioned in the hash, but rename them to the specifed value.</p>
-
-<pre><code>def authorize(ctx, params:, **)
-  ctx[:user] = User.find(params[:id])
-
-  if ctx[:user]
-    ctx[:result] = "Found a user."
-  else
-    ctx[:result] = "User unknown."
-  end
-end
-</code></pre>
-
-<p>In the <code>#authorize</code> example, the following happens.</p>
-
-<ol>
-  <li>The task receives a context with only one variable set, which is <code>:params</code> passed into the activity invocation.</li>
-  <li>In the task, it may write (and pollute) the <code>ctx</code> object as much as it wants. It’s a scoped, private ctx object that will be discarded after the task is finished. This leads to the <code>:result</code> variable being thrown away.</li>
-  <li>Before the private <code>ctx</code> gets disposed of, its <code>:user</code> key gets copied into the original <code>ctx</code> under the name <code>:current_user</code>.</li>
-  <li>The following task <code>create_model</code> will see the original ctx plus <code>:current_user</code> that was written in the previous step using <code>:output</code>.</li>
-</ol>
-
-<pre><code>signal, (ctx, flow_options) = Trailblazer::Activity::TaskWrap.invoke(A::Memo::Create, [{params: {id: 1}}, {}])
-</code></pre>
-
-<p>An array passed to <code>:output</code> will exclusively copy the specified variables to the original ctx, only.</p>
-
-<p>A hash passed to <code>:input</code> results in the called task only “seeing” the specified variables, but renamed to the hash values.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-callable">Callable</li>
-</ul>
-
-<p>As usual, you may provide your own code for dynamic filtering or renaming.</p>
-
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Path
-  step :authorize,
-    input:  -&gt;(original_ctx, **) do {params: original_ctx[:parameters]} end,
-    output: -&gt;(scoped_ctx, **) do {current_user: scoped_ctx[:user]} end
-  step :create_model
-
-  # ...
-end
-</code></pre>
-
-<p>From the <code>:input</code> callable, you can return a hash containing the values that <code>#authorize</code> may see. All other variables you don’t include in that hash will be unavailable. This is called a <em>scope</em> and resembles the arguments you pass into a normal Ruby method along with a method that doesn’t have access to variables outside its scope.</p>
-
-<p>Trailblazer will automatically create a new <code>Context</code> object around your custom input hash. You can write to that without interferring with the original context.</p>
-
-<p>The <code>:output</code> callable receives the scoped, new context object that you wrote to in <code>#authorize</code>. In <code>:output</code>, you return the hash of variables that you want to be visible in the following steps. This hash will be automatically merged into the original context.</p>
-
-<p>In both filters, you’re able to rename and coerce variables. This gives you a bit more control than the simpler DSL.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-filter-methods">Filter Methods</li>
-</ul>
-
-<p>For better readability, you may use instance methods for your filters.</p>
-
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Path
-  step :authorize,
-    input:  :authorize_input,
-    output: :authorize_output
-
-  def authorize_input(original_ctx, **)
-    {params: original_ctx[:parameters]}
-  end
-
-  def authorize_output(scoped_ctx, user:, **)
-    {current_user: scoped_ctx[:user]}
-  end
-</code></pre>
-
-<p>They receive the identical set of arguments that other callables are called with.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-keyword-arguments">Keyword Arguments</li>
-</ul>
-
-<p>You may use keyword arguments in your filters for type safety and better readable code.</p>
-
-<pre><code>step :authorize,
-  input:  -&gt;(original_ctx, parameters:, **) do {params: parameters} end,
-  output: -&gt;(scoped_ctx, user:, **) do {current_user: user} end
-</code></pre>
+<p>Before the introduction of the composable <code>In()</code>, <code>Out()</code> and <code>Inject()</code> filters, variable mapping was done with the <code>:input</code> and <code>:output</code> option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.</p>
 
 <ul>
-  <li><code>:input</code> provides all variables from the original context as kw args.</li>
-  <li><code>:output</code> will receive a list of all variables you added to the scoped, inner context.</li>
+  <li>Once used, the <code>:input</code>, <code>:output</code> and <code>:inject</code> option will overwrite any options set earlier via <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. This will often lead to problems when using macros.</li>
+  <li>The superseded options are basically impossible to debug, whereas the composable <code>In()</code> approach can <a href="#activity-variable-mapping-introspect">nicely display the computed set</a> of variables going in or out of a step.</li>
 </ul>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
     <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-with-outer-ctx">With Outer Ctx</li>
+    <li id="activity-variable-mapping-input-output-input">:input</li>
 </ul>
 
-<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear &gt;= 1.0.1</a></p>
+<p>The <code>:input</code> option accepts any callable following the option interface.</p>
 
-<p>It is possible to access the outer context (in addition to the inner ctx) in an <code>:output</code> filter using the <code>:output_with_outer_ctx</code> DSL option.</p>
-
-<pre><code>step :authorize,
-  output_with_outer_ctx: true, # tell TRB you want {outer_ctx} in the {:output} filter.
-  output: -&gt;(inner_ctx, outer_ctx:, user:, **) do
-    {
-      current_user: user,
-      params:       outer_ctx[:params].merge(errors: false)
-    }
-  end
+<pre><code>step :create_model,
+  input: :input_for_create_model
+  # becomes
+  Input() =&gt; :input_for_create_model
 </code></pre>
 
-<p>The <code>:output</code> filter then receives a special keyword argument <code>:outer_ctx</code> which is the original (“outer”) context. This is helpful if you want to merge new values into existing datastructures, such as error objects.</p>
-
-<p>As usual, the returned hash is then merged into the outer context.</p>
+<p><code>:input</code> works identically to a single <code>In()</code> call. <a href="#activity-variable-mapping-in-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
     <li>Input / Output</li>
-    <li id="activity-variable-mapping-input-output-notes">Notes</li>
+    <li id="activity-variable-mapping-input-output-output">:output</li>
 </ul>
 
-<p> </p>
+<p>The <code>:output</code> option, just like <code>:input</code>, accepts any callable following the option interface.</p>
 
-<ul>
-  <li>You can mix any <code>:input</code> style with any <code>:output</code> style.</li>
-  <li><strong>CTX MANAGEMENT</strong> Using I/O filters always results in a new, scoped context being created in <code>:input</code> (containing your filtered variables), and disposing of that very context in <code>:output</code> (copying desired variables over to the original ctx).</li>
-  <li><strong>LOW-LEVEL API</strong> Please note that the I/O DSL is only providing the most-used requirements. Feel free to use the low-level taskWrap API to build your own variable mapping with different scoping techniques.</li>
-  <li><strong>DEFAULTS</strong> When omitting either <code>:input</code> or <code>:output</code>, defaults will be provided. Default <code>:input</code> will pass through all variables. Default <code>:output</code> copies all written variables from the scoped context to the original one.</li>
+<pre><code>step :create_model,
+  output: :output_for_create_model
+  # becomes
+  Out() =&gt; :output_for_create_model
+</code></pre>
+
+<p><code>:output</code> works identically to a single <code>Out()</code> call. <a href="#activity-variable-mapping-out-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>The <code>:output_with_outer_ctx</code> option is <a href="#activity-variable-mapping-out-outer-context">documented here</a>.</p>
+
+<pre><code>step :create_model,
+  output: :output_for_create_model,
+  output_with_outer_ctx: true
+  # becomes
+  Out(with_outer_ctx: true) =&gt; :output_for_create_model
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-inject">:inject</li>
 </ul>
+
+<p><code>:inject</code> works identically to a single <code>Inject()</code> call. <a href="#activity-variable-mapping-inject-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<pre><code>step :create_model,
+  inject: :inject_for_create_model
+  # becomes
+  Inject() =&gt; :inject_for_create_model
+</code></pre>
 
 <p><span class="divider"></span></p>
 
@@ -2497,8 +2731,7 @@ end
 <p><!-- {activity-dependency-injection-toc} --></p>
 
 <div class="bd-callout bd-callout-info">
-<p>WIP: This section is not final, yet.
-TODO: maybe use Operation API instead?</p>
+<p>WIP: This section is not final, yet.</p>
 </div>
 
 <p><span class="divider"></span></p>
@@ -2509,125 +2742,6 @@ TODO: maybe use Operation API instead?</p>
 <p>Very often your activity or one of the steps contained require particular objects and values to get their job done. Instead of hard-wiring those <em>“dependencies”</em> in the code it is good style to allow providing those objects by passing them into the activity at run-time. This is called dependency injection and is a <a href="https://en.wikipedia.org/wiki/Dependency_injection">common technique</a> in software engineering.</p>
 
 <p>One way for using dependency injection is using keyword arguments for variables you need, and defaulting those in the step signature.</p>
-
-<pre><code>class Log &lt; Trailblazer::Activity::Railway # could be Operation, too.
-  step :write
-  # ...
-  def write(ctx, time: Time.now, **) # {:time} is a dependency.
-    ctx[:log] = "Called @ #{time}!"
-  end
-</code></pre>
-
-<p>The <code>#write</code> step requires a variable <code>:time</code>, which is a dependency. The variable’s default is hard-wired and applied if no other value is provided. However, by injecting <code>:time</code> when invoking the activity, you can override this value at run-time.</p>
-
-<pre><code>signal, (ctx, _) = Trailblazer::Activity::TaskWrap.invoke(Log, [{time: "yesterday"}, {}])
-</code></pre>
-
-<p>This is extremely helpful when you have to replace a “hard-wired” dependency, for example in a test where you want to know and define <code>:time</code>’s value upfront.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="activity-dependency-injection-inject">Inject</h3>
-<p><!-- {activity-dependency-injection-inject-toc} --></p>
-
-<p>The <code>:inject</code> option allows to pass through injected variables without having to add them in the <code>:input</code> filter code. It also provides a way to default variables should they not have been passed from the outside.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>The <code>:inject</code> was introduced in <code>trailblazer-activity-dsl-linear</code> 0.4.3 and is still considered experimental. Use it, but be reasonable and keep in mind that syntactical API might change.</p>
-</div>
-
-<p>When using <code>:inject</code> <strong>without</strong> <code>:input</code> there won’t be any filtering happening. The original ctx with all its variables will be passed into the step.</p>
-
-<p>As usual, the option can be used with both nested operations/activities and callable steps.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Inject</li>
-    <li id="activity-dependency-injection-inject-qualified-pass-through">Qualified Pass-through</li>
-</ul>
-
-<p>The most commonly used style for <code>:inject</code> is the pass-through array. When used in combination with <code>:input</code> this allows to reduce the <code>:input</code> filter code.</p>
-
-<p>Check the following snippet. It’s a common pattern in many TRB applications to use an <code>:input</code> filter to limit variables going into the subprocess. Anyways, when you have defaulted variables in the subprocess, you should only add those to your <code>:input</code> when they’re actually defined by the invoker - or passed from the outside.</p>
-
-<pre><code>class Create &lt; Trailblazer::Activity::Railway # could be Operation, too.
-  # ...
-  step Subprocess(Log),
-    input:  -&gt;(ctx, model:, **) {
-      { model: model }                                  # always pass {:model}
-      .merge(ctx.key?(:time) ? {time: ctx[:time]} : {}) # only add {:time} when it's there.
-    }
-end
-</code></pre>
-
-<p>Quickly, the code gets messy as you constantly need to check whether or not the dependency is injected.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Inject</li>
-    <li id="activity-dependency-injection-inject-array-style">array style</li>
-</ul>
-
-<p>Use the <code>:inject</code> option to automatically add injected variables when they’re present in <code>ctx</code>.</p>
-
-<pre><code>class Create &lt; Trailblazer::Activity::Railway # could be Operation, too.
-  # ...
-  step Subprocess(Log),
-    input:  -&gt;(ctx, model:, **) { {model: model} }, # always pass {model}
-    inject: [:time] # only pass {:time} when it's in ctx.
-end
-</code></pre>
-
-<p>Depending on the variables passed into the activity, the <code>ctx</code> going into <code>Log</code> will look as follows.</p>
-
-<pre><code>#                                 ctx for {Log}
-Create.({})                  #=&gt; {model: XXX}
-Create.({time: "yesterday"}) #=&gt; {model: XXX, time: "yesterday"}
-</code></pre>
-
-<p>Note that this (currently) only has effects when combined with <code>:input</code>.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Inject</li>
-    <li id="activity-dependency-injection-inject-defaulting">defaulting</li>
-</ul>
-
-<p>Instead of defaulting injected variables in the method signature, you can define a more convenient defaulting injection using <code>:inject</code>. Obviously, the affected steps should not use defaulted kwargs for variables that have defaulting happen via <code>:inject</code>.</p>
-
-<pre><code>class Log &lt; Trailblazer::Activity::Railway # could be Operation, too.
-  step :write
-  # ...
-  def write(ctx, time: Time.now, date:, **) # {date} has no default configured.
-    ctx[:log] = "Called @ #{time} and #{date}!"
-  end
-</code></pre>
-
-<p>In this example, we use Ruby’s defaulting for the <code>:time</code> kwarg, and make <code>:date</code> a required kwarg without any defaulting.</p>
-
-<p>The <code>:inject</code> option with a hash allows for configuring defaulting for any number of injected variables.</p>
-
-<pre><code>class Create &lt; Trailblazer::Activity::Railway # could be Operation, too.
-  # ...
-  step Subprocess(Log),
-    input:  -&gt;(ctx, model:, **) { {model: model} }, # always pass {model}
-    inject: [:time, {date: -&gt;(ctx, **) { Date.today }}]
-end
-</code></pre>
-
-<p>In the proc, you have access to the original <code>ctx</code> and its variables via keyword arguments.</p>
-
-<p>Depending on the variables passed into the activity, the <code>ctx</code> going into <code>Log</code> will look as follows.</p>
-
-<pre><code>#                                         ctx for {Log}
-Create.({})                           #=&gt; {model: XXX, date: &lt;today&gt;}
-Create.({time: "now", date: "today"}) #=&gt; {model: XXX, time: "now", date: "today"}
-</code></pre>
-
-<p>Note that defaulted injects are always processed and either added to the original context when used without <code>:input</code> or to the new, filtered context when using it in combination with <code>:input</code>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -4103,6 +4217,11 @@ Create.([ctx])
           <a href="#activity-variable-mapping-inject-defaulting">Defaulting</a>
         </li>
       
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-inject-override">Override</a>
+        </li>
+      
     
       <li>
         <a href="#activity-variable-mapping-macro">
@@ -4137,32 +4256,17 @@ Create.([ctx])
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-overview">Overview</a>
+          <a href="#activity-variable-mapping-input-output-input">:input</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-callable">Callable</a>
+          <a href="#activity-variable-mapping-input-output-output">:output</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-filter-methods">Filter Methods</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-keyword-arguments">Keyword Arguments</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-with-outer-ctx">With Outer Ctx</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-variable-mapping-input-output-notes">Notes</a>
+          <a href="#activity-variable-mapping-input-output-inject">:inject</a>
         </li>
       
     
@@ -4183,29 +4287,6 @@ Create.([ctx])
           Overview
         </a>
       </li>
-      
-    
-      <li>
-        <a href="#activity-dependency-injection-inject">
-          <i class="fas fa-arrow-right"></i>
-          Inject
-        </a>
-      </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-dependency-injection-inject-qualified-pass-through">Qualified Pass-through</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-dependency-injection-inject-array-style">array style</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-dependency-injection-inject-defaulting">defaulting</a>
-        </li>
       
     
       <li>

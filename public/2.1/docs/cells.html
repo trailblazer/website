@@ -745,8 +745,8 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>Here’s what the old legacy <code>layout.html.haml</code> looks like.</p>
 
-<ul id="0.32812163918004866" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-32812163918004866-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-32812163918004866-ERB"> ERB </a> </li> </ul>
-<div class="tab-content"> <div id="0-32812163918004866-HAML" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-19" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-ERB"> ERB </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-HAML" class="tab-pane fade show active"> 
 <pre><code>  %html
     %head
 
@@ -762,7 +762,7 @@ Whatever you return from the <code>show</code> method will be displayed in the p
               "SIGN IN"
 </code></pre>
 
- </div><div id="0-32812163918004866-ERB" class="tab-pane fade show "> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-19-ERB" class="tab-pane fade show "> 
 <pre><code>&lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
 
@@ -795,15 +795,15 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>In order to convert all markup below the <code>&lt;nav&gt;</code> node into a cell, we first need to add the respective gems to our <code>Gemfile</code>.</p>
 
-<ul id="0.1898566755906812" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1898566755906812-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1898566755906812-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-1898566755906812-Ruby" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-65" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Ruby" class="tab-pane fade show active"> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 </code></pre>
 
 <p>For now, all you need is the <code>trailblazer-cells</code> gem and the Cells template engine.</p>
 
- </div><div id="0-1898566755906812-Rails" class="tab-pane fade show "> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-65-Rails" class="tab-pane fade show "> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 gem "cells-rails"
@@ -819,8 +819,8 @@ gem "cells-rails"
 
 <p>Cut the <code>%nav</code> fragment from the original <code>layout.html.haml</code> and replace it with the cell invocation.</p>
 
-<ul id="0.9523192386153017" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9523192386153017-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9523192386153017-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-9523192386153017-Ruby" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-88" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Ruby" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -830,7 +830,7 @@ gem "cells-rails"
 
 <p>Cells can be invoked using the call style.</p>
 
- </div><div id="0-9523192386153017-Rails" class="tab-pane fade show active"> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-88-Rails" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -952,8 +952,8 @@ end
 
 <p>In <code>app/concepts/pro/view/navigation.haml</code>, add actual links to the view.</p>
 
-<ul id="0.06899893774571075" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-06899893774571075-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-06899893774571075-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-06899893774571075-Ruby" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-202" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Ruby" class="tab-pane fade show active"> 
 <pre><code>  %nav
     %ul
       %li SUPPORT CHAT
@@ -969,7 +969,7 @@ end
 
 <p>Without any URL system, you can create links using Haml, or delegate to your own URL objects.</p>
 
- </div><div id="0-06899893774571075-Rails" class="tab-pane fade show "> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-202-Rails" class="tab-pane fade show "> 
 <pre><code>  %nav
     %ul
       %li
@@ -996,15 +996,15 @@ end
 
 <p>In the controller, invoke this new cell instead of letting the framework render the content.</p>
 
-<ul id="0.6676334851067289" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6676334851067289-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6676334851067289-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-6676334851067289-Ruby" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-242" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
     html = Comment::Cell::Show.(comment).()
   end
 </code></pre>
 
- </div><div id="0-6676334851067289-Rails" class="tab-pane fade show "> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-242-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(1)
@@ -1075,8 +1075,8 @@ end
 
 <p>In the controller, the content cell needs to get instructed it will be wrapped by a layout cell.</p>
 
-<ul id="0.9546194663988872" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9546194663988872-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9546194663988872-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-9546194663988872-Ruby" class="tab-pane fade show active"> 
+<ul id="app/concepts/documentation/page/snippet/cells/getting_started.md.erb-310" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
 
@@ -1086,7 +1086,7 @@ end
   end
 </code></pre>
 
- </div><div id="0-9546194663988872-Rails" class="tab-pane fade show "> 
+ </div><div id="app-concepts-documentation-page-snippet-cells-getting_started-md-erb-310-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(params[:id])
