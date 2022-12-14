@@ -1415,67 +1415,6 @@ end
 
 <ul class="navigation">
     <li>Wtf?</li>
-    <li id="trailblazer-developer-wtf-focus_on">focus_on</li>
-</ul>
-
-<p>You can <strong>focus</strong> on specific steps and variables to find out what <code>ctx</code> comes in and what goes out. The <code>focus_on</code> option allows us to capture any key(s) from <code>ctx</code> and print any mutations happening within given steps.</p>
-
-<p><img class="mx-auto d-block" src="/vite-dev/images/wtf-focus.webp" /></p>
-
-<p>You need to pass one or more step names (either default name or given by explicit <code>:id</code>) to capture the mutations.</p>
-
-<pre><code>class Memo::Create &lt; Trailblazer::Activity::Path
-  step :validate
-  step :create, id: :create_memo
-  # ...
-end
-</code></pre>
-
-<pre><code>Dev.wtf?(Memo::Create, [ctx, { focus_on: { steps: [:validate, :create_memo] } }])
-</code></pre>
-
-<p>By default, focusing will capture whole <code>ctx</code> for given steps. But you can also filter on it by passing one or more keys using <code>variables</code>.</p>
-
-<pre><code>Dev.wtf?(Memo::Create, [ctx, { focus_on: { variables: [:params], steps: :validate } }])
-</code></pre>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Wtf?</li>
-    <li id="trailblazer-developer-wtf-default_inspector">default_inspector</li>
-</ul>
-
-<p>Internally, when <code>focus_on</code> option is passed, we call <code>Object#inspect</code> method to collect before-after data from the <code>ctx</code> for given steps. This data is then used while rendering the trace. In case you want to customize the data collection behaviour with your own logic, you can pass the <code>default_inspector</code>.</p>
-
-<pre><code>Dev.wtf?(
-  Memo::Create,
-  [
-    { params: { text: 'Hydrate!', value: nil } },
-    {
-      focus_on: { steps: :validate, variables: :params },
-      default_inspector: -&gt;(value){ value.nil? ? 'UNKNOWN' : value.inspect }
-    }
-  ]
-)
-</code></pre>
-
-<p>Inspection runs deeply when <code>ctx</code> contains nested structures like hashes or arrays. It’s concept is very simple and handled in <code>Dev::Trace::Inspector</code> module.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>The sole purpose to add <code>Dev::Trace::Inspector</code> module is to make custom inspection possible and efficient while tracing. For example, <code>ActiveRecord::Relation#inspect</code> makes <strong>additional</strong> queries to fetch top 10 records and generate the output everytime.</p>
-
-<p><br /></p>
-
-<p>To avoid this, <code>Inspector</code> will not call <code>inspect</code> method when it finds such objects (deeply nested anywhere).</p>
-
-<p>Instead, it’ll call <code>AR::Relation#to_sql</code> to get plain SQL query which doesn’t make additional queries and is better to understand in tracing output. There is always a possibility to cater such cases and make <code>wtf</code> tracing better. Contributions are welcome :)</p>
-</div>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Wtf?</li>
     <li id="trailblazer-developer-wtf-color_map">color_map</li>
 </ul>
 
@@ -1824,16 +1763,6 @@ option.(exec_context: Object.new) # =&gt; 1234567
         
         <li class="sub-item">
           <a href="#trailblazer-developer-wtf-activity">Activity</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-developer-wtf-focus_on">focus_on</a>
-        </li>
-      
-        
-        <li class="sub-item">
-          <a href="#trailblazer-developer-wtf-default_inspector">default_inspector</a>
         </li>
       
         

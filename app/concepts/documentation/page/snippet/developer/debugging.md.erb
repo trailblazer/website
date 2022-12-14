@@ -63,40 +63,6 @@ You have to use the clumsier `Developer.wtf?` method for tracing.
 
 As always with `Activity` subclasses, it operates with the [circuit interface](activity.html#activity-internals-circuit-interface).
 
-
-<%= h4 "focus_on" %>
-
-You can **focus** on specific steps and variables to find out what `ctx` comes in and what goes out. The `focus_on` option allows us to capture any key(s) from `ctx` and print any mutations happening within given steps.
-
-<%= vite_image_tag "images/wtf-focus.webp", class: "mx-auto d-block" %>
-
-You need to pass one or more step names (either default name or given by explicit `:id`) to capture the mutations.
-
-<%= code "step", collapse: "mod" %>
-<%= code "wtf-focus-steps" %>
-
-By default, focusing will capture whole `ctx` for given steps. But you can also filter on it by passing one or more keys using `variables`.
-
-<%= code "wtf-focus-steps-with-variables" %>
-
-<%= h4 "default_inspector" %>
-
-Internally, when `focus_on` option is passed, we call `Object#inspect` method to collect before-after data from the `ctx` for given steps. This data is then used while rendering the trace. In case you want to customize the data collection behaviour with your own logic, you can pass the `default_inspector`.
-
-<%= code "wtf-default-inspector" %>
-
-Inspection runs deeply when `ctx` contains nested structures like hashes or arrays. It's concept is very simple and handled in `Dev::Trace::Inspector` module.
-
-<%= info do %>
-  The sole purpose to add `Dev::Trace::Inspector` module is to make custom inspection possible and efficient while tracing. For example, `ActiveRecord::Relation#inspect` makes **additional** queries to fetch top 10 records and generate the output everytime.
-
-  <br />
-
-  To avoid this, `Inspector` will not call `inspect` method when it finds such objects (deeply nested anywhere).
-
-  Instead, it'll call `AR::Relation#to_sql` to get plain SQL query which doesn't make additional queries and is better to understand in tracing output. There is always a possibility to cater such cases and make `wtf` tracing better. Contributions are welcome :)
-<% end %>
-
 <%= h4 "color_map" %>
 
 The `color_map` option allows you to customize default coloring scheme being used to render passed or failed steps.
