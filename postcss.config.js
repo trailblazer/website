@@ -17,7 +17,11 @@ let environment = {
 if (process.env.RAILS_ENV === "production") {
   environment.plugins.push(
     require("@fullhuman/postcss-purgecss")({
-      content: ["./app/concepts/**/*", "./app/frontend/**/*"],
+      content: [
+        "./app/concepts/**/*",
+        "./app/frontend/**/*",
+        "./config/initializers/torture_server.rb",
+      ],
     })
   );
 }

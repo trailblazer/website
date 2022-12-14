@@ -24,4 +24,10 @@ Snippets.class_eval do
       end
     end # nav_tabs
   end
+
+  # Hack to keep CSS classes used in torture-server and not purge them using purge-css
+  # TODO: We should avoid hard coding classes in torture-server
+  def _keep_this_css_from_purging
+    %(<div class="divider navigation mx-auto d-block bd-callout bd-callout-info tab-content tab-pane nav nav-tabs nav-item fade show active nav-link pink"></div>)
+  end
 end
