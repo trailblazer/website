@@ -231,6 +231,14 @@
     "file": "assets/output.643dda0e.webp",
     "src": "images/output.webp"
   },
+  "images/patch-trace.png": {
+    "file": "assets/patch-trace.0cb4c9cc.png",
+    "src": "images/patch-trace.png"
+  },
+  "images/patch.png": {
+    "file": "assets/patch.49ab0415.png",
+    "src": "images/patch.png"
+  },
   "images/patching-trace.webp": {
     "file": "assets/patching-trace.3e979f58.webp",
     "src": "images/patching-trace.webp"
