@@ -4,7 +4,7 @@ Working with `Subprocess` and nested activities is a great way to encapsulate an
 
 Suppose the following 3-level nested activity.
 
-<%= vite_image_tag "images/patching.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/patch.png", class: "mx-auto d-block", width: "63%" %>
 
 The public operation `Destroy` contains `Delete` as a nested activity, which itself contains `DeleteAssets`. In order to customize the latter one and add another step `tidy_storage`, you'd normally have to subclass all three activities and override steps.
 
