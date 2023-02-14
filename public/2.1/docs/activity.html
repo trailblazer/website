@@ -189,6 +189,28 @@
   
 </div>
 
+<div class="sidebar-accordion-wrapper">
+  <div id="internals">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/internals.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#internals-collapse"
+          aria-expanded="false"
+          aria-controls="internals-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Internals</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
   </div>
 </div>
 
@@ -554,7 +576,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 26 Jan 23</span>
+                      <span>Last updated 09 Feb 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1590,13 +1612,55 @@ end
 <h3 id="activity-dsl-options-patching">Patching</h3>
 <p><!-- {activity-dsl-options-patching-toc} --></p>
 
-<p>Working with <code>Subprocess</code> and deeply nested activities for complex flows is a great way to encapsulate and create reusable code. However, it can be a PITA if you want to customize one of those deeply nested components and add or remove a certain step, for example.</p>
+<p>Working with <code>Subprocess</code> and nested activities is a great way to encapsulate and create reusable code especially with complex logic. However, it can be a PITA if you want to customize one of those deeply nested components and add, replace or remove a certain step.</p>
 
 <p>Suppose the following 3-level nested activity.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/patching.webp" /></p>
+<p><img class="mx-auto d-block" width="63%" src="/vite-dev/images/patch.png" /></p>
 
 <p>The public operation <code>Destroy</code> contains <code>Delete</code> as a nested activity, which itself contains <code>DeleteAssets</code>. In order to customize the latter one and add another step <code>tidy_storage</code>, you’d normally have to subclass all three activities and override steps.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Patching</li>
+    <li id="activity-dsl-options-patching-patch">Patch</li>
+</ul>
+
+<p>Using <code>#patch</code>, you can modify nested activities from the uppermost activity and let Trailblazer do the legwork.</p>
+
+<p>As <code>#patch</code> is mostly used when leveraging inheritance we introduce a subclass of <code>Destroy</code> which is called <code>Erase</code> and introduces the <code>#tidy_storage</code> step. As illustrated above, this new step should be inserted in <code>DeleteAssets</code> activity that itself is nested in <code>Delete</code>, which again is one step of <code>Destroy</code>.</p>
+
+<pre><code>class Erase &lt; Destroy # we're inheriting from Song::Operation::Destroy
+  # ...
+  def self.tidy_storage(ctx, **)
+    # delete files from your amazing cloud
+  end
+  # ...
+  # These steps are inherited:
+  # step :policy
+  # step :find_model
+  # step Subprocess(Delete), id: :delete
+
+  extend Trailblazer::Activity::DSL::Linear::Patch::DSL
+
+  # Note the path you pass to #patch.
+  patch(:delete, :delete_assets) {
+    step Erase.method(:tidy_storage), after: :rm_images
+  }
+end
+</code></pre>
+
+<p>The patching logic accepts a path to the particular activity that you want to modify.</p>
+
+<pre><code>patch(:delete, :delete_assets) { ... }
+</code></pre>
+
+<p>The provided block is executed within that targeted activity and executed as if you’d extend that class. However, the entire modification will only change <code>Erase</code>, all other traversed activities are copied and then modified, leaving the original implemenation unchanged.</p>
+
+<p><img class="mx-auto d-block" src="/vite-dev/images/patch-trace.png" /></p>
+
+<p>The <code>#patch</code> method is perfect when using inheritance to first copy over behavior and control flow, and then fine-tune it for the specific use case.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1605,15 +1669,16 @@ end
     <li id="activity-dsl-options-patching-patch-option">Patch Option</li>
 </ul>
 
-<p>Using patching, you can do this ad-hoc in the uppermost <code>Destroy</code> activity.</p>
+<p>If you’re not using inheritance and want to tweak a nested activity ad-hoc the <code>Subprocess()</code> helper accepts a <code>:patch</code> option.</p>
 
+<ul id="0.32381970016577566" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-32381970016577566-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-32381970016577566-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-32381970016577566-Activity" class="tab-pane fade show active"> 
 <pre><code>class Destroy &lt; Trailblazer::Activity::Railway
   def self.tidy_storage(ctx, **)
     # delete files from your amazing cloud
     true
   end
   # ...
-
   step :policy
   step :find_model
   step Subprocess(Delete,
@@ -1624,16 +1689,30 @@ end
 end
 </code></pre>
 
-<p>The <code>Subprocess()</code> macro accepts the <code>:patch</code> option which is a hash of the path to the customized activity, and its patch. This patch block is <code>class_eval</code>ed in context of the patched activity. You may add methods here, add, remove, or move steps, or whatever else needs fixing.</p>
+ </div><div id="0-32381970016577566-Operation" class="tab-pane fade show "> 
+<pre><code>class Destroy &lt; Trailblazer::Operation
+  def self.tidy_storage(ctx, **)
+    # delete files from your amazing cloud
+    true
+  end
+  # ...
+  step :policy
+  step :find_model
+  step Subprocess(Delete,
+    patch: {
+      [:delete_assets] =&gt; -&gt; { step Destroy.method(:tidy_storage), before: :rm_uploads }
+    }
+  )
+end
+</code></pre>
 
-<div class="bd-callout bd-callout-info">
-<p>Note that patching does <strong>not</strong> change the originally nested activities. It creates copies of them.
-Also, the automatically assigned ID of a step gets replaced with new a copy. Make sure you mention it <a href="#activity-dsl-options-sequence-options-id">explicitly</a> to persist.</p>
-</div>
+ </div> </div>
 
-<p>Looking at the trace of <code>Destroy</code>, you can see that <code>#tidy_storage</code> is executed where you want it.</p>
+<p>This works just like the <code>#patch</code> function but returns the patched activity.</p>
 
-<p><img class="mx-auto d-block" src="/vite-dev/images/patching-trace.webp" /></p>
+<p><code>Subprocess()</code> accepts the <code>:patch</code> option which consists of a hash of the path to the customized activity, and its patch.</p>
+
+<p>This will result in an identical operation as in the above example with <code>#patch</code>. However, <code>Delete</code> is now the operation containing the customization, not a new class <code>Erase</code>.</p>
 
 <p>Patching can be also done at the top-level activity by passing  <code>:patch</code> as a block (Take <code>Delete</code> from above example).</p>
 
@@ -1642,33 +1721,6 @@ Also, the automatically assigned ID of a step gets replaced with new a copy. Mak
   patch: -&gt; { step Destroy.method(:tidy_storage), before: :delete_model }
 ), id: :delete
 </code></pre>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Patching</li>
-    <li id="activity-dsl-options-patching-side-effects">Side effects</li>
-</ul>
-
-<p>The idea of patching is that the originally nested activities remain untouched.</p>
-
-<pre><code>class Delete &lt; Trailblazer::Activity::Railway
-  step :delete_model
-  step Subprocess(DeleteAssets), id: :delete_assets
-  # ...
-end
-</code></pre>
-
-<p>They’re inherited and customized for you automatically by the DSL.</p>
-
-<pre><code>class DeleteAssets &lt; Trailblazer::Activity::Railway
-  step :rm_images
-  step :rm_uploads
-  # ...
-end
-</code></pre>
-
-<p>Patching has no implicit, magical side-effects and is strongly encouraged to customize flows for a specific case in a quick and consise way.</p>
 
 <p><span class="divider"></span></p>
 
@@ -1686,8 +1738,8 @@ end
 
 <p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
 
-<ul id="0.9483228844515261" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9483228844515261-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9483228844515261-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-9483228844515261-Activity" class="tab-pane fade show active"> 
+<ul id="0.28358928852953447" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-28358928852953447-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-28358928852953447-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-28358928852953447-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1697,7 +1749,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-9483228844515261-Operation" class="tab-pane fade show "> 
+ </div><div id="0-28358928852953447-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1728,14 +1780,14 @@ end
 
 <p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
 
-<ul id="0.10676571511167565" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-10676571511167565-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-10676571511167565-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-10676571511167565-Activity" class="tab-pane fade show active"> 
+<ul id="0.8974558785427885" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8974558785427885-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8974558785427885-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8974558785427885-Activity" class="tab-pane fade show active"> 
 <pre><code>result = Trailblazer::Activity.(Song::Activity::Create, current_user: Module)
 
 #=&gt; ArgumentError: missing keyword: :user
 </code></pre>
 
- </div><div id="0-10676571511167565-Operation" class="tab-pane fade show "> 
+ </div><div id="0-8974558785427885-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(current_user: Module)
 
 #=&gt; ArgumentError: missing keyword: :user
@@ -1756,8 +1808,8 @@ end
 
 <p>Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
 
-<ul id="0.1057515219545877" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1057515219545877-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1057515219545877-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-1057515219545877-Activity" class="tab-pane fade show active"> 
+<ul id="0.08111563620679474" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-08111563620679474-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-08111563620679474-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-08111563620679474-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1770,7 +1822,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-1057515219545877-Operation" class="tab-pane fade show "> 
+ </div><div id="0-08111563620679474-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1822,8 +1874,8 @@ end
 
 <p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
 
-<ul id="0.5390972330653155" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5390972330653155-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5390972330653155-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5390972330653155-Activity" class="tab-pane fade show active"> 
+<ul id="0.9305063127634756" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9305063127634756-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9305063127634756-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9305063127634756-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1842,7 +1894,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5390972330653155-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9305063127634756-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1874,8 +1926,8 @@ end
 
 <p><code>In()</code> accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).</p>
 
-<ul id="0.5546530191499358" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5546530191499358-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5546530191499358-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5546530191499358-Activity" class="tab-pane fade show active"> 
+<ul id="0.7624028796110685" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7624028796110685-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7624028796110685-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7624028796110685-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1887,7 +1939,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5546530191499358-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7624028796110685-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1918,8 +1970,8 @@ end
 
 <p>As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).</p>
 
-<ul id="0.5967542600015254" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5967542600015254-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5967542600015254-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5967542600015254-Activity" class="tab-pane fade show active"> 
+<ul id="0.13500677131493177" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-13500677131493177-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-13500677131493177-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-13500677131493177-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1934,7 +1986,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5967542600015254-Operation" class="tab-pane fade show "> 
+ </div><div id="0-13500677131493177-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1972,8 +2024,8 @@ end
 
 <p>Following the TRB option standard, an <code>In()</code> filter may even be implemented as an instance method. All you need to do is pass a symbol to <code>In()</code>.</p>
 
-<ul id="0.19867400622139786" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-19867400622139786-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-19867400622139786-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-19867400622139786-Activity" class="tab-pane fade show active"> 
+<ul id="0.55993041785292" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-55993041785292-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-55993041785292-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-55993041785292-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1990,7 +2042,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-19867400622139786-Operation" class="tab-pane fade show "> 
+ </div><div id="0-55993041785292-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2020,8 +2072,8 @@ end
 
 <p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.</p>
 
-<ul id="0.5759526204902549" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5759526204902549-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5759526204902549-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5759526204902549-Activity" class="tab-pane fade show active"> 
+<ul id="0.5952794624827376" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5952794624827376-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5952794624827376-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5952794624827376-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2036,7 +2088,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5759526204902549-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5952794624827376-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2101,8 +2153,8 @@ end
 
 <p>In order to limit variables added to the outer ctx, <code>Out()</code> accepts an array similar to <code>In()</code>. Consider this as a whitelisting to specify exposed variables.</p>
 
-<ul id="0.33889643190128915" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-33889643190128915-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-33889643190128915-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-33889643190128915-Activity" class="tab-pane fade show active"> 
+<ul id="0.02495310675117901" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-02495310675117901-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-02495310675117901-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-02495310675117901-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2115,7 +2167,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-33889643190128915-Operation" class="tab-pane fade show "> 
+ </div><div id="0-02495310675117901-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2145,8 +2197,8 @@ end
 
 <p>Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the “old” inner name points to the outer name that you want to use in the operation hosting that step.</p>
 
-<ul id="0.898068603960315" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-898068603960315-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-898068603960315-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-898068603960315-Activity" class="tab-pane fade show active"> 
+<ul id="0.7998678935253504" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7998678935253504-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7998678935253504-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7998678935253504-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2159,7 +2211,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-898068603960315-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7998678935253504-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2185,8 +2237,8 @@ end
 
 <p>An <code>Out()</code> filter can be any callable object following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
-<ul id="0.5368451113655587" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5368451113655587-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5368451113655587-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5368451113655587-Activity" class="tab-pane fade show active"> 
+<ul id="0.09282074791627681" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-09282074791627681-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-09282074791627681-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-09282074791627681-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2205,7 +2257,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5368451113655587-Operation" class="tab-pane fade show "> 
+ </div><div id="0-09282074791627681-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2245,8 +2297,8 @@ end
 
 <p>Just as with <code>In()</code> callables can receive keyword arguments.</p>
 
-<ul id="0.487775653045874" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-487775653045874-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-487775653045874-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-487775653045874-Activity" class="tab-pane fade show active"> 
+<ul id="0.002549537421762449" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-002549537421762449-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-002549537421762449-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-002549537421762449-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2265,7 +2317,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-487775653045874-Operation" class="tab-pane fade show "> 
+ </div><div id="0-002549537421762449-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2297,8 +2349,8 @@ end
 
 <p>You can access the outer, original ctx by passing the <code>:with_outer_ctx</code> option to <code>Out()</code>.</p>
 
-<ul id="0.07770290387144774" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-07770290387144774-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-07770290387144774-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-07770290387144774-Activity" class="tab-pane fade show active"> 
+<ul id="0.9536752751349483" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9536752751349483-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9536752751349483-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9536752751349483-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2317,7 +2369,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-07770290387144774-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9536752751349483-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2462,8 +2514,8 @@ end
 
 <p>This is helpful to set configuration variables for an activity while still using the well-established keyword argument mechanics. The <code>Policy::Create</code> class defines <code>:action</code> as a kwarg. This doesn’t necessarily mean the user can always inject and dictate the very value. Instead, we can override any injected value with the “hard-coded” <code>:create</code> value.</p>
 
-<ul id="0.011281841740017562" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-011281841740017562-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-011281841740017562-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-011281841740017562-Activity" class="tab-pane fade show active"> 
+<ul id="0.8401573379433688" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8401573379433688-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8401573379433688-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8401573379433688-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2476,7 +2528,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-011281841740017562-Operation" class="tab-pane fade show "> 
+ </div><div id="0-8401573379433688-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2493,8 +2545,8 @@ end
 
 <p>The call as below will always use <code>action: :create</code>, even if something else is injected.</p>
 
-<ul id="0.22062256868838748" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-22062256868838748-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-22062256868838748-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-22062256868838748-Activity" class="tab-pane fade show active"> 
+<ul id="0.5407543372608224" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5407543372608224-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5407543372608224-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5407543372608224-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
   current_user: current_user,
   action: :update # this is always overridden.
@@ -2502,7 +2554,7 @@ end
 puts ctx[:model] #=&gt; #&lt;Song id: 1, ...&gt;
 </code></pre>
 
- </div><div id="0-22062256868838748-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5407543372608224-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(
   current_user: current_user,
   action: :update # this is always overridden.
@@ -2563,7 +2615,6 @@ end
 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
-    extend Trailblazer::Activity::DSL::Linear::VariableMapping::Inherit # this has to be done on the root level!
 
     step :create_model
     step Policy::Create,
@@ -3702,6 +3753,24 @@ wrap_runtime = Hash.new(wrap) # wrap_runtime[...] will always return the same wr
 <h3 id="activity-taskwrap-static">Static</h3>
 <p><!-- {activity-taskwrap-static-toc} --></p>
 
+<pre><code>ext = Trailblazer::Activity::TaskWrap::Extension(
+  [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"]
+)
+</code></pre>
+
+<h1 id="old">old</h1>
+<pre><code>ext = Trailblazer::Activity::TaskWrap::Extension::WrapStatic.new(extension: ext) # new
+merge = [
+  [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"],
+  [method(:add_2), id: "user.add_2", append:  "task_wrap.call_task"],
+]
+
+abc_implementation, _es = abc_implementation(a_extensions: [TaskWrap::Extension.WrapStatic(*merge)])
+</code></pre>
+
+<p>Example tracing
+https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22</p>
+
 <p><span class="divider"></span></p>
 
 <h2 id="activity-troubleshooting">Troubleshooting</h2>
@@ -4114,12 +4183,12 @@ Create.([ctx])
       
         
         <li class="sub-item">
-          <a href="#activity-dsl-options-patching-patch-option">Patch Option</a>
+          <a href="#activity-dsl-options-patching-patch">Patch</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#activity-dsl-options-patching-side-effects">Side effects</a>
+          <a href="#activity-dsl-options-patching-patch-option">Patch Option</a>
         </li>
       
     

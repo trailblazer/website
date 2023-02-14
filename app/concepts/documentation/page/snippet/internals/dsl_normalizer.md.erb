@@ -1,5 +1,7 @@
 <%= h2 "DSL" %>
 
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a>
+
 <%= h3 "Normalizer" %>
 
 A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
@@ -45,14 +47,16 @@ The `FastTrack` normalizer conditionally adds outputs, only if the respective op
 
 <%= h3 "Output Tuples" %>
 
-Once `ctx[:outputs]` is finalized, the output tuples (or "connectors") come into play. Using the Wiring API you can configure which output goes where.
+Once `ctx[:outputs]` is finalized, the output tuples come into play. Using the Wiring API you can configure which output goes where.
 
 <%= code :ruby do %>
 step :model,
   Output(:success) => Track(:ok) # THIS is the Wiring API!
 <% end %>
 
-Associating outputs to search strategies is implemented in `output_tuples.rb`. After steps of this unit have been run, a new option `ctx[:output_tuples]` exists that connects the `:outputs` and can be transformed into `:connections`.
+
+
+Associating outputs to _connectors_ is implemented in `output_tuples.rb`. After steps of this unit have been run, a new option `ctx[:output_tuples]` exists that connects the `:outputs` and can be transformed into `:connections`.
 
 The running order for computing `:output_tuples` is as follows.
 
@@ -88,12 +92,12 @@ The conversion allows all following output tuples code to work with `Output::Sem
 
 <%= h4 "Inherit" %>
 
-Several steps in the normalizer supply support for `inherit: true`. It is important to understand here that only custom output tuples are inherited. The `:outputs` option is **not inherited**, and neither are the default connectors.
+Several steps in the normalizer supply support for `inherit: true`. It is important to understand here that only custom output tuples are inherited. The `:outputs` option is **not inherited**, and neither are the default output tuples.
 
 1. Non-generic output tuples are marked for recording in `"output_tuples.remember_custom_output_tuples"`. These are stored via the generic inherit logic.
-2. Currently, we assume that `strict_outputs = false`. This means we filter out custom connectors that are not supported by the new step task or activity in `"output_tuples.filter_inherited_output_tuples"`.
+2. Currently, we assume that `strict_outputs = false`. This means we filter out custom output tuples that are not supported by the new step task or activity in `"output_tuples.filter_inherited_output_tuples"`.
 
-    In order to accomplish this, the set of all inherited custom connectors have to be explicitely computed. at present, we do that via `inherited_recorded_options[:custom_output_tuples]`.
+    In order to accomplish this, the set of all inherited custom output tuples have to be explicitely computed. at present, we do that via `inherited_recorded_options[:custom_output_tuples]`.
 
 <%= h3 "Connections" %>
 

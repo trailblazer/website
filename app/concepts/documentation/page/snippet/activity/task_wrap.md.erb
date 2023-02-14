@@ -61,3 +61,31 @@ Using the `:wrap_runtime` feature is a beautiful way to add behavior around step
 
 <%= h3 "Static" %>
 
+
+    ext = Trailblazer::Activity::TaskWrap::Extension(
+      [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"]
+    )
+
+# old
+    ext = Trailblazer::Activity::TaskWrap::Extension::WrapStatic.new(extension: ext)
+# new
+    merge = [
+      [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"],
+      [method(:add_2), id: "user.add_2", append:  "task_wrap.call_task"],
+    ]
+
+    abc_implementation, _es = abc_implementation(a_extensions: [TaskWrap::Extension.WrapStatic(*merge)])
+
+
+
+
+
+
+
+Example tracing
+https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22
+
+
+
+
+example :if

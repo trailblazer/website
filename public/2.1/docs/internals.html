@@ -601,13 +601,13 @@
 <h3 id="internals-wiring-api-output-tuples">Output Tuples</h3>
 <p><!-- {internals-wiring-api-output-tuples-toc} --></p>
 
-<p>Once <code>ctx[:outputs]</code> is finalized, the output tuples (or “connectors”) come into play. Using the Wiring API you can configure which output goes where.</p>
+<p>Once <code>ctx[:outputs]</code> is finalized, the output tuples come into play. Using the Wiring API you can configure which output goes where.</p>
 
 <pre><code>step :model,
   Output(:success) =&gt; Track(:ok) # THIS is the Wiring API!
 </code></pre>
 
-<p>Associating outputs to search strategies is implemented in <code>output_tuples.rb</code>. After steps of this unit have been run, a new option <code>ctx[:output_tuples]</code> exists that connects the <code>:outputs</code> and can be transformed into <code>:connections</code>.</p>
+<p>Associating outputs to <em>connectors</em> is implemented in <code>output_tuples.rb</code>. After steps of this unit have been run, a new option <code>ctx[:output_tuples]</code> exists that connects the <code>:outputs</code> and can be transformed into <code>:connections</code>.</p>
 
 <p>The running order for computing <code>:output_tuples</code> is as follows.</p>
 
@@ -649,6 +649,8 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
 
 <p>When using the two-argument form, a <code>Output::CustomOutput</code> tuple is created. In <code>"output_tuples.register_additional_outputs"</code> this is converted to a <code>Output::Semantic</code> after the new signal is registered as a new output on <code>:outputs</code>.</p>
 
+<p>The conversion allows all following output tuples code to work with <code>Output::Semantic</code>, only.</p>
+
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
@@ -656,9 +658,27 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
     <li id="internals-wiring-api-output-tuples-inherit">Inherit</li>
 </ul>
 
-<h1 id="test-structure">## Test structure</h1>
-<p># wiring_api_test.rb Output(…) =&gt;
-#   inherit tests are in step_test</p>
+<p>Several steps in the normalizer supply support for <code>inherit: true</code>. It is important to understand here that only custom output tuples are inherited. The <code>:outputs</code> option is <strong>not inherited</strong>, and neither are the default output tuples.</p>
+
+<ol>
+  <li>Non-generic output tuples are marked for recording in <code>"output_tuples.remember_custom_output_tuples"</code>. These are stored via the generic inherit logic.</li>
+  <li>
+    <p>Currently, we assume that <code>strict_outputs = false</code>. This means we filter out custom output tuples that are not supported by the new step task or activity in <code>"output_tuples.filter_inherited_output_tuples"</code>.</p>
+
+    <p>In order to accomplish this, the set of all inherited custom output tuples have to be explicitely computed. at present, we do that via <code>inherited_recorded_options[:custom_output_tuples]</code>.</p>
+  </li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-connections">Connections</h3>
+<p><!-- {internals-wiring-api-connections-toc} --></p>
+
+<!--
+# ## Test structure
+# wiring_api_test.rb Output(...) =>
+#   inherit tests are in step_test
+ -->
 
 </div>
 
@@ -730,6 +750,14 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
         <li class="sub-item">
           <a href="#internals-wiring-api-output-tuples-inherit">Inherit</a>
         </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-connections">
+          <i class="fas fa-arrow-right"></i>
+          Connections
+        </a>
+      </li>
       
     
   </ul>
