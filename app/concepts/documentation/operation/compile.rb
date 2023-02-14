@@ -5,6 +5,7 @@ class Documentation::Operation::Compile < Trailblazer::Operation
       trailblazer
       rails
       test
+      internals
     ],
 
     activity:          %w[
@@ -44,7 +45,8 @@ class Documentation::Operation::Compile < Trailblazer::Operation
     "representable"      => { header: "Representable", url: "/2.1/docs/representable.html" },
     "disposable"         => { header: "Disposable", url: "/2.1/docs/disposable.html" },
     "roar"               => { header: "Roar", url: "/2.1/docs/roar.html" },
-    "pro"                => { header: "Pro", url: "/2.1/docs/pro.html" }
+    "pro"                => { header: "Pro", url: "/2.1/docs/pro.html" },
+    "internals"          => { header: "Internals", url: "/2.1/docs/internals.html" },
   }
 
   step :build_pages
