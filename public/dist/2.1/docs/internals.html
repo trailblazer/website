@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Trailblazer - Workflow</title>
+    <title>Trailblazer - Internals</title>
 
     
     <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
@@ -211,10 +211,10 @@
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/internals.html">
         <button
-          class="collapsed"
+          class=""
           data-toggle="collapse"
           data-target="#internals-collapse"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="internals-collapse"
         >
           <i class="fas fa-chevron-right"></i>
@@ -225,6 +225,29 @@
     </h2>
   </div>
 
+  
+    <div
+      id="internals-collapse"
+      class="collapse show"
+      aria-labelledby="internals"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#internals-dsl">
+              DSL
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#internals-wiring-api">
+              Wiring API
+            </a>
+          </li>
+        
+      </ul>
+    </div>
   
 </div>
 
@@ -304,10 +327,10 @@
     <h2 class="mb-0 mt-1 sidebar-accordion-item">
       <a href="/2.1/docs/workflow.html">
         <button
-          class=""
+          class="collapsed"
           data-toggle="collapse"
           data-target="#workflow-collapse"
-          aria-expanded="true"
+          aria-expanded="false"
           aria-controls="workflow-collapse"
         >
           <i class="fas fa-chevron-right"></i>
@@ -318,23 +341,6 @@
     </h2>
   </div>
 
-  
-    <div
-      id="workflow-collapse"
-      class="collapse show"
-      aria-labelledby="workflow"
-      data-parent="#accordion"
-    >
-      <ul class="nav vertical menu navbar-light">
-        
-          <li class="nav-item">
-            <a class="nav-link active" href="#workflow-advance">
-              Advance
-            </a>
-          </li>
-        
-      </ul>
-    </div>
   
 </div>
 
@@ -535,63 +541,172 @@
                 role="main"
               >
                 <div class="doc-block section-name session-show">
-                  <h1 class="w-100">Workflow</h1>
+                  <h1 class="w-100">Internals</h1>
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Aug 22</span>
+                      <span>Last updated 14 Feb 23</span>
                     </li>
                   </ul>
                 </div>
 
                 <div class="doc-block">
-<div class="bd-callout bd-callout-info">
-<p>The <code>trailblazer-workflow</code> gem is currently a paid feature. It’s still unreleased and <a href="http://fb.me/trailblazer_to">we will inform you</a> once it’s available.</p>
-</div>
+<p>The INTERNALS chapter is aimed at fellow developers who want to get a deeper understanding of how Trailblazer is built.</p>
 
 <p><span class="divider"></span></p>
 
-<h2 id="workflow-advance">Advance</h2>
-<p><!-- {workflow-advance-toc} --></p>
+<h2 id="internals-dsl">DSL</h2>
+<p><!-- {internals-dsl-toc} --></p>
 
-<ul>
-  <li>
-    <p>these are still notes # FIXME -</p>
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a></p>
 
-    <p>signal, (ctx, _) = Trailblazer::Developer.wtf?(Trailblazer::Workflow::Advance::Controller, [{
-    event_name:   event_name || _event_name,
-    dictionary: diagram_dictionary,                # DISCUSS: could be retrieved from the Collaboration.
-    activity:   collaboration,
-    # resume_data: {},
-    domain_ctx:    domain_ctx, # DISCUSS: is this where {:resume_data} comes in?</p>
+<p><span class="divider"></span></p>
 
-    <pre><code>process_model_class:  process_model_class,
-process_model_id:     process_model_id,
+<h3 id="internals-dsl-normalizer">Normalizer</h3>
+<p><!-- {internals-dsl-normalizer-toc} --></p>
 
-cipher_key: cipher_key,
-encrypted_resume_data: encrypted_resume_data,
-process_model_from_resume_data: process_model_from_resume_data,
-find_process_model: find_process_model,   }, {throw: []}])
+<p>A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time <code>#step</code> is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the <a href="#sequence"><code>Sequence</code></a> instance.</p>
+
+<p>The basic normalizer resides in <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb"><code>trailblazer/activity/dsl/linear/normalizer.rb</code></a>. All additional normalizers for <code>#fail</code>, <code>#pass</code> and <code>#terminus</code> in both <code>Railway</code> and <code>FastTrack</code> (operation) are built on top of that normalizer.</p>
+
+<p>TODO: how how to extend normalizers, etc.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="internals-wiring-api">Wiring API</h2>
+<p><!-- {internals-wiring-api-toc} --></p>
+
+<p>As almost every task in the final activity is connected to other tasks, this wiring needs to be computed by the DSL. Two parts are required for that: the <em>outputs</em> the task exposes and the <em>connectors</em> where a particular output is connected to.</p>
+
+<p>In order to do so, several steps such as <code>normalize_output_tuples</code> and <code>compile_connections</code> <a href="">are added</a> to the basic normalizer. The logic is implemented in <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer/output_tuples.rb"><code>trailblazer/activity/dsl/linear/normalizer/output_tuples.rb</code></a></p>
+
+<p>The actual work happens in <code>#compile_wirings</code> where the connections from each output are computed from two options: <code>:outputs</code>, which represents all exposed outputs along with their signal, and <code>:connections</code> associating outputs to search strategies.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-outputs">Outputs</h3>
+<p><!-- {internals-wiring-api-outputs-toc} --></p>
+
+<p>Internally, <code>:outputs</code> can be set in two different ways. When using <code>Subprocess()</code> this option is provided by the macro, it retrieves the outputs via the activity interface from the nested task.</p>
+
+<p>When adding a simple step (e.g. an <code>:instance_method</code>) the Strategy’s defaulting gets invoked, and only then! Again, none of the defaulting described in the following section is executed if the <code>:outputs</code> option is provided by a macro or <code>Subprocess()</code>.</p>
+
+<p>After the outputs part is run, there will <strong>always exist</strong> an <code>:outputs</code> option for the following steps in the normalizers ctx.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Outputs</li>
+    <li id="internals-wiring-api-outputs-defaulting">Defaulting</li>
+</ul>
+
+<p>There is a special outputs pipeline under <code>"activity.default_outputs"</code> which has the purpose to configure and provide <code>:outputs</code>.</p>
+
+<p>Each Strategy subclass now adds its <code>:outputs</code> defaulting steps (e.g. <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L16"><code>"path.outputs"</code></a> or <code>"railway.outputs"</code> to that default_outputs pipeline. Currently, the implementation is a bit confusing as we don’t have nesting in pipeline.</p>
+
+<p>As an example, <code>Railway</code> will add <code>outputs[:failure]</code>.</p>
+
+<pre><code>  FAILURE_OUTPUT    = {failure: Activity::Output(Activity::Left, :failure)}
+  # ...
+  def add_failure_output(ctx, outputs:, **)
+    ctx[:outputs] = FAILURE_OUTPUT.merge(outputs)
+  end
 </code></pre>
-  </li>
-</ul>
+
+<p>The <code>FastTrack</code> normalizer conditionally adds outputs, only if the respective option (e.g. <code>pass_fast: true</code> is set.</p>
 
 <p><span class="divider"></span></p>
 
-<h3 id="workflow-advance-domain_ctx">domain_ctx</h3>
-<p><!-- {workflow-advance-domain_ctx-toc} --></p>
+<h3 id="internals-wiring-api-output-tuples">Output Tuples</h3>
+<p><!-- {internals-wiring-api-output-tuples-toc} --></p>
 
-<p>Via the <code>:domain_ctx</code> option, you provide the context object that is directly handed into the workflow/collaboration call.</p>
+<p>Once <code>ctx[:outputs]</code> is finalized, the output tuples come into play. Using the Wiring API you can configure which output goes where.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/advance-domain-ctx.530be156.webp" /></p>
+<pre><code>step :model,
+  Output(:success) =&gt; Track(:ok) # THIS is the Wiring API!
+</code></pre>
 
-<ul>
-  <li>There is no wrapping happening, so building a <code>Context</code> instance is up to you.</li>
-  <li>After the workflow invocation, the <em>returned</em> ctx is made available under <code>:domain_ctx</code> in the outer ctx. In other words, if you want to know what has been going on in the workflow, use <code>:domain_ctx</code>.</li>
+<p>Associating outputs to <em>connectors</em> is implemented in <code>output_tuples.rb</code>. After steps of this unit have been run, a new option <code>ctx[:output_tuples]</code> exists that connects the <code>:outputs</code> and can be transformed into <code>:connections</code>.</p>
+
+<p>The running order for computing <code>:output_tuples</code> is as follows.</p>
+
+<ol>
+  <li>The generic <code>:inherit</code> logic from <code>"inherit.recall_recorded_options"</code> will copy over all non-generic output tuples from the superclass to <code>:non_symbol_options</code>, as if they had been provided by a user.</li>
+  <li>Then, <a href="#internals-wiring-api-output-tuples-defaulting">defaulting</a> from the respective strategy takes place, where default connectors for <code>:success</code> etc are merged <em>before</em> 1.).</li>
+  <li>User tuples are merged on top, potentially overwriting defaulted options, as it should be.</li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-defaulting">Defaulting</li>
 </ul>
 
-<p>{:resume_data} ??
-{:process_model} ??</p>
+<p>Each strategy provides defaulting for the case that no custom wiring is configured.
+Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L25">are added before</a> <code>"output_tuples.normalize_output_tuples"</code>.</p>
+
+<p>Alternatively, as with <code>"railway.fail.success_to_failure"</code>, a particular “inherited” connector <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/railway.rb#L44">step is replaced.</a></p>
+
+<p>This assures that the order in <code>:non_symbol_options</code> and the resulting order of <code>:output_tuples</code> is</p>
+
+<pre><code>[&lt;default tuples&gt;, &lt;inherited tuples&gt;, &lt;user tuples&gt;]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-custom-signals">Custom signals</li>
+</ul>
+
+<p>The Wiring API allows to add outputs along with a new signal to non-nested steps.</p>
+
+<pre><code>step :model,
+  Output(Error, :error) =&gt; Track(:failure) # When Error is returned, go to failure track.
+</code></pre>
+
+<p>When using the two-argument form, a <code>Output::CustomOutput</code> tuple is created. In <code>"output_tuples.register_additional_outputs"</code> this is converted to a <code>Output::Semantic</code> after the new signal is registered as a new output on <code>:outputs</code>.</p>
+
+<p>The conversion allows all following output tuples code to work with <code>Output::Semantic</code>, only.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-inherit">Inherit</li>
+</ul>
+
+<p>Several steps in the normalizer supply support for <code>inherit: true</code>. It is important to understand here that only custom output tuples are inherited. The <code>:outputs</code> option is <strong>not inherited</strong>, and neither are the default output tuples.</p>
+
+<ol>
+  <li>Non-generic output tuples are marked for recording in <code>"output_tuples.remember_custom_output_tuples"</code>. These are stored via the generic inherit logic.</li>
+  <li>
+    <p>Currently, we assume that <code>strict_outputs = false</code>. This means we filter out custom output tuples that are not supported by the new step task or activity in <code>"output_tuples.filter_inherited_output_tuples"</code>.</p>
+
+    <p>In order to accomplish this, the set of all inherited custom output tuples have to be explicitely computed. at present, we do that via <code>inherited_recorded_options[:custom_output_tuples]</code>.</p>
+  </li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-connections">Connections</h3>
+<p><!-- {internals-wiring-api-connections-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Connections</li>
+    <li id="internals-wiring-api-connections-connectors">Connectors</li>
+</ul>
+
+<p>It is also possible to build custom connectors that are able to add any number of steps (actually, sequence rows) via the ADDS interface.</p>
+
+<!--
+# ## Test structure
+# wiring_api_test.rb Output(...) =>
+#   inherit tests are in step_test
+ -->
 
 </div>
 
@@ -602,20 +717,80 @@ find_process_model: find_process_model,   }, {throw: []}])
 
               <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
-                <div class="features" id="workflow-advance-features">
+                <div class="features" id="internals-dsl-features">
   <h3>
     <i class="fas fa-times"></i>
-    <span>Advance</span>
+    <span>DSL</span>
   </h3>
 
   <ul class="vertical menu">
     
       <li>
-        <a href="#workflow-advance-domain_ctx">
+        <a href="#internals-dsl-normalizer">
           <i class="fas fa-arrow-right"></i>
-          domain_ctx
+          Normalizer
         </a>
       </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="internals-wiring-api-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Wiring API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-wiring-api-outputs">
+          <i class="fas fa-arrow-right"></i>
+          Outputs
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-outputs-defaulting">Defaulting</a>
+        </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-output-tuples">
+          <i class="fas fa-arrow-right"></i>
+          Output Tuples
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-defaulting">Defaulting</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-custom-signals">Custom signals</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-inherit">Inherit</a>
+        </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-connections">
+          <i class="fas fa-arrow-right"></i>
+          Connections
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-connections-connectors">Connectors</a>
+        </li>
       
     
   </ul>
