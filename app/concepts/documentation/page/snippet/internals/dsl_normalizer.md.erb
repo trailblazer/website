@@ -4,6 +4,8 @@
 
 <%= h3 "Normalizer" %>
 
+TODO: FILE LAYOUT
+
 A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
 
 The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
@@ -111,3 +113,17 @@ It is also possible to build custom connectors that are able to add any number o
 # wiring_api_test.rb Output(...) =>
 #   inherit tests are in step_test
  -->
+
+<%= h2 "Introspect" %>
+
+<%= h3 "Data" %>
+
+The `#step` DSL allows to save arbitrary data in the activity's `data` field.
+
+<%= code "data_variable", collapse: "meths" %>
+
+You can now read the `:model_class` variable from the `data` field.
+
+<%= code "data_variable_read", collapse: "meths" %>
+
+This is used internally to store and expose data like `:extensions` (which is part of the Introspect API). It's implemented in the basic normalizer in `"activity.compile_data"`.
