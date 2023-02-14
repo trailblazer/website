@@ -90,9 +90,16 @@ The conversion allows all following output tuples code to work with `Output::Sem
 
 Several steps in the normalizer supply support for `inherit: true`. It is important to understand here that only custom output tuples are inherited. The `:outputs` option is **not inherited**, and neither are the default connectors.
 
-1. Recording
+1. Non-generic output tuples are marked for recording in `"output_tuples.remember_custom_output_tuples"`. These are stored via the generic inherit logic.
+2. Currently, we assume that `strict_outputs = false`. This means we filter out custom connectors that are not supported by the new step task or activity in `"output_tuples.filter_inherited_output_tuples"`.
+
+    In order to accomplish this, the set of all inherited custom connectors have to be explicitely computed. at present, we do that via `inherited_recorded_options[:custom_output_tuples]`.
+
+<%= h3 "Connections" %>
 
 
+<!--
 # ## Test structure
 # wiring_api_test.rb Output(...) =>
 #   inherit tests are in step_test
+ -->
