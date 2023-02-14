@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Internals</title>
+
+    <script src="/vite-dev/@vite/client" type="module"></script>
+    <script src="/vite-dev/entrypoints/documentation.js" crossorigin="anonymous" type="module"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    <link
+      rel="preconnect"
+      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    >
+
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite-dev/images/favicon.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="internals">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/internals.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#internals-collapse"
+          aria-expanded="true"
+          aria-controls="internals-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Internals</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="internals-collapse"
+      class="collapse show"
+      aria-labelledby="internals"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#internals-dsl">
+              DSL
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#internals-wiring-api">
+              Wiring API
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="macro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/macro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#macro-collapse"
+          aria-expanded="false"
+          aria-controls="macro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Macro</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main
+                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
+                role="main"
+              >
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Internals</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 14 Feb 23</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p>The INTERNALS chapter is aimed at fellow developers who want to get a deeper understanding of how Trailblazer is built.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="internals-dsl">DSL</h2>
+<p><!-- {internals-dsl-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-dsl-normalizer">Normalizer</h3>
+<p><!-- {internals-dsl-normalizer-toc} --></p>
+
+<p>A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time <code>#step</code> is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the <a href="#sequence"><code>Sequence</code></a> instance.</p>
+
+<p>The basic normalizer resides in <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb"><code>trailblazer/activity/dsl/linear/normalizer.rb</code></a>. All additional normalizers for <code>#fail</code>, <code>#pass</code> and <code>#terminus</code> in both <code>Railway</code> and <code>FastTrack</code> (operation) are built on top of that normalizer.</p>
+
+<p>TODO: how how to extend normalizers, etc.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="internals-wiring-api">Wiring API</h2>
+<p><!-- {internals-wiring-api-toc} --></p>
+
+<p>As almost every task in the final activity is connected to other tasks, this wiring needs to be computed by the DSL. Two parts are required for that: the <em>outputs</em> the task exposes and the <em>connectors</em> where a particular output is connected to.</p>
+
+<p>In order to do so, several steps such as <code>normalize_output_tuples</code> and <code>compile_connections</code> <a href="">are added</a> to the basic normalizer. The logic is implemented in <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer/output_tuples.rb"><code>trailblazer/activity/dsl/linear/normalizer/output_tuples.rb</code></a></p>
+
+<p>The actual work happens in <code>#compile_wirings</code> where the connections from each output are computed from two options: <code>:outputs</code>, which represents all exposed outputs along with their signal, and <code>:connections</code> associating outputs to search strategies.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-outputs">Outputs</h3>
+<p><!-- {internals-wiring-api-outputs-toc} --></p>
+
+<p>Internally, <code>:outputs</code> can be set in two different ways. When using <code>Subprocess()</code> this option is provided by the macro, it retrieves the outputs via the activity interface from the nested task.</p>
+
+<p>When adding a simple step (e.g. an <code>:instance_method</code>) the Strategy’s defaulting gets invoked, and only then! Again, none of the defaulting described in the following section is executed if the <code>:outputs</code> option is provided by a macro or <code>Subprocess()</code>.</p>
+
+<p>After the outputs part is run, there will <strong>always exist</strong> an <code>:outputs</code> option for the following steps in the normalizers ctx.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Outputs</li>
+    <li id="internals-wiring-api-outputs-defaulting">Defaulting</li>
+</ul>
+
+<p>There is a special outputs pipeline under <code>"activity.default_outputs"</code> which has the purpose to configure and provide <code>:outputs</code>.</p>
+
+<p>Each Strategy subclass now adds its <code>:outputs</code> defaulting steps (e.g. <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L16"><code>"path.outputs"</code></a> or <code>"railway.outputs"</code> to that default_outputs pipeline. Currently, the implementation is a bit confusing as we don’t have nesting in pipeline.</p>
+
+<p>As an example, <code>Railway</code> will add <code>outputs[:failure]</code>.</p>
+
+<pre><code>  FAILURE_OUTPUT    = {failure: Activity::Output(Activity::Left, :failure)}
+  # ...
+  def add_failure_output(ctx, outputs:, **)
+    ctx[:outputs] = FAILURE_OUTPUT.merge(outputs)
+  end
+</code></pre>
+
+<p>The <code>FastTrack</code> normalizer conditionally adds outputs, only if the respective option (e.g. <code>pass_fast: true</code> is set.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-output-tuples">Output Tuples</h3>
+<p><!-- {internals-wiring-api-output-tuples-toc} --></p>
+
+<p>Once <code>ctx[:outputs]</code> is finalized, the output tuples (or “connectors”) come into play. Using the Wiring API you can configure which output goes where.</p>
+
+<pre><code>step :model,
+  Output(:success) =&gt; Track(:ok) # THIS is the Wiring API!
+</code></pre>
+
+<p>Associating outputs to search strategies is implemented in <code>output_tuples.rb</code>. After steps of this unit have been run, a new option <code>ctx[:output_tuples]</code> exists that connects the <code>:outputs</code> and can be transformed into <code>:connections</code>.</p>
+
+<p>The running order for computing <code>:output_tuples</code> is as follows.</p>
+
+<ol>
+  <li>The generic <code>:inherit</code> logic from <code>"inherit.recall_recorded_options"</code> will copy over all non-generic output tuples from the superclass to <code>:non_symbol_options</code>, as if they had been provided by a user.</li>
+  <li>Then, <a href="#internals-wiring-api-output-tuples-defaulting">defaulting</a> from the respective strategy takes place, where default connectors for <code>:success</code> etc are merged <em>before</em> 1.).</li>
+  <li>User tuples are merged on top, potentially overwriting defaulted options, as it should be.</li>
+</ol>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-defaulting">Defaulting</li>
+</ul>
+
+<p>Each strategy provides defaulting for the case that no custom wiring is configured.
+Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L25">are added before</a> <code>"output_tuples.normalize_output_tuples"</code>.</p>
+
+<p>Alternatively, as with <code>"railway.fail.success_to_failure"</code>, a particular “inherited” connector <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/railway.rb#L44">step is replaced.</a></p>
+
+<p>This assures that the order in <code>:non_symbol_options</code> and the resulting order of <code>:output_tuples</code> is</p>
+
+<pre><code>[&lt;default tuples&gt;, &lt;inherited tuples&gt;, &lt;user tuples&gt;]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-custom-signals">Custom signals</li>
+</ul>
+
+<p>The Wiring API allows to add outputs along with a new signal to non-nested steps.</p>
+
+<pre><code>step :model,
+  Output(Error, :error) =&gt; Track(:failure) # When Error is returned, go to failure track.
+</code></pre>
+
+<p>When using the two-argument form, a <code>Output::CustomOutput</code> tuple is created. In <code>"output_tuples.register_additional_outputs"</code> this is converted to a <code>Output::Semantic</code> after the new signal is registered as a new output on <code>:outputs</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output Tuples</li>
+    <li id="internals-wiring-api-output-tuples-inherit">Inherit</li>
+</ul>
+
+<h1 id="test-structure">## Test structure</h1>
+<p># wiring_api_test.rb Output(…) =&gt;
+#   inherit tests are in step_test</p>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite-dev/images/deco1.webp" />
+                <div class="features" id="internals-dsl-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>DSL</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-dsl-normalizer">
+          <i class="fas fa-arrow-right"></i>
+          Normalizer
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="internals-wiring-api-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Wiring API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-wiring-api-outputs">
+          <i class="fas fa-arrow-right"></i>
+          Outputs
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-outputs-defaulting">Defaulting</a>
+        </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-output-tuples">
+          <i class="fas fa-arrow-right"></i>
+          Output Tuples
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-defaulting">Defaulting</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-custom-signals">Custom signals</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-output-tuples-inherit">Inherit</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

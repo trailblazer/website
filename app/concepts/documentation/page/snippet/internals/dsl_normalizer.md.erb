@@ -1,0 +1,98 @@
+<%= h2 "DSL" %>
+
+<%= h3 "Normalizer" %>
+
+A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
+
+The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
+
+TODO: how how to extend normalizers, etc.
+
+<%= h2 "Wiring API" %>
+
+As almost every task in the final activity is connected to other tasks, this wiring needs to be computed by the DSL. Two parts are required for that: the _outputs_ the task exposes and the _connectors_ where a particular output is connected to.
+
+In order to do so, several steps such as `normalize_output_tuples` and `compile_connections` [are added]() to the basic normalizer. The logic is implemented in [`trailblazer/activity/dsl/linear/normalizer/output_tuples.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer/output_tuples.rb)
+
+The actual work happens in `#compile_wirings` where the connections from each output are computed from two options: `:outputs`, which represents all exposed outputs along with their signal, and `:connections` associating outputs to search strategies.
+
+<%= h3 "Outputs" %>
+
+Internally, `:outputs` can be set in two different ways. When using `Subprocess()` this option is provided by the macro, it retrieves the outputs via the activity interface from the nested task.
+
+When adding a simple step (e.g. an `:instance_method`) the Strategy's defaulting gets invoked, and only then! Again, none of the defaulting described in the following section is executed if the `:outputs` option is provided by a macro or `Subprocess()`.
+
+After the outputs part is run, there will **always exist** an `:outputs` option for the following steps in the normalizers ctx.
+
+<%= h4 "Defaulting" %>
+
+There is a special outputs pipeline under `"activity.default_outputs"` which has the purpose to configure and provide `:outputs`.
+
+Each Strategy subclass now adds its `:outputs` defaulting steps (e.g. [`"path.outputs"`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L16) or `"railway.outputs"` to that default_outputs pipeline. Currently, the implementation is a bit confusing as we don't have nesting in pipeline.
+
+As an example, `Railway` will add `outputs[:failure]`.
+
+<%= code :ruby do %>
+  FAILURE_OUTPUT    = {failure: Activity::Output(Activity::Left, :failure)}
+  # ...
+  def add_failure_output(ctx, outputs:, **)
+    ctx[:outputs] = FAILURE_OUTPUT.merge(outputs)
+  end
+<% end %>
+
+
+The `FastTrack` normalizer conditionally adds outputs, only if the respective option (e.g. `pass_fast: true` is set.
+
+<%= h3 "Output Tuples" %>
+
+Once `ctx[:outputs]` is finalized, the output tuples (or "connectors") come into play. Using the Wiring API you can configure which output goes where.
+
+<%= code :ruby do %>
+step :model,
+  Output(:success) => Track(:ok) # THIS is the Wiring API!
+<% end %>
+
+Associating outputs to search strategies is implemented in `output_tuples.rb`. After steps of this unit have been run, a new option `ctx[:output_tuples]` exists that connects the `:outputs` and can be transformed into `:connections`.
+
+The running order for computing `:output_tuples` is as follows.
+
+1. The generic `:inherit` logic from `"inherit.recall_recorded_options"` will copy over all non-generic output tuples from the superclass to `:non_symbol_options`, as if they had been provided by a user.
+2. Then, [defaulting](#internals-wiring-api-output-tuples-defaulting) from the respective strategy takes place, where default connectors for `:success` etc are merged *before* 1.).
+3. User tuples are merged on top, potentially overwriting defaulted options, as it should be.
+
+<%= h4 "Defaulting" %>
+
+Each strategy provides defaulting for the case that no custom wiring is configured.
+Defaulting steps such as `"path.step.add_success_connector"` [are added before](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/path.rb#L25) `"output_tuples.normalize_output_tuples"`.
+
+Alternatively, as with `"railway.fail.success_to_failure"`, a particular "inherited" connector [step is replaced.](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/railway.rb#L44)
+
+This assures that the order in `:non_symbol_options` and the resulting order of `:output_tuples` is
+
+<%= code do %>
+[<default tuples>, <inherited tuples>, <user tuples>]
+<% end %>
+
+<%= h4 "Custom signals" %>
+
+The Wiring API allows to add outputs along with a new signal to non-nested steps.
+
+<%= code :ruby do %>
+step :model,
+  Output(Error, :error) => Track(:failure) # When Error is returned, go to failure track.
+<% end %>
+
+When using the two-argument form, a `Output::CustomOutput` tuple is created. In `"output_tuples.register_additional_outputs"` this is converted to a `Output::Semantic` after the new signal is registered as a new output on `:outputs`.
+
+The conversion allows all following output tuples code to work with `Output::Semantic`, only.
+
+<%= h4 "Inherit" %>
+
+Several steps in the normalizer supply support for `inherit: true`. It is important to understand here that only custom output tuples are inherited. The `:outputs` option is **not inherited**, and neither are the default connectors.
+
+1. Recording
+
+
+# ## Test structure
+# wiring_api_test.rb Output(...) =>
+#   inherit tests are in step_test
