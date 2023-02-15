@@ -103,16 +103,59 @@ Several steps in the normalizer supply support for `inherit: true`. It is import
 
 <%= h3 "Connections" %>
 
+Once the `:outputs` variable is computed, and `:output_tuples` are set, the actual connections can be compiled in `"activity.wirings"`, which is a step implemented in `OutputTuples::Connections.compile_wirings`. The returned `:wirings` array contains `Sequence::Search` instances that, during compilation, find the next step for a particular output.
+
+Actually, the term `:wirings` is misleading and should be renamed to `:output_searches`.
+
 
 <%= h4 "Connectors" %>
 
 It is also possible to build custom connectors that are able to add any number of steps (actually, sequence rows) via the ADDS interface.
+
+<%= h3 "Finalization" %>
+
+The actual `Sequence::Row` is then computed in `"activity.create_row"`. This is where `:wirings` is required. The `:row` is pushed onto `ctx[:adds]` which contains all ADDS additions for this step.
+
+The `Row` instance is just one of potentially many ADDS additions.
 
 <!--
 # ## Test structure
 # wiring_api_test.rb Output(...) =>
 #   inherit tests are in step_test
  -->
+
+<%= h3 "ADDS Interface" %>
+
+The ADDS interface is implemented in the [`activity` gem](https://github.com/trailblazer/trailblazer-activity/blob/v0.15.1/lib/trailblazer/activity/adds.rb). It defines behavior and structures for adding rows to or altering an array or sequence.
+
+It's used for adding steps to the taskWrap pipeline, to normalizers, and to add rows representing steps to the `Sequence` in the `dsl` gem.
+
+An ADDS addition instance is a hash composed like so.
+
+<%= code :ruby do %>
+{
+  row:    #<Linear::Sequence::Row >,
+  insert: Adds::Insert.method(:Append)
+}
+<% end %>
+
+A `Row` instance has to expose an `#id` method.
+
+The additions are invoked using `Adds.apply_adds`.
+
+<%= h4 "Friendly Interface" %>
+
+The recommended way of creating ADDS additions is the "friendly interface" via `#adds_for`.
+
+Assuming you had an existing pipeline creating like the one in the following snippet.
+
+<%= code "adds-pipe" %>
+
+You can then use the "friendly interface" using `FriendlyInterface.adds_for` to append another element behind `business.task`.
+
+<%= code "adds" %>
+
+Whatsoever, usually you don't need to use the ADDS directly but through `TaskWrap::Extension.WrapStatic` or when working on `dsl`'s sequence code.
 
 <%= h2 "Introspect" %>
 
