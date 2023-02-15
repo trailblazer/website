@@ -17,14 +17,7 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     >
-    <link
-      rel="preconnect"
-      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
-    >
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
-    >
+    
 
     
 
@@ -106,7 +99,7 @@
         <section class="documentation-main">
           <div class="container-fluid">
             <div class="row flex-xl-nowrap">
-              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+              <div class="col-md-3 doc-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
                 <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
                   <button
                     class="navbar-toggler collapsed"
@@ -531,16 +524,13 @@
                 </div>
               </div>
 
-              <main
-                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
-                role="main"
-              >
+              <main class="col-md-9 doc-xl-8 py-md-5 pl-md-5 order-2" role="main">
                 <div class="doc-block section-name session-show">
                   <h1 class="w-100">Test</h1>
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Aug 22</span>
+                      <span>Last updated 27 Jun 22</span>
                     </li>
                   </ul>
                 </div>
@@ -674,7 +664,6 @@ class SongOperationTest &lt; OperationSpec
         end
       end
     }
-
     it "what" do
       assert_pass( {duration: "2.24"}, {duration: 144}, model_at: :song )
     end
@@ -1223,12 +1212,10 @@ end
 
 <pre><code>it "calls the operation and raises an error and prints trace when fails" do
   exp = assert_raises do
-    factory Create, params: {title: "Shipwreck", band: "The Chats"}
+    factory Song::Operation::Create, params: { song: { title: "Shipwreck" } }
   end
 
-  exp.inspect.include? %(Operation trace)
-  exp.inspect.include? "OperationFailedError: factory(Create) has failed due to validation "\
-                       "errors: {:band=&gt;['must be Rancid']}"
+  assert_equal exp.inspect, %{#&lt;Trailblazer::Test::Operation::Helper::OperationFailedError: factory(Trailblazer::Test::Testing::Song::Operation::Create) has failed due to validation errors: {:band=&gt;[\"must be filled\"]}&gt;}
 end
 </code></pre>
 
@@ -1279,7 +1266,7 @@ end
     ctx[:user] = Struct.new(:name).new('Mocky')
   end
 
-  assert_pass new_activity, default_params, {} do |(signal, (ctx, flow_options))|
+  assert_pass Ctx({ seq: [] }, {}), expected_attrs, activity: new_activity do |signal, (ctx, flow_options)|
     assert_equal ctx[:user].name, 'Mocky'
 
     assert_equal ctx[:seq], [:some_complex_task, :make_call]
@@ -1342,7 +1329,7 @@ end
                 </aside>
               </main>
 
-              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+              <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite-dev/images/deco1.webp" />
                 <div class="features" id="test-installation-features">
   <h3>

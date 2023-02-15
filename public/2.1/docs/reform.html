@@ -17,14 +17,7 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     >
-    <link
-      rel="preconnect"
-      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
-    >
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
-    >
+    
 
     
 
@@ -106,7 +99,7 @@
         <section class="documentation-main">
           <div class="container-fluid">
             <div class="row flex-xl-nowrap">
-              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+              <div class="col-md-3 doc-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
                 <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
                   <button
                     class="navbar-toggler collapsed"
@@ -561,16 +554,13 @@
                 </div>
               </div>
 
-              <main
-                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
-                role="main"
-              >
+              <main class="col-md-9 doc-xl-8 py-md-5 pl-md-5 order-2" role="main">
                 <div class="doc-block section-name session-show">
                   <h1 class="w-100">Reform</h1>
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 14 Dec 22</span>
+                      <span>Last updated 15 Feb 23</span>
                     </li>
                   </ul>
                 </div>
@@ -606,8 +596,8 @@
 
 <p>Forms are defined in classes. Often, these classes partially map to a model.</p>
 
-<ul id="0.2448544905279989" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-2448544905279989-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-2448544905279989-ActiveModel"> ActiveModel </a> </li> </ul>
-<div class="tab-content"> <div id="0-2448544905279989-dry-validation" class="tab-pane fade show active"> 
+<ul id="0.4751859232656527" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-4751859232656527-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-4751859232656527-ActiveModel"> ActiveModel </a> </li> </ul>
+<div class="tab-content"> <div id="0-4751859232656527-dry-validation" class="tab-pane fade show active"> 
 <pre><code>class AlbumForm &lt; Reform::Form
   feature Reform::Form::Dry
 
@@ -621,7 +611,7 @@
 end
 </code></pre>
 
- </div><div id="0-2448544905279989-ActiveModel" class="tab-pane fade show "> 
+ </div><div id="0-4751859232656527-ActiveModel" class="tab-pane fade show "> 
 <pre><code>class AlbumForm &lt; Reform::Form
   property :title
 
@@ -635,8 +625,8 @@ end
 
 <p>Forms can also be nested and map to more complex object graphs.</p>
 
-<ul id="0.3650151961113558" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-3650151961113558-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-3650151961113558-ActiveModel"> ActiveModel </a> </li> </ul>
-<div class="tab-content"> <div id="0-3650151961113558-dry-validation" class="tab-pane fade show active"> 
+<ul id="0.5869959005681749" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5869959005681749-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5869959005681749-ActiveModel"> ActiveModel </a> </li> </ul>
+<div class="tab-content"> <div id="0-5869959005681749-dry-validation" class="tab-pane fade show active"> 
 <pre><code>class AlbumForm &lt; Reform::Form
   feature Reform::Form::Dry
 
@@ -656,7 +646,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-3650151961113558-ActiveModel" class="tab-pane fade show "> 
+ </div><div id="0-5869959005681749-ActiveModel" class="tab-pane fade show "> 
 <pre><code>class AlbumForm &lt; Reform::Form
   property :title
 
@@ -790,8 +780,8 @@ end
 <h3 id="reform-overview-installation">Installation</h3>
 <p><!-- {reform-overview-installation-toc} --></p>
 
-<ul id="0.6709578243837157" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6709578243837157-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6709578243837157-ActiveModel"> ActiveModel </a> </li> </ul>
-<div class="tab-content"> <div id="0-6709578243837157-dry-validation" class="tab-pane fade show active"> 
+<ul id="0.10115237802862032" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-10115237802862032-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-10115237802862032-ActiveModel"> ActiveModel </a> </li> </ul>
+<div class="tab-content"> <div id="0-10115237802862032-dry-validation" class="tab-pane fade show active"> 
 <p>Add this your Gemfile.</p>
 
 <pre><code>gem "reform"
@@ -807,7 +797,7 @@ Reform::Form.class_eval do
 end
 </code></pre>
 
- </div><div id="0-6709578243837157-ActiveModel" class="tab-pane fade show "> 
+ </div><div id="0-10115237802862032-ActiveModel" class="tab-pane fade show "> 
 <p>Add this to your Gemfile.</p>
 
 <pre><code>gem "reform"
@@ -942,8 +932,8 @@ end
 
 <p>Forms are defined in classes. Often, these classes partially map to one or many model(s).</p>
 
-<ul id="0.11479103177137073" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-11479103177137073-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-11479103177137073-ActiveModel"> ActiveModel </a> </li> </ul>
-<div class="tab-content"> <div id="0-11479103177137073-dry-validation" class="tab-pane fade show active"> 
+<ul id="0.9220704399964486" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9220704399964486-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9220704399964486-ActiveModel"> ActiveModel </a> </li> </ul>
+<div class="tab-content"> <div id="0-9220704399964486-dry-validation" class="tab-pane fade show active"> 
 <pre><code>class AlbumForm &lt; Reform::Form
   feature Reform::Form::Dry
 
@@ -957,7 +947,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-11479103177137073-ActiveModel" class="tab-pane fade show "> 
+ </div><div id="0-9220704399964486-ActiveModel" class="tab-pane fade show "> 
 <pre><code>class AlbumForm &lt; Reform::Form
   property :title
 
@@ -1092,8 +1082,8 @@ form.songs[0].title #=&gt; "The Reflex"
 
 <p>You can define validation for every form property and for nested forms.</p>
 
-<ul id="0.7618337093552151" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7618337093552151-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7618337093552151-ActiveModel"> ActiveModel </a> </li> </ul>
-<div class="tab-content"> <div id="0-7618337093552151-dry-validation" class="tab-pane fade show active"> 
+<ul id="0.350636223126891" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-350636223126891-dry-validation"> dry-validation </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-350636223126891-ActiveModel"> ActiveModel </a> </li> </ul>
+<div class="tab-content"> <div id="0-350636223126891-dry-validation" class="tab-pane fade show active"> 
 <pre><code>class AlbumForm &lt; Reform::Form
   feature Reform::Form::Dry
 
@@ -1113,7 +1103,7 @@ form.songs[0].title #=&gt; "The Reflex"
 end
 </code></pre>
 
- </div><div id="0-7618337093552151-ActiveModel" class="tab-pane fade show "> 
+ </div><div id="0-350636223126891-ActiveModel" class="tab-pane fade show "> 
 <pre><code>class AlbumForm &lt; Reform::Form
   property :title
 
@@ -2286,14 +2276,14 @@ end
 
 <p>Note that you are not limited to one validation engine. When switching from <code>ActiveModel::Validation</code> to <code>dry-validation</code>, you should set the first as the default validation engine.</p>
 
-<ul id="0.1936952124029464" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1936952124029464-Rails"> Rails </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1936952124029464-Ruby"> Ruby </a> </li> </ul>
-<div class="tab-content"> <div id="0-1936952124029464-Rails" class="tab-pane fade show active"> 
+<ul id="0.8166641696244811" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8166641696244811-Rails"> Rails </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8166641696244811-Ruby"> Ruby </a> </li> </ul>
+<div class="tab-content"> <div id="0-8166641696244811-Rails" class="tab-pane fade show active"> 
 <pre><code>config.reform.validations = :active_model
 </code></pre>
 
 <p>The configuration assumes you have <code>reform-rails</code> installed.</p>
 
- </div><div id="0-1936952124029464-Ruby" class="tab-pane fade show "> 
+ </div><div id="0-8166641696244811-Ruby" class="tab-pane fade show "> 
 <pre><code>  Reform::Form.send(:include, Reform::Form::ActiveModel::Validations)
 </code></pre>
 
@@ -2789,7 +2779,7 @@ end
                 </aside>
               </main>
 
-              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+              <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite-dev/images/deco1.webp" />
                 <div class="features" id="reform-overview-features">
   <h3>
