@@ -1249,10 +1249,13 @@ a:hover,
   margin-bottom: 0;
 }
 .bd-callout.bd-callout code {
-  color: #FF355D;
-  font-size: 20px;
-  border-radius: 3px;
-  padding: 0 3px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 0 3px 3px 3px;
+  padding: 3px;
+}
+.bd-callout.bd-callout code.hljs {
+  padding: 1rem;
 }
 .bd-callout.bd-callout.bd-callout-info {
   border-color: #3D3580;
@@ -2407,7 +2410,7 @@ i.blue {
 }
 .doc-block pre,
 .doc-block .table-responsive {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 .doc-block ul,
 .doc-block ol {
