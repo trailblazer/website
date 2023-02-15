@@ -10,7 +10,21 @@ A normalizer is a pipeline of steps, a bit like a simple operation without the r
 
 The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
 
-TODO: how how to extend normalizers, etc.
+<%= h4 "Step Interface" %>
+
+Normalizer steps usually check for options in `ctx` and then apply logic. Suppose you want a new option `upcase_id: true` in your operation DSL that uppercase the precomputed ID.
+
+<%= code "upcase" %>
+
+Note that this function needs `:id`, so it has to be inserted after the ID computing step. You can extend an existing normalizer using `Normalizer.extend!`.
+
+<%= code "normalizer-extend", collapse: :meths %>
+
+The first argument is the activity to extend. The following arguments name the normalizers to modify. In this example, only `#step`'s normalizer will contain the `#upcase_id` step.
+
+In the trace you can see, as expected, that only the ID for `:create_model` is uppercased.
+
+<%= vite_image_tag "images/upcase.png", class: "mx-auto d-block" %>
 
 <%= h2 "Wiring API" %>
 
@@ -116,7 +130,9 @@ It is also possible to build custom connectors that are able to add any number o
 
 The actual `Sequence::Row` is then computed in `"activity.create_row"`. This is where `:wirings` is required. The `:row` is pushed onto `ctx[:adds]` which contains all ADDS additions for this step.
 
-The `Row` instance is just one of potentially many ADDS additions.
+The `Row` instance is just one of potentially many ADDS additions that are applied to the `Sequence` instance.
+
+<%= h4 "Sequence Row" %>
 
 <!--
 # ## Test structure
