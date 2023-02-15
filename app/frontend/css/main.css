@@ -2505,3 +2505,15 @@ i.blue {
   font-weight: 700;
   font-size: 15px;
 }
+
+/* doc-xl-* classes are used in the documentation layout to override
+   the default bootstrap grid classes. */
+.doc-xl-2 {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+.doc-xl-8 {
+  flex: 0 0 60%;
+  max-width: 60%;
+}
