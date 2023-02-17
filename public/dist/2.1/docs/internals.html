@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.5976e022.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.6b64773f.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -19,14 +19,7 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     >
-    <link
-      rel="preconnect"
-      href="https://R2IYF7ETH7-dsn.algolia.net" crossorigin
-    >
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
-    >
+    
 
     
       <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -123,7 +116,7 @@
         <section class="documentation-main">
           <div class="container-fluid">
             <div class="row flex-xl-nowrap">
-              <div class="col-md-3 col-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+              <div class="col-md-3 doc-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
                 <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
                   <button
                     class="navbar-toggler collapsed"
@@ -243,6 +236,12 @@
           <li class="nav-item">
             <a class="nav-link " href="#internals-wiring-api">
               Wiring API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#internals-introspect">
+              Introspect
             </a>
           </li>
         
@@ -536,16 +535,13 @@
                 </div>
               </div>
 
-              <main
-                class="col-md-9 col-xl-8 py-md-5 pl-md-5 order-2"
-                role="main"
-              >
+              <main class="col-md-9 doc-xl-8 py-md-5 pl-md-5 order-2" role="main">
                 <div class="doc-block section-name session-show">
                   <h1 class="w-100">Internals</h1>
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 14 Feb 23</span>
+                      <span>Last updated 17 Feb 23</span>
                     </li>
                   </ul>
                 </div>
@@ -565,11 +561,103 @@
 <h3 id="internals-dsl-normalizer">Normalizer</h3>
 <p><!-- {internals-dsl-normalizer-toc} --></p>
 
+<p>TODO: FILE LAYOUT</p>
+
 <p>A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time <code>#step</code> is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the <a href="#sequence"><code>Sequence</code></a> instance.</p>
 
 <p>The basic normalizer resides in <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb"><code>trailblazer/activity/dsl/linear/normalizer.rb</code></a>. All additional normalizers for <code>#fail</code>, <code>#pass</code> and <code>#terminus</code> in both <code>Railway</code> and <code>FastTrack</code> (operation) are built on top of that normalizer.</p>
 
-<p>TODO: how how to extend normalizers, etc.</p>
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Normalizer</li>
+    <li id="internals-dsl-normalizer-extend">Extend</li>
+</ul>
+
+<p>Normalizer steps usually check for options in <code>ctx</code> and then apply logic. Suppose you want a new option <code>upcase_id: true</code> in your operation DSL that uppercase the precomputed ID.</p>
+
+<pre><code>module MyNormalizer
+  def self.upcase_id(ctx, upcase_id: nil, id:, **)
+    return unless upcase_id
+
+    ctx[:id] = id.to_s.upcase
+  end
+end
+</code></pre>
+
+<p>Note that this function needs <code>:id</code>, so it has to be inserted after the ID computing step. You can extend an existing normalizer using <code>Normalizer.extend!</code>.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    Trailblazer::Activity::DSL::Linear::Normalizer.extend!(
+      Song::Activity::Create,
+      :step
+    ) do |normalizer|
+      Trailblazer::Activity::DSL::Linear::Normalizer.prepend_to(
+        normalizer,
+        "activity.default_outputs", # few steps after "activity.normalize_id"
+        {
+          "my.upcase_id" =&gt; Trailblazer::Activity::DSL::Linear::Normalizer.Task(MyNormalizer.method(:upcase_id)),
+        }
+      )
+    end
+
+    step :create_model, upcase_id: true
+    step :validate
+    pass :save,         upcase_id: true # not applied!
+    # ...
+  end
+end
+</code></pre>
+
+<p>The first argument is the activity to extend. The following arguments name the normalizers to modify. In this example, only <code>#step</code>’s normalizer will contain the <code>#upcase_id</code> step.</p>
+
+<p>In the trace you can see, as expected, that only the ID for <code>:create_model</code> is uppercased.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/upcase.18002c1e.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Normalizer</li>
+    <li id="internals-dsl-normalizer-inherit">Inherit</li>
+</ul>
+
+<p>The <code>dsl</code> supports the <code>inherit: true</code> option to copy over particular recorded options from the replaced step in the superclass. This is implemented in <code>"inherit.recall_recorded_options"</code>. In order to instruct the <code>:inherit</code> logic to record and reapply certain options, you need to mark those using <code>Record()</code>.</p>
+
+<p>If you wanted the <code>:upcase_id</code> option to be added automatically to the user’s option when using <code>inherit: true</code> the following function could be added to the above <code>MyNormalizer</code>.</p>
+
+<pre><code>module MyNormalizer
+  # ...
+  def self.record_upcase_id_flag(ctx, non_symbol_options:, upcase_id: nil, **)
+    ctx.merge!(
+      non_symbol_options: non_symbol_options.merge(
+        Trailblazer::Activity::DSL::Linear::Normalizer::Inherit.Record(
+          {upcase_id: upcase_id},   # what do you want to record?
+          type: :upcase_id_feature, # categorize the recorded data.
+          non_symbol_options: false # this is a real :symbol option.
+        )
+      )
+    )
+  end
+end
+</code></pre>
+
+<p>As <code>:upcase_id</code> is a symbol option (unlike, for example, <code>Out()</code>), the <code>:non_symbol_option</code> for <code>Record()</code> is `false.</p>
+
+<p>It is added as another step to the original normalizer using <code>extend!</code>.</p>
+
+<pre><code>Trailblazer::Activity::DSL::Linear::Normalizer.extend!(Song::Activity::Create, :step) do |normalizer|
+  Trailblazer::Activity::DSL::Linear::Normalizer.prepend_to(
+    normalizer,
+    "activity.default_outputs", # step after "activity.normalize_id"
+    {
+      "my.upcase_id"             =&gt; Trailblazer::Activity::DSL::Linear::Normalizer.Task(MyNormalizer.method(:upcase_id)),
+      "my.record_upcase_id_flag" =&gt; Trailblazer::Activity::DSL::Linear::Normalizer.Task(MyNormalizer.method(:record_upcase_id_flag)),
+    }
+  )
+end
+</code></pre>
 
 <p><span class="divider"></span></p>
 
@@ -693,6 +781,10 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
 <h3 id="internals-wiring-api-connections">Connections</h3>
 <p><!-- {internals-wiring-api-connections-toc} --></p>
 
+<p>Once the <code>:outputs</code> variable is computed, and <code>:output_tuples</code> are set, the actual connections can be compiled in <code>"activity.wirings"</code>, which is a step implemented in <code>OutputTuples::Connections.compile_wirings</code>. The returned <code>:wirings</code> array contains <code>Sequence::Search</code> instances that, during compilation, find the next step for a particular output.</p>
+
+<p>Actually, the term <code>:wirings</code> is misleading and should be renamed to <code>:output_searches</code>.</p>
+
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
@@ -702,11 +794,110 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
 
 <p>It is also possible to build custom connectors that are able to add any number of steps (actually, sequence rows) via the ADDS interface.</p>
 
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-finalization">Finalization</h3>
+<p><!-- {internals-wiring-api-finalization-toc} --></p>
+
+<p>The actual <code>Sequence::Row</code> is then computed in <code>"activity.create_row"</code>. This is where <code>:wirings</code> is required. The <code>:row</code> is pushed onto <code>ctx[:adds]</code> which contains all ADDS additions for this step.</p>
+
+<p>The <code>Row</code> instance is just one of potentially many ADDS additions that are applied to the <code>Sequence</code> instance.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Finalization</li>
+    <li id="internals-wiring-api-finalization-sequence-row">Sequence Row</li>
+</ul>
+
 <!--
 # ## Test structure
 # wiring_api_test.rb Output(...) =>
 #   inherit tests are in step_test
  -->
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-wiring-api-adds-interface">ADDS Interface</h3>
+<p><!-- {internals-wiring-api-adds-interface-toc} --></p>
+
+<p>The ADDS interface is implemented in the <a href="https://github.com/trailblazer/trailblazer-activity/blob/v0.15.1/lib/trailblazer/activity/adds.rb"><code>activity</code> gem</a>. It defines behavior and structures for adding rows to or altering an array or sequence.</p>
+
+<p>It’s used for adding steps to the taskWrap pipeline, to normalizers, and to add rows representing steps to the <code>Sequence</code> in the <code>dsl</code> gem.</p>
+
+<p>An ADDS addition instance is a hash composed like so.</p>
+
+<pre><code>{
+  row:    #&lt;Linear::Sequence::Row &gt;,
+  insert: Adds::Insert.method(:Append)
+}
+</code></pre>
+
+<p>A <code>Row</code> instance has to expose an <code>#id</code> method.</p>
+
+<p>The additions are invoked using <code>Adds.apply_adds</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>ADDS Interface</li>
+    <li id="internals-wiring-api-adds-interface-friendly-interface">Friendly Interface</li>
+</ul>
+
+<p>The recommended way of creating ADDS additions is the “friendly interface” via <code>#adds_for</code>.</p>
+
+<p>Assuming you had an existing pipeline creating like the one in the following snippet.</p>
+
+<pre><code>row = Trailblazer::Activity::TaskWrap::Pipeline::Row[
+  "business.task",  # id, required as per ADDS interface
+  Object            # task
+]
+
+pipeline = [row] # pipe contains one item.
+</code></pre>
+
+<p>You can then use the “friendly interface” using <code>FriendlyInterface.adds_for</code> to append another element behind <code>business.task</code>.</p>
+
+<pre><code>adds = Trailblazer::Activity::Adds::FriendlyInterface.adds_for(
+  [
+    [Song::Activity::Create, id: "my.create", append: "business.task"],
+  ]
+)
+extended_pipeline = Trailblazer::Activity::Adds.apply_adds(pipeline, adds)
+# =&gt; [row, #&lt;row with Song::Activity::Create&gt;]
+</code></pre>
+
+<p>Whatsoever, usually you don’t need to use the ADDS directly but through <code>TaskWrap::Extension.WrapStatic</code> or when working on <code>dsl</code>’s sequence code.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="internals-introspect">Introspect</h2>
+<p><!-- {internals-introspect-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-introspect-data">Data</h3>
+<p><!-- {internals-introspect-data-toc} --></p>
+
+<p>The <code>#step</code> DSL allows to save arbitrary data in the activity’s <code>data</code> field.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model,
+      model_class: Song,
+      DataVariable() =&gt; :model_class # mark :model_class as data-worthy.
+    # ...
+  end
+end
+</code></pre>
+
+<p>Using <code>Introspect::Graph</code>, you can now read the <code>:model_class</code> variable from the <code>data</code> field.</p>
+
+<pre><code>Trailblazer::Activity::Introspect.Graph(Song::Activity::Create)
+  .find(:create_model).data[:model_class] #=&gt; Song
+</code></pre>
+
+<p>This is used internally to store and expose data like <code>:extensions</code> (which is part of the Introspect API). It’s implemented in the basic normalizer in <code>"activity.compile_data"</code>.</p>
 
 </div>
 
@@ -715,7 +906,7 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
                 </aside>
               </main>
 
-              <div class="d-none d-xl-block col-xl-2 list-group sidebar-scroll order-3">
+              <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
                 <div class="features" id="internals-dsl-features">
   <h3>
@@ -731,6 +922,16 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
           Normalizer
         </a>
       </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-dsl-normalizer-extend">Extend</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-dsl-normalizer-inherit">Inherit</a>
+        </li>
       
     
   </ul>
@@ -791,6 +992,51 @@ Defaulting steps such as <code>"path.step.add_success_connector"</code> <a href=
         <li class="sub-item">
           <a href="#internals-wiring-api-connections-connectors">Connectors</a>
         </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-finalization">
+          <i class="fas fa-arrow-right"></i>
+          Finalization
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-finalization-sequence-row">Sequence Row</a>
+        </li>
+      
+    
+      <li>
+        <a href="#internals-wiring-api-adds-interface">
+          <i class="fas fa-arrow-right"></i>
+          ADDS Interface
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-wiring-api-adds-interface-friendly-interface">Friendly Interface</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="internals-introspect-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Introspect</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-introspect-data">
+          <i class="fas fa-arrow-right"></i>
+          Data
+        </a>
+      </li>
       
     
   </ul>
