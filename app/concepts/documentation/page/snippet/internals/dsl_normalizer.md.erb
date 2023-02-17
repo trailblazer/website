@@ -10,7 +10,7 @@ A normalizer is a pipeline of steps, a bit like a simple operation without the r
 
 The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
 
-<%= h4 "Step Interface" %>
+<%= h4 "Extend" %>
 
 Normalizer steps usually check for options in `ctx` and then apply logic. Suppose you want a new option `upcase_id: true` in your operation DSL that uppercase the precomputed ID.
 
@@ -25,6 +25,21 @@ The first argument is the activity to extend. The following arguments name the n
 In the trace you can see, as expected, that only the ID for `:create_model` is uppercased.
 
 <%= vite_image_tag "images/upcase.png", class: "mx-auto d-block" %>
+
+<%= h4 "Inherit" %>
+
+The `dsl` supports the `inherit: true` option to copy over particular recorded options from the replaced step in the superclass. This is implemented in `"inherit.recall_recorded_options"`. In order to instruct the `:inherit` logic to record and reapply certain options, you need to mark those using `Record()`.
+
+If you wanted the `:upcase_id` option to be added automatically to the user's option when using `inherit: true` the following function could be added to the above `MyNormalizer`.
+
+<%= code "record-normalizer", collapse: "meths" %>
+
+As `:upcase_id` is a symbol option (unlike, for example, `Out()`), the `:non_symbol_option` for `Record()` is `false.
+
+It is added as another step to the original normalizer using `extend!`.
+
+<%= code "record-extend", collapse: "meths" %>
+
 
 <%= h2 "Wiring API" %>
 
