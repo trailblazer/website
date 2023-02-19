@@ -58,7 +58,7 @@ Ctx variables set within an iteration [are discarded per default](#macro-each-va
 
 If one of your iterated steps sets `ctx[:value]` within `Each()`, this value will be collected.
 
-<%= code "iterated" %>
+<%= code "iterated-value" %>
 
 All collected values are available at `ctx[:collected_from_each]` when `Each()` is finished.
 
