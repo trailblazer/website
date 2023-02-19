@@ -1,5 +1,7 @@
 <%= h2 "Variable Mapping", name: "variable-mapping" %>
 
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a>
+
 Since TRB 2.1 it is possible to define the input and output variables for each step. This is called _variable mapping_, or I/O in short. It provides an interface to define what variable go in and come out of a task, enabling you to limit what steps "see" and what "output" they can add to the context.
 
 It's one of the most frequently used features in Trailblazer.
@@ -272,10 +274,6 @@ It defines two input and one output filter.
 
 A sub operation could now replace the policy step. However, instead of redefining the i/o filters, they can be inherited and extended.
 
-<%= info do %>
-As `inherit: [:variable_mapping]` is still an experimental feature, you need to explicitely `extend` the `VariableMapping::Inherit` module into the top-most operation where the inheritance chain should begin.
-<% end %>
-
 Here's a potential inheriting operation.
 
 <%= code "inheritance-sub", collapse: "meths" %>
@@ -286,6 +284,7 @@ This configuration is adding another `Out()` filter, resulting in a total filter
 
 The new `Out()` filter setting `:raw_message_for_admin` is placed behind the inherited filter.
 
+Note that `inherit: true` will, besides other options, also invoke the variable mapping inheritance.
 
 <!--
 <%#= h3 "Manual filter" %>
