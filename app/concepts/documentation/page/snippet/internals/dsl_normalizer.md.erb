@@ -47,7 +47,9 @@ As almost every task in the final activity is connected to other tasks, this wir
 
 In order to do so, several steps such as `normalize_output_tuples` and `compile_connections` [are added]() to the basic normalizer. The logic is implemented in [`trailblazer/activity/dsl/linear/normalizer/output_tuples.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer/output_tuples.rb)
 
-The actual work happens in `#compile_wirings` where the connections from each output are computed from two options: `:outputs`, which represents all exposed outputs along with their signal, and `:connections` associating outputs to search strategies.
+The actual work happens in `#compile_wirings` where the connections from each output are computed from two options: `:outputs`, which represents all exposed outputs along with their signal, and `:output_tuples` associating outputs to search strategies.
+
+One major design guideline is that `:outputs` is simply a list of available outputs of the step. This option does not imply any outgoing connections. Those are effectivly defined by the `:output_tuples`.
 
 <%= h3 "Outputs" %>
 
