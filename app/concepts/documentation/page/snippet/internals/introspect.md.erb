@@ -1,0 +1,13 @@
+<%= h2 "Introspect" %>
+
+<%= h3 "Data" %>
+
+The `#step` DSL allows to save arbitrary data in the activity's `data` field.
+
+<%= code "data_variable", collapse: "meths" %>
+
+Using `Introspect::Graph`, you can now read the `:model_class` variable from the `data` field.
+
+<%= code "data_variable_read", collapse: "meths" %>
+
+This is used internally to store and expose data like `:extensions` (which is part of the Introspect API). It's implemented in the basic normalizer in `"activity.compile_data"`.

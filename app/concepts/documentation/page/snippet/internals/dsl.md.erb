@@ -1,0 +1,45 @@
+<%= h2 "DSL" %>
+
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a>
+
+<%= h3 "Normalizer" %>
+
+TODO: FILE LAYOUT
+
+A normalizer is a pipeline of steps, a bit like a simple operation without the railway. The concept of normalizers is used in a lot of places in TRB: for processing DSL options as seen with `#step` or in Reform 3's `#property`, or even in the `Developer::Debugger`.
+
+
+In the Activity DSL, every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
+
+The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
+
+<%= h4 "Extend" %>
+
+Normalizer steps usually check for options in `ctx` and then apply logic. Suppose you want a new option `upcase_id: true` in your operation DSL that uppercase the precomputed ID.
+
+<%= code "upcase" %>
+
+Note that this function needs `:id`, so it has to be inserted after the ID computing step. You can extend an existing normalizer using `Normalizer.extend!`.
+
+<%= code "normalizer-extend", collapse: :meths %>
+
+The first argument is the activity to extend. The following arguments name the normalizers to modify. In this example, only `#step`'s normalizer will contain the `#upcase_id` step.
+
+In the trace you can see, as expected, that only the ID for `:create_model` is uppercased.
+
+<%= vite_image_tag "images/upcase.png", class: "mx-auto d-block" %>
+
+<%= h4 "Inherit" %>
+
+The `dsl` supports the `inherit: true` option to copy over particular recorded options from the replaced step in the superclass. This is implemented in `"inherit.recall_recorded_options"`. In order to instruct the `:inherit` logic to record and reapply certain options, you need to mark those using `Record()`.
+
+If you wanted the `:upcase_id` option to be added automatically to the user's option when using `inherit: true` the following function could be added to the above `MyNormalizer`.
+
+<%= code "record-normalizer", collapse: "meths" %>
+
+As `:upcase_id` is a symbol option (unlike, for example, `Out()`), the `:non_symbol_option` for `Record()` is `false.
+
+It is added as another step to the original normalizer using `extend!`.
+
+<%= code "record-extend", collapse: "meths" %>
+
