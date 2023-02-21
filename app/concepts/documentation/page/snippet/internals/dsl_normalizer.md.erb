@@ -6,7 +6,10 @@
 
 TODO: FILE LAYOUT
 
-A normalizer is a pipeline of steps, a bit like a simple operation without the railway. Every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
+A normalizer is a pipeline of steps, a bit like a simple operation without the railway. The concept of normalizers is used in a lot of places in TRB: for processing DSL options as seen with `#step` or in Reform 3's `#property`, or even in the `Developer::Debugger`.
+
+
+In the Activity DSL, every time `#step` is called, a normalizer is invoked and its steps eventually produce the task(s) and the wiring. The result is then added to the [`Sequence`](#sequence) instance.
 
 The basic normalizer resides in [`trailblazer/activity/dsl/linear/normalizer.rb`](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear/normalizer.rb). All additional normalizers for `#fail`, `#pass` and `#terminus` in both `Railway` and `FastTrack` (operation) are built on top of that normalizer.
 
