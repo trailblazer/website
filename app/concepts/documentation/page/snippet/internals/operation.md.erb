@@ -1,0 +1,18 @@
+<%= h2 "Operation" %>
+
+<a href="https://github.com/trailblazer/trailblazer-operation" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-operation 0.10.0</a>
+
+The `trailblazer-operation` gem, being ridiculously tiny, provides the following features.
+
+1. The `Trailblazer::Operation` class which is a `Trailblazer::Activity::FastTrack` subclass with additions.
+2. A user-friendly public `Operation.call` version implemented in `operation/public_call.rb`.
+3. The `ClassDependencies` module to set ctx variables directly on the operation class.
+4. Last but not least, `Operation::Result` that is returned from `Operation.call` and allows queries such as `#success?`.
+
+The `operation` gem is really just a syntactical sugaring on top of `Activity::FastTrack`. Everything else, from the `#step` DSL to tracing, is implemented in underlying gems.
+
+<%= h3 "Public call" %>
+
+<%= h3 "Future" %>
+
+Long-term, I'd like to remove this gem. The only useful addition is `Operation.call(ctx)`, and this comes with a [high price](). The `public_call.rb` code introduces unnecessary complexity and needs to apply all kinds of tricks to make `Operation` expose two different `#call` methods.
