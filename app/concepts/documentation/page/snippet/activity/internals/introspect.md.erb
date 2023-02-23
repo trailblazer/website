@@ -1,57 +1,32 @@
 <%= h3 "Introspection API" %>
 
-To find out the structure and composition details about any activity, use the `Introspect` API.
+<a href="https://github.com/trailblazer/trailblazer-activity" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity 0.16.0</a>
 
-<%= h4 "Find" %>
-
-You may use `Graph#find` with a block for a more complex search.
-
-<%= code "find-block" %>
-
-Alternatively, using the `Graph#find` method with an ID provided, you can retrieve a particular node in the activity's circuit.
+To introspect an activity and find out about steps, IDs and configuration, use the `Introspect.Nodes()` function.
 
 Consider the following activity.
 
-<%= code "act" %>
+<%= code_tabs "create" %>
 
-You can introspect a certain element by using `find(id)`.
+<%= h4 "ID" %>
 
-<%= code "find" %>
+You can retrieve a datastructure describing a particular task by ID.
 
-Note that all queries go via a `Graph` instance.
+<%= code "nodes" %>
 
-<%= h4 "Node API" %>
+The returned `Attributes` object exposes `#id`, `#data` and `#task`.
 
-The returned node instance exposes several inspect helpers.
+<!-- # FIXME: we need a skip-convert flag for Activity -> Operation -->
+<%= code "nodes-puts" %>
 
-The ID of the element is retrieved by using `#id`.
+<%= h4 "Task" %>
 
-<%= code "id" %>
+It also accepts a `:task` option if you need to find attributes for a step where you only know the code component, not the ID. This is, for example, used in the tracing code.
 
-To see what actual task sits behind this circuit's node, use `#task`. This is always the low-level task that responds to a circuit interface. It might be a wrapper around your actual logic, provided by the DSL.
+<%= code "nodes-task" %>
 
-<%= code "task" %>
+The returned `Attributes` instance behaves identically to the above.
 
-Outgoing connections from a task can be queried using `#outgoings`. This returns an array of all outgoing arrows.
+<%= h4 "Data" %>
 
-<%= code "outgoings" %>
-
-<%= h4 "Outgoing" %>
-
-An `Outgoing` provides several interesting fields.
-
-You can retrieve the connected element by using `#task`. It returns the actual low-level task.
-
-<%= code "left-task" %>
-
-The `#output` method returns the `Output` instance that connects the task to the next element.
-
-<%= code "left" %>
-
-The `Output#signal` field returns the signal object the task returns to trigger that connection. To see the semantic of this output, use `Output#semantic`.
-
-<%= h4 "Outputs" %>
-
-The `Node#outputs` method returns an array of `Output` objects defining each output of outgoing connections of a specific node.
-
-<%= code "outputs" %>
+Note that you can use `Attributes` to query [custom data from the DSL](/2.1/docs/internals.html#internals-dsl-introspect-data).

@@ -1,0 +1,63 @@
+<%= h3 "Graph" %>
+<!-- OLD link: https://trailblazer.to/2.1/docs/activity#activity-internals-introspection-api -->
+<!-- NEW link: /2.1/docs/trailblazer.html#trailblazer-developer-graph -->
+
+<%= info do  %>
+With `trailblazer-activity` 0.16.0, the `Introspect::Graph` API has been moved to `trailblazer-developer` and might get replaced. Please refer to the `Introspect::Nodes` API.
+<% end %>
+
+To find out the structure and composition details about any activity, use the `Introspect` API.
+
+<%= h4 "Find" %>
+
+You may use `Graph#find` with a block for a more complex search.
+
+<%= code "find-block" %>
+
+Alternatively, using the `Graph#find` method with an ID provided, you can retrieve a particular node in the activity's circuit.
+
+Consider the following activity.
+
+<%= code "act" %>
+
+You can introspect a certain element by using `find(id)`.
+
+<%= code "find" %>
+
+Note that all queries go via a `Graph` instance.
+
+<%= h4 "Node API" %>
+
+The returned node instance exposes several inspect helpers.
+
+The ID of the element is retrieved by using `#id`.
+
+<%= code "id" %>
+
+To see what actual task sits behind this circuit's node, use `#task`. This is always the low-level task that responds to a circuit interface. It might be a wrapper around your actual logic, provided by the DSL.
+
+<%= code "task" %>
+
+Outgoing connections from a task can be queried using `#outgoings`. This returns an array of all outgoing arrows.
+
+<%= code "outgoings" %>
+
+<%= h4 "Outgoing" %>
+
+An `Outgoing` provides several interesting fields.
+
+You can retrieve the connected element by using `#task`. It returns the actual low-level task.
+
+<%= code "left-task" %>
+
+The `#output` method returns the `Output` instance that connects the task to the next element.
+
+<%= code "left" %>
+
+The `Output#signal` field returns the signal object the task returns to trigger that connection. To see the semantic of this output, use `Output#semantic`.
+
+<%= h4 "Outputs" %>
+
+The `Node#outputs` method returns an array of `Output` objects defining each output of outgoing connections of a specific node.
+
+<%= code "outputs" %>
