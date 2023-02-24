@@ -1,7 +1,22 @@
 <%= h2 "Activity" %>
 
+An `Activity` instance exposes two public methods.
+
+* `Activity#call` to invoke the activity.
+* `Activity#to_h` that returns the `Schema` hash which contains all data that was collected
+  during compile time.
+
+This instance is usually created via a DSL, the `Schema` (and Activity) is created when compiled in `intermediate.rb`.
+
 <%= h3 "Schema" %>
 
-created during intermediate
+The schema hash can be accessed using `Activity#to_h`. It consists of four mandatory keys.
+
+1. `activity.to_h[:circuit]` The executable `Activity::Circuit that will actually run the task graph.
+2. `activity.to_h[:nodes]` A `Schema::Nodes` instance with an `Attributes` instance per activity task. Usually used with `Introspect::Nodes()`.
+2. `activity.to_h[:outputs]` The output instances this activity exposes.
+2. `activity.to_h[:config]` A hash keeping viable data such as `:wrap_static`. Note that you can add to this structure during compilation.
+
 <%= h4 "Nodes" %>
+
 <%= h4 "Attributes" %>
