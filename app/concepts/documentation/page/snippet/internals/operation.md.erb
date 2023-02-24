@@ -13,6 +13,8 @@ The `operation` gem is really just a syntactical sugaring on top of `Activity::F
 
 <%= h3 "Public call" %>
 
+<%= h4 "call_task hack" %>
+
 <%= h3 "Future" %>
 
 Long-term, I'd like to remove this gem. The only useful addition is `Operation.call(ctx)`, and this comes with a [high price](). The `public_call.rb` code introduces unnecessary complexity and needs to apply all kinds of tricks to make `Operation` expose two different `#call` methods.
