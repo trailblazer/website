@@ -8,6 +8,10 @@ An `Activity` instance exposes two public methods.
 
 This instance is usually created via a DSL, the `Schema` (and Activity) is created when compiled in `intermediate.rb`.
 
+An `Activity` is created by a DSL or other layers, but it's completely unrelated to any DSL.
+It is the runtime object that actually invokes your steps.
+
+
 <%= h3 "Schema" %>
 
 The schema hash can be accessed using `Activity#to_h`. It consists of four mandatory keys.

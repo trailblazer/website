@@ -1,40 +1,44 @@
-
 <%= h3 "Path()" %>
+
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a>
 
 For branching out a separate path in an activity, use the `Path()` macro. It's a convenient, simple way to declare alternative routes, even if you could do everything it does manually.
 
-<%= code "path", collapse: "meths" %>
+<%= code_tabs "path", collapse: "meths" %>
 
-By providing the options `:end_id` and `:end_task`, the newly created path will quit in a new end event.
+If `#decide_type` returns false, the path will be executed and terminate on the new terminus `End.with_cc` because of the `:terminus` option.
 
-<%= vite_image_tag "images/path-macro.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/path-cc.png", class: "mx-auto d-block" %>
 
-Using `Output` you can create an additional output in `decide_type` with the semantic `:credit_card`. This output is triggered when its task returns a `Trailblazer::Activity::Left` signal.
-
-Note that the path ends in its very own end, signalizing a new end state, or outcome. The end's semantic is `:with_cc`.
+Note that you don't necessarily have to reuse the `:failure` output in order to branch out a new path. You might as well use an [additional signal](#activity-wiring-api-path-railway), or any other predefined output of the task.
 
 <%= h4 "Join" %>
 
 If you want the path to reconnect and join the activity at some point, use the `:connect_to` option.
 
-<%= code "path-join", collapse: "meths" %>
+<%= code_tabs "path-join", collapse: "meths" %>
 
-There won't be another end event created.
+There won't be an additional terminus created.
 
-<%= vite_image_tag "images/path-macro-join.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/path-join.png", class: "mx-auto d-block" %>
 
 <%= h4 "Railway" %>
 
 You can use `Path()` in any Trailblazer strategy, for example in `Railway`.
 
-<%= code "path-railway", collapse: "meths" %>
+<%= code_tabs "path-railway", collapse: "meths" %>
 
-In this example, we add a third output to `decide_type` to handle the credit card payment scenario (you could also "override" or re-configure the existing `:failure` or `:success` outputs).
+In this example, we add a third output to `#decide_type` to handle the credit card payment scenario (you could also "override" or re-configure the existing `:failure` or `:success` outputs).
 
-<%= vite_image_tag "images/path-macro-railway.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/path-railway.png", class: "mx-auto d-block" %>
 
 Only when `decide_type` returns `MySignal`, the new path alternative is taken.
 
 <%= code "path-decider", collapse: "meths" %>
 
-`Output()` in combination with `Path()` allow very simple modelling for alternive routes.
+`Output()` in combination with `Path()` allows for a simple modeling of alternative routes.
+
+<!-- OLD link https://trailblazer.to/2.1/docs/activity.html#activity-wiring-api-path-end_task-end_id-deprecation -->
+<%= h4 "End_task/End_id Deprecation" %>
+
+Note that the `:terminus` options has been introduced in `trailblazer-activity-dsl-linear-1.2.0` and replaces the former `:end_task` and `:end_id` options.
