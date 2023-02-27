@@ -247,9 +247,17 @@
     "file": "assets/patching.cdec2000.webp",
     "src": "images/patching.webp"
   },
+  "images/path-cc.png": {
+    "file": "assets/path-cc.662cd27c.png",
+    "src": "images/path-cc.png"
+  },
   "images/path-end.webp": {
     "file": "assets/path-end.33750cc0.webp",
     "src": "images/path-end.webp"
+  },
+  "images/path-join.png": {
+    "file": "assets/path-join.76589086.png",
+    "src": "images/path-join.png"
   },
   "images/path-macro-join.webp": {
     "file": "assets/path-macro-join.8cbdf9ea.webp",
@@ -262,6 +270,10 @@
   "images/path-macro.webp": {
     "file": "assets/path-macro.3043370b.webp",
     "src": "images/path-macro.webp"
+  },
+  "images/path-railway.png": {
+    "file": "assets/path-railway.b0ebc77b.png",
+    "src": "images/path-railway.png"
   },
   "images/path.webp": {
     "file": "assets/path.c7a25937.webp",

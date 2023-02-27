@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.6b64773f.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.663d7795.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -176,18 +176,6 @@
           <li class="nav-item">
             <a class="nav-link " href="#trailblazer-developer">
               Developer
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a class="nav-link " href="#trailblazer-context">
-              Context
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a class="nav-link " href="#trailblazer-option">
-              Option
             </a>
           </li>
         
@@ -553,7 +541,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 22 Aug 22</span>
+                      <span>Last updated 23 Feb 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1495,138 +1483,107 @@ end
 
 <p><span class="divider"></span></p>
 
-<h2 id="trailblazer-context">Context</h2>
-<p><!-- {trailblazer-context-toc} --></p>
-
-<p>Context aka <code>ctx</code> (or plain old <code>options</code>) is a core argument-specific data structure for Trailblazer. It provides a generic, ordered read/write interface that collects mutable runtime-computed data while providing access to any compile-time information. It is extracted into its own <a href="https://github.com/trailblazer/trailblazer-context">gem</a> and can also be used independently.</p>
-
-<p><span class="divider"></span></p>
-
-<h3 id="trailblazer-context-ctx">ctx</h3>
-<p><!-- {trailblazer-context-ctx-toc} --></p>
-
-<p><code>ctx</code> can be initialized when an operation is invoked at the run time or by defining <a href="/2.1/docs/operation.html#operation-options-class-dependencies">dependencies</a> at the compile time. Inside the operation, it gets passed down to every <code>step</code> with it’s argument position depending on step’s <a href="/2.1/docs/activity.html#activity-internals-circuit-interface">interface</a>. It will contain whatever the most recently executed step has changed and hopefully contains what you’re expecting.</p>
+<h3 id="trailblazer-developer-graph">Graph</h3>
+<p><!-- {trailblazer-developer-graph-toc} -->
+<!-- OLD link: https://trailblazer.to/2.1/docs/activity#activity-internals-introspection-api -->
+<!-- NEW link: /2.1/docs/trailblazer.html#trailblazer-developer-graph --></p>
 
 <div class="bd-callout bd-callout-info">
-<p>If you want to see what <code>ctx</code> modifications are being performed per step or at specific steps, you can debug it using developer’s <a href="/2.1/docs/trailblazer.html#trailblazer-developer-wtf-focus_on">focus_on</a> API.</p>
+<p>With <code>trailblazer-activity</code> 0.16.0, the <code>Introspect::Graph</code> API has been moved to <code>trailblazer-developer</code> and might get replaced. Please refer to the <code>Introspect::Nodes</code> API.</p>
 </div>
 
-<p><code>ctx</code>’s purpose is to hold the state of your activity which can also be passed down to other nested activities using <a href="/2.1/docs/activity.html#activity-wiring-api-subprocess">Subprocess</a>. You can filter what such activities can or can not “see” using <a href="/2.1/docs/activity.html#activity-variable-mapping">variable mapping</a>. After operation’s execution using public call, the <a href="/2.1/docs/operation.html#operation-overview-result">Result</a> object wraps the context for convenient access.</p>
-
-<p>In order to provide the generic interface, scoping and debugging capabilities, the “Hash” argument you provide to an operation is initialized as an instance of <code>Trailblazer::Context::Container</code> to build up the final <code>ctx</code>. This allows us to support more features on top of it like indifferent access, aliasing etc</p>
+<p>To find out the structure and composition details about any activity, use the <code>Introspect</code> API.</p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>ctx</li>
-    <li id="trailblazer-context-ctx-indifferent-access">Indifferent Access</li>
+    <li>Graph</li>
+    <li id="trailblazer-developer-graph-find">Find</li>
 </ul>
 
-<p><code>ctx</code> mimics as “Hash” and also allows you to use Strings or Symbols interchangeably as keys; similar to the <code>params</code> hash in Rails.</p>
+<p>You may use <code>Graph#find</code> with a block for a more complex search.</p>
 
-<pre><code>result = Memo::Create.(params: { text: "Enjoy an IPA" })
-
-result[:params]     # =&gt; { text: "Enjoy an IPA" }
-result['params']    # =&gt; { text: "Enjoy an IPA" }
+<pre><code>node = graph.find { |node| node.task.class == Trailblazer::Activity::TaskBuilder }
 </code></pre>
 
-<p>All keys are stored as Symbols by default in order to allow them to be accessible as keyword arguments.
-Note that <code>ctx</code> doesn’t provide interchangeable keys for any nested hashes because of the performance reasons.</p>
+<p>Alternatively, using the <code>Graph#find</code> method with an ID provided, you can retrieve a particular node in the activity’s circuit.</p>
+
+<p>Consider the following activity.</p>
+
+<pre><code>class Memo::Update &lt; Trailblazer::Activity::Railway
+  step :find_model
+  step :validate, Output(:failure) =&gt; End(:validation_error)
+  step :save
+  fail :log_error
+end
+</code></pre>
+
+<p>You can introspect a certain element by using <code>find(id)</code>.</p>
+
+<pre><code>graph = Trailblazer::Developer::Introspect.Graph(Memo::Update)
+
+node = graph.find(:validate)
+</code></pre>
+
+<p>Note that all queries go via a <code>Graph</code> instance.</p>
 
 <p><span class="divider"></span></p>
 
 <ul class="navigation">
-    <li>ctx</li>
-    <li id="trailblazer-context-ctx-aliases">Aliases</li>
+    <li>Graph</li>
+    <li id="trailblazer-developer-graph-node-api">Node API</li>
 </ul>
 
-<p>Most commonly found keys in <code>ctx</code> are <code>'contract.default', 'contract.default.params', 'policy.default'</code> etc. It sometimes becomes cumbersome to access them from <code>ctx</code> as they can’t be defined as keyword arguments in steps.</p>
+<p>The returned node instance exposes several inspect helpers.</p>
 
-<p>To overcome this, it is possible to define a shorter versions of context keys using <code>aliases</code>. By providing aliases mapping in <code>flow_options[:context_options]</code>, context will maintain any mutations being made on the origianl keys with 
-the aliases and vice versa.</p>
+<p>The ID of the element is retrieved by using <code>#id</code>.</p>
 
-<pre><code>options = { params: { text: "Enjoy an IPA" } }
-flow_options = {
-  context_options: {
-    aliases: { 'contract.default': :contract, 'policy.default': :policy },
-    container_class: Trailblazer::Context::Container::WithAliases,
-  }
-}
-
-# Sorry, this feature is only reliable in Ruby &gt; 2.7
-if Gem::Version.new(RUBY_VERSION) &gt;= Gem::Version.new("3.0.0")
-  result = AliasesExample::Memo::Create.(options, flow_options)
-else # Ruby 2.6 etc
-  result = AliasesExample::Memo::Create.call_with_flow_options(options, flow_options)
-end
-
-result['contract.default']  # =&gt; Memo::Contract::Create
-result[:contract]           # =&gt; Memo::Contract::Create
+<pre><code># puts node.id.inspect #=&gt; :validate
 </code></pre>
 
-<p><code>flow_options</code> are passed to the nested operations via <code>Subprocess</code> and all given aliases will also be applied in them by default.</p>
+<p>To see what actual task sits behind this circuit’s node, use <code>#task</code>. This is always the low-level task that responds to a circuit interface. It might be a wrapper around your actual logic, provided by the DSL.</p>
 
-<pre><code>class Memo::Create &lt; Trailblazer::Operation
-  # ...
+<pre><code># puts node.task       #=&gt; #Trailblazer::Activity::TaskBuilder::Task user_proc=validate&gt;
+</code></pre>
 
-  pass :sync
+<p>Outgoing connections from a task can be queried using <code>#outgoings</code>. This returns an array of all outgoing arrows.</p>
 
-  def sync(ctx, contract:, **)
-    # ctx['contract.default'] == ctx[:contract]
-    contract.sync
-  end
-end
+<pre><code># left, right = node.outgoings # returns array
 </code></pre>
 
 <p><span class="divider"></span></p>
 
-<h2 id="trailblazer-option">Option</h2>
-<p><!-- {trailblazer-option-toc} --></p>
+<ul class="navigation">
+    <li>Graph</li>
+    <li id="trailblazer-developer-graph-outgoing">Outgoing</li>
+</ul>
 
-<p><a href="https://github.com/trailblazer/trailblazer-option">Trailblazer::Option</a> is one of the core concept behind operation’s <a href="/2.1/docs/activity.html#activity-wiring-api">step API</a>, reform’s <a href="/2.1/docs/reform.html#reform-populators">populator API</a> etc. It makes us possible to accept any kind of callable objects at compile time and execute them at runtime.</p>
+<p>An <code>Outgoing</code> provides several interesting fields.</p>
 
-<pre><code class="language-ruby">class Song::Create &lt; Trailblazer::Operation
-  step Authorize				# Module callable
-  step :model					# Method callable
-  step -&gt;(ctx, model:, **) { puts model }	# Proc callable
-end
+<p>You can retrieve the connected element by using <code>#task</code>. It returns the actual low-level task.</p>
+
+<pre><code># puts left.task #=&gt; #Trailblazer::Activity::End semantic=:validation_error&gt;
 </code></pre>
 
-<p>It is also a replacement over <a href="https://github.com/apotonick/declarative-option">declarative-option</a> and has been extracted out from <a href="https://github.com/trailblazer/trailblazer-context">trailblazer-context</a> by identifying common callable patterns.</p>
+<p>The <code>#output</code> method returns the <code>Output</code> instance that connects the task to the next element.</p>
+
+<pre><code># puts left.output.signal   #=&gt; Trailblazer::Activity::Left
+# puts left.output.semantic #=&gt; :failure
+</code></pre>
+
+<p>The <code>Output#signal</code> field returns the signal object the task returns to trigger that connection. To see the semantic of this output, use <code>Output#semantic</code>.</p>
 
 <p><span class="divider"></span></p>
 
-<h3 id="trailblazer-option-callables">Callables</h3>
-<p><!-- {trailblazer-option-callables-toc} --></p>
+<ul class="navigation">
+    <li>Graph</li>
+    <li id="trailblazer-developer-graph-outputs">Outputs</li>
+</ul>
 
-<p><code>Trailblazer::Option()</code> accepts <code>Symbol</code>, <code>lambda</code> and any other type of callable as an argument. It will be wrapped accordingly to make an executable, so you can evaluate it at runtime.</p>
+<p>The <code>Node#outputs</code> method returns an array of <code>Output</code> objects defining each output of outgoing connections of a specific node.</p>
 
-<p>Passing a <code>Symbol</code> will be treated as a method that’s called on the given <code>exec_context</code>.</p>
-
-<pre><code>option = Trailblazer::Option(:object_id)
-option.(exec_context: Object.new) # =&gt; 1234567
-</code></pre>
-
-<p>Same with the objects responding to <code>.call</code> or <code>#call</code> method.</p>
-
-<pre><code>class CallMe
-  def self.call(message:, **options)
-    message
-  end
-end
-
-option = Trailblazer::Option(CallMe)
-option.(keyword_arguments: { message: "hello!" }, exec_context: nil) # =&gt; "hello!"
-</code></pre>
-
-<div class="bd-callout bd-callout-info">
-<p>Notice the usage of <code>keyword_arguments</code> while calling an <code>Option()</code>. They need to be mentioned explicitly in order for them to be <a href="https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/">compatible</a> with ruby 2.7+.</p>
-</div>
-
-<p>And of course, passing lambdas. They get executed within given <code>exec_context</code> when set.</p>
-
-<pre><code>option = Trailblazer::Option(-&gt; { object_id })
-option.(exec_context: Object.new) # =&gt; 1234567
+<pre><code>outputs = node.outputs
+left = outputs[0] #=&gt; output object
 </code></pre>
 
 </div>
@@ -1829,52 +1786,32 @@ option.(exec_context: Object.new) # =&gt; 1234567
         </li>
       
     
-  </ul>
-</div>
-
-<div class="features" id="trailblazer-context-features">
-  <h3>
-    <i class="fas fa-times"></i>
-    <span>Context</span>
-  </h3>
-
-  <ul class="vertical menu">
-    
       <li>
-        <a href="#trailblazer-context-ctx">
+        <a href="#trailblazer-developer-graph">
           <i class="fas fa-arrow-right"></i>
-          ctx
+          Graph
         </a>
       </li>
       
         
         <li class="sub-item">
-          <a href="#trailblazer-context-ctx-indifferent-access">Indifferent Access</a>
+          <a href="#trailblazer-developer-graph-find">Find</a>
         </li>
       
         
         <li class="sub-item">
-          <a href="#trailblazer-context-ctx-aliases">Aliases</a>
+          <a href="#trailblazer-developer-graph-node-api">Node API</a>
         </li>
       
-    
-  </ul>
-</div>
-
-<div class="features" id="trailblazer-option-features">
-  <h3>
-    <i class="fas fa-times"></i>
-    <span>Option</span>
-  </h3>
-
-  <ul class="vertical menu">
-    
-      <li>
-        <a href="#trailblazer-option-callables">
-          <i class="fas fa-arrow-right"></i>
-          Callables
-        </a>
-      </li>
+        
+        <li class="sub-item">
+          <a href="#trailblazer-developer-graph-outgoing">Outgoing</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#trailblazer-developer-graph-outputs">Outputs</a>
+        </li>
       
     
   </ul>
