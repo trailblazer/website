@@ -41,4 +41,25 @@ Only when `decide_type` returns `MySignal`, the new path alternative is taken.
 <!-- OLD link https://trailblazer.to/2.1/docs/activity.html#activity-wiring-api-path-end_task-end_id-deprecation -->
 <%= h4 "End_task/End_id Deprecation" %>
 
-Note that the `:terminus` options has been introduced in `trailblazer-activity-dsl-linear-1.2.0` and replaces the former `:end_task` and `:end_id` options.
+In older versions before `trailblazer-activity-dsl-linear-1.2.0`, connecting the `Path()` to a separate terminus required you to pass two  options `:end_task` and `:end_id`.
+
+<%= code :ruby do %>
+Output(...) => Path(end_task: Activity::End.new(semantic: :valid), end_id: "End.valid") do
+  # ...
+end
+<% end %>
+
+This is now simplified (and more consistent) by introducing the `:terminus` option.
+
+<%= code :ruby do %>
+Output(...) => Path(terminus: :valid) do
+  # ...
+end
+<% end %>
+
+If you haven't updated your code you will see a deprecation warning.
+
+<%= code :ruby do %>
+[Trailblazer] <file.rb> Using `:end_task` and `:end_id` in Path() is deprecated, use `:terminus` instead.
+  Please refer to https://trailblazer.to/2.1/docs/activity.html#activity-wiring-api-path-end_task-end_id-deprecation
+<% end %>
