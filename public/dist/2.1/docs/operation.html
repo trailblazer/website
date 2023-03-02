@@ -993,10 +993,10 @@ It avoids any conditional checks and can be wired to render <strong>422 response
 In order to add this <a href="/2.1/docs/activity.html#activity-wiring-api-end-adding-ends">new termini</a> in your operation’s terminuses, you need to pass <code>invalid_data_terminus</code> kwarg.</p>
 
 <pre><code>class Song::Create &lt; Trailblazer::Operation
-  step Model( Song, :new )
-  step Contract::Build( constant: Song::Contract::Create )
-  step Contract::Validate( key: :song, invalid_data_terminus: true )
-  step Contract::Persist( )
+  step Model(Song, :new)
+  step Contract::Build(constant: Song::Contract::Create)
+  step Contract::Validate(key: :song, invalid_data_terminus: true)
+  step Contract::Persist()
 end
 </code></pre>
 

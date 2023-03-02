@@ -774,8 +774,8 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>Here’s what the old legacy <code>layout.html.haml</code> looks like.</p>
 
-<ul id="0.10560331249710997" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-10560331249710997-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-10560331249710997-ERB"> ERB </a> </li> </ul>
-<div class="tab-content"> <div id="0-10560331249710997-HAML" class="tab-pane fade show active"> 
+<ul id="0.12914231002906607" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-12914231002906607-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-12914231002906607-ERB"> ERB </a> </li> </ul>
+<div class="tab-content"> <div id="0-12914231002906607-HAML" class="tab-pane fade show active"> 
 <pre><code>  %html
     %head
 
@@ -791,7 +791,7 @@ Whatever you return from the <code>show</code> method will be displayed in the p
               "SIGN IN"
 </code></pre>
 
- </div><div id="0-10560331249710997-ERB" class="tab-pane fade show "> 
+ </div><div id="0-12914231002906607-ERB" class="tab-pane fade show "> 
 <pre><code>&lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
 
@@ -824,15 +824,15 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>In order to convert all markup below the <code>&lt;nav&gt;</code> node into a cell, we first need to add the respective gems to our <code>Gemfile</code>.</p>
 
-<ul id="0.24721227927104972" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-24721227927104972-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-24721227927104972-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-24721227927104972-Ruby" class="tab-pane fade show active"> 
+<ul id="0.8084833061748882" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8084833061748882-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8084833061748882-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-8084833061748882-Ruby" class="tab-pane fade show active"> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 </code></pre>
 
 <p>For now, all you need is the <code>trailblazer-cells</code> gem and the Cells template engine.</p>
 
- </div><div id="0-24721227927104972-Rails" class="tab-pane fade show "> 
+ </div><div id="0-8084833061748882-Rails" class="tab-pane fade show "> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 gem "cells-rails"
@@ -848,8 +848,8 @@ gem "cells-rails"
 
 <p>Cut the <code>%nav</code> fragment from the original <code>layout.html.haml</code> and replace it with the cell invocation.</p>
 
-<ul id="0.9290752102490961" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9290752102490961-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9290752102490961-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-9290752102490961-Ruby" class="tab-pane fade show active"> 
+<ul id="0.07786165222610786" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-07786165222610786-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-07786165222610786-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-07786165222610786-Ruby" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -859,7 +859,7 @@ gem "cells-rails"
 
 <p>Cells can be invoked using the call style.</p>
 
- </div><div id="0-9290752102490961-Rails" class="tab-pane fade show active"> 
+ </div><div id="0-07786165222610786-Rails" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -981,8 +981,8 @@ end
 
 <p>In <code>app/concepts/pro/view/navigation.haml</code>, add actual links to the view.</p>
 
-<ul id="0.6001598126639064" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6001598126639064-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6001598126639064-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-6001598126639064-Ruby" class="tab-pane fade show active"> 
+<ul id="0.0028909624179005444" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-0028909624179005444-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-0028909624179005444-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-0028909624179005444-Ruby" class="tab-pane fade show active"> 
 <pre><code>  %nav
     %ul
       %li SUPPORT CHAT
@@ -998,7 +998,7 @@ end
 
 <p>Without any URL system, you can create links using Haml, or delegate to your own URL objects.</p>
 
- </div><div id="0-6001598126639064-Rails" class="tab-pane fade show "> 
+ </div><div id="0-0028909624179005444-Rails" class="tab-pane fade show "> 
 <pre><code>  %nav
     %ul
       %li
@@ -1025,15 +1025,15 @@ end
 
 <p>In the controller, invoke this new cell instead of letting the framework render the content.</p>
 
-<ul id="0.32252196089166074" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-32252196089166074-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-32252196089166074-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-32252196089166074-Ruby" class="tab-pane fade show active"> 
+<ul id="0.47294438195688315" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-47294438195688315-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-47294438195688315-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-47294438195688315-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
     html = Comment::Cell::Show.(comment).()
   end
 </code></pre>
 
- </div><div id="0-32252196089166074-Rails" class="tab-pane fade show "> 
+ </div><div id="0-47294438195688315-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(1)
@@ -1104,8 +1104,8 @@ end
 
 <p>In the controller, the content cell needs to get instructed it will be wrapped by a layout cell.</p>
 
-<ul id="0.8821299335360989" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8821299335360989-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8821299335360989-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-8821299335360989-Ruby" class="tab-pane fade show active"> 
+<ul id="0.05588251964745827" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-05588251964745827-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-05588251964745827-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-05588251964745827-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
 
@@ -1115,7 +1115,7 @@ end
   end
 </code></pre>
 
- </div><div id="0-8821299335360989-Rails" class="tab-pane fade show "> 
+ </div><div id="0-05588251964745827-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(params[:id])

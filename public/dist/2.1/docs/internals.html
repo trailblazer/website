@@ -263,6 +263,12 @@
             </a>
           </li>
         
+          <li class="nav-item">
+            <a class="nav-link " href="#internals-core-developer">
+              Core Developer
+            </a>
+          </li>
+        
       </ul>
     </div>
   
@@ -559,7 +565,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 24 Feb 23</span>
+                      <span>Last updated 02 Mar 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1148,6 +1154,41 @@ option.(keyword_arguments: { message: "hello!" }, exec_context: nil) # =&gt; "he
 option.(exec_context: Object.new) # =&gt; 1234567
 </code></pre>
 
+<p><span class="divider"></span></p>
+
+<h2 id="internals-core-developer">Core Developer</h2>
+<p><!-- {internals-core-developer-toc} --></p>
+
+<p>Some notes and guidelines for core developers.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-core-developer-deprecate">Deprecate</h3>
+<p><!-- {internals-core-developer-deprecate-toc} --></p>
+
+<p>Always use <code>Activity::Deprecate.warn</code> when marking a method as deprecated.</p>
+
+<pre><code>def outdated_method
+  Trailblazer::Activity::Deprecate.warn caller_locations[0], "The `#outdated_method` is deprecated."
+
+  # old code here.
+end
+</code></pre>
+
+<p>You need to pass one element of <code>caller_locations</code> to <code>#warn</code>. Sometimes the index changes, feel free to <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear.rb#L24">apply some searching</a> for a more helpful location. Users will find the old code much faster and hopefully replace it.</p>
+
+<p>Also, please test that the deprecation is actually visible.</p>
+
+<pre><code>it "gives a deprecation warning" do
+  _, err = capture_io do
+    outdated_method()
+  end
+  line_no = __LINE__
+
+  assert_equal err, %([Trailblazer] #{__FILE__}:#{line_no - 2} The `#outdated_method` is deprecated.\n)
+end
+</code></pre>
+
 </div>
 
                 <aside>
@@ -1387,6 +1428,25 @@ option.(exec_context: Object.new) # =&gt; 1234567
         <a href="#internals-option-callables">
           <i class="fas fa-arrow-right"></i>
           Callables
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="internals-core-developer-features">
+  <h3>
+    <i class="fas fa-times"></i>
+    <span>Core Developer</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-core-developer-deprecate">
+          <i class="fas fa-arrow-right"></i>
+          Deprecate
         </a>
       </li>
       
