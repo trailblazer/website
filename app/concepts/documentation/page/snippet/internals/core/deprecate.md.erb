@@ -1,0 +1,11 @@
+<%= h3 "Deprecate" %>
+
+Always use `Activity::Deprecate.warn` when marking a method as deprecated.
+
+<%= code "method" %>
+
+You need to pass one element of `caller_locations` to `#warn`. Sometimes the index changes, feel free to [apply some searching](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/v1.2.0/lib/trailblazer/activity/dsl/linear.rb#L24) for a more helpful location. Users will find the old code much faster and hopefully replace it.
+
+Also, please test that the deprecation is actually visible.
+
+<%= code "test" %>
