@@ -1,0 +1,25 @@
+<%= h2 "Developer" %>
+
+The `trailblazer-developer` gem provides tracing logic and the infamous `#wtf?` method.
+
+<%= h3 "Trace" %>
+
+When using `#wtf?`, two taskWrap steps `Trace.capture_args` and `Trace.capture_return` are injected and applied around every activity step being run during the invocation of the activities. Those taskWrap extensions then invoke the *snapshooters* to produce a snapshot of the ctx variables before invocation of actual task, and after.
+
+<%= h4 "Snapshooter" %>
+
+The snapshot logic is implemented in `Trace::Snapshot.before_snapshooter` and `.after_snapshooter`, leveraging the `Snapshot::Version.changeset_for` method to produce a diffable snapshot of `ctx`.
+
+<%= h4 "Stack" %>
+
+Both taskWrap extensions add the created `Snapshot::Before` or `After` instance to a `Stack` instance which collects the snapshots and maintains the `Version` object.
+
+The `stack` is returned to the caller of the operation and can then be used for presentation.
+
+<%= h4 "Trace::Node" %>
+
+Once presentation is called, an array of `Trace::Node` instances is generated from `stack`, each node comprised either of a `Snapshot::Before`, and its matching `After`, or a `Node::Incomplete`, when the `Snapshot::After` couldn't be found (e.g. due to an exception thrown before the tracer was called).
+
+<%= h4 "Debugger::Trace" %>
+
+After `trace_nodes` is computed, the specific rendering begins, and a `Debugger::Trace` is generated. It consists of variable versions and `Debugger::Node` instances, the latter basically decorating a `Trace::Node`. This `Debugger::Trace` is then passed to either `#wtf?` or to `trailblazer-pro`'s rendering.g
