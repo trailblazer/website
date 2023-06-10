@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.663d7795.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.f0b29665.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -260,6 +260,12 @@
           <li class="nav-item">
             <a class="nav-link " href="#internals-option">
               Option
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#internals-developer">
+              Developer
             </a>
           </li>
         
@@ -565,7 +571,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 02 Mar 23</span>
+                      <span>Last updated 10 Jun 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1156,6 +1162,64 @@ option.(exec_context: Object.new) # =&gt; 1234567
 
 <p><span class="divider"></span></p>
 
+<h2 id="internals-developer">Developer</h2>
+<p><!-- {internals-developer-toc} --></p>
+
+<p>The <code>trailblazer-developer</code> gem provides tracing logic and the infamous <code>#wtf?</code> method.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="internals-developer-trace">Trace</h3>
+<p><!-- {internals-developer-trace-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-developer" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-developer &gt;= 0.1.0</a></p>
+
+<p>When using <code>#wtf?</code>, two taskWrap steps <code>Trace.capture_args</code> and <code>Trace.capture_return</code> are injected and applied around every activity step being run during the invocation of the activities (including the top activity itself). Those taskWrap extensions then invoke the <em>snapshooters</em> to produce a snapshot of the ctx variables before invocation of actual task, and after.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/internals-trace-tw.75a7ae4d.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
+    <li id="internals-developer-trace-snapshooter">Snapshooter</li>
+</ul>
+
+<p>The snapshot logic is implemented in <code>Trace::Snapshot.before_snapshooter</code> and <code>.after_snapshooter</code>, leveraging the <code>Snapshot::Version.changeset_for</code> method to produce a diffable snapshot of <code>ctx</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
+    <li id="internals-developer-trace-stack">Stack</li>
+</ul>
+
+<p>Both taskWrap extensions add the created <code>Snapshot::Before</code> or <code>After</code> instance to a <code>Stack</code> instance which collects the snapshots and maintains the <code>Version</code> object.</p>
+
+<p>The <code>stack</code> is returned to the caller of the operation and can then be used for presentation.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
+    <li id="internals-developer-trace-trace-node">Trace::Node</li>
+</ul>
+
+<p>Once presentation is called, an array of <code>Trace::Node</code> instances is generated from <code>stack</code>, each node comprised either of a <code>Snapshot::Before</code>, and its matching <code>After</code>, or a <code>Node::Incomplete</code>, when the <code>Snapshot::After</code> couldn’t be found (e.g. due to an exception thrown before the tracer was called).</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/internals-trace-node.9a2f2c95.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
+    <li id="internals-developer-trace-debugger-trace">Debugger::Trace</li>
+</ul>
+
+<p>After <code>trace_nodes</code> is computed, the specific rendering begins, and a <code>Debugger::Trace</code> is generated. It consists of variable versions and <code>Debugger::Node</code> instances, the latter basically decorating a <code>Trace::Node</code>. This <code>Debugger::Trace</code> is then passed to either <code>#wtf?</code> or to <code>trailblazer-pro</code>’s rendering.</p>
+
+<p><span class="divider"></span></p>
+
 <h2 id="internals-core-developer">Core Developer</h2>
 <p><!-- {internals-core-developer-toc} --></p>
 
@@ -1255,7 +1319,7 @@ end
               <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
                 <div class="features" id="internals-dsl-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>DSL</span>
   </h3>
@@ -1297,7 +1361,7 @@ end
 </div>
 
 <div class="features" id="internals-wiring-api-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Wiring API</span>
   </h3>
@@ -1383,7 +1447,7 @@ end
 </div>
 
 <div class="features" id="internals-activity-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Activity</span>
   </h3>
@@ -1412,7 +1476,7 @@ end
 </div>
 
 <div class="features" id="internals-operation-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Operation</span>
   </h3>
@@ -1444,7 +1508,7 @@ end
 </div>
 
 <div class="features" id="internals-context-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Context</span>
   </h3>
@@ -1473,7 +1537,7 @@ end
 </div>
 
 <div class="features" id="internals-option-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Option</span>
   </h3>
@@ -1491,8 +1555,47 @@ end
   </ul>
 </div>
 
+<div class="features" id="internals-developer-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Developer</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#internals-developer-trace">
+          <i class="fas fa-arrow-right"></i>
+          Trace
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-developer-trace-snapshooter">Snapshooter</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-developer-trace-stack">Stack</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-developer-trace-trace-node">Trace::Node</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-developer-trace-debugger-trace">Debugger::Trace</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
 <div class="features" id="internals-core-developer-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Core Developer</span>
   </h3>

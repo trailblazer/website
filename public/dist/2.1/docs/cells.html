@@ -8,7 +8,7 @@
 
     
     <script src="/vite/assets/documentation.090e3fb2.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
-<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.663d7795.css" media="screen" />
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.f0b29665.css" media="screen" />
 <link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
 
     <link
@@ -774,8 +774,8 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>Here’s what the old legacy <code>layout.html.haml</code> looks like.</p>
 
-<ul id="0.3079591480114916" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-3079591480114916-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-3079591480114916-ERB"> ERB </a> </li> </ul>
-<div class="tab-content"> <div id="0-3079591480114916-HAML" class="tab-pane fade show active"> 
+<ul id="0.25469113006327015" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-25469113006327015-HAML"> HAML </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-25469113006327015-ERB"> ERB </a> </li> </ul>
+<div class="tab-content"> <div id="0-25469113006327015-HAML" class="tab-pane fade show active"> 
 <pre><code>  %html
     %head
 
@@ -791,7 +791,7 @@ Whatever you return from the <code>show</code> method will be displayed in the p
               "SIGN IN"
 </code></pre>
 
- </div><div id="0-3079591480114916-ERB" class="tab-pane fade show "> 
+ </div><div id="0-25469113006327015-ERB" class="tab-pane fade show "> 
 <pre><code>&lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
 
@@ -824,15 +824,15 @@ Whatever you return from the <code>show</code> method will be displayed in the p
 
 <p>In order to convert all markup below the <code>&lt;nav&gt;</code> node into a cell, we first need to add the respective gems to our <code>Gemfile</code>.</p>
 
-<ul id="0.322830784396562" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-322830784396562-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-322830784396562-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-322830784396562-Ruby" class="tab-pane fade show active"> 
+<ul id="0.0889542369248364" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-0889542369248364-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-0889542369248364-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-0889542369248364-Ruby" class="tab-pane fade show active"> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 </code></pre>
 
 <p>For now, all you need is the <code>trailblazer-cells</code> gem and the Cells template engine.</p>
 
- </div><div id="0-322830784396562-Rails" class="tab-pane fade show "> 
+ </div><div id="0-0889542369248364-Rails" class="tab-pane fade show "> 
 <pre><code>gem "trailblazer-cells"
 gem "cells-hamlit"
 gem "cells-rails"
@@ -848,8 +848,8 @@ gem "cells-rails"
 
 <p>Cut the <code>%nav</code> fragment from the original <code>layout.html.haml</code> and replace it with the cell invocation.</p>
 
-<ul id="0.33126697988881015" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-33126697988881015-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-33126697988881015-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-33126697988881015-Ruby" class="tab-pane fade show active"> 
+<ul id="0.917304078690744" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-917304078690744-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-917304078690744-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-917304078690744-Ruby" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -859,7 +859,7 @@ gem "cells-rails"
 
 <p>Cells can be invoked using the call style.</p>
 
- </div><div id="0-33126697988881015-Rails" class="tab-pane fade show active"> 
+ </div><div id="0-917304078690744-Rails" class="tab-pane fade show active"> 
 <pre><code>%html
   %head
 
@@ -981,8 +981,8 @@ end
 
 <p>In <code>app/concepts/pro/view/navigation.haml</code>, add actual links to the view.</p>
 
-<ul id="0.7823217662789708" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7823217662789708-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7823217662789708-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-7823217662789708-Ruby" class="tab-pane fade show active"> 
+<ul id="0.7155292999441173" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7155292999441173-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7155292999441173-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-7155292999441173-Ruby" class="tab-pane fade show active"> 
 <pre><code>  %nav
     %ul
       %li SUPPORT CHAT
@@ -998,7 +998,7 @@ end
 
 <p>Without any URL system, you can create links using Haml, or delegate to your own URL objects.</p>
 
- </div><div id="0-7823217662789708-Rails" class="tab-pane fade show "> 
+ </div><div id="0-7155292999441173-Rails" class="tab-pane fade show "> 
 <pre><code>  %nav
     %ul
       %li
@@ -1025,15 +1025,15 @@ end
 
 <p>In the controller, invoke this new cell instead of letting the framework render the content.</p>
 
-<ul id="0.7162523058407012" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7162523058407012-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7162523058407012-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-7162523058407012-Ruby" class="tab-pane fade show active"> 
+<ul id="0.17247153448143615" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-17247153448143615-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-17247153448143615-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-17247153448143615-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
     html = Comment::Cell::Show.(comment).()
   end
 </code></pre>
 
- </div><div id="0-7162523058407012-Rails" class="tab-pane fade show "> 
+ </div><div id="0-17247153448143615-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(1)
@@ -1104,8 +1104,8 @@ end
 
 <p>In the controller, the content cell needs to get instructed it will be wrapped by a layout cell.</p>
 
-<ul id="0.8520650904730175" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8520650904730175-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8520650904730175-Rails"> Rails </a> </li> </ul>
-<div class="tab-content"> <div id="0-8520650904730175-Ruby" class="tab-pane fade show active"> 
+<ul id="0.5383521489121086" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5383521489121086-Ruby"> Ruby </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5383521489121086-Rails"> Rails </a> </li> </ul>
+<div class="tab-content"> <div id="0-5383521489121086-Ruby" class="tab-pane fade show active"> 
 <pre><code>  def show
     comment = Comment.find(1)
 
@@ -1115,7 +1115,7 @@ end
   end
 </code></pre>
 
- </div><div id="0-8520650904730175-Rails" class="tab-pane fade show "> 
+ </div><div id="0-5383521489121086-Rails" class="tab-pane fade show "> 
 <pre><code>  class CommentsController &lt; ApplicationController
     def show
       comment = Comment.find(params[:id])
@@ -2704,7 +2704,7 @@ end
               <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
                 <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
                 <div class="features" id="cells-overview-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Overview</span>
   </h3>
@@ -2779,7 +2779,7 @@ end
 </div>
 
 <div class="features" id="cells-getting-started-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Getting Started</span>
   </h3>
@@ -2878,7 +2878,7 @@ end
 </div>
 
 <div class="features" id="cells-api-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>API</span>
   </h3>
@@ -3129,7 +3129,7 @@ end
 </div>
 
 <div class="features" id="cells-trailblazer-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Trailblazer</span>
   </h3>
@@ -3196,7 +3196,7 @@ end
 </div>
 
 <div class="features" id="cells-testing-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Testing</span>
   </h3>
@@ -3255,7 +3255,7 @@ end
 </div>
 
 <div class="features" id="cells-rendering-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Rendering</span>
   </h3>
@@ -3282,7 +3282,7 @@ end
 </div>
 
 <div class="features" id="cells-rails-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Rails</span>
   </h3>
@@ -3381,7 +3381,7 @@ end
 </div>
 
 <div class="features" id="cells-template-engines-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Template Engines</span>
   </h3>
@@ -3424,7 +3424,7 @@ end
 </div>
 
 <div class="features" id="cells-troubleshooting-features">
-  <h3>
+  <h3 class="mt-0">
     <i class="fas fa-times"></i>
     <span>Troubleshooting</span>
   </h3>
