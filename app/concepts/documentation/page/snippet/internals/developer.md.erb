@@ -4,6 +4,9 @@ The `trailblazer-developer` gem provides tracing logic and the infamous `#wtf?` 
 
 <%= h3 "Trace" %>
 
+<a href="https://github.com/trailblazer/trailblazer-developer" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-developer >= 0.1.0</a>
+
+
 When using `#wtf?`, two taskWrap steps `Trace.capture_args` and `Trace.capture_return` are injected and applied around every activity step being run during the invocation of the activities (including the top activity itself). Those taskWrap extensions then invoke the *snapshooters* to produce a snapshot of the ctx variables before invocation of actual task, and after.
 
 <%= vite_image_tag "images/internals-trace-tw.png", class: "mx-auto d-block" %>
