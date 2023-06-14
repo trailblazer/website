@@ -16,6 +16,9 @@ When using `#wtf?`, two taskWrap steps `Trace.capture_args` and `Trace.capture_r
 
 The snapshot logic is implemented in `Trace::Snapshot.before_snapshooter` and `.after_snapshooter`, leveraging the `Snapshot::Version.changeset_for` method to produce a diffable snapshot of `ctx`.
 
+<%= h4 "Version" %>
+
+
 <%= h4 "Stack" %>
 
 Both taskWrap extensions add the created `Snapshot::Before` or `After` instance to a `Stack` instance which collects the snapshots and maintains the `Version` object.
@@ -28,6 +31,22 @@ Once presentation is called, an array of `Trace::Node` instances is generated fr
 
 <%= vite_image_tag "images/internals-trace-node.png", class: "mx-auto d-block" %>
 
+<%= h4 "Present" %>
+
+The `Trace::Present.call` method accepts two arguments:
+1. the `Stack` instance
+2. a block that yields this `trace_node` structure (along with the other options) and allows to return a hash that is then passed on to the `render_method`. This hash allows to configure the rendering code, and in the core renderers, config per node can be added keyed by `Trace::Node` instance.
+
+TODO: add example from node_options.
+
+
 <%= h4 "Debugger::Trace" %>
 
-After `trace_nodes` is computed, the specific rendering begins, and a `Debugger::Trace` is generated. It consists of variable versions and `Debugger::Node` instances, the latter basically decorating a `Trace::Node`. This `Debugger::Trace` is then passed to either `#wtf?` or to `trailblazer-pro`'s rendering.
+After `trace_nodes` is computed, the specific rendering begins, and a `Debugger::Trace` is generated. It consists of variable versions and `Debugger::Node` instances, the latter basically decorating a `Trace::Node`.
+
+
+
+
+This `Debugger::Trace` is then passed to either `#wtf?` or to `trailblazer-pro`'s rendering.
+
+Debugger::Normalizer
