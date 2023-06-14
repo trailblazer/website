@@ -571,7 +571,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 10 Jun 23</span>
+                      <span>Last updated 14 Jun 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1191,6 +1191,13 @@ option.(exec_context: Object.new) # =&gt; 1234567
 
 <ul class="navigation">
     <li>Trace</li>
+    <li id="internals-developer-trace-version">Version</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
     <li id="internals-developer-trace-stack">Stack</li>
 </ul>
 
@@ -1213,10 +1220,27 @@ option.(exec_context: Object.new) # =&gt; 1234567
 
 <ul class="navigation">
     <li>Trace</li>
+    <li id="internals-developer-trace-present">Present</li>
+</ul>
+
+<p>The <code>Trace::Present.call</code> method accepts two arguments:
+1. the <code>Stack</code> instance
+2. a block that yields this <code>trace_node</code> structure (along with the other options) and allows to return a hash that is then passed on to the <code>render_method</code>. This hash allows to configure the rendering code, and in the core renderers, config per node can be added keyed by <code>Trace::Node</code> instance.</p>
+
+<p>TODO: add example from node_options.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Trace</li>
     <li id="internals-developer-trace-debugger-trace">Debugger::Trace</li>
 </ul>
 
-<p>After <code>trace_nodes</code> is computed, the specific rendering begins, and a <code>Debugger::Trace</code> is generated. It consists of variable versions and <code>Debugger::Node</code> instances, the latter basically decorating a <code>Trace::Node</code>. This <code>Debugger::Trace</code> is then passed to either <code>#wtf?</code> or to <code>trailblazer-pro</code>’s rendering.</p>
+<p>After <code>trace_nodes</code> is computed, the specific rendering begins, and a <code>Debugger::Trace</code> is generated. It consists of variable versions and <code>Debugger::Node</code> instances, the latter basically decorating a <code>Trace::Node</code>.</p>
+
+<p>This <code>Debugger::Trace</code> is then passed to either <code>#wtf?</code> or to <code>trailblazer-pro</code>’s rendering.</p>
+
+<p>Debugger::Normalizer</p>
 
 <p><span class="divider"></span></p>
 
@@ -1577,12 +1601,22 @@ end
       
         
         <li class="sub-item">
+          <a href="#internals-developer-trace-version">Version</a>
+        </li>
+      
+        
+        <li class="sub-item">
           <a href="#internals-developer-trace-stack">Stack</a>
         </li>
       
         
         <li class="sub-item">
           <a href="#internals-developer-trace-trace-node">Trace::Node</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#internals-developer-trace-present">Present</a>
         </li>
       
         
