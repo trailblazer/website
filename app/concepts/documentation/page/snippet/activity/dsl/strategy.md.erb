@@ -114,6 +114,15 @@ Regardless of `create`'s return value, it will always flow to the next success t
 
 Both outputs are connected to the following task on the success path (or, in this case, the success end).
 
+<%= h4 "Left" %>
+<a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.2</a>
+
+To avoid syntax problems with several editors, `#fail` is also aliased as `#left`.
+
+<%= code "railway-left", collapse: :mod %>
+
+The signature and accepted arguments are identical to `#fail`.
+
 <%= h4 "Notes" %>
 
 FIXME
