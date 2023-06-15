@@ -583,7 +583,7 @@
                   <ul>
                     <li>
                       <i class="far fa-clock pink"></i>
-                      <span>Last updated 14 Jun 23</span>
+                      <span>Last updated 15 Jun 23</span>
                     </li>
                   </ul>
                 </div>
@@ -1304,8 +1304,8 @@ puts signal.to_h[:semantic] #=&gt; :provider_invalid
 
 <p>For branching out a separate path in an activity, use the <code>Path()</code> macro. It’s a convenient, simple way to declare alternative routes, even if you could do everything it does manually.</p>
 
-<ul id="0.8642341706531623" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8642341706531623-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8642341706531623-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8642341706531623-Activity" class="tab-pane fade show active"> 
+<ul id="0.39753228853292166" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-39753228853292166-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-39753228853292166-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-39753228853292166-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Charge &lt; Trailblazer::Activity::Railway
     # ...
@@ -1319,7 +1319,7 @@ puts signal.to_h[:semantic] #=&gt; :provider_invalid
 end
 </code></pre>
 
- </div><div id="0-8642341706531623-Operation" class="tab-pane fade show "> 
+ </div><div id="0-39753228853292166-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Charge &lt; Trailblazer::Operation
     # ...
@@ -1350,8 +1350,8 @@ end
 
 <p>If you want the path to reconnect and join the activity at some point, use the <code>:connect_to</code> option.</p>
 
-<ul id="0.09860177358642708" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-09860177358642708-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-09860177358642708-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-09860177358642708-Activity" class="tab-pane fade show active"> 
+<ul id="0.7065374082673844" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7065374082673844-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7065374082673844-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7065374082673844-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Charge &lt; Trailblazer::Activity::Railway
     # ...
@@ -1366,7 +1366,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-09860177358642708-Operation" class="tab-pane fade show "> 
+ </div><div id="0-7065374082673844-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Charge &lt; Trailblazer::Operation
     # ...
@@ -1396,8 +1396,8 @@ end
 
 <p>You can use <code>Path()</code> in any Trailblazer strategy, for example in <code>Railway</code>.</p>
 
-<ul id="0.14016222868895334" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-14016222868895334-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-14016222868895334-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-14016222868895334-Activity" class="tab-pane fade show active"> 
+<ul id="0.14693566602181196" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-14693566602181196-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-14693566602181196-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-14693566602181196-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Charge &lt; Trailblazer::Activity::Railway
     MySignal = Class.new(Trailblazer::Activity::Signal)
@@ -1413,7 +1413,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-14016222868895334-Operation" class="tab-pane fade show "> 
+ </div><div id="0-14693566602181196-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Charge &lt; Trailblazer::Operation
     MySignal = Class.new(Trailblazer::Operation::Signal)
@@ -1789,8 +1789,8 @@ end
 
 <p>If you’re not using inheritance and want to tweak a nested activity ad-hoc the <code>Subprocess()</code> helper accepts a <code>:patch</code> option.</p>
 
-<ul id="0.19864388570334945" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-19864388570334945-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-19864388570334945-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-19864388570334945-Activity" class="tab-pane fade show active"> 
+<ul id="0.24305241378381437" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-24305241378381437-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-24305241378381437-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-24305241378381437-Activity" class="tab-pane fade show active"> 
 <pre><code>class Destroy &lt; Trailblazer::Activity::Railway
   def self.tidy_storage(ctx, **)
     # delete files from your amazing cloud
@@ -1807,7 +1807,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-19864388570334945-Operation" class="tab-pane fade show "> 
+ </div><div id="0-24305241378381437-Operation" class="tab-pane fade show "> 
 <pre><code>class Destroy &lt; Trailblazer::Operation
   def self.tidy_storage(ctx, **)
     # delete files from your amazing cloud
@@ -1858,8 +1858,8 @@ end
 
 <p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
 
-<ul id="0.9437269013088888" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9437269013088888-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9437269013088888-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-9437269013088888-Activity" class="tab-pane fade show active"> 
+<ul id="0.1281513062231764" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1281513062231764-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1281513062231764-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-1281513062231764-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1869,7 +1869,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-9437269013088888-Operation" class="tab-pane fade show "> 
+ </div><div id="0-1281513062231764-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1900,14 +1900,14 @@ end
 
 <p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
 
-<ul id="0.8795827733430398" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8795827733430398-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8795827733430398-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8795827733430398-Activity" class="tab-pane fade show active"> 
+<ul id="0.8348826175482466" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8348826175482466-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8348826175482466-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8348826175482466-Activity" class="tab-pane fade show active"> 
 <pre><code>result = Trailblazer::Activity.(Song::Activity::Create, current_user: Module)
 
 #=&gt; ArgumentError: missing keyword: :user
 </code></pre>
 
- </div><div id="0-8795827733430398-Operation" class="tab-pane fade show "> 
+ </div><div id="0-8348826175482466-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(current_user: Module)
 
 #=&gt; ArgumentError: missing keyword: :user
@@ -1928,8 +1928,8 @@ end
 
 <p>Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
 
-<ul id="0.7009472513452495" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7009472513452495-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7009472513452495-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-7009472513452495-Activity" class="tab-pane fade show active"> 
+<ul id="0.5578544772752342" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5578544772752342-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5578544772752342-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5578544772752342-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -1942,7 +1942,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-7009472513452495-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5578544772752342-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -1994,8 +1994,8 @@ end
 
 <p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
 
-<ul id="0.365818024141113" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-365818024141113-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-365818024141113-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-365818024141113-Activity" class="tab-pane fade show active"> 
+<ul id="0.5129997158358658" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5129997158358658-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5129997158358658-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5129997158358658-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2014,7 +2014,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-365818024141113-Operation" class="tab-pane fade show "> 
+ </div><div id="0-5129997158358658-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2046,8 +2046,8 @@ end
 
 <p><code>In()</code> accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).</p>
 
-<ul id="0.37268233429102526" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-37268233429102526-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-37268233429102526-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-37268233429102526-Activity" class="tab-pane fade show active"> 
+<ul id="0.6131645314283234" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6131645314283234-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6131645314283234-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-6131645314283234-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2059,7 +2059,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-37268233429102526-Operation" class="tab-pane fade show "> 
+ </div><div id="0-6131645314283234-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2090,8 +2090,8 @@ end
 
 <p>As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).</p>
 
-<ul id="0.9576182568127689" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9576182568127689-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9576182568127689-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-9576182568127689-Activity" class="tab-pane fade show active"> 
+<ul id="0.42396260737457914" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-42396260737457914-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-42396260737457914-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-42396260737457914-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2106,7 +2106,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-9576182568127689-Operation" class="tab-pane fade show "> 
+ </div><div id="0-42396260737457914-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2144,8 +2144,8 @@ end
 
 <p>Following the TRB option standard, an <code>In()</code> filter may even be implemented as an instance method. All you need to do is pass a symbol to <code>In()</code>.</p>
 
-<ul id="0.20415164869572822" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-20415164869572822-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-20415164869572822-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-20415164869572822-Activity" class="tab-pane fade show active"> 
+<ul id="0.13985957427346574" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-13985957427346574-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-13985957427346574-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-13985957427346574-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2162,7 +2162,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-20415164869572822-Operation" class="tab-pane fade show "> 
+ </div><div id="0-13985957427346574-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2192,8 +2192,8 @@ end
 
 <p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.</p>
 
-<ul id="0.8844232878964705" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8844232878964705-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8844232878964705-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8844232878964705-Activity" class="tab-pane fade show active"> 
+<ul id="0.23457763186794967" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-23457763186794967-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-23457763186794967-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-23457763186794967-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2208,7 +2208,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-8844232878964705-Operation" class="tab-pane fade show "> 
+ </div><div id="0-23457763186794967-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2273,8 +2273,8 @@ end
 
 <p>In order to limit variables added to the outer ctx, <code>Out()</code> accepts an array similar to <code>In()</code>. Consider this as a whitelisting to specify exposed variables.</p>
 
-<ul id="0.5155561695350734" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5155561695350734-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5155561695350734-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-5155561695350734-Activity" class="tab-pane fade show active"> 
+<ul id="0.9789259624053759" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9789259624053759-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9789259624053759-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9789259624053759-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2287,7 +2287,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-5155561695350734-Operation" class="tab-pane fade show "> 
+ </div><div id="0-9789259624053759-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2317,8 +2317,8 @@ end
 
 <p>Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the “old” inner name points to the outer name that you want to use in the operation hosting that step.</p>
 
-<ul id="0.7492979606373836" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7492979606373836-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7492979606373836-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-7492979606373836-Activity" class="tab-pane fade show active"> 
+<ul id="0.011077955548158602" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-011077955548158602-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-011077955548158602-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-011077955548158602-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2331,7 +2331,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-7492979606373836-Operation" class="tab-pane fade show "> 
+ </div><div id="0-011077955548158602-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2357,8 +2357,8 @@ end
 
 <p>An <code>Out()</code> filter can be any callable object following the <a href="#activity-internals-step-interface">step interface</a>.</p>
 
-<ul id="0.7714377043853857" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7714377043853857-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7714377043853857-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-7714377043853857-Activity" class="tab-pane fade show active"> 
+<ul id="0.1315346483968589" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-1315346483968589-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-1315346483968589-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-1315346483968589-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2377,7 +2377,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-7714377043853857-Operation" class="tab-pane fade show "> 
+ </div><div id="0-1315346483968589-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2417,8 +2417,8 @@ end
 
 <p>Just as with <code>In()</code> callables can receive keyword arguments.</p>
 
-<ul id="0.6056905770814074" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6056905770814074-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6056905770814074-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-6056905770814074-Activity" class="tab-pane fade show active"> 
+<ul id="0.36833383333979375" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-36833383333979375-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-36833383333979375-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-36833383333979375-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2437,7 +2437,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-6056905770814074-Operation" class="tab-pane fade show "> 
+ </div><div id="0-36833383333979375-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2469,8 +2469,8 @@ end
 
 <p>You can access the outer, original ctx by passing the <code>:with_outer_ctx</code> option to <code>Out()</code>.</p>
 
-<ul id="0.6146308890882519" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6146308890882519-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6146308890882519-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-6146308890882519-Activity" class="tab-pane fade show active"> 
+<ul id="0.09316324028112133" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-09316324028112133-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-09316324028112133-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-09316324028112133-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2489,7 +2489,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-6146308890882519-Operation" class="tab-pane fade show "> 
+ </div><div id="0-09316324028112133-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2634,8 +2634,8 @@ end
 
 <p>This is helpful to set configuration variables for an activity while still using the well-established keyword argument mechanics. The <code>Policy::Create</code> class defines <code>:action</code> as a kwarg. This doesn’t necessarily mean the user can always inject and dictate the very value. Instead, we can override any injected value with the “hard-coded” <code>:create</code> value.</p>
 
-<ul id="0.06736524011133427" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-06736524011133427-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-06736524011133427-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-06736524011133427-Activity" class="tab-pane fade show active"> 
+<ul id="0.023418098349423988" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-023418098349423988-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-023418098349423988-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-023418098349423988-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :create_model
@@ -2648,7 +2648,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-06736524011133427-Operation" class="tab-pane fade show "> 
+ </div><div id="0-023418098349423988-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :create_model
@@ -2665,8 +2665,8 @@ end
 
 <p>The call as below will always use <code>action: :create</code>, even if something else is injected.</p>
 
-<ul id="0.8683377040253983" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8683377040253983-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8683377040253983-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-8683377040253983-Activity" class="tab-pane fade show active"> 
+<ul id="0.6685937739108734" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6685937739108734-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6685937739108734-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-6685937739108734-Activity" class="tab-pane fade show active"> 
 <pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
   current_user: current_user,
   action: :update # this is always overridden.
@@ -2674,7 +2674,7 @@ end
 puts ctx[:model] #=&gt; #&lt;Song id: 1, ...&gt;
 </code></pre>
 
- </div><div id="0-8683377040253983-Operation" class="tab-pane fade show "> 
+ </div><div id="0-6685937739108734-Operation" class="tab-pane fade show "> 
 <pre><code>result = Song::Operation::Create.(
   current_user: current_user,
   action: :update # this is always overridden.
@@ -3095,8 +3095,8 @@ end
 
 <p>Consider the following activity.</p>
 
-<ul id="0.21860592577085447" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-21860592577085447-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-21860592577085447-Operation"> Operation </a> </li> </ul>
-<div class="tab-content"> <div id="0-21860592577085447-Activity" class="tab-pane fade show active"> 
+<ul id="0.878024666199638" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-878024666199638-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-878024666199638-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-878024666199638-Activity" class="tab-pane fade show active"> 
 <pre><code>module Song::Activity
   class Create &lt; Trailblazer::Activity::Railway
     step :validate
@@ -3106,7 +3106,7 @@ end
 end
 </code></pre>
 
- </div><div id="0-21860592577085447-Operation" class="tab-pane fade show "> 
+ </div><div id="0-878024666199638-Operation" class="tab-pane fade show "> 
 <pre><code>module Song::Operation
   class Create &lt; Trailblazer::Operation
     step :validate
@@ -3619,60 +3619,99 @@ end
 
 <p>The <em>taskWrap</em> is the “<code>around_filter</code>” of Trailblazer. It allows adding steps before and after actual tasks without having to change the activity, and without having to introduce <code>if</code>s.</p>
 
-<p>Some prominent examples for taskWrap usage in the wild are the <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb"><code>:input</code>/<code>:output</code> variable mapping</a> and tracing happening in <a href="https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb"><code>#wtf?</code></a>.</p>
+<p>Some prominent examples for taskWrap usage in the wild are <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb">variable mapping</a> and tracing happening in <a href="https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb"><code>#wtf?</code></a>. Those are features completely separated from the core code. You can use the taskWrap mechanics to inject static wraps at compile time (as it’s done for, say, the <code>In()</code> feature), or at runtime, the way <code>#wtf?</code> is built.</p>
 
-<p><img class="mx-auto d-block" src="/vite/assets/task-wrap.da2d9521.webp" /></p>
+<p><img class="mx-auto d-block" src="/vite/assets/task_wrap_validate.1282e372.png" /></p>
 
-<p>You can maintain a taskWrap for each specific task of an activity, or run the same “around steps” for every task, even in nested activities. Also, taskWraps can be configured statically at compile-time or defined dynamically at run-time, which is how tracing in <code>#wtf?</code> works.</p>
+<p>It’s possible to configure a specific taskWrap for a particular step, or run the same one for all steps encountered while running an activity, even with nesting.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-example">Example</h3>
+<p><!-- {activity-taskwrap-example-toc} --></p>
+
+<p>Let’s discuss the taskWrap with the following simple <code>Create</code> activity that you’ve probably met before.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :validate
+    left :handle_errors
+    step :notify
+    # ...
+  end
+end
+</code></pre>
+
+<p>We’re using an imaginary <code>MyAPM</code> gem that provides a convenient interface for starting and stopping instrumentation.</p>
+
+<pre><code>span = MyAPM.start_span("validate", payload: {time: Time.now})
+# do whatever you have to...
+span.finish(payload: {time: Time.now})
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-step">Step</h3>
+<p><!-- {activity-taskwrap-step-toc} --></p>
+
+<p>In order to execute the instrumentation, we have to write two taskWrap steps, one to start, one for finishing the instrumentation. Those steps look similar to “ordinary” activity steps, but expose the taskWrap interface.</p>
+
+<pre><code>module MyAPM # Advanced performance monitoring, done right!
+  module Extension
+    def self.start_instrumentation(wrap_ctx, original_args)
+      (ctx, _flow_options), circuit_options = original_args
+
+      activity  = circuit_options[:activity] # currently running Activity.
+      task      = wrap_ctx[:task]            # the current "step".
+
+      task_id   = Trailblazer::Activity::Introspect.Nodes(activity, task: task).id
+
+      span      = MyAPM.start_span("operation.step", payload: {id: task_id})
+
+      wrap_ctx[:span] = span
+
+      return wrap_ctx, original_args
+    end
+  end
+end
+</code></pre>
+
+<p>A taskWrap step receives two positional arguments, the <code>wrap_ctx</code> that is used to transport taskWrap-specific data across taskWrap steps, and the <code>original_args</code> that represent how the circuit called the currently invoked task.</p>
+
+<p>Above, you can see how it’s possible to retrieve the currently invoked <code>task</code> and its <code>activity</code>.</p>
+
+<p>We then store the <code>span</code> object in the <code>wrap_ctx</code> so the finishing code can close that span in the second taskWrap step <code>#finish_instrumentation</code>.</p>
+
+<pre><code>module MyAPM # Advanced performance monitoring, done right!
+  module Extension
+    def self.finish_instrumentation(wrap_ctx, original_args)
+      ctx   = original_args[0][0]
+      span  = wrap_ctx[:span]
+
+      span.finish(payload: ctx.inspect)
+
+      return wrap_ctx, original_args
+    end
+  end
+end
+</code></pre>
+
+<p>As you can see, the <code>span</code> object can be fetched from <code>wrap_ctx</code> as the second step is run somewhere after <code>start_instrumentation</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-call_task">call_task</h3>
+<p><!-- {activity-taskwrap-call_task-toc} --></p>
+
+<p>Each taskWrap has at least one element, the <code>call_task</code> step that calls the actual task. Sometimes this task is a method, such as <code>#validate</code>, sometimes a nested activity, and so on.</p>
 
 <p><span class="divider"></span></p>
 
 <h3 id="activity-taskwrap-runtime">Runtime</h3>
 <p><!-- {activity-taskwrap-runtime-toc} --></p>
 
-<p>At run-time, any taskWrap can be injected using <code>:wrap_runtime</code>. However, the taskWrap needs to be set up beforehand.</p>
-
-<p>Consider the following operation, or activity.</p>
-
-<pre><code>class Create &lt; Trailblazer::Activity::Railway # or Trailblazer::Operation
-  step :model
-  step :save
-  # ...
-  # ...
-</code></pre>
-
-<p>In order to invoke your own logger before every task (including the <code>Create</code> activity itself), you need to define a taskWrap extension and a taskWrap step for the actual logging.</p>
-
-<p><span class="divider"></span></p>
-
-<ul class="navigation">
-    <li>Runtime</li>
-    <li id="activity-taskwrap-runtime-taskwrap-step">taskWrap step</li>
-</ul>
-
-<p>A taskWrap step looks very similar to a normal step but has a slightly different interface.</p>
-
-<pre><code>module TaskWrapLogger
-  def self.log_before(wrap_ctx, original_args)
-    # Pick what you need here.
-    (ctx, flow_options), circuit_options = original_args
-
-    ctx[:log] &lt;&lt; "Before #{wrap_ctx[:task]}"
-
-    return wrap_ctx, original_args
-  end
-end
-</code></pre>
-
-<p>Note that the first positional argument is <code>wrap_ctx</code> which is a taskWrap-specific datastructure. It contains the <code>:task</code> variable which is the currently “invoked” step of your operation.</p>
-
-<p>The second positional argument is <code>original_args</code>, which are the circuit-interface arguments that are being passed to the actual step. Depending on whether your taskWrap step is placed before or after the actual step, you can change the <code>ctx</code>, add or remove variables, or completely change what’s being passed around.</p>
-
-<p>It is important to always return an array <code>[wrap_ctx, original_args]</code>.</p>
-
-<div class="bd-callout bd-callout-info">
-<p>You don’t have to mutate structures in the taskWrap. The example shows a convenient version. Anyway, you can build your own <code>ctx</code> and return the respective new structures from the taskWrap step.</p>
-</div>
+<p>The taskWrap can be extended at runtime, when <code>call</code>ing an activity. This allow for adding features to steps without having to change the actual business code.</p>
 
 <p><span class="divider"></span></p>
 
@@ -3681,31 +3720,15 @@ end
     <li id="activity-taskwrap-runtime-extension">Extension</li>
 </ul>
 
-<p>Before injecting, you need to build a taskWrap extension.</p>
+<p>To actually run the <code>Song::Activity::Create</code> activity with this new taskWrap, we need to build a runtime extension.</p>
 
-<pre><code>merge = [
-  [
-    Trailblazer::Activity::TaskWrap::Pipeline.method(:insert_before), # insert my step before
-    "task_wrap.call_task",                                            # the {call_task} taskWrap step
-    ["user.log_before", TaskWrapLogger.method(:log_before)]           # here's my own taskWrap step
-  ],
-  # ... add more, e.g. with {:insert_after}
-  # [Trailblazer::Activity::TaskWrap::Pipeline.method(:insert_after), ...
-]
-
-wrap = Trailblazer::Activity::TaskWrap::Pipeline::Merge.new(*merge)
-
-wrap_runtime = Hash.new(wrap) # wrap_runtime[...] will always return the same wrap
+<pre><code>apm_extension = Trailblazer::Activity::TaskWrap::Extension(
+  [MyAPM::Extension.method(:start_instrumentation),  id: "my_apm.start_span",  prepend: "task_wrap.call_task"],
+  [MyAPM::Extension.method(:finish_instrumentation), id: "my_apm.finish_span", append: "task_wrap.call_task"],
+)
 </code></pre>
 
-<p>This might look a bit clumsy, but this API is not designed for people who don’t know what they’re doing. Feel special.</p>
-
-<ul>
-  <li>Each item in the <code>merge</code> array is a taskWrap you want to add.</li>
-  <li>The <code>"task_wrap.call_task"</code> is the taskWrap step which invokes the actual step, e.g. <code>Create#model</code>.</li>
-  <li>You can configure taskWrap steps for specific steps. In this example, we want the taskWrap to be invoked for every step, that’s why we use <code>Hash.new(wrap)</code>.</li>
-  <li>The hash passed as <code>wrap_runtime</code> can contain specific wraps like <code>{my_task =&gt; my_specific_taskwrap}</code>, but in our example will always return the same taskWrap for each step.</li>
-</ul>
+<p>You can configure where to insert the taskWrap steps using <code>:append</code> or <code>:prepend</code>.</p>
 
 <p><span class="divider"></span></p>
 
@@ -3714,53 +3737,113 @@ wrap_runtime = Hash.new(wrap) # wrap_runtime[...] will always return the same wr
     <li id="activity-taskwrap-runtime-invoke">Invoke</li>
 </ul>
 
-<p>The taskWrap needs to be injected into the activity’s <code>invoke</code>, following the <a href="/2.1/docs/activity.html#activity-internals-circuit-interface">circuit-interface</a>.</p>
+<p>We’re now all set to inject that new taskWrap into the execution of our business activity. In the following example, the <code>my_wrap</code> hash is configured in a way that our extension is run around every task in <code>Create</code>, even for <code>Create</code> itself.</p>
 
-<pre><code>signal, (ctx, flow_options) = Trailblazer::Activity::TaskWrap.invoke(
-  Create,
-  [{log: []}, {}],
-  wrap_runtime: wrap_runtime
+<pre><code>my_wrap = Hash.new(apm_extension)
+
+Song::Activity::Create.invoke(
+  [
+    # ctx:
+    {
+      song: {title: "Timebomb"},
+      seq: []
+    }
+  ],
+  wrap_runtime: my_wrap # runtime taskWrap extensions!
 )
 </code></pre>
 
-<p>You can now inspect the <code>ctx[:log]</code> field to see that your <code>log_before</code> has been called for each step, including the activity itself.</p>
+<p>This will result in the same taskWrap being applied to every step of the activity execution path, and for <code>#validate</code>, looks like so.</p>
 
-<pre><code>puts ctx[:log]
- =&gt; [
-      "Before Create",
-      "Before #&lt;Trailblazer::Activity::Start semantic=:default&gt;",
-      "Before #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=model&gt;"
-      "Before #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=save&gt;",
-      "Before #&lt;Trailblazer::Activity::End semantic=:success&gt;",
-    ]
+<p><img class="mx-auto d-block" src="/vite/assets/task_wrap_validate.1282e372.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-step-filter">Step filter</li>
+</ul>
+
+<p>You don’t have to run a taskWrap extension around every step. It is possible to configure an extension only being applied to a particular step in your activity. Let’s invoke the new APM taskWrap only around <code>#validate</code>.</p>
+
+<pre><code>validate_task = Trailblazer::Activity::Introspect
+  .Nodes(Song::Activity::Create, id: :validate) # returns Node::Attributes
+  .task                                         # and the actually executed task from the circuit.
+
+my_wrap = {validate_task =&gt; apm_extension}
 </code></pre>
 
-<p>Using the <code>:wrap_runtime</code> feature is a beautiful way to add behavior around steps without having to use any decider or <code>if</code>s.</p>
+<p>Note that <code>my_wrap</code> can map specific tasks to their taskWrap extension.</p>
+
+<p>When running <code>Create</code> with the new configuration, the APM code is only called for <code>#validate</code>.</p>
+
+<pre><code>Song::Activity::Create.invoke(
+  [
+    # ctx:
+    {
+      song: {title: "Timebomb"},
+      seq: []
+    }
+  ],
+  wrap_runtime: my_wrap # runtime taskWrap extensions!
+)
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-top-activity">Top activity</li>
+</ul>
+
+<p>It’s important to understand that even the top activity <code>Song::Activity::Create</code> is run using a taskWrap, so if you want to apply APM only to this particular “step”, you could do so as follows.</p>
+
+<pre><code>my_wrap = {Song::Activity::Create =&gt; apm_extension}
+</code></pre>
 
 <p><span class="divider"></span></p>
 
 <h3 id="activity-taskwrap-static">Static</h3>
 <p><!-- {activity-taskwrap-static-toc} --></p>
 
-<pre><code>ext = Trailblazer::Activity::TaskWrap::Extension(
-  [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"]
-)
+<p>Instead of dynamically adding taskWrap extensions at runtime, in some cases you might want to do so when defining the activity class, at compile-time. For example, the <code>In()</code> and <code>Out()</code> filter DSL uses a static taskWrap extension to add steps around a specific task.</p>
+
+<p>This can be achieved with the <code>WrapStatic()</code> helper.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :validate,
+      Extension() =&gt; Trailblazer::Activity::TaskWrap::Extension::WrapStatic(
+        [MyAPM::Extension.method(:start_instrumentation),  id: "my_apm.start_span",  prepend: "task_wrap.call_task"],
+        [MyAPM::Extension.method(:finish_instrumentation), id: "my_apm.finish_span", append: "task_wrap.call_task"],
+      )
+    left :handle_errors
+    step :notify
+    include T.def_steps(:create_model, :validate, :notify)
+  end
+end
 </code></pre>
 
-<h1 id="old">old</h1>
-<pre><code>ext = Trailblazer::Activity::TaskWrap::Extension::WrapStatic.new(extension: ext) # new
-merge = [
-  [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"],
-  [method(:add_2), id: "user.add_2", append:  "task_wrap.call_task"],
-]
+<p>Obviously, you’d introduce a macro here to hide all those specific details to the user of your extension.</p>
 
-abc_implementation, _es = abc_implementation(a_extensions: [TaskWrap::Extension.WrapStatic(*merge)])
+<p>When running, the APM instrumentation is run only around <code>#validate</code>.</p>
+
+<pre><code>signal, (ctx, _) = Song::Activity::Create.invoke([ctx, {}])
 </code></pre>
 
-<p>Example tracing
-https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22</p>
+<p><span class="divider"></span></p>
 
-<p>example :if</p>
+<h3 id="activity-taskwrap-introspection">Introspection</h3>
+<p><!-- {activity-taskwrap-introspection-toc} --></p>
+
+<p>You can use our web-based debugger to introspect the static taskWrap of any step.</p>
+
+<!-- example :if -->
+
+<!-- Example tracing
+https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22
+ -->
 
 <p><span class="divider"></span></p>
 
@@ -4558,16 +4641,35 @@ Create.([ctx])
   <ul class="vertical menu">
     
       <li>
+        <a href="#activity-taskwrap-example">
+          <i class="fas fa-arrow-right"></i>
+          Example
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-step">
+          <i class="fas fa-arrow-right"></i>
+          Step
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-call_task">
+          <i class="fas fa-arrow-right"></i>
+          call_task
+        </a>
+      </li>
+      
+    
+      <li>
         <a href="#activity-taskwrap-runtime">
           <i class="fas fa-arrow-right"></i>
           Runtime
         </a>
       </li>
-      
-        
-        <li class="sub-item">
-          <a href="#activity-taskwrap-runtime-taskwrap-step">taskWrap step</a>
-        </li>
       
         
         <li class="sub-item">
@@ -4579,11 +4681,29 @@ Create.([ctx])
           <a href="#activity-taskwrap-runtime-invoke">Invoke</a>
         </li>
       
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-step-filter">Step filter</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-top-activity">Top activity</a>
+        </li>
+      
     
       <li>
         <a href="#activity-taskwrap-static">
           <i class="fas fa-arrow-right"></i>
           Static
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-introspection">
+          <i class="fas fa-arrow-right"></i>
+          Introspection
         </a>
       </li>
       
