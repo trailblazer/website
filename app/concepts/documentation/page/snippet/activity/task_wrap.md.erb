@@ -2,90 +2,105 @@
 
 The _taskWrap_ is the "`around_filter`" of Trailblazer. It allows adding steps before and after actual tasks without having to change the activity, and without having to introduce `if`s.
 
-Some prominent examples for taskWrap usage in the wild are the [`:input`/`:output` variable mapping](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb) and tracing happening in [`#wtf?`](https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb).
+Some prominent examples for taskWrap usage in the wild are [variable mapping](https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb) and tracing happening in [`#wtf?`](https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb). Those are features completely separated from the core code. You can use the taskWrap mechanics to inject static wraps at compile time (as it's done for, say, the `In()` feature), or at runtime, the way `#wtf?` is built.
 
-<%= vite_image_tag "images/task-wrap.webp", class: "mx-auto d-block" %>
+<%= vite_image_tag "images/task_wrap_validate.png", class: "mx-auto d-block" %>
 
-You can maintain a taskWrap for each specific task of an activity, or run the same "around steps" for every task, even in nested activities. Also, taskWraps can be configured statically at compile-time or defined dynamically at run-time, which is how tracing in `#wtf?` works.
+It's possible to configure a specific taskWrap for a particular step, or run the same one for all steps encountered while running an activity, even with nesting.
+
+
+<%= h3 "Example" %>
+
+Let's discuss the taskWrap with the following simple `Create` activity that you've probably met before.
+
+<%= code "create", collapse: :meths %>
+
+We're using an imaginary `MyAPM` gem that provides a convenient interface for starting and stopping instrumentation.
+
+<%= code "start" %>
+
+<%= h3 "Step" %>
+
+In order to execute the instrumentation, we have to write two taskWrap steps, one to start, one for finishing the instrumentation. Those steps look similar to "ordinary" activity steps, but expose the taskWrap interface.
+
+<%= code "myapm_start" %>
+
+A taskWrap step receives two positional arguments, the `wrap_ctx` that is used to transport taskWrap-specific data across taskWrap steps, and the `original_args` that represent how the circuit called the currently invoked task.
+
+Above, you can see how it's possible to retrieve the currently invoked `task` and its `activity`.
+
+We then store the `span` object in the `wrap_ctx` so the finishing code can close that span in the second taskWrap step `#finish_instrumentation`.
+
+<%= code "myapm" %>
+
+As you can see, the `span` object can be fetched from `wrap_ctx` as the second step is run somewhere after `start_instrumentation`.
+
+<%= h3 "call_task" %>
+
+Each taskWrap has at least one element, the `call_task` step that calls the actual task. Sometimes this task is a method, such as `#validate`, sometimes a nested activity, and so on.
 
 <%= h3 "Runtime" %>
 
-At run-time, any taskWrap can be injected using `:wrap_runtime`. However, the taskWrap needs to be set up beforehand.
-
-Consider the following operation, or activity.
-
-<%= code "op-run", collapse: "meth" %>
-
-In order to invoke your own logger before every task (including the `Create` activity itself), you need to define a taskWrap extension and a taskWrap step for the actual logging.
-
-<%= h4 "taskWrap step" %>
-
-A taskWrap step looks very similar to a normal step but has a slightly different interface.
-
-<%= code "run-logger" %>
-
-Note that the first positional argument is `wrap_ctx` which is a taskWrap-specific datastructure. It contains the `:task` variable which is the currently "invoked" step of your operation.
-
-The second positional argument is `original_args`, which are the circuit-interface arguments that are being passed to the actual step. Depending on whether your taskWrap step is placed before or after the actual step, you can change the `ctx`, add or remove variables, or completely change what's being passed around.
-
-It is important to always return an array `[wrap_ctx, original_args]`.
-
-<%= info do %>
-You don't have to mutate structures in the taskWrap. The example shows a convenient version. Anyway, you can build your own `ctx` and return the respective new structures from the taskWrap step.
-<% end %>
+The taskWrap can be extended at runtime, when `call`ing an activity. This allow for adding features to steps without having to change the actual business code.
 
 <%= h4 "Extension" %>
 
-Before injecting, you need to build a taskWrap extension.
+To actually run the `Song::Activity::Create` activity with this new taskWrap, we need to build a runtime extension.
 
-<%= code "run-merge" %>
+<%= code "runtime_ext" %>
 
-This might look a bit clumsy, but this API is not designed for people who don't know what they're doing. Feel special.
-
-* Each item in the `merge` array is a taskWrap you want to add.
-* The `"task_wrap.call_task"` is the taskWrap step which invokes the actual step, e.g. `Create#model`.
-* You can configure taskWrap steps for specific steps. In this example, we want the taskWrap to be invoked for every step, that's why we use `Hash.new(wrap)`.
-* The hash passed as `wrap_runtime` can contain specific wraps like `{my_task => my_specific_taskwrap}`, but in our example will always return the same taskWrap for each step.
+You can configure where to insert the taskWrap steps using `:append` or `:prepend`.
 
 <%= h4 "Invoke" %>
 
-The taskWrap needs to be injected into the activity's `invoke`, following the [circuit-interface](/2.1/docs/activity.html#activity-internals-circuit-interface).
+We're now all set to inject that new taskWrap into the execution of our business activity. In the following example, the `my_wrap` hash is configured in a way that our extension is run around every task in `Create`, even for `Create` itself.
 
-<%= code "run-invoke" %>
+<%= code "runtime" %>
 
-You can now inspect the `ctx[:log]` field to see that your `log_before` has been called for each step, including the activity itself.
+This will result in the same taskWrap being applied to every step of the activity execution path, and for `#validate`, looks like so.
 
-<%= code "run-puts" %>
+<%= vite_image_tag "images/task_wrap_validate.png", class: "mx-auto d-block" %>
 
-Using the `:wrap_runtime` feature is a beautiful way to add behavior around steps without having to use any decider or `if`s.
+
+<%= h4 "Step filter" %>
+
+You don't have to run a taskWrap extension around every step. It is possible to configure an extension only being applied to a particular step in your activity. Let's invoke the new APM taskWrap only around `#validate`.
+
+<%= code "runtime_validate" %>
+
+Note that `my_wrap` can map specific tasks to their taskWrap extension.
+
+When running `Create` with the new configuration, the APM code is only called for `#validate`.
+
+<%= code "runtime_invoke", collapse: "meths" %>
+
+<%= h4 "Top activity" %>
+
+It's important to understand that even the top activity `Song::Activity::Create` is run using a taskWrap, so if you want to apply APM only to this particular "step", you could do so as follows.
+
+<%= code "wrap_create" %>
 
 <%= h3 "Static" %>
 
+Instead of dynamically adding taskWrap extensions at runtime, in some cases you might want to do so when defining the activity class, at compile-time. For example, the `In()` and `Out()` filter DSL uses a static taskWrap extension to add steps around a specific task.
 
-    ext = Trailblazer::Activity::TaskWrap::Extension(
-      [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"]
-    )
+This can be achieved with the `WrapStatic()` helper.
 
-# old
-    ext = Trailblazer::Activity::TaskWrap::Extension::WrapStatic.new(extension: ext)
-# new
-    merge = [
-      [method(:add_1), id: "user.add_1", prepend: "task_wrap.call_task"],
-      [method(:add_2), id: "user.add_2", append:  "task_wrap.call_task"],
-    ]
+<%= code "static" %>
 
-    abc_implementation, _es = abc_implementation(a_extensions: [TaskWrap::Extension.WrapStatic(*merge)])
+Obviously, you'd introduce a macro here to hide all those specific details to the user of your extension.
 
+When running, the APM instrumentation is run only around `#validate`.
 
+<%= code "static_invoke" %>
 
+<%= h3 "Introspection" %>
 
+You can use our web-based debugger to introspect the static taskWrap of any step.
 
+<!-- example :if -->
 
 
-Example tracing
+<!-- Example tracing
 https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22
-
-
-
-
-example :if
+ -->
