@@ -23,7 +23,6 @@ function updateRightSidebarScrollspy() {
   var feature = chapter + "-features";
   jquery(".features").hide();
   jquery(feature).show();
-  history.replaceState({}, "", href);
 }
 
 async function activateAllTabsFor(navTagTitle) {
