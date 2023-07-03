@@ -1,0 +1,31 @@
+<%= h2 "Model" %>
+
+An operation can automatically find or create a model for you using the `Model()` macro. The produced model is written to `ctx[:model]`.
+
+You could easily write this code yourself, nevertheless, our macro comes with a bunch of helpful features.
+
+<%= h3 "Model::Find" %>
+
+<a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro 2.1.16</a>
+
+In operations targeting existing models, the `Model::Find()` macro is the right tool to use.
+
+<%= h4 "Find_by" %>
+
+To find a model by its ID using `Song.find_by(id: id)` use the macro like so.
+
+<%= code :find_by_id, collapse: "meths" %>
+
+The `id` value is extracted from `id = params[:id]`.
+
+Note that the finder method doesn't have to be `find_by` - you may pass any method name to `Find()`, for example `:where`.
+
+The `id:` key is also up to you. For example, you can dictate a query with a different key with the following code.
+
+<%= code :find_by_column, collapse: "meths" %>
+
+<%= h4 "params_key" %>
+
+Sometimes the ID key and the `params` key differ. Use the `:params_key` option if you want to look into `params` using a different key.
+
+<%= code :params_key, collapse: "meths" %>

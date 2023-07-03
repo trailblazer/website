@@ -1,5 +1,10 @@
 <%= h2 "Model" %>
 
+
+<%= info do %>
+The `Model()` macro will be deprecated and removed in Trailblazer 2.2. Please switch over to the more powerful `Model::Find` and friends.
+<% end %>
+
 An operation can automatically find or create a model for you using the `Model()` macro.
 
 <%= code_tabs "op" %>
