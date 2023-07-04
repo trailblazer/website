@@ -211,6 +211,10 @@
     "file": "assets/model-not-found.a42c117d.png",
     "src": "images/model-not-found.png"
   },
+  "images/model_find_trace.png": {
+    "file": "assets/model_find_trace.822b6f1b.png",
+    "src": "images/model_find_trace.png"
+  },
   "images/nested-static-complete.png": {
     "file": "assets/nested-static-complete.0c841265.png",
     "src": "images/nested-static-complete.png"
