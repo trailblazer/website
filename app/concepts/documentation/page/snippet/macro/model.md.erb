@@ -1,8 +1,7 @@
-<%= h2 "Model" %>
-
+<%= h3 "Model" %>
 
 <%= info do %>
-The `Model()` macro will be deprecated and removed in Trailblazer 2.2. Please switch over to the more powerful `Model::Find` and friends.
+The `Model()` macro will be deprecated and removed in Trailblazer 2.2. Please switch over to the more powerful [`Model::Find` and friends](/2.1/docs/macro.html#macro-model-model-find).
 <% end %>
 
 An operation can automatically find or create a model for you using the `Model()` macro.
@@ -15,7 +14,7 @@ After this step, there is a fresh model instance under `ctx[:model]` that can be
 
 Internally, the `Model()` macro will simply invoke `Song.new` to populate `ctx[:model]`.
 
-<%= h3 "Find_by" %>
+<%= h4 "Find_by" %>
 
 You can also find models using `:find_by`. This is helpful for `Update` or `Delete` operations.
 
@@ -45,7 +44,7 @@ It is also possible to `find_by` using an attribute other than `:id`.
 
 Note that, instead of `find_by`, you may also use `:find`. This is not recommended, though, since it raises an exception, which is not the preferred way of flow control in Trailblazer.
 
-<%= h3 "Arbitrary Finder" %>
+<%= h4 "Arbitrary Finder" %>
 
 It's possible to specify any finder method, which is helpful with ROMs such as Sequel.
 
@@ -61,7 +60,7 @@ Given your database gem provides that finder, it will result in a query.
 
 <%= code_tabs "show-ok" %>
 
-<%= h3 "Not Found" %>
+<%= h4 "Not Found" %>
 
 You can wire the `Model()` step to a dedicated terminus `:not_found` in case of a missing model, instead of connecting it to the default failure track. The new terminus represents an explicit outcome and could, for instance, be used in an [endpoint](/2.1/docs/endpoint.html) to render a **404 response** without having to check if `ctx[:model]` is present or not.
 
@@ -75,7 +74,7 @@ When running the `Update` activity with an invalid ID, it terminates on `End.not
 
 <%= code_tabs "not_found" %>
 
-<%= h3 "Dependency Injection" %>
+<%= h4 "Dependency Injection" %>
 
 The following `Model()` options can be injected using variables when `call`ing the operation.
 

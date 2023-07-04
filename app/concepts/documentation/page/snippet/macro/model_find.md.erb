@@ -8,7 +8,7 @@ You could easily write this code yourself, nevertheless, our macro comes with a 
 
 <a href="https://github.com/trailblazer/trailblazer-macro" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-macro 2.1.16</a>
 
-In operations targeting existing models, the `Model::Find()` macro is the right tool to use.
+In operations that target existing models, the `Model::Find()` macro is the right tool to use.
 
 <%= h4 "Find_by" %>
 
@@ -20,7 +20,7 @@ The `id` value is extracted from `id = params[:id]`.
 
 Note that the finder method doesn't have to be `find_by` - you may pass any method name to `Find()`, for example `:where`.
 
-The `id:` key is also up to you. For example, you can dictate a query with a different key with the following code.
+The `id:` key is also up to you. As an example, you can dictate a query with a different key using the following code.
 
 <%= code :find_by_column, collapse: "meths" %>
 
@@ -29,3 +29,50 @@ The `id:` key is also up to you. For example, you can dictate a query with a dif
 Sometimes the ID key and the `params` key differ. Use the `:params_key` option if you want to look into `params` using a different key.
 
 <%= code :params_key, collapse: "meths" %>
+
+<%= h4 "id_from" %>
+
+If the ID extraction is more complicated, maybe you need to look into a deeply nested hash in `params`, use the block style to implement your own extraction.
+
+<%= code :id_from, collapse: "meths" %>
+
+The block receives the same `ctx, **kws` style arguments that an ordinary step would.
+
+<%= h4 "Not Found" %>
+
+You can wire the `Model::Find()` step to a dedicated terminus `:not_found` in case of a missing model (instead of connecting it to the default failure track). The new terminus represents an explicit outcome and could, for instance, be used in an [endpoint](/2.1/docs/endpoint.html) to render a **404 response** without having to check if `ctx[:model]` is present or not.
+
+<%= vite_image_tag "images/model-not-found.png", class: "mx-auto d-block" %>
+
+To add the explicit `End.not_found`terminus, pass the `:not_found_terminus` option to the macro.
+
+<%= code "not-found" %>
+
+When running the `Update` activity with an invalid ID, it terminates on `End.not_found`.
+
+<%= code "not-found-invoke" %>
+
+<%= h4 "find" %>
+
+In case your model needs to be retrieved using a positional ID argument, use the `:find` style without a hash.
+
+<%= code :find, collapse: "meths" %>
+
+This will result in an invocation like `Song.find(id)`. As always `:find` can be anything, for example, `:[]` in case you're using Sequel.
+
+<%= h4 "Debugging" %>
+
+With tracing turned on, you can see that `Model::Find()` actually creates a tiny activity with two steps.
+
+<%= vite_image_tag "images/model_find_trace.png", class: "mx-auto d-block" %>
+
+1. The first extracts the ID from params. If this step fails, your configured ID couldn't be found
+2. The second step runs the finder.
+
+<%= h3 "Model::Build" %>
+
+For `Create` operations without an existing model you can use `Model::Build` to instantiate a new model.
+
+<%= code :new, collapse: "meths" %>
+
+Here, `:new` might be replace with any method you want to be called on `Song`, e.g. `:build`.
