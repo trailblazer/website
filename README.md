@@ -58,9 +58,7 @@ Always branch when working on new parts of the docs.
 
 When pushing, use `rails publish`.
 
-You need to activate the branch for "deploy preview" here:
-
-[https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches](https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches)
+Currently, all branches are automatically deployed. This can be configured here: https://app.netlify.com/sites/ornate-heliotrope-1c15e2/settings/deploys#branches
 
 You can then view the preview by replacing `macro-chapter` with the branch you want to preview.
 
