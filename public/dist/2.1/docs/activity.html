@@ -1,0 +1,4823 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Activity</title>
+
+    
+    <script src="/vite/assets/documentation.80d1547f.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.f0b29665.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    
+
+    
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-69514939-1");
+      </script>
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 doc-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="internals">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/internals.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#internals-collapse"
+          aria-expanded="false"
+          aria-controls="internals-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Internals</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="true"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="activity-collapse"
+      class="collapse show"
+      aria-labelledby="activity"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#activity-overview">
+              Overview
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-strategy">
+              STRATEGY
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-wiring-api">
+              Wiring API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-dsl-options">
+              DSL Options
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-variable-mapping">
+              Variable Mapping
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-dependency-injection">
+              Dependency Injection
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-macro-api">
+              Macro API
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-internals">
+              Internals
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-taskwrap">
+              TaskWrap
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#activity-troubleshooting">
+              Troubleshooting
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="macro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/macro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#macro-collapse"
+          aria-expanded="false"
+          aria-controls="macro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Macro</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="false"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main class="col-md-9 doc-xl-8 py-md-5 pl-md-5 order-2" role="main">
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Activity</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 15 Jun 23</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p><span class="divider"></span></p>
+
+<h2 id="activity-overview">Overview</h2>
+<p><!-- {activity-overview-toc} --></p>
+
+<p>An activity is an executable <em>circuit</em> of tasks. Each task is arbitrary Ruby code, usually encapsulated in a callable object. Depending on its return value and its outgoing connections, the next task to invoke is picked.</p>
+
+<p>Activities are tremendously helpful for modelling and implementing any kind of logic and any level of complexity. They’re useful for a hash merge algorithm, an application’s function to validate form data and update models with it, or for implementing long-running business workflows that drive entire application lifecycles.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>The <code>activity</code> gem is an extraction from Trailblazer 2.0, where we only had operations. Operations expose a linear flow which goes into one direction, only. While this was a massive improvement over messily nested code, we soon decided it’s cool being able to model non-linear flows. This is why activities are the major concept since Trailblazer 2.1.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-overview-anatomy">Anatomy</h3>
+<p><!-- {activity-overview-anatomy-toc} --></p>
+
+<p>To understand the mechanics behind Trailblazer’s activities, you need to know a few simple concepts.</p>
+
+<ol>
+  <li>An <strong>activity</strong> is a circuit of tasks - boxes being connected by arrows.</li>
+  <li>It has one <strong>start</strong> and at least one <strong>end event</strong>. Those are the circles in the diagrams.</li>
+  <li>A <strong>task</strong> is a unit of business logic. They’re visualized as boxes. This is where your code goes!</li>
+  <li>Each task has one or more <strong>outputs</strong>. From one particular output you can draw one connecting line to the next task.</li>
+  <li>An output is triggered by a <strong>signal</strong>. The last line in a task usually decides what output to pick, and that happens by <code>return</code>ing a specific object, a signal.</li>
+  <li>Besides the signal, a <strong>semantic</strong> is assigned to an output. This is a completely arbitrary “meaning”. In Trailblazer, we use <code>success</code> and <code>failure</code> as conventional semantics.</li>
+  <li>In a railway activity, for instance, the “failure” and “success” track mean nothing more than following the <code>failure</code> or <code>success</code>-labeled outputs. That’s a <strong>track</strong>.</li>
+</ol>
+
+<p>Activities can be visualized neatly by taking advantage of the BPMN specification.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/intermediate.055eb297.webp" /></p>
+
+<p>Well, this is not entirely BPMN, but you get the idea. Intuitively, you understand that the tasks <code>B</code> and <code>C</code> have only one outcome, whereas <code>A</code> yields two possible results. This works by adding two <em>outputs</em> to <code>A</code>.</p>
+
+<p>An output is a combination of a <em>semantic</em> and a <em>signal</em>. A part of the return value of the invoked task is interpreted as a signal, and that’s how Trailblazer picks the connection to the next task to take.</p>
+
+<p>Depending on <code>A</code>’s’ returned signal (yet to be defined), the flow will continue on its <code>success</code> or <code>failure</code> connection. It’s completely up to the modelling developer what names they choose for semantics, and how many outputs they need. Nevertheless, for binary outputs we usually take <code>success</code> and <code>failure</code> as meaningful semantics.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-overview-dsl">DSL</h3>
+<p><!-- {activity-overview-dsl-toc} --></p>
+
+<p>To implement our activity, we can use Activity’s DSL.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>To demonstrate the concepts of an activity, we make use of the DSL. This simplifies defining activities. However, keep in mind that you’re free to build activities using the PRO editor, with your own DSL or with our [low-level API].</p>
+</div>
+
+<pre><code>class Upsert &lt; Trailblazer::Activity::Path
+  step :find_model, Output(Trailblazer::Activity::Left, :failure) =&gt; Id(:create)
+  step :update
+  step :create, magnetic_to: nil, Output(Trailblazer::Activity::Right, :success) =&gt; Id(:update)
+
+  # ...
+end
+</code></pre>
+
+<p>The <code>Activity::Path</code> class is the simplest DSL strategy. It automatically connects each <code>step</code> to the previous one, unless you use the <code>:magnetic_to</code> option. In our case, this is necessary to connect <code>#find</code> (A) to <code>#create</code> (C). The <code>Output</code> method helps to define what signal and semantic an output has, and using <code>Id</code> you can point those to a specific neighbor task.</p>
+
+<p>If unsure, use the [developer tools] to render the circuit.</p>
+
+<pre><code>Trailblazer::Developer.render(A::Upsert)
+</code></pre>
+
+<p>Alternatively, use the PRO editor tools.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-overview-invocation">Invocation</h3>
+<p><!-- {activity-overview-invocation-toc} --></p>
+
+<p>Before you can use your activity, the tasks need to be written. Using the [task interface] this is pretty straight-forward. Note that you can return either a boolean value or a [signal subclass] in order to dictate the direction of flow.</p>
+
+<pre><code>class Upsert &lt; Trailblazer::Activity::Path
+  # ...
+
+  def find_model(ctx, id:, **) # A
+    ctx[:memo] = Memo.find(id)
+    ctx[:memo] ? Trailblazer::Activity::Right : Trailblazer::Activity::Left # can be omitted.
+  end
+
+  def update(ctx, params:, **) # B
+    ctx[:memo].update(**params)
+    true # can be omitted
+  end
+
+  def create(ctx, **)
+    ctx[:memo] = Memo.new
+  end
+end
+</code></pre>
+
+<div class="bd-callout bd-callout-info">
+<p>You don’t have to stick to the task interface! The [circuit interface] is a bit more clumsy, but gives you much better control over how ctx and signals are handled.</p>
+</div>
+
+<p>To run your activity, use its <code>call</code> method. <code>Activity</code>s always use the [circuit interface].</p>
+
+<pre><code>ctx = {id: 1, params: {text: "Hydrate!"}}
+
+signal, (ctx, flow_options) = A::Upsert.([ctx, {}])
+</code></pre>
+
+<p>The <code>ctx</code> will be whatever the most recently executed task returned, and hopefully contain what you’re expecting.</p>
+
+<pre><code># FIXME
+</code></pre>
+
+<p>After this brief introduction, you should check out how [nesting] of activities will help you, what [operations] are, and what awesome debugging tools such as [tracing] we provide.</p>
+
+<p><code>:activity</code> is guaranteed to match the currently invoked activity</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-strategy">STRATEGY</h2>
+<p><!-- {activity-strategy-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-strategy-path">Path</h3>
+<p><!-- {activity-strategy-path-toc} --></p>
+
+<p>The simplest strategy is <code>Path</code>, which does nothing but connecting each task’s <code>:success</code> output to the following task.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Path
+  step :validate
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>Without any additional DSL options, this results in a straight path.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path.c7a25937.webp" /></p>
+
+<p>In turn, this means that only <code>true</code> return values in your tasks will work. The DSL will, per default, wrap every task with the <code>Binary</code> interface, meaning returning <code>true</code> will result in <code>Activity::Right</code>, and false in <code>Activity::Left</code>. Currently, only <code>Right</code> signals are wired up.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path</li>
+    <li id="activity-strategy-path-output">Output</li>
+</ul>
+
+<p>You may add as many outputs to a task as you need. The DSL provides the <code>Output()</code> helper to do so.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Path
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>The <code>Path</code> strategy only maintains the <code>:success</code>/<code>Activity::Right</code> semantic/signal combination. Any other combination you need to define explicitly using <code>Output(signal, semantic)</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path</li>
+    <li id="activity-strategy-path-end">End</li>
+</ul>
+
+<p>The <code>End()</code> helper allows creating a new end event labelled with the specified semantic.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Path
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>This will result in the following circuit.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-end.33750cc0.webp" /></p>
+
+<p>The <code>validate</code> task now has a <code>success</code> and a <code>failure</code> output. Since it’s wrapped using <code>Binary</code> it may return <code>true</code> or <code>false</code> to dictate the used output (or <code>Activity::Right</code>/<code>Activity::Left</code> since it’s the [task interface]).</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Path
+  # ...
+  def validate(ctx, params:, **)
+    ctx[:input] = Form.validate(params) # true/false
+  end
+
+  def create(ctx, input:, **)
+    Memo.create(input)
+  end
+end
+</code></pre>
+
+<p>The activity will halt on the <code>:invalid</code>-labelled end if <code>validate</code> was falsey.</p>
+
+<pre><code>ctx = {params: nil}
+signal, (ctx, flow_options) = Memo::Create.([ctx, {}])
+
+puts signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:invalid&gt;
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path</li>
+    <li id="activity-strategy-path-multiple-references">Multiple References</li>
+</ul>
+
+<p>Note that repeatedly using the same semantic (<code>End(:semantic)</code>) will reference the same end event.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Path
+  step :validate, Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
+  step :create,   Output(Trailblazer::Activity::Left, :failure) =&gt; End(:invalid)
+  # ...
+end
+</code></pre>
+
+<p>Since we’re adding a <code>:failure</code> output, <code>create</code> now has two outgoing connections.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/double-end.e43a4ac3.webp" /></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-strategy-railway">Railway</h3>
+<p><!-- {activity-strategy-railway-toc} --></p>
+
+<p>The <a href="http://fsharpforfunandprofit.com/rop/"><code>Railway</code> pattern</a> is used for “automatic” error handling. You arrange your actual chain of logic on the “success” track, if a problem occurs, the processing jumps to the parallel “failure” track, skipping the rest of the tasks on the success track.</p>
+
+<p>Once on the failure track, it stays there (unless you instruct not to do so!).</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/railway.0bda5593.webp" /></p>
+
+<p>Three possible execution paths this activity might take.</p>
+
+<ul>
+  <li>No errors: First <code>validate</code>, then <code>create</code>, then ends in <code>End.success</code>. The activity was successful.</li>
+  <li>Validation error: First <code>validate</code>, which returns a <code>Left</code> (failure) signal, leading to <code>log_error</code>, then <code>End.failure</code>.</li>
+  <li>Creation error: First <code>validate</code>, then <code>create</code>, which deviates to the failure track, leading to <code>End.failure</code>. Note this doesn’t hit the logging error handler due to the sequence order.</li>
+</ul>
+
+<p>To place tasks on the failure track, use <code>#fail</code>. Note that the order of tasks corresponds to the order in the Railway.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :validate
+  fail :log_error
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>Obviously, you may use as many tasks as you need on both tracks. There are no limitations.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Historically, the success path is called “right” whereas the error handling track is “left”. The signals <code>Right</code> and <code>Left</code> in Trailblazer are still named following this convention.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Railway</li>
+    <li id="activity-strategy-railway-wiring">Wiring</li>
+</ul>
+
+<p>All wiring features apply to <code>Railway</code>. You can rewire, add or remove connections as you please.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :validate
+  fail :log_error
+  step :create, Output(:failure) =&gt; End(:db_error)
+  # ...
+end
+</code></pre>
+
+<p>Railway automatically connects a task’s <code>success</code> output to the next possible task available on the success track. Vice-verse, the <code>failure</code> output is connected the the new possible task on the failure path.</p>
+
+<p>Here, <code>create</code>’s failure output is reconnected.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/railway-wire.c615cabc.webp" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Railway</li>
+    <li id="activity-strategy-railway-fail">Fail</li>
+</ul>
+
+<p>DSL’s <code>#fail</code> method allows to place tasks on the failure track.</p>
+
+<p>Such error handlers are still wrapped using <code>Binary</code>. In other words, they can still return a <code>Right</code> or <code>Left</code> signal. However, per default, both outputs are connected to the next task on the failure track.</p>
+
+<p>You may rewire or add outputs on failure tasks, too.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :validate
+  fail :log_error, Output(:success) =&gt; Track(:success)
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>For instance, it’s possible to jump back to the success path if <code>log_error</code> decides to do so.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/railway-fail.c936dcf7.webp" /></p>
+
+<p>The return value of <code>log_error</code> now does matter.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  # ...
+
+  def log_error(_ctx, logger:, params:, **)
+    logger.error("wrong params: #{params.inspect}")
+
+    fixable?(params) ? true : false # or Activity::Right : Activity::Left
+  end
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Railway</li>
+    <li id="activity-strategy-railway-pass">Pass</li>
+</ul>
+
+<p>If the return value of a “right” task shouldn’t matter, use <code>#pass</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :validate
+  fail :log_error
+  pass :create
+  # ...
+end
+</code></pre>
+
+<p>Regardless of <code>create</code>’s return value, it will always flow to the next success task.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/railway-pass.68c20bc0.webp" /></p>
+
+<p>Both outputs are connected to the following task on the success path (or, in this case, the success end).</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Railway</li>
+    <li id="activity-strategy-railway-left">Left</li>
+</ul>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.2</a></p>
+
+<p>To avoid syntax problems with several editors, <code>#fail</code> is also aliased as <code>#left</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :validate
+  left :log_error
+  # ...
+end
+</code></pre>
+
+<p>The signature and accepted arguments are identical to <code>#fail</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Railway</li>
+    <li id="activity-strategy-railway-notes">Notes</li>
+</ul>
+
+<p>FIXME</p>
+
+<ul>
+  <li>Using <code>Railway</code>, tasks always get two outputs assigned: <code>:success/Right</code> and <code>:failure/Left</code>.</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-strategy-fasttrack">FastTrack</h3>
+<p><!-- {activity-strategy-fasttrack-toc} --></p>
+
+<p>Based on the <code>Railway</code> strategy, the <code>FastTrack</code> pattern allows to “short-circuit” tasks and leave the circuit at specified events.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>The infamous <code>Trailblazer::Operation</code> is a thin public API around <code>Activity::FastTrack</code>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>FastTrack</li>
+    <li id="activity-strategy-fasttrack-passfast">PassFast</li>
+</ul>
+
+<p>The <code>:pass_fast</code> option wires the <code>:success</code> output straight to the new <code>pass_fast</code> end.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::FastTrack
+  step :validate, pass_fast: true
+  fail :log_error
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>If <code>validate</code> returns a true value, it will skip the remaining tasks on the success track and end in <code>End.pass_fast</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ft-passfast.1c886dae.webp" /></p>
+
+<p>Note that in the example, the <code>create</code> task not accessable anymore.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>FastTrack</li>
+    <li id="activity-strategy-fasttrack-failfast">FailFast</li>
+</ul>
+
+<p>The counter-part for <code>:pass_fast</code> is <code>:fail_fast</code>.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::FastTrack
+  step :validate, fail_fast: true
+  fail :log_error
+  step :create
+  # ...
+end
+</code></pre>
+
+<p>A falsey return value from <code>#validate</code> will deviate the flow and go straight to <code>End.fail_fast</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ft-failfast.d5c817d0.webp" /></p>
+
+<p>Again, this specific example renders the <code>log_errors</code> task unreachable.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>FastTrack</li>
+    <li id="activity-strategy-fasttrack-fasttrack">FastTrack</li>
+</ul>
+
+<p>It’s possible to wire a task to the two FastTrack ends <code>End.fail_fast</code> and <code>End.pass_fast</code> in addition to the normal Railway wiring.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::FastTrack
+  step :validate, fast_track: true
+  fail :log_error
+  step :create
+
+  def validate(ctx, params:, **)
+    begin
+      ctx[:input] = Form.validate(params) # true/false
+    rescue
+      return Trailblazer::Activity::FastTrack::FailFast # signal
+    end
+
+    ctx[:input] # true/false
+  end
+
+  # ...
+end
+</code></pre>
+
+<p>The <code>validate</code> task now has four outputs. You can instruct the two new FastTrack outputs by returning either <code>Trailblazer::Activity::FastTrack::FailFast</code> or <code>Trailblazer::Activity::FastTrack::PassFast</code> (see also [returning signals]).</p>
+
+<p>Note that you don’t have to use both outputs.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ft-fasttrack.01c61356.webp" /></p>
+
+<p>The standard FastTrack setup allows you to communicate and model up to four states from one task.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>FastTrack</li>
+    <li id="activity-strategy-fasttrack-notes">Notes</li>
+</ul>
+
+<p>FIXME</p>
+
+<ul>
+  <li>All options (<code>:pass_fast</code>, <code>:fail_fast</code> and <code>:fast_track</code>) may be used with <code>step</code>, <code>pass</code> or <code>fail</code>. If in doubt, [render the circuit].</li>
+  <li><code>:pass_fast</code> and <code>:fail_fast</code> can be used in combination.</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-wiring-api">Wiring API</h2>
+<p><!-- {activity-wiring-api-toc} --></p>
+
+<p>You can use the wiring API to model more complicated flows in activities.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>The wiring API is implemented in the [<code>trailblazer-activity-dsl-linear</code> gem].</p>
+
+<p>Feel invited to write your own DSL using our [low-level mechanics], or if your activities get too complex, please use the [visual editor].</p>
+</div>
+
+<p>In addition to your friends <code>step</code>, <code>pass</code> and <code>fail</code>, the DSL provides helpers to fine-tune your wiring.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider
+  step :charge_creditcard
+end
+</code></pre>
+
+<p>By default, and without additional helpers used, the DSL will connect every <code>step</code> task’s two outputs to the two respective tracks of a “railway”.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output.c22074db.webp" /></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-output-">Output()</h3>
+<p><!-- {activity-wiring-api-output--toc} --></p>
+
+<p>The <code>Output()</code> method helps to rewire one or more specific outputs of a task, or to add outputs.</p>
+
+<p>To understand this helper, you should understand that every <code>step</code> invocation calls <code>Output()</code> for you behind the scenes. The following DSL use is identical to the one [above].</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider,
+    Output(Trailblazer::Activity::Left, :failure) =&gt; Track(:failure),
+    Output(Trailblazer::Activity::Right, :success) =&gt; Track(:success)
+  step :charge_creditcard
+
+end
+</code></pre>
+
+<p>We’re adding two outputs here, provide the <em>signal</em> as the first and the <em>semantic</em> as the second parameter to <code>Output()</code> and then connect them to a track.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output()</li>
+    <li id="activity-wiring-api-output-implicit-signal">Implicit signal</li>
+</ul>
+
+<p>Trailblazer has two outputs predefined. As you might’ve guessed, the <code>:failure</code> and <code>:success</code> outputs are a convention. This allows to <strong>omit the signal</strong> when referencing an existing output.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider, Output(:failure) =&gt; Track(:failure)
+  step :charge_creditcard
+end
+</code></pre>
+
+<p>As the DSL knows the <code>:failure</code> output, it will reconnect it accordingly while keeping the signal.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Output()</li>
+    <li id="activity-wiring-api-output-adding-outputs">Adding outputs</li>
+</ul>
+
+<p>When specifying a new semantic to <code>Output()</code>, you are adding an output to the task. This is why you must also pass a signal as the first argument.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Since a particular output is triggered by a particular signal, note that each output must be configured with a <strong>unique signal</strong> per activity.</p>
+</div>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  UsePaypal = Class.new(Trailblazer::Activity::Signal)
+
+  step :find_provider, Output(UsePaypal, :paypal) =&gt; Track(:paypal)
+  step :charge_creditcard
+end
+</code></pre>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-add.d68b4d30.webp" /></p>
+
+<p>The <code>find_provider</code> task now has three possible outcomes that can be triggered by returning either <code>Right</code>, <code>Left</code>, or <code>UsePaypal</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-end-">End()</h3>
+<p><!-- {activity-wiring-api-end--toc} --></p>
+
+<p>Use <code>End()</code> to connect outputs to an existing end, or create a new end.</p>
+
+<p>You may reference existing ends by their semantic.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider
+  step :charge_creditcard, Output(:failure) =&gt; End(:success)
+end
+</code></pre>
+
+<p>This reconnects both outputs to the same end, always ending in a - desirable, yet unrealistic - successful state.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-end.27493e02.webp" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>End()</li>
+    <li id="activity-wiring-api-end-adding-ends">Adding ends</li>
+</ul>
+
+<p>Providing a new semantic to the <code>End()</code> function will create a new end event.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider
+  step :charge_creditcard, Output(:failure) =&gt; End(:declined)
+end
+</code></pre>
+
+<p>Adding ends to an activity is a beautiful way to communicate more than two outcomes to the outer world without having to use a state field in the <code>ctx</code>. It also allows wiring those outcomes to different tracks in the container activity. [See nesting]</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wire-output-endadd.3a9250b8.webp" /></p>
+
+<p>This activity now maintains three end events. The path to the <code>declined</code> end is taken from the task’s <code>failure</code> output.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Successive uses of the same <code>End(:semantic)</code> will all connect to the same end.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-id-">Id()</h3>
+<p><!-- {activity-wiring-api-id--toc} --></p>
+
+<p>An output can be connected to a particular task by using <code>Id()</code>.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider
+  step :charge_creditcard, Output(:failure) =&gt; Id(:find_provider)
+end
+</code></pre>
+
+<p>This connects the <code>failure</code> output to the previous task, which might create an infinity loop and waste your computing time - it is solely here for demonstrational purposes.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-track-">Track()</h3>
+<p><!-- {activity-wiring-api-track--toc} --></p>
+
+<p>The <code>Track()</code> function will snap the output to the next task that is “magnetic to” the track’s semantic.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider, Output(:success) =&gt; Track(:failure)
+  step :charge_creditcard
+  fail :notify
+end
+</code></pre>
+
+<p>Since <code>notify</code> sits on the “failure” track and hence is “magnetic to” <code>:failure</code>, <code>find_provider</code> will be connected to it.</p>
+
+<p>Using <code>Track()</code> with a new track semantic only makes sense when using the [<code>:magnetic_to</code> option] on other tasks.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Use [Path()] if you want to avoid <code>Track()</code> and <code>:magnetic_to</code> - this helper does nothing but providing those values to your convenience.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-terminus">Terminus</h3>
+<p><!-- {activity-wiring-api-terminus-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.0.0</a></p>
+
+<p>In addition to the strategy’s termini, you can add your own end events using <code>#terminus</code>. This is an important design tool helping you to communicate outcomes other than “success” or “failure” to the outer world (in a <code>Railway</code> activity).</p>
+
+<pre><code>module Payment::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    step :find_provider
+
+    terminus :provider_invalid # , id: "End.provider_invalid", magnetic_to: :provider_invalid
+    # ...
+  end
+end
+</code></pre>
+
+<p>The above code adds a new terminus named <code>End.provider_invalid</code> to the activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wiring-terminus-dashed.cd1c53fa.png" /></p>
+
+<p>As visible, this terminus is not connected to anything as its <code>magnetic_to</code> property is set to <code>:provider_invalid</code>.</p>
+
+<p>You could now connect <code>find_provider</code>’s failure output to the new terminus by using the <code>Track()</code> helper.</p>
+
+<pre><code>module Payment::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    step :find_provider,
+      # connect {failure} to the next element that is magnetic_to {:provider_invalid}.
+      Output(:failure) =&gt; Track(:provider_invalid)
+
+    terminus :provider_invalid
+    # ...
+  end
+end
+</code></pre>
+
+<p>The failure output will be connected to the next following element that is magnetic_to <code>:provider_invalid</code>, which is the new terminus we created.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/wiring-terminus-track.799e44d6.png" /></p>
+
+<p>Invoking this activity with an unsolicited provider will stop on the newly added terminus.</p>
+
+<pre><code>signal, (ctx, _) = Payment::Operation::Create.(provider: "bla-unknown")
+puts signal.to_h[:semantic] #=&gt; :provider_invalid
+</code></pre>
+
+<div class="bd-callout bd-callout-info">
+<p>The default semantic is <code>:provider_invalid</code>. Note that the following options <code>:id</code> and <code>:magnetic_to</code> can be passed to <code>#terminus</code>:</p>
+
+<ul>
+  <li><code>:id</code></li>
+  <li><code>:magnetic_to</code></li>
+  <li><code>:task</code> which has to be a subclass of <code>Trailblazer::Activity::End</code>.</li>
+</ul>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-path-">Path()</h3>
+<p><!-- {activity-wiring-api-path--toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a></p>
+
+<p>For branching out a separate path in an activity, use the <code>Path()</code> macro. It’s a convenient, simple way to declare alternative routes, even if you could do everything it does manually.</p>
+
+<ul id="0.8372582400605002" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8372582400605002-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8372582400605002-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8372582400605002-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Charge &lt; Trailblazer::Activity::Railway
+    # ...
+    step :validate
+    step :decide_type, Output(:failure) =&gt; Path(terminus: :with_cc) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+  end
+end
+</code></pre>
+
+ </div><div id="0-8372582400605002-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Charge &lt; Trailblazer::Operation
+    # ...
+    step :validate
+    step :decide_type, Output(:failure) =&gt; Path(terminus: :with_cc) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>If <code>#decide_type</code> returns false, the path will be executed and terminate on the new terminus <code>End.with_cc</code> because of the <code>:terminus</code> option.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-cc.662cd27c.png" /></p>
+
+<p>Note that you don’t necessarily have to reuse the <code>:failure</code> output in order to branch out a new path. You might as well use an <a href="#activity-wiring-api-path-railway">additional signal</a>, or any other predefined output of the task.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path()</li>
+    <li id="activity-wiring-api-path-join">Join</li>
+</ul>
+
+<p>If you want the path to reconnect and join the activity at some point, use the <code>:connect_to</code> option.</p>
+
+<ul id="0.8256460514988685" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8256460514988685-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8256460514988685-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8256460514988685-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Charge &lt; Trailblazer::Activity::Railway
+    # ...
+    step :validate
+    step :decide_type, Output(:failure) =&gt; Path(connect_to: Id(:finalize)) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+    step :finalize
+  end
+end
+</code></pre>
+
+ </div><div id="0-8256460514988685-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Charge &lt; Trailblazer::Operation
+    # ...
+    step :validate
+    step :decide_type, Output(:failure) =&gt; Path(connect_to: Id(:finalize)) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+    step :finalize
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>There won’t be an additional terminus created.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-join.76589086.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path()</li>
+    <li id="activity-wiring-api-path-railway">Railway</li>
+</ul>
+
+<p>You can use <code>Path()</code> in any Trailblazer strategy, for example in <code>Railway</code>.</p>
+
+<ul id="0.6311459367735214" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6311459367735214-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6311459367735214-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-6311459367735214-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Charge &lt; Trailblazer::Activity::Railway
+    MySignal = Class.new(Trailblazer::Activity::Signal)
+    # ...
+    step :validate
+    step :decide_type, Output(MySignal, :credit_card) =&gt; Path(connect_to: Id(:finalize)) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+    step :finalize
+  end
+end
+</code></pre>
+
+ </div><div id="0-6311459367735214-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Charge &lt; Trailblazer::Operation
+    MySignal = Class.new(Trailblazer::Operation::Signal)
+    # ...
+    step :validate
+    step :decide_type, Output(MySignal, :credit_card) =&gt; Path(connect_to: Id(:finalize)) do
+      step :authorize
+      step :charge
+    end
+    step :direct_debit
+    step :finalize
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>In this example, we add a third output to <code>#decide_type</code> to handle the credit card payment scenario (you could also “override” or re-configure the existing <code>:failure</code> or <code>:success</code> outputs).</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/path-railway.b0ebc77b.png" /></p>
+
+<p>Only when <code>decide_type</code> returns <code>MySignal</code>, the new path alternative is taken.</p>
+
+<pre><code>def decide_type(ctx, model:, **)
+  if model.is_a?(CreditCard)
+    return MySignal # go the Path() way!
+  elsif model.is_a?(DebitCard)
+    return true
+  else
+    return false
+  end
+end
+</code></pre>
+
+<p><code>Output()</code> in combination with <code>Path()</code> allows for a simple modeling of alternative routes.</p>
+
+<!-- OLD link https://trailblazer.to/2.1/docs/activity.html#activity-wiring-api-path-end_task-end_id-deprecation -->
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Path()</li>
+    <li id="activity-wiring-api-path-end_task-end_id-deprecation">End_task/End_id Deprecation</li>
+</ul>
+
+<p>In older versions before <code>trailblazer-activity-dsl-linear-1.2.0</code>, connecting the <code>Path()</code> to a separate terminus required you to pass two  options <code>:end_task</code> and <code>:end_id</code>.</p>
+
+<pre><code>Output(...) =&gt; Path(end_task: Activity::End.new(semantic: :valid), end_id: "End.valid") do
+  # ...
+end
+</code></pre>
+
+<p>This is now simplified (and more consistent) by introducing the <code>:terminus</code> option.</p>
+
+<pre><code>Output(...) =&gt; Path(terminus: :valid) do
+  # ...
+end
+</code></pre>
+
+<p>If you haven’t updated your code you will see a deprecation warning.</p>
+
+<pre><code>[Trailblazer] &lt;file.rb&gt; Using `:end_task` and `:end_id` in Path() is deprecated, use `:terminus` instead.
+  Please refer to https://trailblazer.to/2.1/docs/activity.html#activity-wiring-api-path-end_task-end_id-deprecation
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-wiring-api-subprocess">Subprocess</h3>
+<p><!-- {activity-wiring-api-subprocess-toc} --></p>
+
+<p>While you could nest an activity into another manually, the <code>Subprocess</code> macro will come in handy.</p>
+
+<p>Consider the following nested activity.</p>
+
+<pre><code>class Memo::Validate &lt; Trailblazer::Activity::Railway
+  step :check_params
+  step :check_attributes
+  # ...
+end
+</code></pre>
+
+<p>Use <code>Subprocess</code> to nest it into the <code>Create</code> activity.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Subprocess(Memo::Validate)
+  step :save
+  # ...
+  # ...
+</code></pre>
+
+<p>The macro automatically wires all of <code>Validate</code>’s ends to the known counter-part tracks.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nesting.e6d94bf5.webp" /></p>
+
+<p>The <code>Subprocess</code> macro will go through all outputs of the nested activity, query their semantics and search for tracks with the same semantic.</p>
+
+<p>Note that the failure track starting from <code>create_model</code> will skip the nested activity, just as if it was simple task.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Subprocess</li>
+    <li id="activity-wiring-api-subprocess-wiring">Wiring</li>
+</ul>
+
+<p>You can use the familiar DSL to reconnect ends.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Subprocess(Memo::Validate), Output(:failure) =&gt; Track(:success)
+  step :save
+  # ...
+end
+</code></pre>
+
+<p>The nested’s <code>failure</code> output now goes to the outer <code>success</code> track.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nesting-reconnect.769b3356.webp" /></p>
+
+<p>In this example, regardless of nested’s outcome, it will always be interpreted as a successful invocation.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Subprocess</li>
+    <li id="activity-wiring-api-subprocess-end">End</li>
+</ul>
+
+<p>A nested activity doesn’t have to have two ends, only.</p>
+
+<pre><code>class Memo::Validate &lt; Trailblazer::Activity::Railway
+  step :check_params, Output(:failure) =&gt; End(:invalid_params)
+  step :check_attributes
+  # ...
+end
+</code></pre>
+
+<p><code>Subprocess</code> will try to match the nested ends’ semantics to the tracks it knows. You may wire custom ends using <code>Output</code>.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Subprocess(Memo::Validate), Output(:invalid_params) =&gt; Track(:failure)
+  step :save
+  # ...
+end
+</code></pre>
+
+<p>The new special end is now wired to the <code>failure</code> track of the containing activity.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/nesting-end.b3cc30b3.webp" /></p>
+
+<p>There will be an exception thrown if you don’t connect unknown ends.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-dsl-options">DSL Options</h2>
+<p><!-- {activity-dsl-options-toc} --></p>
+
+<p><code>#step</code> and friends accept a bunch of options in order to insert a task at a specific location, add pre-defined connections and outputs, or even configure its taskWrap.
+<!--
+  outputs
+  connections
+  magnetic_to
+ --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dsl-options-magnetic_to">magnetic_to</h3>
+<p><!-- {activity-dsl-options-magnetic_to-toc} --></p>
+
+<p>In combination with [<code>Track()</code>], the <code>:magnetic_to</code> option allows for a neat way to spawn custom tracks outside of the conventional Railway or FastTrack schema.</p>
+
+<pre><code>class Execute &lt; Trailblazer::Activity::Railway
+  step :find_provider, Output(:failure) =&gt; Track(:paypal)
+  step :charge_creditcard
+  step :charge_paypal, magnetic_to: :paypal
+end
+</code></pre>
+
+<p>The <code>failure</code> output of the <code>find_provider</code> task will now snap to the next task being <code>:magnetic_to</code> its semantic - which obviously is the <code>charge_paypal</code> task.</p>
+
+<p>When creating a new branch (or path) in this way, it’s a matter of repeating the use of <code>Track()</code> and <code>:magnetic_to</code> to add more tasks to the branch.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dsl-options-extensions">extensions</h3>
+<p><!-- {activity-dsl-options-extensions-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dsl-options-inherit">Inherit</h3>
+<p><!-- {activity-dsl-options-inherit-toc} --></p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dsl-options-sequence-options">Sequence Options</h3>
+<p><!-- {activity-dsl-options-sequence-options-toc} --></p>
+
+<p>In addition to wiring options, there are a handful of other options known as <em>sequence options</em>. They configure where a task goes when inserted, and helps with introspection and tracing.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Sequence Options</li>
+    <li id="activity-dsl-options-sequence-options-id">id</li>
+</ul>
+
+<p>The DSL will provide default names for tasks.
+You can name explicitely using the <code>:id</code> option.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Path
+  step :create_model
+  step :validate
+  step :save, id: :save_the_world
+  # ...
+end
+</code></pre>
+
+<p>The IDs are as follows.</p>
+
+<pre><code>Trailblazer::Developer.railway(Memo::Create)
+#=&gt; [&gt;create_model,&gt;validate,&gt;save_the_world]
+</code></pre>
+
+<p>This is advisable when planning to override a step via a module or inheritance or when reconnecting it. Naming also shows up in tracing and introspection. Defaults names are given to steps without the <code>:id</code> options, but these might be awkward sometimes.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Sequence Options</li>
+    <li id="activity-dsl-options-sequence-options-delete">Delete</li>
+</ul>
+
+<p>When it’s necessary to remove a task, you can use <code>:delete</code>.</p>
+
+<pre><code>class Memo::Create::Admin &lt; Memo::Create
+  step nil, delete: :validate
+end
+</code></pre>
+
+<p>The <code>:delete</code> option can be helpful when using modules or inheritance to build concrete operations from base operations. In this example, a very poor one, the <code>validate</code> task gets removed, assuming the <code>Admin</code> won’t need a validation.</p>
+
+<pre><code>Trailblazer::Developer.railway(Memo::Create::Admin)
+#=&gt; [&gt;create_model,&gt;save_the_world]
+</code></pre>
+
+<p>All steps are inherited, then the deletion is applied, as the introspection shows.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Sequence Options</li>
+    <li id="activity-dsl-options-sequence-options-before">Before</li>
+</ul>
+
+<p>To insert a new task before an existing one, for example in a subclass, use <code>:before</code>.</p>
+
+<pre><code>class Memo::Create::Authorized &lt; Memo::Create
+  step :policy, before: :create_model
+  # ...
+end
+</code></pre>
+
+<p>The circuit now yields a new <code>policy</code> step before the inherited tasks.</p>
+
+<pre><code>Trailblazer::Developer.railway(Memo::Create::Authorized)
+#=&gt; [&gt;policy,&gt;create_model,&gt;validate,&gt;save_the_world]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Sequence Options</li>
+    <li id="activity-dsl-options-sequence-options-after">After</li>
+</ul>
+
+<p>To insert after an existing task, you might have guessed it, use the <code>:after</code> option with the exact same semantics as <code>:before</code>.</p>
+
+<pre><code>class Memo::Create::Logging &lt; Memo::Create
+  step :logger, after: :validate
+  # ...
+end
+</code></pre>
+
+<p>The task is inserted after, as the introspection shows.</p>
+
+<pre><code>Trailblazer::Developer.railway(Memo::Create::Logging)
+#=&gt; [&gt;create_model,&gt;validate,&gt;logger,&gt;save_the_world]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Sequence Options</li>
+    <li id="activity-dsl-options-sequence-options-replace">Replace</li>
+</ul>
+
+<p>Replacing an existing task is done using <code>:replace</code>.</p>
+
+<pre><code>class Memo::Update &lt; Memo::Create
+  step :find_model, replace: :create_model, id: :update_memo
+  # ...
+end
+</code></pre>
+
+<p>Replacing, obviously, only replaces in the applied class, not in the superclass.</p>
+
+<pre><code>Trailblazer::Developer.railway(Memo::Update)
+#=&gt; [&gt;update_memo,&gt;validate,&gt;save_the_world]
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dsl-options-patching">Patching</h3>
+<p><!-- {activity-dsl-options-patching-toc} --></p>
+
+<p>Working with <code>Subprocess</code> and nested activities is a great way to encapsulate and create reusable code especially with complex logic. However, it can be a PITA if you want to customize one of those deeply nested components and add, replace or remove a certain step.</p>
+
+<p>Suppose the following 3-level nested activity.</p>
+
+<p><img class="mx-auto d-block" width="63%" src="/vite/assets/patch.49ab0415.png" /></p>
+
+<p>The public operation <code>Destroy</code> contains <code>Delete</code> as a nested activity, which itself contains <code>DeleteAssets</code>. In order to customize the latter one and add another step <code>tidy_storage</code>, you’d normally have to subclass all three activities and override steps.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Patching</li>
+    <li id="activity-dsl-options-patching-patch">Patch</li>
+</ul>
+
+<p>Using <code>#patch</code>, you can modify nested activities from the uppermost activity and let Trailblazer do the legwork.</p>
+
+<p>As <code>#patch</code> is mostly used when leveraging inheritance we introduce a subclass of <code>Destroy</code> which is called <code>Erase</code> and introduces the <code>#tidy_storage</code> step. As illustrated above, this new step should be inserted in <code>DeleteAssets</code> activity that itself is nested in <code>Delete</code>, which again is one step of <code>Destroy</code>.</p>
+
+<pre><code>class Erase &lt; Destroy # we're inheriting from Song::Operation::Destroy
+  # ...
+  def self.tidy_storage(ctx, **)
+    # delete files from your amazing cloud
+  end
+  # ...
+  # These steps are inherited:
+  # step :policy
+  # step :find_model
+  # step Subprocess(Delete), id: :delete
+
+  extend Trailblazer::Activity::DSL::Linear::Patch::DSL
+
+  # Note the path you pass to #patch.
+  patch(:delete, :delete_assets) {
+    step Erase.method(:tidy_storage), after: :rm_images
+  }
+end
+</code></pre>
+
+<p>The patching logic accepts a path to the particular activity that you want to modify.</p>
+
+<pre><code>patch(:delete, :delete_assets) { ... }
+</code></pre>
+
+<p>The provided block is executed within that targeted activity and executed as if you’d extend that class. However, the entire modification will only change <code>Erase</code>, all other traversed activities are copied and then modified, leaving the original implemenation unchanged.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/patch-trace.0cb4c9cc.png" /></p>
+
+<p>The <code>#patch</code> method is perfect when using inheritance to first copy over behavior and control flow, and then fine-tune it for the specific use case.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Patching</li>
+    <li id="activity-dsl-options-patching-patch-option">Patch Option</li>
+</ul>
+
+<p>If you’re not using inheritance and want to tweak a nested activity ad-hoc the <code>Subprocess()</code> helper accepts a <code>:patch</code> option.</p>
+
+<ul id="0.37334886293845815" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-37334886293845815-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-37334886293845815-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-37334886293845815-Activity" class="tab-pane fade show active"> 
+<pre><code>class Destroy &lt; Trailblazer::Activity::Railway
+  def self.tidy_storage(ctx, **)
+    # delete files from your amazing cloud
+    true
+  end
+  # ...
+  step :policy
+  step :find_model
+  step Subprocess(Delete,
+    patch: {
+      [:delete_assets] =&gt; -&gt; { step Destroy.method(:tidy_storage), before: :rm_uploads }
+    }
+  )
+end
+</code></pre>
+
+ </div><div id="0-37334886293845815-Operation" class="tab-pane fade show "> 
+<pre><code>class Destroy &lt; Trailblazer::Operation
+  def self.tidy_storage(ctx, **)
+    # delete files from your amazing cloud
+    true
+  end
+  # ...
+  step :policy
+  step :find_model
+  step Subprocess(Delete,
+    patch: {
+      [:delete_assets] =&gt; -&gt; { step Destroy.method(:tidy_storage), before: :rm_uploads }
+    }
+  )
+end
+</code></pre>
+
+ </div> </div>
+
+<p>This works just like the <code>#patch</code> function but returns the patched activity.</p>
+
+<p><code>Subprocess()</code> accepts the <code>:patch</code> option which consists of a hash of the path to the customized activity, and its patch.</p>
+
+<p>This will result in an identical operation as in the above example with <code>#patch</code>. However, <code>Delete</code> is now the operation containing the customization, not a new class <code>Erase</code>.</p>
+
+<p>Patching can be also done at the top-level activity by passing  <code>:patch</code> as a block (Take <code>Delete</code> from above example).</p>
+
+<pre><code>step Subprocess(
+  Delete,
+  patch: -&gt; { step Destroy.method(:tidy_storage), before: :delete_model }
+), id: :delete
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-variable-mapping">Variable Mapping</h2>
+<p><!-- {activity-variable-mapping-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity-dsl-linear 1.2.0</a></p>
+
+<p>Since TRB 2.1 it is possible to define the input and output variables for each step. This is called <em>variable mapping</em>, or I/O in short. It provides an interface to define what variable go in and come out of a task, enabling you to limit what steps “see” and what “output” they can add to the context.</p>
+
+<p>It’s one of the most frequently used features in Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-overview">Overview</h3>
+<p><!-- {activity-variable-mapping-overview-toc} --></p>
+
+<p>Imagine a complex application where policies are protecting your operation code from unsolicited access. This code component - the policy - sits as a step in every business operation and decides whether or not the current user is permitted to execute this very operation.</p>
+
+<ul id="0.8306313811299793" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-8306313811299793-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-8306313811299793-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-8306313811299793-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create # an imaginary policy step.
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-8306313811299793-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create # an imaginary policy step.
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The <code>Policy::Create</code> implementation is a simple callable class following the <a href="#activity-internals-step-interface">step interface</a>.</p>
+
+<pre><code>module Policy
+  # Explicit policy, not ideal as it results in a lot of code.
+  class Create
+    def self.call(ctx, model:, user:, **)
+      decision = ApplicationPolicy.can?(model, user, :create) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>Note that it requires two variables <code>:model</code> and <code>:user</code> from the ctx. For whatever reasons, the author of this class dictated that the “current user” must be passed named <code>:user</code>, not, as it’s a convention in Trailblazer, named <code>:current_user</code>.</p>
+
+<p>Last, depending on the policy decision, the step code returns true or false.</p>
+
+<p>When executing the <code>Create</code> operation using the <code>:current_user</code> variable, an <code>ArgumentError</code> is raised.</p>
+
+<ul id="0.21540831233582514" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-21540831233582514-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-21540831233582514-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-21540831233582514-Activity" class="tab-pane fade show active"> 
+<pre><code>result = Trailblazer::Activity.(Song::Activity::Create, current_user: Module)
+
+#=&gt; ArgumentError: missing keyword: :user
+</code></pre>
+
+ </div><div id="0-21540831233582514-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(current_user: Module)
+
+#=&gt; ArgumentError: missing keyword: :user
+</code></pre>
+
+ </div> </div>
+
+<p>Since the “current user” is handed into the operation as the <code>:current_user</code> variable, and no other step preceding <code>Policy::Create</code> is setting this variable, the step expecting <code>:user</code> crashes.</p>
+
+<p>And this is why we need variable mapping in Trailblazer.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-composable-i-o">Composable I/o</h3>
+<p><!-- {activity-variable-mapping-composable-i-o-toc} --></p>
+
+<p>Variable mapping (short: i/o) can be done manually, with ugly “helper” steps before or after the respective step, or by using <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. Before these helpers got introduced, we used the <code>:input</code> and <code>:output</code> option - both works, the latter one coming with several drawbacks.</p>
+
+<p>Helpers can be used multiple times, depending on how complex the incoming or outcoming variables are, forming a pipeline of filters around the actual task.</p>
+
+<ul id="0.06966610004667584" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-06966610004667584-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-06966610004667584-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-06966610004667584-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-06966610004667584-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>Not only are those input and output pipelines easy to <a href="#activity-variable-mapping-introspect">debug</a>, they also allow to be altered in derived operations, when <a href="#activity-variable-mapping-inheritance">using inheritance</a>, and  work in <a href="#activity-variable-mapping-macro">combination with macros</a>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-in-">In()</h3>
+<p><!-- {activity-variable-mapping-in--toc} --></p>
+
+<p><code>In()</code> allows to configure variables going <em>into</em> the step. The helper accepts either a mapping hash, a limiting array or a callable object (often a lambda), to compute variables at runtime.</p>
+
+<p>Be wary that once you <strong>use <code>In()</code> your are white-listing</strong>: only the variables defined in your filters will be passed into the step. All other variables from ctx are invisible in the step.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-mapping-hash">Mapping hash</li>
+</ul>
+
+<p>Picking up the example from above, here’s how a mapping hash “translates” the selected variables from the original ctx object to a new ctx, one that is compatible with <code>Policy::Create</code>’s interface.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create_model
+  step Policy::Create,
+    In() =&gt; {
+      :current_user =&gt; :user, # rename {:current_user} to {:user}
+      :model        =&gt; :model # add {:model} to the inner ctx.
+    }
+  # ...
+end
+</code></pre>
+
+<p>The <code>In()</code> filter will result in <code>:current_user</code> being renamed to <code>:user</code>. Since the policy step also needs <code>:model</code> we need to mention this variable as well, no renaming happening here. The beauty of I/O: this is only visible to <code>Policy::Create</code>!</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-in.7bc24cc8.png" /></p>
+
+<p>To instantly see what new ctx is passed into the configured step, you could replace the original policy step with a <code>#show_ctx</code> method.</p>
+
+<ul id="0.2596924101223902" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-2596924101223902-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-2596924101223902-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-2596924101223902-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :show_ctx,
+      In() =&gt; {
+        :current_user =&gt; :user, # rename {:current_user} to {:user}
+        :model        =&gt; :model # add {:model} to the inner ctx.
+      }
+
+    def show_ctx(ctx, **)
+      p ctx.to_h
+      #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-2596924101223902-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step :show_ctx,
+      In() =&gt; {
+        :current_user =&gt; :user, # rename {:current_user} to {:user}
+        :model        =&gt; :model # add {:model} to the inner ctx.
+      }
+
+    def show_ctx(ctx, **)
+      p ctx.to_h
+      #=&gt; {:user=&gt;#&lt;User email:...&gt;, :model=&gt;#&lt;Song name=nil&gt;}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>You should use the mapping hash when variables need to be renamed. If variables need to be added without renaming, a limiting array is your friend.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-limiting-array">Limiting array</li>
+</ul>
+
+<p><code>In()</code> accepts an array, listed variables are passed into the new ctx (whether they exist in the original ctx or not!).</p>
+
+<ul id="0.4585292220404936" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-4585292220404936-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-4585292220404936-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-4585292220404936-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-4585292220404936-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>This configuration will lead to the exact same new ctx for <code>Policy::Create</code> as in the <a href="#activity-variable-mapping-in-mapping-hash">example above</a>, producing a new ctx that will look as below.</p>
+
+<pre><code>#=&gt; {
+#     :user  =&gt; #&lt;User email:...&gt;,
+#     :model =&gt; #&lt;Song name=nil&gt;}
+#   }
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-callable">Callable</li>
+</ul>
+
+<p>As always, you may implement your own input filter with any callable object [adhering to the step interface])(#activity-internals-step-interface).</p>
+
+<ul id="0.3131096816059349" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-3131096816059349-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-3131096816059349-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-3131096816059349-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; -&gt;(ctx, **) do
+        # only rename {:current_user} if it's there.
+        ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-3131096816059349-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; -&gt;(ctx, **) do
+        # only rename {:current_user} if it's there.
+        ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>Callable <code>In()</code> filters <strong>have to</strong> return a hash. This hash will be merged with the other <code>In()</code> filters and comprise the new ctx.</p>
+
+<p>And again, when the operation is invoked with a <code>:current_user</code>, this will, result in the same new ctx as above.</p>
+
+<pre><code>#=&gt; {
+#     :user  =&gt; #&lt;User email:...&gt;,
+#     :model =&gt; #&lt;Song name=nil&gt;}
+#   }
+</code></pre>
+
+<p>However, if <code>:current_user</code> is <code>nil</code>, <code>Policy::Create</code> will raise an exception complaining about the <code>:user</code> keyword missing.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-filter-method">Filter method</li>
+</ul>
+
+<p>Following the TRB option standard, an <code>In()</code> filter may even be implemented as an instance method. All you need to do is pass a symbol to <code>In()</code>.</p>
+
+<ul id="0.3265862927811559" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-3265862927811559-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-3265862927811559-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-3265862927811559-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; :input_for_policy, # You can use an {:instance_method}!
+      In() =&gt; [:model]
+
+    def input_for_policy(ctx, **)
+      # only rename {:current_user} if it's there.
+      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-3265862927811559-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; :input_for_policy, # You can use an {:instance_method}!
+      In() =&gt; [:model]
+
+    def input_for_policy(ctx, **)
+      # only rename {:current_user} if it's there.
+      ctx[:current_user].nil? ? {} : {user: ctx[:current_user]}
+    end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The method needs to expose a step interface just like any other callable.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>In()</li>
+    <li id="activity-variable-mapping-in-keyword-arguments">Keyword arguments</li>
+</ul>
+
+<p>Both callables and filter methods for <code>In()</code> can receive ctx variables as keyword arguments, making it a convenient access and have Ruby perform a loose existance test automatically.</p>
+
+<ul id="0.49496130031180785" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-49496130031180785-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-49496130031180785-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-49496130031180785-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+                    # vvvvvvvvvvvv keyword arguments rock!
+      In() =&gt; -&gt;(ctx, current_user: nil, **) do
+        current_user.nil? ? {} : {user: current_user}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-49496130031180785-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+                    # vvvvvvvvvvvv keyword arguments rock!
+      In() =&gt; -&gt;(ctx, current_user: nil, **) do
+        current_user.nil? ? {} : {user: current_user}
+      end,
+      In() =&gt; [:model]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>Keep in mind that when not defaulting the keyword argument your filter might crash at runtime when the expected variables were not passed.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-out-">Out()</h3>
+<p><!-- {activity-variable-mapping-out--toc} --></p>
+
+<p>Without any output configuration on the exemplary policy step, any variable written to <code>ctx</code> will be automatically set on the outer ctx, passing along internal variabes to the following step.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-out-all.d11786e1.png" /></p>
+
+<p>Here, both <code>:status</code> and <code>:message</code> variables that were written in <code>Policy::Create</code> are passed into the outer ctx. The behavior is identical to the way before you were using i/o.</p>
+
+<p>However, it is often necessary to rename or limit the outgoing variables of a particular step. Especially when using nested operations you probably don’t want the entire nested ctx to be copied into the outer context. This is where output filters enter the stage.</p>
+
+<p>Consider the following updated <code>Policy::Create</code> step.</p>
+
+<pre><code>module Policy
+  # Explicit policy, not ideal as it results in a lot of code.
+  class Create
+    def self.call(ctx, model:, user:, **)
+      decision = ApplicationPolicy.can?(model, user, :create) # FIXME: how does pundit/cancan do this exactly?
+
+      if decision.allowed?
+        return true
+      else
+        ctx[:status]  = 422 # we're not interested in this field.
+        ctx[:message] = "Command {create} not allowed!"
+        return false
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Both <code>ctx[:status]</code> and <code>ctx[:message]</code> will be visible in all steps following <code>Policy::Create</code>. This might lead to “misunderstandings” and bugs in more complex applications.</p>
+
+<p>As soon as you use <code>Out()</code>, only variables specified through the filters will be merged with the original (outer) ctx and passed on to the next step.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-limiting-array">Limiting array</li>
+</ul>
+
+<p>In order to limit variables added to the outer ctx, <code>Out()</code> accepts an array similar to <code>In()</code>. Consider this as a whitelisting to specify exposed variables.</p>
+
+<ul id="0.3619891113201428" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-3619891113201428-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-3619891113201428-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-3619891113201428-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-3619891113201428-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message]
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>This single <code>Out()</code> usage will result in only the <code>:message</code> variable being written to the outer ctx that is passed on. The <code>:status</code> variable is discarded.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/ctx-out.2de6a326.png" /></p>
+
+<p>You may pass any number of variables in the limiting array.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-mapping-hash">Mapping hash</li>
+</ul>
+
+<p>Renaming variables from the inner to the outer ctx works by providing a mapping hash, where the “old” inner name points to the outer name that you want to use in the operation hosting that step.</p>
+
+<ul id="0.6744713577037829" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6744713577037829-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6744713577037829-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-6744713577037829-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; {:message =&gt; :message_from_policy}
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-6744713577037829-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; {:message =&gt; :message_from_policy}
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>Here, steps following <code>Policy::Create</code> will see a variable <code>:message_from_policy</code> merged into the ctx - which is the original <code>:message</code>, renamed.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-callable">Callable</li>
+</ul>
+
+<p>An <code>Out()</code> filter can be any callable object following the <a href="#activity-internals-step-interface">step interface</a>.</p>
+
+<ul id="0.9215326707315044" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-9215326707315044-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-9215326707315044-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-9215326707315044-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, **) do
+        return {} unless ctx[:message]
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; ctx[:message]
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-9215326707315044-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, **) do
+        return {} unless ctx[:message]
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; ctx[:message]
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The callable receives the inner ctx that just left the actual step, here <code>Policy::Create</code>. You may run any Ruby code in the callable, even <code>if</code>s.</p>
+
+<p>Note that a callable always must return a hash, which is then merged with the original outer ctx.</p>
+
+<p>Be adviced that it is usually a better idea to maintain multiple smaller <code>Out()</code> callables for different variables. You might later decide to override them, debugging will be easier and the code is more maintainable. This was different when <code>:output</code> was the only way to filter outgoing variables and you had to create one big hash in a one single filter.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>You may also use an <code>:instance_method</code> to filter outgoing variables, similar to <a href="#activity-variable-mapping-in-filter-method">how it’s done with In()</a>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-keyword-arguments">Keyword arguments</li>
+</ul>
+
+<p>Just as with <code>In()</code> callables can receive keyword arguments.</p>
+
+<ul id="0.33121779189515066" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-33121779189515066-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-33121779189515066-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-33121779189515066-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, message: nil, **) do
+        return {} if message.nil?
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; message
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-33121779189515066-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; -&gt;(ctx, message: nil, **) do
+        return {} if message.nil?
+
+        { # you always have to return a hash from a callable!
+          :message_from_policy =&gt; message
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>Any variable readable on the inner <code>ctx</code> that just left <code>Policy::Create</code> is available as a keyword argument for a callable. Note that you need to default it if its presence is not guaranteed.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Out()</li>
+    <li id="activity-variable-mapping-out-outer-context">Outer context</li>
+</ul>
+
+<p>You can access the outer, original ctx by passing the <code>:with_outer_ctx</code> option to <code>Out()</code>.</p>
+
+<ul id="0.6356775302506249" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-6356775302506249-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-6356775302506249-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-6356775302506249-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
+
+      Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
+        {
+          errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-6356775302506249-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
+
+      Out(with_outer_ctx: true) =&gt; -&gt;(inner_ctx, outer_ctx:, **) do
+        {
+          errors: outer_ctx[:errors].merge(policy_message: inner_ctx[:message])
+        }
+      end
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>While the callable still needs to return a hash that is then merged with the original ctx, it’s possible to access variables from the outer ctx through the <code>:outer_ctx</code> keyword argument. This allows for merging deeper data structures, such as error objects.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-inject-">Inject()</h3>
+<p><!-- {activity-variable-mapping-inject--toc} --></p>
+
+<p>An <code>Inject()</code> filter, as opposed to <code>In()</code>, does an existance check on the ctx using <code>ctx.key?(:variable)</code> before performing its logic. It is helpful in combination with <code>In()</code> filters, when using defaulted keyword arguments in a step or in nested operations.</p>
+
+<ul>
+  <li>It allows defaulting a variable when it’s absent in the ctx.</li>
+  <li>It can pass-through a variable when it is present in the ctx, and only then.</li>
+  <li>You can also statically set a variable, whether or not it is present using the <code>:override</code> option.</li>
+</ul>
+
+<p>Note that <code>Inject()</code> can be used without <code>In()</code>.</p>
+
+<p>Check the following exemplary policy code.</p>
+
+<pre><code>module Policy
+  class Check
+                                    # vvvvvvvvvvvvvvv-- defaulted keyword arguments
+    def self.call(ctx, model:, user:, action: :create, **)
+      decision = ApplicationPolicy.can?(model, user, action) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>This policy implementation uses keyword arguments to automatically extract <code>:model</code>, <code>:user</code> and <code>:action</code> from the ctx. Note that the latter is defaulted to <code>:create</code>. Defaulting kwargs only works when the keyword variable is <strong>not passed</strong> into the step - if it’s <code>nil</code>, the defaulting will not get triggered.</p>
+
+<p>You could now use <code>In()</code> filters to embed this policy step into your operation.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model, :action]
+    # ...
+  end
+end
+</code></pre>
+
+<p>However, this will break because the <code>action</code> variable will never be defaulted to <code>:create</code>. The <code>In()</code> filter will <em>always</em> pass <code>:action</code> through when calling the policy, even when it’s absent.</p>
+
+<p>The <code>Inject()</code> helper is designed to handle this case.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-array-style">Array style</li>
+</ul>
+
+<p>Use <code>Inject()</code> in combination with <code>In()</code> to add variables to the filtered ctx, but only when they’re present in the outer ctx.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject() =&gt; [:action]
+    # ...
+  end
+end
+</code></pre>
+
+<p>We call this <em>qualified pass-through</em>, it means the <code>:action</code> variable will only be passed into the filtered ctx if it exists on <code>ctx</code> when the filter is invoked.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-defaulting">Defaulting</li>
+</ul>
+
+<p>Instead of hard-wiring defaulted keyword arguments into your step implementations, you can configure <code>Inject()</code> to set a default value to variables, if they’re absent in the ctx.</p>
+
+<p>Here’s an example policy without any defaulting in the signature.</p>
+
+<pre><code>module Policy
+  class Check
+                                    # vvvvvvv-- no defaulting!
+    def self.call(ctx, model:, user:, action:, **)
+      decision = ApplicationPolicy.can?(model, user, action) # FIXME: how does pundit/cancan do this exactly?
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>Defaulting the <code>:action</code> variable via <code>Inject()</code> will improve the policy component’s reusability.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action) =&gt; -&gt;(ctx, **) { :create }
+    # ...
+  end
+end
+</code></pre>
+
+<p>The lambda is executed at runtime, just before the actual step is invoked. It provides access to the ctx object and allows extracting keyword arguments.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Inject()</li>
+    <li id="activity-variable-mapping-inject-override">Override</li>
+</ul>
+
+<p>Use the <code>:override</code> option to always set a variable, even if it is already present in the incoming <code>ctx</code>.</p>
+
+<pre><code>Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+</code></pre>
+
+<p>This is helpful to set configuration variables for an activity while still using the well-established keyword argument mechanics. The <code>Policy::Create</code> class defines <code>:action</code> as a kwarg. This doesn’t necessarily mean the user can always inject and dictate the very value. Instead, we can override any injected value with the “hard-coded” <code>:create</code> value.</p>
+
+<ul id="0.7300326954725107" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7300326954725107-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7300326954725107-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7300326954725107-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+    # ...
+  end
+end
+</code></pre>
+
+ </div><div id="0-7300326954725107-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :create_model
+    step Policy::Check,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Inject(:action, override: true) =&gt; -&gt;(*) { :create } # always used.
+    # ...
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p>The call as below will always use <code>action: :create</code>, even if something else is injected.</p>
+
+<ul id="0.5439981935663628" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-5439981935663628-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-5439981935663628-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-5439981935663628-Activity" class="tab-pane fade show active"> 
+<pre><code>signal, (ctx, _) = Trailblazer::Activity.(Song::Activity::Create,
+  current_user: current_user,
+  action: :update # this is always overridden.
+)
+puts ctx[:model] #=&gt; #&lt;Song id: 1, ...&gt;
+</code></pre>
+
+ </div><div id="0-5439981935663628-Operation" class="tab-pane fade show "> 
+<pre><code>result = Song::Operation::Create.(
+  current_user: current_user,
+  action: :update # this is always overridden.
+)
+puts result[:model] #=&gt; #&lt;Song id: 1, ...&gt;
+</code></pre>
+
+ </div> </div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-macro">Macro</h3>
+<p><!-- {activity-variable-mapping-macro-toc} --></p>
+
+<p>As all DSL options the <code>In()</code>, <code>Out()</code> and <code>Inject()</code> helpers can be used from macros, providing the macro author a convenient way to define default filters. <a href="/2.1/docs/activity.html#activity-macro-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<pre><code>module Policy
+  def self.Create()
+    {
+      task: Policy::Create,
+      wrap_task: true,
+      Trailblazer::Activity::Railway.In()  =&gt; {:current_user =&gt; :user},
+      Trailblazer::Activity::Railway.In()  =&gt; [:model],
+      Trailblazer::Activity::Railway.Out() =&gt; {:message =&gt; :message_from_policy},
+    }
+  end
+end
+</code></pre>
+
+<p>In the options hash that a macro must return, you can use the helpers by referencing <code>Trailblazer::Activity::Railway</code>. Except for the prefixed constant, there is no difference or limitation to their usage.</p>
+
+<p>They can be extended with options the macro user provides.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step Policy::Create(),
+      Out() =&gt; {:message =&gt; :copied_message} # user options!
+    # ...
+  end
+end
+</code></pre>
+
+<p>The user options will be merged into the macro options, resulting in <code>:message</code> being renamed to <code>:message_from_policy</code> and copied to <code>:copied_message</code>.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Before <code>trailblazer-activity-dsl-linear-1.0.0</code> and the <code>In()</code> and <code>Out()</code> helper shipped with it, any <code>:input</code> from the user would always override the macro’s <code>:input</code> option.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-inheritance">Inheritance</h3>
+<p><!-- {activity-variable-mapping-inheritance-toc} --></p>
+
+<p>Subclasses can add and remove input and output filters - hence the term <em>composable</em>. This is a great tool when inherited operations replace particular steps and need to fine-tune ingoing or returned variables.</p>
+
+<p>Consider the following base operation.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+
+    step :create_model
+    step Policy::Create,
+      In() =&gt; {:current_user =&gt; :user},
+      In() =&gt; [:model],
+      Out() =&gt; [:message],
+      id: :policy
+    # ...
+  end
+end
+</code></pre>
+
+<p>It defines two input and one output filter.</p>
+
+<p>A sub operation could now replace the policy step. However, instead of redefining the i/o filters, they can be inherited and extended.</p>
+
+<p>Here’s a potential inheriting operation.</p>
+
+<pre><code>module Song::Activity
+  class Admin &lt; Create
+    step Policy::Create,
+      Out() =&gt; {:message =&gt; :raw_message_for_admin},
+      inherit: [:variable_mapping],
+      id: :policy,      # you need to reference the :id when your step
+      replace: :policy
+  end
+end
+</code></pre>
+
+<p>This configuration is adding another <code>Out()</code> filter, resulting in a total filter setup as follows in the introspection.</p>
+
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Activity::Admin, id: :policy)
+
+Song::Activity::Admin
+# `-- policy
+#     |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
+#     |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
+#     |   |-- input.add_variables.0.994[...]............... {:current_user=&gt;:user}....................... VariableMapping::AddVariables
+#     |   |-- input.add_variables.0.592[...]............... [:model]..................................... VariableMapping::AddVariables
+#     |   `-- input.scope.................................. ............................................. VariableMapping.scope
+#     |-- task_wrap.call_task..............Method
+#     `-- task_wrap.output.................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Output
+#         |-- output.init_hash............................. ............................................. VariableMapping.initial_aggregate
+#         |-- output.add_variables.0.599[...].............. [:message]................................... VariableMapping::AddVariables::Output
+#         |-- output.add_variables.0.710[...].............. {:message=&gt;:raw_message_for_admin}........... VariableMapping::AddVariables::Output
+#        `-- output.merge_with_original................... ............................................. VariableMapping.merge_with_original
+</code></pre>
+
+<p>The new <code>Out()</code> filter setting <code>:raw_message_for_admin</code> is placed behind the inherited filter.</p>
+
+<p>Note that <code>inherit: true</code> will, besides other options, also invoke the variable mapping inheritance.</p>
+
+<!--
+
+
+TODO: decompose trick (input )
+-->
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-introspect">Introspect</h3>
+<p><!-- {activity-variable-mapping-introspect-toc} --></p>
+
+<p>You can visualize the pipelines around each step by using the <code>trailblazer-developer</code> gem.</p>
+
+<pre><code>puts Trailblazer::Developer::Render::TaskWrap.(Song::Activity::Create, id: :policy)
+</code></pre>
+
+<p>This handy invocation will render the task wrap around <code>Song::Operation::Create</code>’s step <code>:policy</code>.</p>
+
+<pre><code>Song::Activity::Create
+`-- policy
+    |-- task_wrap.input..................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Input
+    |   |-- input.init_hash.............................. ............................................. VariableMapping.initial_aggregate
+    |   |-- input.add_variables.0.994[...]............... {:current_user=&gt;:user}....................... VariableMapping::AddVariables
+    |   |-- input.add_variables.0.592[...]............... [:model]..................................... VariableMapping::AddVariables
+    |   `-- input.scope.................................. ............................................. VariableMapping.scope
+    |-- task_wrap.call_task..............Method
+    `-- task_wrap.output.................Trailblazer::Activity::DSL::Linear::VariableMapping::Pipe::Output
+        |-- output.init_hash............................. ............................................. VariableMapping.initial_aggregate
+        |-- output.add_variables.0.599[...].............. [:message]................................... VariableMapping::AddVariables::Output
+        `-- output.merge_with_original................... ............................................. VariableMapping.merge_with_original
+</code></pre>
+
+<p>In i/o context, the interesting branches here are <code>task_wrap.input</code> and <code>task_wrap.output</code>. Sandwiched between generic library steps are your filter steps. The visualizer even renders filter configuration where possible.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>We’re planning improvements on this part of <code>trailblazer-developer</code>. If you want to help out with better rendering, please <a href="https://trailblazer.zulipchat.com">come chat to us</a>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-variable-mapping-input-output">Input / Output</h3>
+<p><!-- {activity-variable-mapping-input-output-toc} --></p>
+
+<div class="bd-callout bd-callout-info">
+<p>With <code>trailblazer-2.1.1</code> and the bundled <code>trailblazer-activity-dsl-linear-1.0.0</code> gems, the recommended way of I/O is using <a href="">composable variable mapping</a> via <code>In()</code> and <code>Out()</code>.</p>
+</div>
+
+<p>Before the introduction of the composable <code>In()</code>, <code>Out()</code> and <code>Inject()</code> filters, variable mapping was done with the <code>:input</code> and <code>:output</code> option. This is still supported and not planned to be dropped. However, there are a bunch of drawbacks with using the monolithic, non-composable options.</p>
+
+<ul>
+  <li>Once used, the <code>:input</code>, <code>:output</code> and <code>:inject</code> option will overwrite any options set earlier (or later) via <code>In()</code>, <code>Out()</code> and <code>Inject()</code>. This will often lead to problems when using macros.</li>
+  <li>The superseded options are basically impossible to debug, whereas the composable <code>In()</code> approach can <a href="#activity-variable-mapping-introspect">nicely display the computed set</a> of variables going in or out of a step.</li>
+  <li>In future versions of Trailblazer we’re planning automatic “contracts” for steps along with type checking. This is not possible with the monolithic <code>:input</code> option.</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-input">:input</li>
+</ul>
+
+<p>The <code>:input</code> option accepts any callable following the option interface.</p>
+
+<pre><code>step :create_model,
+  input: :input_for_create_model
+  # becomes
+  In() =&gt; :input_for_create_model
+</code></pre>
+
+<p><code>:input</code> works identically to a single <code>In()</code> call. <a href="#activity-variable-mapping-in-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-output">:output</li>
+</ul>
+
+<p>The <code>:output</code> option, just like <code>:input</code>, accepts any callable following the option interface.</p>
+
+<pre><code>step :create_model,
+  output: :output_for_create_model
+  # becomes
+  Out() =&gt; :output_for_create_model
+</code></pre>
+
+<p><code>:output</code> works identically to a single <code>Out()</code> call. <a href="#activity-variable-mapping-out-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p>The <code>:output_with_outer_ctx</code> option is <a href="#activity-variable-mapping-out-outer-context">documented here</a>.</p>
+
+<pre><code>step :create_model,
+  output: :output_for_create_model,
+  output_with_outer_ctx: true
+  # becomes
+  Out(with_outer_ctx: true) =&gt; :output_for_create_model
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Input / Output</li>
+    <li id="activity-variable-mapping-input-output-inject">:inject</li>
+</ul>
+
+<p><code>:inject</code> works identically to a single <code>Inject()</code> call. <a href="#activity-variable-mapping-inject-"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<pre><code>step :create_model,
+  inject: :inject_for_create_model
+  # becomes
+  Inject() =&gt; :inject_for_create_model
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-dependency-injection">Dependency Injection</h2>
+<p><!-- {activity-dependency-injection-toc} --></p>
+
+<div class="bd-callout bd-callout-info">
+<p>WIP: This section is not final, yet.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dependency-injection-overview">Overview</h3>
+<p><!-- {activity-dependency-injection-overview-toc} --></p>
+
+<p>Very often your activity or one of the steps contained require particular objects and values to get their job done. Instead of hard-wiring those <em>“dependencies”</em> in the code it is good style to allow providing those objects by passing them into the activity at run-time. This is called dependency injection and is a <a href="https://en.wikipedia.org/wiki/Dependency_injection">common technique</a> in software engineering.</p>
+
+<p>One way for using dependency injection is using keyword arguments for variables you need, and defaulting those in the step signature.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dependency-injection-mapping">Mapping</h3>
+<p><!-- {activity-dependency-injection-mapping-toc} -->
+TODO</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-dependency-injection-dry-container">Dry container</h3>
+<p><!-- {activity-dependency-injection-dry-container-toc} -->
+TODO</p>
+
+<p>defaulting in macros</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-macro-api">Macro API</h2>
+<p><!-- {activity-macro-api-toc} --></p>
+
+<p>Macros are short-cuts for inserting a task along with options into your activity.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-macro-api-definition">Definition</h3>
+<p><!-- {activity-macro-api-definition-toc} --></p>
+
+<p>They’re simple functions that return a hash with options described here.</p>
+
+<pre><code>module MyMacro
+  def self.NormalizeParams(name: :myparams, merge_hash: {})
+    task = -&gt;((ctx, flow_options), _) do
+      ctx[name] = ctx[:params].merge(merge_hash)
+
+      return Trailblazer::Activity::Right, [ctx, flow_options]
+    end
+
+    # new API
+    {
+      task: task,
+      id:   name
+    }
+  end
+end
+</code></pre>
+
+<p>Two required options are <code>:id</code> and <code>:task</code>, the latter being the actual task you want to insert. The callable task needs to implement the [circuit interface].</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Please note that the actual task doesn’t have to be a proc! Use a class, constant, object, as long as it exposes a <code>#call</code> method it will flow.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-macro-api-usage">Usage</h3>
+<p><!-- {activity-macro-api-usage-toc} --></p>
+
+<p>To actually apply the macro you call the function in combination with <code>step</code>, <code>pass</code>, <code>fail</code>, etc.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step MyMacro::NormalizeParams(merge_hash: {role: "sailor"})
+end
+</code></pre>
+
+<p>There’s no additional logic from Trailblazer happening here. The function returns a well-defined hash which is passed as an argument to <code>step</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-macro-api-options">Options</h3>
+<p><!-- {activity-macro-api-options-toc} --></p>
+
+<p>In the returned hash you may insert any valid DSL [step option], such as sequence options like <code>:before</code>, <code>Output()</code> and friends from the wiring API or even <code>:extensions</code>.</p>
+
+<p>The following <code>FindModel</code> macro retrieves a configured model just like <code>trailblazer-macro</code>’s <code>Model()</code> and automatically wires the step’s <code>failure</code> output to a new terminus <code>not_found</code>.</p>
+
+<pre><code>module MyMacro
+  def self.FindModel(model_class)
+    # the inserted task.
+    task = -&gt;((ctx, flow_options), _) do
+      model         = model_class.find_by(id: ctx[:params][:id])
+
+      return_signal = model ? Trailblazer::Activity::Right : Trailblazer::Activity::Left
+      ctx[:model]   = model
+
+      return return_signal, [ctx, flow_options]
+    end
+
+    # the configuration needed by Trailblazer's DSL.
+    {
+      task: task,
+      id:   :"find_model_#{model_class}",
+      Trailblazer::Activity::Railway.Output(:failure) =&gt; Trailblazer::Activity::Railway.End(:not_found)
+    }
+  end
+end
+</code></pre>
+
+<p>See how you can simply add <code>Output</code> wirings by using the well-established mechanics from the wiring API? Remember you’re not in an <code>Activity</code> or <code>Operation</code> namespace and hence need to use the fully-qualified constant reference <code>Trailblazer::Activity::Railway.Output()</code>.</p>
+
+<p>To insert that step and its extended wiring, simply call the macro.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step MyMacro::FindModel(User)
+end
+</code></pre>
+
+<p>When running the activity without a valid model ID, it will now terminate on <code>End.not_found</code>.</p>
+
+<pre><code>signal, (ctx, _) = Trailblazer::Developer.wtf?(User::Create, [{params: {id: nil}}])
+signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:not_found&gt;
+
+`-- User::Create
+    |-- Start.default
+    |-- find_model_User
+    `-- End.not_found
+</code></pre>
+
+<p>Using the wiring API in your own macros gives you a powerful tool for harnessing extended wiring without requiring the user to know about the details - the crucial point for a good API.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Options</li>
+    <li id="activity-macro-api-options-subprocess">Subprocess</li>
+</ul>
+
+<p>You can even use other macros in custom macros, such as the <a href="#activity-wiring-api-subprocess"><code>Subprocess()</code> helper</a> for nesting activities.</p>
+
+<p>Consider the following <code>Logger</code> activity.</p>
+
+<pre><code>class Logger &lt; Trailblazer::Activity::Railway
+  step :log
+
+  def log(ctx, logged:, **)
+    ctx[:log] = logged.inspect
+  end
+end
+</code></pre>
+
+<p>Along with the nested <code>Logger</code> step should also go <code>:input</code> and <code>:output</code> configuration. When using the <code>Logger</code> in multiple operation, you would need to repeat the options, so why not pack the entire configuration in a macro?</p>
+
+<pre><code>module Macro
+  def self.Logger(logged_name: )
+    {
+      id: "logger",
+      input:  {logged_name =&gt; :logged},
+      output: [:log],
+      **Trailblazer::Activity::Railway.Subprocess(Logger), # nest
+    }
+  end
+end
+</code></pre>
+
+<p>The nesting activity can now elegantly use the macro without inconvenient options.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step Macro::Logger(logged_name: :model) # we want to log {ctx[:model]}
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-internals">Internals</h2>
+<p><!-- {activity-internals-toc} --></p>
+
+<p>This section discusses low-level structures and is intended for engineers interested in changing or adding their own DSLs, the activity build process, or who want to optimize the Trailblazer internals (which is always appreciated!).</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-internals-introspection-api">Introspection API</h3>
+<p><!-- {activity-internals-introspection-api-toc} --></p>
+
+<p><a href="https://github.com/trailblazer/trailblazer-activity" class="pink"><i class="fa fa-gem" aria-hidden="true"></i> trailblazer-activity 0.16.0</a></p>
+
+<p>To introspect an activity and find out about steps, IDs and configuration, use the <code>Introspect.Nodes()</code> function.</p>
+
+<p>Consider the following activity.</p>
+
+<ul id="0.7588649897379977" class="nav nav-tabs"> <li class="nav-item"> <a href="#" class="nav-link pink active active" data-toggle="tab" data-tag="#0-7588649897379977-Activity"> Activity </a> </li><li class="nav-item"> <a href="#" class="nav-link pink " data-toggle="tab" data-tag="#0-7588649897379977-Operation"> Operation </a> </li> </ul>
+<div class="tab-content"> <div id="0-7588649897379977-Activity" class="tab-pane fade show active"> 
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :validate
+    step Subprocess(Save),
+      id: :save
+  end
+end
+</code></pre>
+
+ </div><div id="0-7588649897379977-Operation" class="tab-pane fade show "> 
+<pre><code>module Song::Operation
+  class Create &lt; Trailblazer::Operation
+    step :validate
+    step Subprocess(Save),
+      id: :save
+  end
+end
+</code></pre>
+
+ </div> </div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Introspection API</li>
+    <li id="activity-internals-introspection-api-id">ID</li>
+</ul>
+
+<p>You can retrieve a datastructure describing a particular task by ID.</p>
+
+<pre><code>attrs = Trailblazer::Activity::Introspect.Nodes(Song::Activity::Create, id: :validate)
+</code></pre>
+
+<p>The returned <code>Attributes</code> object exposes <code>#id</code>, <code>#data</code> and <code>#task</code>.</p>
+
+<!-- # FIXME: we need a skip-convert flag for Activity -> Operation -->
+
+<pre><code>puts attrs.id   #=&gt; :validate
+puts attrs.task #=&gt; #&lt;Trailblazer::Activity::TaskBuilder::Task user_proc=validate&gt;
+puts attrs.data[:extensions] =&gt; []
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Introspection API</li>
+    <li id="activity-internals-introspection-api-task">Task</li>
+</ul>
+
+<p>It also accepts a <code>:task</code> option if you need to find attributes for a step where you only know the code component, not the ID. This is, for example, used in the tracing code.</p>
+
+<pre><code>attrs = Trailblazer::Activity::Introspect.Nodes(Song::Activity::Create, task: Song::Activity::Save)
+attrs.id #=&gt; :save
+</code></pre>
+
+<p>The returned <code>Attributes</code> instance behaves identically to the above.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Introspection API</li>
+    <li id="activity-internals-introspection-api-data">Data</li>
+</ul>
+
+<p>Note that you can use <code>Attributes</code> to query <a href="/2.1/docs/internals.html#internals-dsl-introspect-data">custom data from the DSL</a>.</p>
+
+<!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-internals-circuit-interface">Circuit Interface</h3>
+<p><!-- {activity-internals-circuit-interface-toc} --></p>
+
+<p>Activities and all tasks (or “steps”) are required to expose a <em>circuit interface</em>. This is the low-level interface. When an activity is executed, all involved tasks are called with that very signature.</p>
+
+<p>Most of the times it is hidden behind the <a href="#FIXME">task interface</a> that you’re probably used to from your operations when using <code>step</code>. Under the hood, however, all callable circuit elements operate through that very interface.</p>
+
+<p>The circuit interface consists of three things.</p>
+
+<ul>
+  <li>A circuit element has to expose a <code>call</code> method.</li>
+  <li>The signature of the <code>call</code> method is <code>call((ctx, flow_options), **circuit_options)</code>.</li>
+  <li>Return value of the <code>call</code> method is an array of format <code>[signal, [new_ctx, new_flow_options]]</code>.</li>
+</ul>
+
+<p>Do not fear those syntactical finesses unfamiliar to you, young padawan.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  def self.validate((ctx, flow_options), **_circuit_options)
+    # ...
+    return signal, [ctx, flow_options]
+  end
+
+  step task: method(:validate)
+end
+</code></pre>
+
+<p>Both the <code>Create</code> activity itself and the <code>validate</code> step expose the circuit interface. Note that the <code>:task</code> option for <code>step</code> configures this element as a low-level circuit interface, or in other words, it will skip the wrapping with the task interface.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-invocation">Invocation</li>
+</ul>
+
+<p>Maybe it makes more sense now when you see how an activity is called manually? Here’s how to invoke <code>Create</code>.</p>
+
+<pre><code>ctx          = {name: "Face to Face"}
+flow_options = {}
+
+signal, (ctx, _flow_options) = Create.([ctx, flow_options])
+
+signal #=&gt; #&lt;Trailblazer::Activity::End semantic=:success&gt;
+ctx    #=&gt; {:name=&gt;\"Face to Face\", :validate_outcome=&gt;true}
+</code></pre>
+
+<p>Note that both <code>ctx</code> and <code>flow_options</code> can be just anything. Per convention, they respond to a hash interface, but theoretically it’s up to you how your network of activities and tasks communicates.</p>
+
+<p>Check the implementation of <code>validate</code> to understand how you return a different signal or a changed <code>ctx</code>.</p>
+
+<pre><code>def self.validate((ctx, flow_options), **_circuit_options)
+  is_valid = ctx[:name].nil? ? false : true
+
+  ctx    = ctx.merge(validate_outcome: is_valid) # you can change ctx
+  signal = is_valid ? Trailblazer::Activity::Right : Trailblazer::Activity::Left
+
+  return signal, [ctx, flow_options]
+end
+</code></pre>
+
+<p>Make sure to always stick to the <code>return</code> signature on the circuit interface level.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-signature">Signature</li>
+</ul>
+
+<p>The circuit interface is a bit more clumsy but it gives you unlimited power over the way the activity will be run. And trust us, we’ve been playing with different APIs for two years and this was the easiest and fastest outcome.</p>
+
+<pre><code>def self.validate((ctx, flow_options), **_circuit_options)
+  # ...
+  return signal, [ctx, flow_options]
+end
+</code></pre>
+
+<p>The alienating signature uses <a href="https://docs.ruby-lang.org/en/2.1.0/syntax/methods_rdoc.html#label-Array+Decomposition">Ruby’s decomposition</a> feature. This only works because the first argument for <code>call</code> is actually an array.</p>
+
+<p>Using this interface empowers you to fully take <em>control of the flow™</em>.</p>
+
+<ul>
+  <li>You can return any <code>signal</code> you want, not only the binary style in <em>steps</em>. Do not forget to wire that signal appropriately to the next task, though.</li>
+  <li>If needed, the <code>ctx</code> object might be mutated or, better, replaced and a new version returned. This is the place where you’d start implementing an immutable version of Trailblazer’s <code>ctx</code>, for instance.</li>
+  <li>Advanced features like tracing, input/output filters or type checking leverage the framework argument <code>flow_options</code>, which will be passed onwards through the entire activities flow. Know what you’re doing when using <code>flow_options</code> and <strong>always return it</strong> even if you’re not changing it.</li>
+  <li>The <code>circuit_options</code> is another framework argument needed to control the start task and more. It is immutable and you don’t have to return it. The same <code>circuit_options</code> are guaranteed to be passed to all invoked tasks within one activity.</li>
+</ul>
+
+<p>Since in 99% the <code>circuit_options</code> are irrelevant for you, it’s nicer and faster to discard them instantly.</p>
+
+<pre><code class="ruby light code-snippet wow fadeIn">
+def validate((ctx, flow_options), *)
+  # ...
+end
+</code></pre>
+
+<p>Use the lonely <code>*</code> squat asterisk to do so.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-circuit-options">Circuit options</li>
+</ul>
+
+<p>The last positional argument when <code>call</code>ing an activity or task is called <em>circuit options</em>. It’s a library-level hash that is guaranteed to be identical for all tasks of an activity. In other words, all tasks of one activity will be called with the same <code>circuit_options</code> hash.</p>
+
+<p>The following options are available.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-start_task">Start_task</li>
+</ul>
+
+<p>You can instruct the activity where to start - it doesn’t have to be the default start event! Use the <code>:start_task</code> option.</p>
+
+<p>Consider this activity.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  # ...
+  step :create
+  step :validate
+  step :save
+end
+</code></pre>
+
+<p>Inject the <code>:start_task</code> option via the circuit options. The value has to be the actual callable task object. You can use the [introspection API] to grab it.</p>
+
+<pre><code>circuit_options = {
+  start_task: Trailblazer::Activity::Introspect::Nodes(B::Create, id: :validate).task
+}
+
+signal, (ctx, flow_options) = B::Create.([ctx, flow_options], **circuit_options)
+</code></pre>
+
+<p>Starting with <code>:validate</code>, the <code>:create</code> task will be skipped and only <code>:validate</code> and then <code>:save</code> will be executed.</p>
+
+<p>Note that this is a low-level option that should not be used to build “reuseable” activities. If you want different behavior for differing contexts, you should compose different activities.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-exec_context">Exec_context</li>
+</ul>
+
+<p>When using the <code>step :method_name</code> DSL style, the <code>:exec_context</code> option controls what object provides the method implementations at runtime.</p>
+
+<p>Usually, <code>Activity#call</code> will automatically set this, but you can invoke the <code>circuit</code> instead, and inject your own <code>exec_context</code>. This allows you to have a separate structure and implementation.</p>
+
+<p>The following activity is such an “empty” structure.</p>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  step :create
+  step :save
+end
+</code></pre>
+
+<p>You may then use a class, object or module to define the implementation of your steps.</p>
+
+<pre><code>class Create::Implementation
+  def create(ctx, params:, **)
+    ctx[:model] = Memo.new(params)
+  end
+
+  def save(ctx, model:, **)
+    ctx[:model].save
+  end
+end
+    end
+</code></pre>
+
+<p>This is really just a container of the desired step logic, with the familiar interface.</p>
+
+<p>When invoking the <code>Create</code> activity, you need to call the <code>circuit</code> directly and inject the <code>:exec_context</code> option.</p>
+
+<pre><code>circuit_options = {
+  exec_context: C::Create::Implementation.new
+}
+
+signal, (ctx, flow_options) = C::Create.to_h[:circuit].([ctx, flow_options], **circuit_options)
+</code></pre>
+
+<p>While this bypasses <code>Activity#call</code>, it gives you a powerful tool for advanced activity design.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Circuit Interface</li>
+    <li id="activity-internals-circuit-interface-dsl">DSL</li>
+</ul>
+
+<p>When using the DSL, use the <code>:task</code> option if you want your added task to be called directly with the circuit interface.  This skips the <code>TaskBuilder::Binary</code> wrapping.</p>
+
+<pre><code class="ruby light code-snippet wow fadeIn">
+class Create &lt; Trailblazer::Activity::Railway
+  # ...
+  step task: method(:validate)
+end
+</code></pre>
+
+<!-- @activity-circuit-interface <trailblazer-activity[1.0] activity, circuit interface, low level -->
+
+<p><a name="activity-internals-task-interface"><!-- old name/link -->
+<span class="divider"></span></a></p>
+
+<h3 id="activity-internals-step-interface">Step Interface</h3>
+<p><!-- {activity-internals-step-interface-toc} --></p>
+
+<p><em>a.k.a. <strong>Task interface</strong></em></p>
+
+<p>The convenient high-level interface for a task implementation is - surprisingly - called <em>task interface</em>. It’s the one you will be working with 95% of your time when writing task logic.</p>
+
+<p>This interface comprises of two parts.</p>
+
+<ul>
+  <li>The <strong>signature</strong> receives a mutable <code>ctx</code> object, and an optional list of keywords, often seen as <code>(ctx, **)</code>.</li>
+  <li>The <strong>return value</strong> can be <code>true</code>, <code>false</code>, or a subclass of <code>Activity::Signal</code> to dictate the control flow.</li>
+</ul>
+
+<p>The return value does not control what is the next task. Instead, it informs the circuit runner about its outcome, and the circuit runner will find the task executed next.</p>
+
+<pre><code>module Memo::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    def self.create_model(ctx, **)
+      attributes = ctx[:attrs]           # read from ctx
+
+      ctx[:model] = Memo.new(attributes) # write to ctx
+
+      ctx[:model].save ? true : false    # return value matters
+    end
+
+    step method(:create_model)
+    # ...
+  end
+end
+</code></pre>
+
+<p>Components (such as methods or callable objects) exposing the step interface always receive the <code>ctx</code> as the first (and only) positional argument. Keyword arguments may be used to extract variables from the <code>ctx</code>.</p>
+
+<p>Depending on the step’s logic, you can write variables to the <code>ctx</code> object.</p>
+
+<p>The return value can be either a subclass of <code>Trailblazer::Activity::Signal</code> or it will be evaluated to <code>true</code> or <code>false</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-keyword-arguments">Keyword Arguments</li>
+</ul>
+
+<p>A cleaner way to access data from the <code>ctx</code> object is to use keyword arguments in the method signature. Trailblazer makes all <code>ctx</code> options available as kw args.</p>
+
+<pre><code>def self.create_model(ctx, attrs:, **) # kw args!
+  ctx[:model] = Memo.new(attrs)        # write to ctx
+
+  ctx[:model].save ? true : false      # return value matters
+end
+</code></pre>
+
+<p>You may use as many keyword arguments as you need - it will save you reading from <code>ctx</code> manually, gives you automatic presence checks, and allows defaulting, too.</p>
+
+<!-- @activity-circuit-interface-class-method <trailblazer-activity[1.0] activity, circuit interface, low level, class method -->
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-return-value">Return Value</li>
+</ul>
+
+<p>Using the DSL, your task will usually be wrapped in a <code>TaskBuilder::Binary</code> object, which translates a <code>nil</code> and <code>false</code> return value to an <code>Activity::Left</code> signal, and all other return values to <code>Activity::Right</code>.</p>
+
+<pre><code>def self.create_model(ctx, attrs:, **) # kw args!
+  # ...
+  ctx[:model].save ? true : false      # return value matters
+end
+</code></pre>
+
+<p>In a Railway activity, a true value will usually result in the flow staying on the “success” path, where a falsey return value deviates to the “failure” track. However, eventually it’s the developer’s decision how to <a href="#activity-wiring-api">wire signals to connections</a>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-return-signal">Return Signal</li>
+</ul>
+
+<p>You are not limited to true and falsey return values. Any subclass of <code>Activity::Signal</code> will simply be passed through without getting “translated” by the <code>Binary</code> wrapper. This allows to emit more than two possible states from a task.</p>
+
+<pre><code>module Memo::Operation
+  class Create &lt; Trailblazer::Activity::Railway
+    DatabaseError = Class.new(Trailblazer::Activity::Signal) # subclass Signal
+
+    def create_model(ctx, attrs:, **)
+      ctx[:model] = Memo.new(attrs)
+
+      begin
+        return ctx[:model].save ? true : false  # binary return values
+      rescue
+        return DatabaseError                    # third return value
+      end
+    end
+    # ...
+
+    step :create_model,
+      Output(DatabaseError, :handle_error) =&gt; Id(:handle_db_error)
+    step :handle_db_error,
+      magnetic_to: nil, Output(:success) =&gt; Track(:failure)
+  end
+end
+</code></pre>
+
+<p>The exemplary <code>DatabaseError</code> is being passed through to the routing and interpreted. It’s your job to make sure this signal is wired to a following task, track, or end (line 16).</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/activity-signal.56eb92ff.png" /></p>
+
+<p>Note that you don’t have to use the default binary signals at all (<code>Left</code> and <code>Right</code>).
+<!-- <a href="#" class="pink">
+   <i class="far fa-arrow-alt-circle-right"></i>
+   <span class="medium">wiring</span>
+</a>
+ -->
+<a href="#wiring-api"><i class="fa fa-book" aria-hidden="true"></i> API docs</a></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-instance-method">Instance Method</li>
+</ul>
+
+<p>The most convenient way is to use instance methods. Those may be declared after the <code>step</code> definitions, allowing you to first define the flow, then implement it.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  step :authorize
+  # ...
+
+  def authorize(ctx, current_user:, **)
+    current_user.can?(Memo, :create)
+  end
+end
+</code></pre>
+
+<p>Use <code>:method_name</code> to refer to instance methods.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Do <em>not use instance variables</em> (<code>@ivar</code>) ever as they’re not guaranteed to work as expected. Always transport state via <code>ctx</code>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-class-method">Class Method</li>
+</ul>
+
+<p>A class method can implement a task of an activity. It needs to be declared as a class method using <code>self.method_name</code> and must precede the <code>step</code> declaration. Using Ruby’s <code>#method</code>, it can be passed to the <code>step</code> DSL.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  def self.authorize(ctx, current_user:, **)
+    current_user.can?(Memo, :create)
+  end
+
+  step method(:authorize)
+end
+</code></pre>
+
+<p>Instead of prefixing every method signature with <code>self.</code> you could use Ruby’s <code>class &lt;&lt; self</code> block to create class methods.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  class &lt;&lt; self
+    def authorize(ctx, current_user:, **)
+      current_user.can?(Memo, :create)
+    end
+    # more methods...
+  end
+
+  step method(:authorize)
+end
+</code></pre>
+
+<p>In TRB 2.0, instance methods in operations were the preferred way for implementing tasks. This was a bit more convenient, but required the framework to create an object instance with every single activity invocation. It also encouraged users to transport state via the activity instance itself (instead of the <code>ctx</code> object), which led to bizarre issues.</p>
+
+<p>Since 2.1, the approach is as stateless and functional as possible, as we now prefer class methods.</p>
+
+<!-- @activity-circuit-interface-callable <trailblazer-activity[1.0] activity, circuit interface, low level, class method -->
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-callable">Callable</li>
+</ul>
+
+<p>As a matter of fact, you can use any callable object. That means, any object that responds to <code>#call</code> is suitable as a task implementation.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  # ...
+  step AuthorizeForCreate
+end
+</code></pre>
+
+<p>When using a class, it needs to expose a class method <code>#call</code>. This is ideal for more complex task code that needs to be decomposed into smaller private methods internally.</p>
+
+<pre><code>class AuthorizeForCreate
+  def self.call(ctx, current_user:, **)
+    current_user.can?(Memo, :create)
+  end
+end
+</code></pre>
+
+<p>The signature of <code>#call</code> is identical to the other implementation styles.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Step Interface</li>
+    <li id="activity-internals-step-interface-module">Module</li>
+</ul>
+
+<p>Keep in mind that you don’t have to implement every task in the activity itself - it can be outsourced to a module.</p>
+
+<pre><code>module Authorizer
+  module_function
+
+  def memo_create(ctx, current_user:, **)
+    current_user.can?(Memo, :create)
+  end
+end
+</code></pre>
+
+<p>When using <code>module_function</code>, every method will be a “class” method automatically.</p>
+
+<p>In the activity, you can reference the module’s methods using our old friend <code>method</code>.</p>
+
+<pre><code>class Memo::Create &lt; Trailblazer::Activity::Railway
+  step Authorizer.method(:memo_create)
+  # ...
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-taskwrap">TaskWrap</h2>
+<p><!-- {activity-taskwrap-toc} --></p>
+
+<p>The <em>taskWrap</em> is the “<code>around_filter</code>” of Trailblazer. It allows adding steps before and after actual tasks without having to change the activity, and without having to introduce <code>if</code>s.</p>
+
+<p>Some prominent examples for taskWrap usage in the wild are <a href="https://github.com/trailblazer/trailblazer-activity-dsl-linear/blob/f54ce384f57dde063f77a769487fc38023217910/lib/trailblazer/activity/dsl/linear/variable_mapping.rb">variable mapping</a> and tracing happening in <a href="https://github.com/trailblazer/trailblazer-developer/blob/de84d67ac390fee5e98ffc0a172cf80141e06c81/lib/trailblazer/developer/trace.rb"><code>#wtf?</code></a>. Those are features completely separated from the core code. You can use the taskWrap mechanics to inject static wraps at compile time (as it’s done for, say, the <code>In()</code> feature), or at runtime, the way <code>#wtf?</code> is built.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/task_wrap_validate.1282e372.png" /></p>
+
+<p>It’s possible to configure a specific taskWrap for a particular step, or run the same one for all steps encountered while running an activity, even with nesting.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-example">Example</h3>
+<p><!-- {activity-taskwrap-example-toc} --></p>
+
+<p>Let’s discuss the taskWrap with the following simple <code>Create</code> activity that you’ve probably met before.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :validate
+    left :handle_errors
+    step :notify
+    # ...
+  end
+end
+</code></pre>
+
+<p>We’re using an imaginary <code>MyAPM</code> gem that provides a convenient interface for starting and stopping instrumentation.</p>
+
+<pre><code>span = MyAPM.start_span("validate", payload: {time: Time.now})
+# do whatever you have to...
+span.finish(payload: {time: Time.now})
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-step">Step</h3>
+<p><!-- {activity-taskwrap-step-toc} --></p>
+
+<p>In order to execute the instrumentation, we have to write two taskWrap steps, one to start, one for finishing the instrumentation. Those steps look similar to “ordinary” activity steps, but expose the taskWrap interface.</p>
+
+<pre><code>module MyAPM # Advanced performance monitoring, done right!
+  module Extension
+    def self.start_instrumentation(wrap_ctx, original_args)
+      (ctx, _flow_options), circuit_options = original_args
+
+      activity  = circuit_options[:activity] # currently running Activity.
+      task      = wrap_ctx[:task]            # the current "step".
+
+      task_id   = Trailblazer::Activity::Introspect.Nodes(activity, task: task).id
+
+      span      = MyAPM.start_span("operation.step", payload: {id: task_id})
+
+      wrap_ctx[:span] = span
+
+      return wrap_ctx, original_args
+    end
+  end
+end
+</code></pre>
+
+<p>A taskWrap step receives two positional arguments, the <code>wrap_ctx</code> that is used to transport taskWrap-specific data across taskWrap steps, and the <code>original_args</code> that represent how the circuit called the currently invoked task.</p>
+
+<p>Above, you can see how it’s possible to retrieve the currently invoked <code>task</code> and its <code>activity</code>.</p>
+
+<p>We then store the <code>span</code> object in the <code>wrap_ctx</code> so the finishing code can close that span in the second taskWrap step <code>#finish_instrumentation</code>.</p>
+
+<pre><code>module MyAPM # Advanced performance monitoring, done right!
+  module Extension
+    def self.finish_instrumentation(wrap_ctx, original_args)
+      ctx   = original_args[0][0]
+      span  = wrap_ctx[:span]
+
+      span.finish(payload: ctx.inspect)
+
+      return wrap_ctx, original_args
+    end
+  end
+end
+</code></pre>
+
+<p>As you can see, the <code>span</code> object can be fetched from <code>wrap_ctx</code> as the second step is run somewhere after <code>start_instrumentation</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-call_task">call_task</h3>
+<p><!-- {activity-taskwrap-call_task-toc} --></p>
+
+<p>Each taskWrap has at least one element, the <code>call_task</code> step that calls the actual task. Sometimes this task is a method, such as <code>#validate</code>, sometimes a nested activity, and so on.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-runtime">Runtime</h3>
+<p><!-- {activity-taskwrap-runtime-toc} --></p>
+
+<p>The taskWrap can be extended at runtime, when <code>call</code>ing an activity. This allow for adding features to steps without having to change the actual business code.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-extension">Extension</li>
+</ul>
+
+<p>To actually run the <code>Song::Activity::Create</code> activity with this new taskWrap, we need to build a runtime extension.</p>
+
+<pre><code>apm_extension = Trailblazer::Activity::TaskWrap::Extension(
+  [MyAPM::Extension.method(:start_instrumentation),  id: "my_apm.start_span",  prepend: "task_wrap.call_task"],
+  [MyAPM::Extension.method(:finish_instrumentation), id: "my_apm.finish_span", append: "task_wrap.call_task"],
+)
+</code></pre>
+
+<p>You can configure where to insert the taskWrap steps using <code>:append</code> or <code>:prepend</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-invoke">Invoke</li>
+</ul>
+
+<p>We’re now all set to inject that new taskWrap into the execution of our business activity. In the following example, the <code>my_wrap</code> hash is configured in a way that our extension is run around every task in <code>Create</code>, even for <code>Create</code> itself.</p>
+
+<pre><code>my_wrap = Hash.new(apm_extension)
+
+Song::Activity::Create.invoke(
+  [
+    # ctx:
+    {
+      song: {title: "Timebomb"},
+      seq: []
+    }
+  ],
+  wrap_runtime: my_wrap # runtime taskWrap extensions!
+)
+</code></pre>
+
+<p>This will result in the same taskWrap being applied to every step of the activity execution path, and for <code>#validate</code>, looks like so.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/task_wrap_validate.1282e372.png" /></p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-step-filter">Step filter</li>
+</ul>
+
+<p>You don’t have to run a taskWrap extension around every step. It is possible to configure an extension only being applied to a particular step in your activity. Let’s invoke the new APM taskWrap only around <code>#validate</code>.</p>
+
+<pre><code>validate_task = Trailblazer::Activity::Introspect
+  .Nodes(Song::Activity::Create, id: :validate) # returns Node::Attributes
+  .task                                         # and the actually executed task from the circuit.
+
+my_wrap = {validate_task =&gt; apm_extension}
+</code></pre>
+
+<p>Note that <code>my_wrap</code> can map specific tasks to their taskWrap extension.</p>
+
+<p>When running <code>Create</code> with the new configuration, the APM code is only called for <code>#validate</code>.</p>
+
+<pre><code>Song::Activity::Create.invoke(
+  [
+    # ctx:
+    {
+      song: {title: "Timebomb"},
+      seq: []
+    }
+  ],
+  wrap_runtime: my_wrap # runtime taskWrap extensions!
+)
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="activity-taskwrap-runtime-top-activity">Top activity</li>
+</ul>
+
+<p>It’s important to understand that even the top activity <code>Song::Activity::Create</code> is run using a taskWrap, so if you want to apply APM only to this particular “step”, you could do so as follows.</p>
+
+<pre><code>my_wrap = {Song::Activity::Create =&gt; apm_extension}
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-static">Static</h3>
+<p><!-- {activity-taskwrap-static-toc} --></p>
+
+<p>Instead of dynamically adding taskWrap extensions at runtime, in some cases you might want to do so when defining the activity class, at compile-time. For example, the <code>In()</code> and <code>Out()</code> filter DSL uses a static taskWrap extension to add steps around a specific task.</p>
+
+<p>This can be achieved with the <code>WrapStatic()</code> helper.</p>
+
+<pre><code>module Song::Activity
+  class Create &lt; Trailblazer::Activity::Railway
+    step :create_model
+    step :validate,
+      Extension() =&gt; Trailblazer::Activity::TaskWrap::Extension::WrapStatic(
+        [MyAPM::Extension.method(:start_instrumentation),  id: "my_apm.start_span",  prepend: "task_wrap.call_task"],
+        [MyAPM::Extension.method(:finish_instrumentation), id: "my_apm.finish_span", append: "task_wrap.call_task"],
+      )
+    left :handle_errors
+    step :notify
+    include T.def_steps(:create_model, :validate, :notify)
+  end
+end
+</code></pre>
+
+<p>Obviously, you’d introduce a macro here to hide all those specific details to the user of your extension.</p>
+
+<p>When running, the APM instrumentation is run only around <code>#validate</code>.</p>
+
+<pre><code>signal, (ctx, _) = Song::Activity::Create.invoke([ctx, {}])
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-taskwrap-introspection">Introspection</h3>
+<p><!-- {activity-taskwrap-introspection-toc} --></p>
+
+<p>You can use our web-based debugger to introspect the static taskWrap of any step.</p>
+
+<!-- example :if -->
+
+<!-- Example tracing
+https://gist.github.com/matheusca/893dc965bd06c97625b2cb2adae418b4#file-test-rb-L22
+ -->
+
+<p><span class="divider"></span></p>
+
+<h2 id="activity-troubleshooting">Troubleshooting</h2>
+<p><!-- {activity-troubleshooting-toc} --></p>
+
+<p>Even though tracing and <code>wtf?</code> attempt to make your developer experience as smooth as possible, sometimes there are annoying issues.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-troubleshooting-type-error">Type Error</h3>
+<p><!-- {activity-troubleshooting-type-error-toc} --></p>
+
+<p>It’s a common error to use a bare <code>Hash</code> (with string keys!) instead of a <code>Trailblazer::Context</code> object when running an activity. While symbolized hashes are not a problem, string keys will fail.</p>
+
+<pre><code>ctx = {"message" =&gt; "Not gonna work!"} # bare hash.
+Bla.([ctx])
+</code></pre>
+
+<p>The infamous <code>TypeError</code> means your context object can’t convert strings into symbol keys. This is required when calling your steps with keyword arguments.</p>
+
+<pre><code>TypeError: wrong argument type String (expected Symbol)
+</code></pre>
+
+<p>Use <code>Trailblazer::Context</code> as a wrapper.</p>
+
+<pre><code>ctx = Trailblazer::Context({"message" =&gt; "Yes, works!"})
+
+signal, (ctx, _) = Bla.([ctx])
+</code></pre>
+
+<p>The <code>Context</code> object automatically converts string keys to symbols.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-troubleshooting-wrong-circuit">Wrong circuit</h3>
+<p><!-- {activity-troubleshooting-wrong-circuit-toc} --></p>
+
+<p>When using the same task multiple times in an activity, you might end up with a wiring you’re not expecting. This is due to Trailblazer internally keying tasks by their object identity.</p>
+
+<pre><code>class Update &lt; Trailblazer::Activity::Railway
+  class CheckAttribute &lt; Trailblazer::Activity::Railway
+    step :valid?
+  end
+
+  step :find_model
+  step Subprocess(CheckAttribute), id: :a
+  step Subprocess(CheckAttribute), id: :b # same task!
+  step :save
+end
+</code></pre>
+
+<p>When introspecting this activity, you will see that the <code>CheckAttribute</code> task is present only once.</p>
+
+<p>You need to create a copy of the method or the class of your callable task in order to fix this and have two identical steps.</p>
+
+<pre><code>class Update &lt; Trailblazer::Activity::Railway
+  class CheckAttribute &lt; Trailblazer::Activity::Railway
+    step :valid?
+  end
+
+  step :find_model
+  step Subprocess(CheckAttribute), id: :a
+  step Subprocess(Class.new(CheckAttribute)), id: :b # different task!
+  step :save
+end
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<h3 id="activity-troubleshooting-illegal-signal-error">Illegal Signal Error</h3>
+<p><!-- {activity-troubleshooting-illegal-signal-error-toc} --></p>
+
+<p>As the name suggests, the <code>IllegalSignalError</code> exception is raised when a step returns a signal that is not registered at <a href="/2.1/docs/activity.html#activity-internals-build-structures-compilation">compile time</a>. The routing algorithm is not able to find a connection for the returned signal and raises an error at run-time.</p>
+
+<p>Usually, you encounter this beautiful exception when using the <a href="#activity-internals-circuit-interface">circuit interface</a> signature for a step, and returning a “wrong” signal that is not wired to an on-going next task.</p>
+
+<p>Other common cases may be</p>
+
+<ul>
+  <li>Steps which are not wrapped by [TaskBuilder], for example: <code>step task: method(:validate)</code></li>
+  <li><a href="/2.1/docs/activity.html#activity-macro-api">User defined macros</a>.</li>
+</ul>
+
+<pre><code>class Create &lt; Trailblazer::Activity::Railway
+  def self.validate((ctx, flow_options), **circuit_options)
+    return :invalid_signal, [ctx, flow_options], circuit_options
+  end
+
+  step task: method(:validate)
+end
+
+ctx = {"message" =&gt; "Not gonna work!"} # bare hash.
+Create.([ctx])
+
+# IllegalSignalError: Create:
+# Unrecognized Signal `:invalid_signal` returned from `Method: Create.validate`. Registered signals are,
+# - Trailblazer::Activity::Left
+# - Trailblazer::Activity::Right
+</code></pre>
+
+<p>The exception helps by displaying both the actually returned signal and the registered, wired signals for this step.</p>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="activity-overview-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Overview</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-overview-anatomy">
+          <i class="fas fa-arrow-right"></i>
+          Anatomy
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-overview-dsl">
+          <i class="fas fa-arrow-right"></i>
+          DSL
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-overview-invocation">
+          <i class="fas fa-arrow-right"></i>
+          Invocation
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-strategy-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>STRATEGY</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-strategy-path">
+          <i class="fas fa-arrow-right"></i>
+          Path
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-path-output">Output</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-path-end">End</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-path-multiple-references">Multiple References</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-strategy-railway">
+          <i class="fas fa-arrow-right"></i>
+          Railway
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-railway-wiring">Wiring</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-railway-fail">Fail</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-railway-pass">Pass</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-railway-left">Left</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-railway-notes">Notes</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-strategy-fasttrack">
+          <i class="fas fa-arrow-right"></i>
+          FastTrack
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-fasttrack-passfast">PassFast</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-fasttrack-failfast">FailFast</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-fasttrack-fasttrack">FastTrack</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-strategy-fasttrack-notes">Notes</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-wiring-api-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Wiring API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-wiring-api-output-">
+          <i class="fas fa-arrow-right"></i>
+          Output()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-output-implicit-signal">Implicit signal</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-output-adding-outputs">Adding outputs</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-end-">
+          <i class="fas fa-arrow-right"></i>
+          End()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-end-adding-ends">Adding ends</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-id-">
+          <i class="fas fa-arrow-right"></i>
+          Id()
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-track-">
+          <i class="fas fa-arrow-right"></i>
+          Track()
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-terminus">
+          <i class="fas fa-arrow-right"></i>
+          Terminus
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-path-">
+          <i class="fas fa-arrow-right"></i>
+          Path()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-path-join">Join</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-path-railway">Railway</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-path-end_task-end_id-deprecation">End_task/End_id Deprecation</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-wiring-api-subprocess">
+          <i class="fas fa-arrow-right"></i>
+          Subprocess
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-subprocess-wiring">Wiring</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-wiring-api-subprocess-end">End</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-dsl-options-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>DSL Options</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-dsl-options-magnetic_to">
+          <i class="fas fa-arrow-right"></i>
+          magnetic_to
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-dsl-options-extensions">
+          <i class="fas fa-arrow-right"></i>
+          extensions
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-dsl-options-inherit">
+          <i class="fas fa-arrow-right"></i>
+          Inherit
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-dsl-options-sequence-options">
+          <i class="fas fa-arrow-right"></i>
+          Sequence Options
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-sequence-options-id">id</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-sequence-options-delete">Delete</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-sequence-options-before">Before</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-sequence-options-after">After</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-sequence-options-replace">Replace</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-dsl-options-patching">
+          <i class="fas fa-arrow-right"></i>
+          Patching
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-patching-patch">Patch</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-dsl-options-patching-patch-option">Patch Option</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-variable-mapping-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Variable Mapping</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-variable-mapping-overview">
+          <i class="fas fa-arrow-right"></i>
+          Overview
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-composable-i-o">
+          <i class="fas fa-arrow-right"></i>
+          Composable I/o
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-in-">
+          <i class="fas fa-arrow-right"></i>
+          In()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-mapping-hash">Mapping hash</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-limiting-array">Limiting array</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-filter-method">Filter method</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-in-keyword-arguments">Keyword arguments</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-out-">
+          <i class="fas fa-arrow-right"></i>
+          Out()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-limiting-array">Limiting array</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-mapping-hash">Mapping hash</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-keyword-arguments">Keyword arguments</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-out-outer-context">Outer context</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-inject-">
+          <i class="fas fa-arrow-right"></i>
+          Inject()
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-inject-array-style">Array style</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-inject-defaulting">Defaulting</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-inject-override">Override</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-macro">
+          <i class="fas fa-arrow-right"></i>
+          Macro
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-inheritance">
+          <i class="fas fa-arrow-right"></i>
+          Inheritance
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-introspect">
+          <i class="fas fa-arrow-right"></i>
+          Introspect
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-variable-mapping-input-output">
+          <i class="fas fa-arrow-right"></i>
+          Input / Output
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-input">:input</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-output">:output</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-variable-mapping-input-output-inject">:inject</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-dependency-injection-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Dependency Injection</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-dependency-injection-overview">
+          <i class="fas fa-arrow-right"></i>
+          Overview
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-dependency-injection-mapping">
+          <i class="fas fa-arrow-right"></i>
+          Mapping
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-dependency-injection-dry-container">
+          <i class="fas fa-arrow-right"></i>
+          Dry container
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-macro-api-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Macro API</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-macro-api-definition">
+          <i class="fas fa-arrow-right"></i>
+          Definition
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-macro-api-usage">
+          <i class="fas fa-arrow-right"></i>
+          Usage
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-macro-api-options">
+          <i class="fas fa-arrow-right"></i>
+          Options
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-macro-api-options-subprocess">Subprocess</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-internals-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Internals</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-internals-introspection-api">
+          <i class="fas fa-arrow-right"></i>
+          Introspection API
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-introspection-api-id">ID</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-introspection-api-task">Task</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-introspection-api-data">Data</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-internals-circuit-interface">
+          <i class="fas fa-arrow-right"></i>
+          Circuit Interface
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-invocation">Invocation</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-signature">Signature</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-circuit-options">Circuit options</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-start_task">Start_task</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-exec_context">Exec_context</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-circuit-interface-dsl">DSL</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-internals-step-interface">
+          <i class="fas fa-arrow-right"></i>
+          Step Interface
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-keyword-arguments">Keyword Arguments</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-return-value">Return Value</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-return-signal">Return Signal</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-instance-method">Instance Method</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-class-method">Class Method</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-callable">Callable</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-internals-step-interface-module">Module</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-taskwrap-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>TaskWrap</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-taskwrap-example">
+          <i class="fas fa-arrow-right"></i>
+          Example
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-step">
+          <i class="fas fa-arrow-right"></i>
+          Step
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-call_task">
+          <i class="fas fa-arrow-right"></i>
+          call_task
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-runtime">
+          <i class="fas fa-arrow-right"></i>
+          Runtime
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-extension">Extension</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-invoke">Invoke</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-step-filter">Step filter</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#activity-taskwrap-runtime-top-activity">Top activity</a>
+        </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-static">
+          <i class="fas fa-arrow-right"></i>
+          Static
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-taskwrap-introspection">
+          <i class="fas fa-arrow-right"></i>
+          Introspection
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="activity-troubleshooting-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Troubleshooting</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#activity-troubleshooting-type-error">
+          <i class="fas fa-arrow-right"></i>
+          Type Error
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-troubleshooting-wrong-circuit">
+          <i class="fas fa-arrow-right"></i>
+          Wrong circuit
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#activity-troubleshooting-illegal-signal-error">
+          <i class="fas fa-arrow-right"></i>
+          Illegal Signal Error
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

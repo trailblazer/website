@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Trailblazer - Endpoint</title>
+
+    
+    <script src="/vite/assets/documentation.80d1547f.js" crossorigin="anonymous" type="module"></script><link rel="modulepreload" href="/vite/assets/main.8edf4e21.js" as="script" crossorigin="anonymous">
+<link rel="modulepreload" href="/vite/assets/initAnchor.90976c72.js" as="script" crossorigin="anonymous"><link rel="stylesheet" href="/vite/assets/main.f0b29665.css" media="screen" />
+<link rel="stylesheet" href="/vite/assets/initAnchor.22f475c1.css" media="screen" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800"
+      rel="stylesheet"
+    >
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    >
+    
+
+    
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-69514939-1"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-69514939-1");
+      </script>
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/vite/assets/favicon.39e9303e.ico">
+  </head>
+  <body>
+    <div class="alert alert-primary m-0 rounded-0 text-center" role="alert">
+      <span class="alert-text text-center">
+        <!-- The new TRB 2.1 book series has begun - 82 pages are <a class="alert-link" href="https://leanpub.com/buildalib">waiting for you</a>! -->
+        Dear Russian friends, please watch President Zelenskyy's
+        <a href="https://twitter.com/PMoelleken/status/1496941845812760577">speech addressed to you</a>.
+        🇺🇦 Help our brave mates in Ukraine
+        <a
+          href="https://actions.sumofus.org/a/give-to-ukrainians-who-need-an-urgent-lifeline"
+        >
+          with a donation
+        </a>.
+      </span>
+    </div>
+
+    <div class="lg-bg">
+      <!-- Add class="session-show" if you need a header with dark background -->
+      <header
+        id="header"
+        class="trailblazer-header documentation-navbar navbar navbar-expand-lg flex-column flex-md-row"
+      >
+        <h1 class="m-2">
+          <a class="navbar-brand mr-0 mr-md-2" href="/2.1/index.html">Trailblazer</a>
+        </h1>
+
+        <div class="navbar-nav-scroll ml-md-auto">
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="d-none d-md-block">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+    <li>
+      <div id="docsearch"></div> https://docsearch.algolia.com/docs/DocSearch-v3
+    </li>
+  
+  -->
+</ul>
+
+        </div>
+      </header>
+
+      <main>
+        <section class="documentation-main">
+          <div class="container-fluid">
+            <div class="row flex-xl-nowrap">
+              <div class="col-md-3 doc-xl-2 border-bottom order-1 sidebar-accordion sidebar-scroll">
+                <form class="d-md-none d-flex align-items-center position-relative py-3 mx-n3 border-bottom">
+                  <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarTrailBlazer"
+                    aria-controls="navBarTrailBlazer"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <i class="far fa-lg fa-bars"></i>
+                  </button>
+                </form>
+                <div class="collapse d-md-block py-3 mx-n3" id="navBarTrailBlazer">
+                  <div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="trailblazer">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/trailblazer.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#trailblazer-collapse"
+          aria-expanded="false"
+          aria-controls="trailblazer-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Trailblazer</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="rails-integration">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/rails.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#rails-integration-collapse"
+          aria-expanded="false"
+          aria-controls="rails-integration-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Rails Integration</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="test">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/test.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#test-collapse"
+          aria-expanded="false"
+          aria-controls="test-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Test</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="internals">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/internals.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#internals-collapse"
+          aria-expanded="false"
+          aria-controls="internals-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Internals</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="activity">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#activity-collapse"
+          aria-expanded="false"
+          aria-controls="activity-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Activity</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="macro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/macro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#macro-collapse"
+          aria-expanded="false"
+          aria-controls="macro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Macro</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="operation">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/operation.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#operation-collapse"
+          aria-expanded="false"
+          aria-controls="operation-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Operation</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="workflow">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/workflow.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#workflow-collapse"
+          aria-expanded="false"
+          aria-controls="workflow-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Workflow</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="endpoint">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/endpoint.html">
+        <button
+          class=""
+          data-toggle="collapse"
+          data-target="#endpoint-collapse"
+          aria-expanded="true"
+          aria-controls="endpoint-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Endpoint</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+    <div
+      id="endpoint-collapse"
+      class="collapse show"
+      aria-labelledby="endpoint"
+      data-parent="#accordion"
+    >
+      <ul class="nav vertical menu navbar-light">
+        
+          <li class="nav-item">
+            <a class="nav-link active" href="#endpoint-overview">
+              Overview
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#endpoint-configuration">
+              Configuration
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#endpoint-api-interface">
+              API Interface
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link " href="#endpoint-web-interface">
+              Web Interface
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="reform">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/reform.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#reform-collapse"
+          aria-expanded="false"
+          aria-controls="reform-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Reform</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="cells">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/cells.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#cells-collapse"
+          aria-expanded="false"
+          aria-controls="cells-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Cells</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="representable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/representable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#representable-collapse"
+          aria-expanded="false"
+          aria-controls="representable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Representable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="disposable">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/disposable.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#disposable-collapse"
+          aria-expanded="false"
+          aria-controls="disposable-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Disposable</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="roar">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/roar.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#roar-collapse"
+          aria-expanded="false"
+          aria-controls="roar-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Roar</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+<div class="border-bottom">
+  <div class="my-4">
+    <div class="sidebar-accordion-wrapper">
+  <div id="tutorials">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/tutorials/activity.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#tutorials-collapse"
+          aria-expanded="false"
+          aria-controls="tutorials-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>Tutorials</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+<div class="sidebar-accordion-wrapper">
+  <div id="pro">
+    <h2 class="mb-0 mt-1 sidebar-accordion-item">
+      <a href="/2.1/docs/pro.html">
+        <button
+          class="collapsed"
+          data-toggle="collapse"
+          data-target="#pro-collapse"
+          aria-expanded="false"
+          aria-controls="pro-collapse"
+        >
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-times"></i>
+          <span>PRO</span>
+        </button>
+      </a>
+    </h2>
+  </div>
+
+  
+</div>
+
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <main class="col-md-9 doc-xl-8 py-md-5 pl-md-5 order-2" role="main">
+                <div class="doc-block section-name session-show">
+                  <h1 class="w-100">Endpoint</h1>
+                  <ul>
+                    <li>
+                      <i class="far fa-clock pink"></i>
+                      <span>Last updated 29 Oct 22</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="doc-block">
+<p>The <code>endpoint</code> gem is the missing link between your routing framework and your business code. It acts like a mix of <code>before_filter</code>s and “responder” that handles authentication and authorization, invoking your actual logic, and rendering a response.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>These docs, as of early December 2020, are still work-in-progress, and so is the <code>endpoint</code> gem. <a href="https://github.com/trailblazer/trailblazer-endpoint/issues">Your input</a> for best practices is highly appreciated!</p>
+
+<p>We’re pretty confident that by the end of the year <code>endpoint</code> is released and the API docs are streamlined.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h2 id="endpoint-overview">Overview</h2>
+<p><!-- {endpoint-overview-toc} --></p>
+
+<p>An endpoint links your routing with your business code. The idea is that your controllers are pure HTTP routers, calling the respective endpoint for each action. From there, the endpoint takes over, handles authentication, policies, executing the domain code, interpreting the result, and providing hooks to render a response.</p>
+
+<p>Instead of dealing with a mix of <code>before_filter</code>s, Rack-middlewares, controller code and callbacks, an endpoint is just another activity and allows to be customized with the well-established Trailblazer mechanics.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-draft.3f7e9f04.webp" /></p>
+
+<p>The abstract cave painting beautifully illustrates the concept of an endpoint.</p>
+
+<ul>
+  <li>Instead of invoking your domain operation yourself (which would be running <code>Song::Operation::Create</code> here), the endpoints takes care of that. You only configure and run the endpoint.</li>
+  <li>The endpoint runs auth*-related logic before and response-specific code after the operation, depending on the outcome of the former code. Flow-control in the endpoint is implemented identically to what happens in activities and operations: an endpoint is just another activity using the <a href="/2.1/docs/activity.html#activity-wiring-api">Wiring API</a> to insert steps and connect outputs.</li>
+  <li>For pluggability, an endpoint is split into a <em>Protocol</em> and an <em>Adapter</em> part. This separates generic logic from  environment-dependent code.</li>
+  <li>You may use the wiring mechanics to customize endpoint, adapter, protocol, remove or change steps, rewire outputs, inherit from base endpoints, and so on.</li>
+  <li>All Trailblazer developer niceties are available: tracing and debugging endpoints via <code>#wtf?</code> and friends helps understanding flow and behavior.</li>
+</ul>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-overview-example">Example</h3>
+<p><!-- {endpoint-overview-example-toc} --></p>
+
+<p>In a Rails controller, a controller action could look as follows.</p>
+
+<pre><code>class DiagramsController &lt; ApplicationController
+  endpoint Diagram::Operation::Create, [:is_logged_in?, :can_add_diagram?]
+
+  def create
+    endpoint Diagram::Operation::Create do |ctx, **|
+      redirect_to diagram_path(ctx[:diagram].id)
+    end.Or do |ctx, **|
+      render :form
+    end
+  end
+end
+</code></pre>
+
+<p>While routing and redirecting/rendering still happens in Rails, all remaining steps are handled in the endpoint.</p>
+
+<p>An API controller action, where the rendering is done generically, could look much simpler.</p>
+
+<pre><code>class API::V1::DiagramsController &lt; ApplicationController
+  endpoint Diagram::Operation::Create, [:is_logged_in?, :can_add_diagram?]
+
+  def create
+    endpoint Diagram::Operation::Create
+  end
+end
+</code></pre>
+
+<p>Endpoints are easily customized but their main intent is to reduce fuzzy controller code and providing best practices for both HTML-rendering controllers and APIs.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-overview-endpoint">Endpoint</h3>
+<p><!-- {endpoint-overview-endpoint-toc} --></p>
+
+<p>Each controller action maintains its very own endpoint. The endpoint contains the actual business operation to be executed.</p>
+
+<p>An endpoint is separated into two parts: protocol and adapter.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Endpoint</li>
+    <li id="endpoint-overview-endpoint-protocol">Protocol</li>
+</ul>
+
+<p>The protocol is where authentication, policy checks, and eventually your domain logic happen. All termini of the protocol’s activity are standardized end events - that’s how protocol and adapter communicate.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-protocol.e7c76d24.webp" /></p>
+
+<p>Note how a handful of default steps lead into six standardized termini, allowing to plug protocols into different adapters. Imagine replacing your self-written API adapter with a canonical JSON-API adapter, for example.</p>
+
+<p>The default steps of the protocol handle the following aspects.</p>
+
+<ul>
+  <li><strong>AUTHENTICATION</strong> The <code>authenticate</code> step is specific to the environment. For instance, it might deserialize a user from a web cookie, or parse an XML header for authentication detail. The outcome is communicated through its well-defined terminus <code>not_authenticated</code>. It is up to you to implement this step.</li>
+  <li><strong>AUTHORIZATION</strong> Per default, there’s a <code>policy</code> step to decide whether or not the domain operation should be invoked. Should the check fail the protocol will end on <code>not_authorized</code>. It is up to you to replace, implement or remove this step.</li>
+  <li><strong>DOMAIN ACTIVITY</strong> Once the above steps have been executed successfully, your actual business code is invoked. This could be an operation, a workflow, or hand-baked Ruby code completely unrelated to Trailblazer.</li>
+</ul>
+
+<p>Four more termini implement the following concepts.</p>
+
+<ul>
+  <li><code>success</code> indicates a successful run of the domain activity.</li>
+  <li><code>failure</code> is interpreted as “invalid data”. Most operations end on <code>failure</code> if something went “wrong”, such as a failed validation.</li>
+  <li><code>not_found</code> is reached when the domain operation (or additional steps in the protocol) couldn’t find a particular object. Most “legacy” operations don’t have this output, yet. However, the <code>Model()</code> macro <a href="/2.1/docs/operation.html#operation-macros-model-not-found">now supports this terminus</a>. Alternatively, you could add a decider step after your domain activity that connects to the <code>not_found</code> terminus if <code>ctx[:model]</code> is empty.</li>
+  <li><code>invalid_data</code> is an experimental terminus that is designed to represent a validation failure more explicitly. Ignore it for now.</li>
+</ul>
+
+<p>It is important to understand that the protocol doesn’t interact with the environment: while it handles all the “boring” tasks like auth* and running the actual domain activity, it does not react to that but merely communicates the outcome via one of the well-defined termini.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Endpoint</li>
+    <li id="endpoint-overview-endpoint-adapter">Adapter</li>
+</ul>
+
+<p>In turn, the adapter knows nothing about what happened in the protocol. Its job is to prepare everything for the response, which usually implies setting HTTP headers, a status and rendering some kind of document.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-adapter-web.4ae0d07f.webp" /></p>
+
+<p>Structurally, the adapter activity contains the protocol as just another step. The protocol’s termini are wired to the handler paths in the adapter (depicted above as dotted lines). As visible, the wiring is completely customizable using the TRB wiring API. For example, <code>failure</code> and <code>invalid_data</code> are both wired to the same handler path.</p>
+
+<p>The three end events <code>not_found</code>, <code>not_authenticated</code> and <code>not_authorized</code> are all running through the same path, ending in the <code>fail_fast</code> terminus. This path is called <code>protocol_failure</code> and implies a non-business problem, like a failed authentication.</p>
+
+<p>Business failures such as a invalid contract validation will usually end up on the <code>failure</code> terminus.</p>
+
+<p>Both the <code>Web</code> and the <code>API</code> adapter will now run, and the frontend code then interprets the outcome and runs your configured <em>block</em> (e.g. <code>render</code> or <code>redirect_to</code>).</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Currently, we have very simple adapters that don’t do much, as we’re still figuring out the best practices here.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h2 id="endpoint-configuration">Configuration</h2>
+<p><!-- {endpoint-configuration-toc} --></p>
+
+<p>In Rails, the endpoint layer is introduced by including a customized module in a controller. You may do so by using <code>Controller::module</code>.</p>
+
+<pre><code>class ApplicationController::Api &lt; ApplicationController
+  include Trailblazer::Endpoint::Controller.module(api: true, application_controller: true)
+</code></pre>
+
+<p>The options are discussed in the respective API and Web sections. When including, a bunch of configuration directives are set up, and a handful of class and instance methods are added to the controller.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-configuration-controller-level-setup">Controller-level Setup</h3>
+<p><!-- {endpoint-configuration-controller-level-setup-toc} --></p>
+
+<p>Configuring endpoints for your application involves three steps.</p>
+
+<ul>
+  <li>Defining application-wide and/or controller-wide runtime options by setting <code>directive</code>s.</li>
+  <li>Setting application or controller-wide default values for building endpoints at compile-time using the “hash-form” of <code>::endpoint</code>.</li>
+  <li>Fine-tuning each controller action endpoint using the “targeted” <code>endpoint Song::Operation::Create</code> and passing specific options.</li>
+</ul>
+
+<p>Those options will be combined at compile-time to build a specific endpoint activity for each controller action, where the “targeted” options (3.) override default settings from the “hash-form” (2.).</p>
+
+<p>It is a good strategy to configure as much as possible on the controller-level and customize per specific endpoint. Use the “hash-form” of <code>endpoint</code> to configure default options.</p>
+
+<p>For example, in a set of web controllers, most endpoints will reuse the same protocol and adapter. You can specify default values on the (application) controller level, here, on <code>ApplicationController::Web</code>.</p>
+
+<pre><code># app/controllers/application_controller/api.rb
+endpoint protocol: Protocol, adapter: Adapter::Representable do
+  # {Output(:not_found) =&gt; Track(:not_found)}
+  {}
+end
+</code></pre>
+
+<p>The “hash-form” <code>::endpoint</code> method accepts the following options.</p>
+
+<ul>
+  <li><code>:protocol</code></li>
+  <li><code>:adapter</code></li>
+  <li>The “protocol block” passed as a block to <code>::endpoint</code>. This block is executed in the protocol context and allows adding, changing and removing steps using the TRB wiring API. Currently, you need to return a hash from it. (FIXME)</li>
+  <li><code>:find_process_model</code> to activate process model finding.</li>
+  <li><code>:serialize</code> and <code>:deserialize</code> to active encrypted suspend/resume session handling.</li>
+  <li><code>:deserialize_process_model_id_from_resume_data</code> to automatically extract the process model’s ID from the resume data. (experimental)</li>
+</ul>
+
+<p>Keep in mind that those options can be overridden using the “targeted” <code>::endpoint</code> method.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Controller-level Setup</li>
+    <li id="endpoint-configuration-controller-level-setup-action-endpoint">Action Endpoint</li>
+</ul>
+
+<p>Every action needs to have its very own endpoint set up. This is usually done one the class level with the <code>::endpoint</code> method.</p>
+
+<pre><code>class SongsController &lt; ApplicationController::Api
+  endpoint Song::Operation::Create
+  endpoint Song::Operation::Show do
+    {Output(:not_found) =&gt; Track(:not_found)}  # add additional wiring to {domain_activity}
+  end
+</code></pre>
+
+<p>It’s sufficient to simply pass the operation constant to <code>::endpoint</code> to make Trailblazer set up an endpoint that contains the specified operation as its domain activity.
+ All other values are copied over from the <a href="#endpoint-configuration-endpoint-setup">generic setup</a>.</p>
+
+<p>Note that you can override the <em>protocol block</em> per action/endpoint.</p>
+
+<p>It’s possible to use an arbitrary alias for the endpoint if you provide the <code>:domain_activity</code> option.</p>
+
+<pre><code>endpoint :create, domain_activity: Song::Operation::Create
+</code></pre>
+
+<p>You can then invoke the endpoint by providing the alias.</p>
+
+<pre><code>def create
+  endpoint :create
+end
+</code></pre>
+
+<p>This is helpful for triggering events when using workflows within the endpoint. (We will document that soon!)</p>
+
+<h1 id="todo-domainctxfilter-currentuser">todo domain_ctx_filter, :current_user</h1>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Controller-level Setup</li>
+    <li id="endpoint-configuration-controller-level-setup-directives">Directives</li>
+</ul>
+
+<p>As everything in TRB, an endpoint is invoked top-to-bottom. Any dependency required inside, for instance the <code>current_user</code> in the domain activity, needs to be “thrown into” the invocation. Just like you’re used to when calling operations manually.</p>
+
+<p>Injecting dependencies is done using directives. Those are Ruby snippets that provide variables.</p>
+
+<pre><code>  def self.options_for_domain_ctx(ctx, controller:, **) # TODO: move to ApplicationController
+    {
+      params: controller.params,
+    }
+  end
+
+  directive :options_for_domain_ctx,    method(:options_for_domain_ctx)
+</code></pre>
+
+<p>By registering directives using the same-named method, Trailblazer knows that you want to add variables to a well-defined configuration hash. The directives are executed at certain hooks in <code>endpoint</code> and hopefully provide the desired data.</p>
+
+<p>The <code>endpoint</code> gem uses four directives.</p>
+
+<ul>
+  <li><code>options_for_endpoint</code> is data passed directly to the endpoint activity. For instance, if you need to parse an XML body for authentication, or inspect a JWT, you have to make sure that at least the <code>request</code> object is available in this hash.</li>
+  <li><code>options_for_domain_ctx</code> represents the “hash” passed to the domain activity. This is where <code>params</code> and such is passed.</li>
+  <li><code>options_for_block_options</code> are three blocks defining the behavior for the three different outcomes. Hence, the keys are <code>:success_block</code>, <code>:failure_block</code> and <code>:protocol_failure_block</code>.</li>
+  <li><code>options_for_flow_options</code> are library-specific options. Here, you could set <code>context_options</code> to alias keys in the <code>ctx</code> object, activate your own tracing, etc.</li>
+</ul>
+
+<p>Please refer to the API and Web sections to see directives in action.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>TODO note: we will shortly document how <code>directive</code>s work generically as it’s a mechanism independent from <code>endpoint</code>.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-configuration-runtime">Runtime</h3>
+<p><!-- {endpoint-configuration-runtime-toc} --></p>
+
+<p>To run an endpoint in a controller action, use the <code>#endpoint</code> method. Its interface varies depending on if you use the API or the DSL version.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create do |ctx, model:, **|
+    redirect_to song_path(model.id)
+  end
+end
+</code></pre>
+
+<p>The particular endpoint is referenced by passing the alias to the <code>#endpoint</code> method, which is usually the constant of the operation.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Runtime</li>
+    <li id="endpoint-configuration-runtime-options">Options</li>
+</ul>
+
+<p>Any options passed to the method will be available in the <code>endpoint_ctx</code>.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create, session: {user_id: 2} do |ctx, current_user:, model:, **|
+    render html: cell(Song::Cell::Create, model, current_user: current_user)
+  end
+end
+</code></pre>
+
+<p>If you want to override the <code>domain_ctx</code>, the <code>:options_for_domain_ctx</code> option is your friend.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create, options_for_domain_ctx: {params: {id: 999}} do |ctx, model:, **|
+    render html: cell(Song::Cell::Create, model)
+  end
+end
+</code></pre>
+
+<p>The <code>options_for_domain_ctx</code> directive will not be used if you provide the option manually.</p>
+
+<!--
+
+
+* top to bottom, as everything in TRB.
+
+* controllers are configuration containers for input and rendering behavior (failure case, success!)
+
+* Endpoints are just a suggestion following a best-practice. You can and should rewire them using the Wiring API if you find the existing pattern not suiting your needs.
+* The separation of protocol and adapter makes it super simple to reuse adapters for many protocols.
+* Certain steps, like `authentication` can easily be replaced with  a subprocess from authentication gems, like Tyrant or Devise. Again, you can use the Wiring API.
+
+      endpoint =
+        Trailblazer::Endpoint.build(
+          domain_activity: activity,
+          protocol: Trailblazer::Endpoint::Protocol,
+          adapter:  Trailblazer::Endpoint::Adapter::Web,
+      ) do
+        # this block is executed in the context of the {Protocol}
+
+        step Subprocess(Tyrant::Auth::Cookie), replace: :authenticate, inherit: true # replace the template's authentication with yours
+        {}
+      end
+-->
+
+<p><span class="divider"></span></p>
+
+<h2 id="endpoint-api-interface">API Interface</h2>
+<p><!-- {endpoint-api-interface-toc} --></p>
+
+<p>If a controller exposes a generic behavior, the <code>API</code> interface is your pick. While you can still override specific behavior, it abstracts best practices for document APIs.</p>
+
+<p>The <code>API</code> interface is designed to generically render a document response (such as XML or JSON) along with a response status. It does so by placing handler and render steps onto the three outcome tracks for <code>success</code>, <code>failure</code> and <code>protocol_failure</code> in an API-specific <code>Adapter</code>.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-adapter-api.759fe2e8.webp" /></p>
+
+<p>In <code>Adapter::API</code> there’s one track for a <code>success</code>ful domain execution, one for <code>failure</code> or <code>invalid_data</code> and one <em>protocol failure</em> track that handles <code>not_found</code>, <code>not_authorized</code> and <code>not_authenticated</code>. The idea is to render a generic error with HTTP status code for the latter three cases, hence all three outcomes lead into the same track.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-application-controller">Application Controller</h3>
+<p><!-- {endpoint-api-interface-application-controller-toc} --></p>
+
+<p>It is a good practice to install an <code>ApplicationController::Api</code> controller in your app to inherit from.</p>
+
+<pre><code>class ApplicationController::Api &lt; ApplicationController
+  include Trailblazer::Endpoint::Controller.module(api: true, application_controller: true)
+</code></pre>
+
+<p>Introducing all necessary class and runtime methods, every controller inheriting from <code>Api</code> is ready to be used as an endpoint controller for a document API.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Please include the <code>Endpoint::Controller</code> module only once per inheritance tree.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-action">Action</h3>
+<p><!-- {endpoint-api-interface-action-toc} --></p>
+
+<p>Since the response behavior in APIs is very universal, controllers usually look quite simple.</p>
+
+<pre><code>module Api
+  module V1
+    class SongsController &lt; ApplicationController::Api
+      endpoint Song::Operation::Create
+      endpoint Song::Operation::Show do
+        {Output(:not_found) =&gt; Track(:not_found)}  # add additional wiring to {domain_activity}
+      end
+
+      def create
+        endpoint Song::Operation::Create, representer_class: Song::Representer
+      end
+
+      # ...
+    end
+  end
+end
+</code></pre>
+
+<p>Note that the concrete controllers are derived from <code>ApplicationController::Api</code>.</p>
+
+<p>On the class level, each endpoint is configured using the <code>::endpoint</code> method. The only required option is the operation you intend to run (also known as <em>domain_activity</em>). Optionally, you might add additional wiring using the <em>protocol block</em>, such as adding a <code>not_found</code> output. (FIXME: explain later)</p>
+
+<p>In the actual action you can now run the endpoint and your domain operation using the <code>#endpoint</code> instance method. Additional options may be passed and will be available in the <code>endpoint_ctx</code>.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Endpoints should be configured on the class level. This allows compiling each activity when your code is loaded, which results in a much faster app performance than computing the endpoint at runtime.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-configuration">Configuration</h3>
+<p><!-- {endpoint-api-interface-configuration-toc} --></p>
+
+<p>A handful of options need to be configured using Trailblazer’s <code>directive</code> mechanism.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-api-interface-configuration-response">Response</li>
+</ul>
+
+<p>Universal behavior is usually configured on the app-level. In Rails, this would be the <code>ApplicationController</code> or a generic subclass such as <code>ApplicationController::Api</code>.</p>
+
+<pre><code>class ApplicationController::Api &lt; ApplicationController
+  include Trailblazer::Endpoint::Controller.module(api: true, application_controller: true)
+
+  def self.options_for_block_options(ctx, controller:, **)
+    response_block = -&gt;(ctx, endpoint_ctx:, **) do
+      controller.render json: endpoint_ctx[:representer], status: endpoint_ctx[:status]
+    end
+
+    {
+      success_block:          response_block,
+      failure_block:          response_block,
+      protocol_failure_block: response_block
+    }
+  end
+
+  directive :options_for_block_options, method(:options_for_block_options)
+</code></pre>
+
+<p>The hash returned by <code>#options_for_block_options</code> configures the generic behavior for the three outcomes <code>success</code>, <code>failure</code> and <code>protocol_failure</code>.</p>
+
+<p>You have access to the currently executed <code>controller</code> instance and hence can use all of Rails’ controller API, in our case, render a JSON document and set a HTTP response status. Since all three outcomes do the same, this is very generic configuration. Nevertheless, here is the place to add additional headers such as <code>Authorization</code>.</p>
+
+<p>Both the <code>:representer</code> and the <code>:status</code> variables are set during the endpoint’s invocation. We will discuss this shortly.</p>
+
+<p>Last, you need to use the <code>::directive</code> method to register your configuration. The <code>:options_for_block_options</code> directive is used internally after running the endpoint and before rendering the response.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-api-interface-configuration-overriding-block-options">Overriding Block options</li>
+</ul>
+
+<p>Per default, the three blocks to render the response are configured via the <code>:options_for_block_options</code> directive. You may override them via <code>#endpoint</code>.</p>
+
+<pre><code>def show
+  endpoint Song::Operation::Show, representer_class: Song::Representer,
+    protocol_failure_block: -&gt;(ctx, endpoint_ctx:, **) { head endpoint_ctx[:status] + 1 }
+end
+</code></pre>
+
+<p>This is handy to customize behavior in a particular action, or for debugging.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-api-interface-configuration-runtime-options">Runtime Options</li>
+</ul>
+
+<p>As the endpoint needs data to perform authentication, authorization and eventually the rendering, a few more options are set using the canonical <code>options_for_endpoint</code> directive.</p>
+
+<pre><code>  def self.options_for_endpoint(ctx, controller:, **)
+    {
+      request: controller.request,
+      errors_representer_class: App::Api::V1::Representer::Errors,
+      errors: Trailblazer::Endpoint::Adapter::API::Errors.new,
+    }
+  end
+
+  directive :options_for_endpoint, method(:options_for_endpoint)
+</code></pre>
+
+<p>The three variables <code>:request</code>, <code>:errors</code> and <code>:errors_representer</code> will now be injected into the endpoint’s <code>ctx</code>. Note that these are specific to our authentication and our very own <code>Adapter</code> implementation. In your project, you might not need representers or an application <code>Errors</code> object.</p>
+
+<p>In order to inject data into your domain operation (e.g. <code>Song::Operation::Create</code>), use the <code>:options_for_domain_ctx</code> directive. It can be easily overridden at run-time in the controller action if you need to tweak it specifically (FIXME: add link).</p>
+
+<pre><code>  def self.options_for_domain_ctx(ctx, controller:, **) # TODO: move to ApplicationController
+    {
+      params: controller.params,
+    }
+  end
+
+  directive :options_for_domain_ctx,    method(:options_for_domain_ctx)
+</code></pre>
+
+<p>The domain operation can now access <code>ctx[:params]</code>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-protocol">Protocol</h3>
+<p><!-- {endpoint-api-interface-protocol-toc} --></p>
+
+<p>For an API-specific protocol, in most cases a password or JWT-based authentication will be installed. Authorization, or a policy deciding whether or not this action is legit, can be handled with your own logic or entirely removed and done in the operation itself.</p>
+
+<p>Both authorization and policy are discussed in the tutorial, simple versions are <a href="https://github.com/trailblazer/trailblazer-endpoint/blob/prototype-nick/test/rails-app/app/concepts/auth/operation/authenticate.rb">implemented in the gem test suite</a>.</p>
+
+<p>Whatever your auth* logic does, it should set a <code>ctx[:current_user]</code> that will then get passed into your business operation.</p>
+
+<pre><code>class Protocol &lt; Trailblazer::Endpoint::Protocol
+  step Auth::Operation::Policy, inherit: true, id: :policy, replace: :policy
+  step Subprocess(Auth::Operation::Authenticate), inherit: true, id: :authenticate, replace: :authenticate
+end
+</code></pre>
+
+<p>Derive your API protocol from <code>Trailblazer::Endpoint::Protocol</code> and override the steps you want to customize using the <code>:inherit</code> option, so that the original step’s wiring stays in place.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-adapter">Adapter</h3>
+<p><!-- {endpoint-api-interface-adapter-toc} --></p>
+
+<p>It is important to understand that the <code>Adapter::API</code> shipped with <code>endpoint</code> only sets the HTTP status according to the outcome. In order to render a document, additional steps have to be added to the adapter subclass.</p>
+
+<pre><code>module Adapter
+  class Representable &lt; Trailblazer::Endpoint::Adapter::API
+    step :render # added before End.success
+    step :render_errors, after: :_422_status, magnetic_to: :failure, Output(:success) =&gt; Track(:failure)
+    step :render_errors, after: :protocol_failure, magnetic_to: :fail_fast, Output(:success) =&gt; Track(:fail_fast), id: :render_protocol_failure_errors
+
+    def render(ctx, domain_ctx:, representer_class:, **) # this is what usually happens in your {Responder}.
+      ctx[:representer] = representer_class.new(domain_ctx[:model] || raise("no model found!"))
+    end
+
+    def render_errors(ctx, errors:, errors_representer_class:, **) # TODO: extract with {render}
+      ctx[:representer] = errors_representer_class.new(errors)
+    end
+
+    Trailblazer::Endpoint::Adapter::API.insert_error_handler_steps!(self)
+    include Trailblazer::Endpoint::Adapter::API::Errors::Handlers # handler methods to set an error message.
+  end # Representable
+end
+</code></pre>
+
+<p>Those render steps in our example app use two injected variables for rendering.</p>
+
+<p>The <code>:representer_class</code> variable is injected per controller action by passing it to the <code>endpoint</code> helper.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create, representer_class: Song::Representer
+end
+</code></pre>
+
+<p>Since the error rendering is generic, the <code>:errors_representer_class</code> variable is set controller-wide <a href="#endpoint-api-interface-configuration-runtime-options">via <code>options_for_endpoint</code></a>.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-api-endpoint">api endpoint</h3>
+<p><!-- {endpoint-api-interface-api-endpoint-toc} --></p>
+
+<p>Putting together the <code>Protocol</code> with the specific <code>Adapter</code> along with the <code>Create</code> domain operation will result in a flow as depicted here.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-adapter-api.759fe2e8.webp" /></p>
+
+<p>The separation of the <code>Protocol</code> and <code>Adapter</code> allows to use the same business logic in different environments, the <code>Adapter</code> only reacts to well-defined outcomes such as “not found” or “invalid data” and, in an API context, responds with a rendered document and a HTTP status. This behavior could and should be different [in a web UI].</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>api endpoint</li>
+    <li id="endpoint-api-interface-api-endpoint-handlers">Handlers</li>
+</ul>
+
+<p>In our example adapter, each <code>_xxx_status</code> method sets a status code in the endpoint’s context. Those steps are shipped with the gem in <code>Adapter::API</code>.</p>
+
+<pre><code># endpoint/lib/trailblazer/endpoint/adapter.rb
+class Trailblazer::Endpoint::Adapter::API &lt; Web
+  # ...
+  def _422_status(ctx, **)
+    ctx[:status] = 422
+  end
+</code></pre>
+
+<p>All <code>handle_*</code> steps are inserted via <code>include Trailblazer::Endpoint::Adapter::API::Errors::Handlers</code>, in their standard version they simply set an error message on the <code>errors</code> object instance.</p>
+
+<pre><code># endpoint/lib/trailblazer/endpoint/adapter.rb
+class Trailblazer::Endpoint::Adapter::API &lt; Web
+  # ...
+  def handle_invalid_data(ctx, errors:, **)
+    errors.message = "The submitted data is invalid."
+  end
+</code></pre>
+
+<p>Feel free to replace, extend or remove these error handlers should you not want to maintain an <code>errors</code> object, for instance.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>api endpoint</li>
+    <li id="endpoint-api-interface-api-endpoint-protocol-failure">Protocol Failure</li>
+</ul>
+
+<p>Check again the above diagram. It is important to understand that only <code>failure</code> and <code>invalid_data</code> are wired to the explicit <code>failure</code> terminus in the adapter. This communicates a domain error, such as a failed validation or an expired account.</p>
+
+<p>All other problems are connected to the <code>protocol_failure</code> step and will end on the <code>fail_fast</code> terminus of the adapter, indicating a <em>protocol error</em> like wrong user credentials, a not-existent record, or missing permissions to perform that very operation.</p>
+
+<p>In the API context, protocol failures often need to be treated differently to domain errors. The first may be communicated to the user with a generic error message and an HTTP status code, whereas the latter often involves rendering the specific validation errors. The design of the <code>Adapter::API</code> in the endpoint gem makes this quite trivial.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-build">Build</h3>
+<p><!-- {endpoint-api-interface-build-toc} --></p>
+
+<p>Once all parts are written and configured, you need to configure the basic endpoint.</p>
+
+<pre><code># app/controllers/application_controller/api.rb
+endpoint protocol: Protocol, adapter: Adapter::Representable do
+  # {Output(:not_found) =&gt; Track(:not_found)}
+  {}
+end
+</code></pre>
+
+<p>All controllers derived from <code>ApplicationController::Api</code> will inherit those settings.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-api-interface-test">Test</h3>
+<p><!-- {endpoint-api-interface-test-toc} --></p>
+
+<p>To see your API endpoints in action, write a test. In the example, we use simple Rails controller tests.</p>
+
+<p>When <code>POST</code>ing a valid document to your <code>Create</code> action, a <code>200</code> HTTP is returned along with a JSON response which is the rendered object we just created.</p>
+
+<pre><code>post_json "/v1/songs", {id: 1}, yogi_jwt
+
+assert_response 200
+assert_equal "{\"id\":1}", response.body
+</code></pre>
+
+<p>Note the valid JWT token we pass along in the request. The valid token and the appropriate input data results in the following trace.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-success-trace.1ec0b92c.webp" /></p>
+
+<p>The next test covers the <code>not_authenticated</code> case where the JWT was not submitted.</p>
+
+<pre><code>post_json "/v1/songs", {} # no token
+assert_response 401
+assert_equal "{\"errors\":{\"message\":\"Authentication credentials were not provided or are invalid.\"}}", response.body
+</code></pre>
+
+<p>In case you’re wondering - the error message is set by the <code>handle_not_authenticated</code> step in the adapter.</p>
+
+<p>Here’s the trace.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-not_authenticated-trace.b4a2dd9a.webp" /></p>
+
+<p>As this is a protocol_failure, the endpoint terminates on its <code>fail_fast</code> end.</p>
+
+<p><span class="divider"></span></p>
+
+<h2 id="endpoint-web-interface">Web Interface</h2>
+<p><!-- {endpoint-web-interface-toc} --></p>
+
+<p>The Web interface is designed to be used in HTML-rendering controllers that operate web UIs.</p>
+
+<p>While its concepts are very similar to the mechanics found in API endpoints, it focuses on a better action API since web controllers very often need to customize behavior, such as redirecting, rendering pages in a specific fashion or even setting cookie values.</p>
+
+<pre><code>class SongsController &lt; ApplicationController::Web
+  # ...
+  def create
+    endpoint Song::Operation::Create do |ctx, model:, **|
+      render html: cell(Song::Cell::Create, model)          # render success cell
+    end.Or do |ctx, contract:, **|                          # validation failure
+      flash "Errors: #{contract.errors.messages}"
+      redirect_to "/my"                                     # manual override
+    end
+  end
+end
+</code></pre>
+
+<p>Endpoint’s <code>Or</code>-DSL is optimized for web-based controllers.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-web-interface-adapter">Adapter</h3>
+<p><!-- {endpoint-web-interface-adapter-toc} --></p>
+
+<p>The <code>Trailblazer::Endpoint::Adapter::Web</code> adapter is slightly simpler than the API version.</p>
+
+<p><img class="mx-auto d-block" src="/vite/assets/endpoint-adapter-web.4ae0d07f.webp" /></p>
+
+<p>As oppossed to the <code>Api</code> adapter, there are no handler steps and such installed. Use this adapter if you want to customize the flow or if you don’t need any automatic behavior.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-web-interface-application-controller">Application Controller</h3>
+<p><!-- {endpoint-web-interface-application-controller-toc} --></p>
+
+<p>A good practice is to install an <code>ApplicationController::Web</code> controller in your app to inherit from.</p>
+
+<pre><code>class ApplicationController::Web &lt; ApplicationController
+  include Trailblazer::Endpoint::Controller.module(dsl: true, application_controller: true)
+</code></pre>
+
+<p>By providing <code>dsl: true</code> you activate the <code>Or</code>-DSL.</p>
+
+<div class="bd-callout bd-callout-info">
+<p>Please include the <code>Endpoint::Controller</code> module only once per inheritance tree.</p>
+</div>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-web-interface-configuration">Configuration</h3>
+<p><!-- {endpoint-web-interface-configuration-toc} --></p>
+
+<p>The web interface uses the well-established mechanisms and directives on the controller class level.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-web-interface-configuration-endpoint-definition">Endpoint Definition</li>
+</ul>
+
+<p>Endpoints are defined per action on the controller class.</p>
+
+<pre><code>class SongsController &lt; ApplicationController::Web
+  endpoint Song::Operation::Create
+</code></pre>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-web-interface-configuration-options">Options</li>
+</ul>
+
+<p>You can use the four endpoint directives to configure what data gets passed to the endpoint and your domain activity (or operation).</p>
+
+<p>In order to perform authentication and authorization in the endpoint’s protocol, injecting the <code>session</code> is a good idea.</p>
+
+<pre><code>class ApplicationController::Web &lt; ApplicationController
+  include Trailblazer::Endpoint::Controller.module(dsl: true, application_controller: true)
+
+  def self.options_for_endpoint(ctx, controller:, **)
+    {
+      session: controller.session,
+    }
+  end
+
+  directive :options_for_endpoint, method(:options_for_endpoint)
+</code></pre>
+
+<p>This is done by setting a <code>options_for_endpoint</code> directive.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-web-interface-configuration-protocol">Protocol</li>
+</ul>
+
+<p>In a web context, the <code>Protocol</code> will usually extract the user from the cookie and perform a policy check based on that user.</p>
+
+<pre><code>class ApplicationController::Web &lt; ApplicationController
+# ...
+  class Protocol &lt; Trailblazer::Endpoint::Protocol
+    # provide method for {step :authenticate}
+    def authenticate(ctx, session:, **)
+      ctx[:current_user] = User.find_by(id: session[:user_id])
+    end
+
+    # provide method for {step :policy}
+    def policy(ctx, domain_ctx:, **)
+      Policy.(domain_ctx)
+    end
+
+    Trailblazer::Endpoint::Protocol::Controller.insert_copy_to_domain_ctx!(self, {:current_user =&gt; :current_user})
+    Trailblazer::Endpoint::Protocol::Controller.insert_copy_from_domain_ctx!(self, {:model =&gt; :process_model})
+  end
+</code></pre>
+
+<p>As always, you don’t have to perform the policy check in the protocol.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Configuration</li>
+    <li id="endpoint-web-interface-configuration-generic-endpoint">Generic endpoint</li>
+</ul>
+
+<p>With the <code>Protocol</code> class defined, the generic endpoint settings can be configured.</p>
+
+<pre><code>class ApplicationController::Web &lt; ApplicationController
+# ...
+  endpoint protocol: Protocol, adapter: Trailblazer::Endpoint::Adapter::Web
+end
+</code></pre>
+
+<p>Note that we simply use the <code>Adapter::Web</code> adapter.</p>
+
+<p>The <code>:domain_ctx_filter</code> option will inject the <code>current_user</code> into the <code>domain_ctx</code> so it is accessable from within your domain activity.</p>
+
+<p><span class="divider"></span></p>
+
+<h3 id="endpoint-web-interface-or-dsl">Or-DSL</h3>
+<p><!-- {endpoint-web-interface-or-dsl-toc} --></p>
+
+<p>In the controller subclasses you’re now ready to use endpoints and the <code>Or</code>-DSL.</p>
+
+<pre><code>class SongsController &lt; ApplicationController::Web
+  endpoint Song::Operation::Create
+
+  def create
+    endpoint Song::Operation::Create do |ctx, current_user:, model:, **|
+      render html: cell(Song::Cell::Create, model, current_user: current_user)
+    end.Or do |ctx, contract:, **| # validation failure
+      render html: cell(Song::Cell::New, contract)
+    end
+  end
+</code></pre>
+
+<p>The <code>Or</code> block is executed when your endpoint terminates on <code>:failure</code>, which is the case for <code>invalid_data</code> or <code>failure</code>. The <code>endpoint</code> block, as usual, is invoked for a <code>success</code>ful outcome.</p>
+
+<p>In both blocks, the <code>domain_ctx</code> is available along with the <code>:endpoint_ctx</code> keyword argument, should you need low-level data.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Or-DSL</li>
+    <li id="endpoint-web-interface-or-dsl-runtime-options">Runtime Options</li>
+</ul>
+
+<p>You can pass <code>#endpoint</code> options at run-time.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create, session: {user_id: 2} do |ctx, current_user:, model:, **|
+    render html: cell(Song::Cell::Create, model, current_user: current_user)
+  end
+end
+</code></pre>
+
+<p>Run-time options will be accessable in the endpoint contenxt (<strong>not</strong> the <code>domain_ctx</code>).</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Or-DSL</li>
+    <li id="endpoint-web-interface-or-dsl-protocol-failure">Protocol Failure</li>
+</ul>
+
+<p>The <code>Or</code> block is only executed for a <code>failure</code> outcome. To catch a protocol failure you can use <code>#protocol_failure</code>.</p>
+
+<pre><code>def create_with_protocol_failure
+  endpoint Song::Operation::Create do |ctx, **|
+    redirect_to dashboard_path
+  end.protocol_failure do |ctx, **|
+    render html: "wrong login, app crashed", status: 500
+  end
+end
+</code></pre>
+
+<p>The block is only executed for authentication/authorization failures.</p>
+
+<p><span class="divider"></span></p>
+
+<ul class="navigation">
+    <li>Or-DSL</li>
+    <li id="endpoint-web-interface-or-dsl-pitfalls">Pitfalls</li>
+</ul>
+
+<p><strong>Do not return</strong> anything from your controller action! This will break the DSL.</p>
+
+<pre><code>def create
+  endpoint Song::Operation::Create do |ctx, **|
+    # ...
+  end.Or do |ctx|
+    # ...
+  end
+
+  @counter += 1 # this will break!
+end
+</code></pre>
+
+<p>Put any additional code before or into the DSL blocks.</p>
+
+</div>
+
+                <aside>
+                  <span class="deco-purple-cross wow fadeIn"></span>
+                </aside>
+              </main>
+
+              <div class="d-none d-xl-block doc-xl-2 list-group sidebar-scroll order-3">
+                <img alt="Trailblazer" class="wow fadeIn" src="/vite/assets/deco1.51110a75.webp" />
+                <div class="features" id="endpoint-overview-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Overview</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#endpoint-overview-example">
+          <i class="fas fa-arrow-right"></i>
+          Example
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-overview-endpoint">
+          <i class="fas fa-arrow-right"></i>
+          Endpoint
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-overview-endpoint-protocol">Protocol</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-overview-endpoint-adapter">Adapter</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="endpoint-configuration-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Configuration</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#endpoint-configuration-controller-level-setup">
+          <i class="fas fa-arrow-right"></i>
+          Controller-level Setup
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-configuration-controller-level-setup-action-endpoint">Action Endpoint</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-configuration-controller-level-setup-directives">Directives</a>
+        </li>
+      
+    
+      <li>
+        <a href="#endpoint-configuration-runtime">
+          <i class="fas fa-arrow-right"></i>
+          Runtime
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-configuration-runtime-options">Options</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="endpoint-api-interface-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>API Interface</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#endpoint-api-interface-application-controller">
+          <i class="fas fa-arrow-right"></i>
+          Application Controller
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-action">
+          <i class="fas fa-arrow-right"></i>
+          Action
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-configuration">
+          <i class="fas fa-arrow-right"></i>
+          Configuration
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-api-interface-configuration-response">Response</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-api-interface-configuration-overriding-block-options">Overriding Block options</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-api-interface-configuration-runtime-options">Runtime Options</a>
+        </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-protocol">
+          <i class="fas fa-arrow-right"></i>
+          Protocol
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-adapter">
+          <i class="fas fa-arrow-right"></i>
+          Adapter
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-api-endpoint">
+          <i class="fas fa-arrow-right"></i>
+          api endpoint
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-api-interface-api-endpoint-handlers">Handlers</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-api-interface-api-endpoint-protocol-failure">Protocol Failure</a>
+        </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-build">
+          <i class="fas fa-arrow-right"></i>
+          Build
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-api-interface-test">
+          <i class="fas fa-arrow-right"></i>
+          Test
+        </a>
+      </li>
+      
+    
+  </ul>
+</div>
+
+<div class="features" id="endpoint-web-interface-features">
+  <h3 class="mt-0">
+    <i class="fas fa-times"></i>
+    <span>Web Interface</span>
+  </h3>
+
+  <ul class="vertical menu">
+    
+      <li>
+        <a href="#endpoint-web-interface-adapter">
+          <i class="fas fa-arrow-right"></i>
+          Adapter
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-web-interface-application-controller">
+          <i class="fas fa-arrow-right"></i>
+          Application Controller
+        </a>
+      </li>
+      
+    
+      <li>
+        <a href="#endpoint-web-interface-configuration">
+          <i class="fas fa-arrow-right"></i>
+          Configuration
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-configuration-endpoint-definition">Endpoint Definition</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-configuration-options">Options</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-configuration-protocol">Protocol</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-configuration-generic-endpoint">Generic endpoint</a>
+        </li>
+      
+    
+      <li>
+        <a href="#endpoint-web-interface-or-dsl">
+          <i class="fas fa-arrow-right"></i>
+          Or-DSL
+        </a>
+      </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-or-dsl-runtime-options">Runtime Options</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-or-dsl-protocol-failure">Protocol Failure</a>
+        </li>
+      
+        
+        <li class="sub-item">
+          <a href="#endpoint-web-interface-or-dsl-pitfalls">Pitfalls</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="trailblazer-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-lg-2">
+        <a href="/2.1/index.html" class="logo-footer">Trailblazer</a>
+      </div>
+      <div class="col-md-6 col-lg-8">
+        <nav>
+          <ul class="navbar-nav documentation-nav-items">
+  <li>
+    <a class="nav-item nav-link active" href="/2.1/docs/trailblazer.html">
+      <i class="fas fa-arrow-right"></i>
+      DOCS
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="https://dev.to/trailblazer">BLOG</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link " href="/2.1/about_us.html">ABOUT US</a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link " href="/2.1/learn.html">LEARN</a>
+  </li>
+
+  <li class="">
+    <a class="nav-item nav-link" href="/2.0/index.html">
+      <i class="fas fa-arrow-right"></i>
+      2.0
+    </a>
+  </li>
+
+  <li>
+    <a class="nav-item nav-link" href="https://trailblazer.zulipchat.com" target="_blank">
+      <i class="fas fa-comments"></i>
+      CHAT
+    </a>
+  </li>
+
+  <!--
+  
+  -->
+</ul>
+
+        </nav>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <ul class="social purple">
+          <li>
+            <a href="https://github.com/trailblazer" target="_blank"><i class="fab fa-github-square"></i></a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/trailblazer.to" target="_blank"><i class="fab fa-facebook-square"></i></a>
+          </li>
+          <li>
+            <a href="https://twitter.com/trailblazer_to" target="_blank"><i class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
