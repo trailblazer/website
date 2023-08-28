@@ -28,5 +28,8 @@ class Page::Operation::Compile < Trailblazer::Operation
       html = Page::Cell::Show.new(page).call(:show)
       File.write("#{dir_path}#{page.url}", html)
     end
+
+    # Override 404 generation until DDoS is over :(
+    File.write("#{dir_path}/404.html", "not_found")
   end
 end
